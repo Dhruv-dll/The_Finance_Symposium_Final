@@ -129,34 +129,37 @@ function FloatingGeometry() {
   );
 }
 
-// Enhanced Market Ticker with Sentiment
+// Enhanced Market Ticker with Accurate Real-Time Data
 function EnhancedMarketTicker() {
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [stockData, setStockData] = useState<StockData[]>([]);
+  const [stockData, setStockData] = useState<AccurateStockData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [marketSentiment, setMarketSentiment] = useState<'bullish' | 'bearish' | 'neutral'>('neutral');
+  const [marketSentiment, setMarketSentiment] = useState<MarketSentiment>({
+    sentiment: 'neutral',
+    advanceDeclineRatio: 0.5,
+    positiveStocks: 0,
+    totalStocks: 0
+  });
+  const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
+  const [connectionStatus, setConnectionStatus] = useState<'connected' | 'disconnected' | 'reconnecting'>('connected');
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
-    
+
     return () => clearInterval(timer);
   }, []);
 
   useEffect(() => {
-    const unsubscribe = marketDataService.subscribeToUpdates((data) => {
-      setStockData(data);
+    // Subscribe to accurate real-time market updates
+    setConnectionStatus('reconnecting');
+    const unsubscribe = accurateMarketDataService.subscribeToUpdates((data) => {
+      setStockData(data.stocks);
+      setMarketSentiment(data.sentiment);
+      setLastUpdate(new Date());
       setIsLoading(false);
-      
-      // Calculate market sentiment
-      const positiveChanges = data.filter(stock => stock.change > 0).length;
-      const totalStocks = data.length;
-      const bullishRatio = positiveChanges / totalStocks;
-      
-      if (bullishRatio > 0.6) setMarketSentiment('bullish');
-      else if (bullishRatio < 0.4) setMarketSentiment('bearish');
-      else setMarketSentiment('neutral');
+      setConnectionStatus('connected');
     });
 
     return unsubscribe;
