@@ -1,5 +1,5 @@
 class FinnhubMarketDataService {
-  private readonly API_KEY = process.env.FINNHUB_API_KEY || "your_api_key_here"; // ✅ Use environment variable
+  private readonly API_KEY = process.env.FINNHUB_API_KEY || "crm3ck9r01qsa2l9t5u0crm3ck9r01qsa2l9t5ug"; // ✅ Use environment variable
   private readonly BASE_URL = "https://finnhub.io/api/v1";
 
   private stocks = [
