@@ -260,5 +260,28 @@ export interface FinnhubStockData {
   dayLow: number;
 }
 
+// Utility function for safe timestamp formatting
+export function safeFormatTimestamp(
+  timestamp: Date | string | number,
+  locale = "en-IN",
+): string {
+  try {
+    if (timestamp instanceof Date) {
+      return timestamp.toLocaleTimeString(locale);
+    }
+
+    // Handle string or number timestamps
+    const date = new Date(timestamp);
+    if (isNaN(date.getTime())) {
+      return new Date().toLocaleTimeString(locale);
+    }
+
+    return date.toLocaleTimeString(locale);
+  } catch (error) {
+    console.warn("Error formatting timestamp:", error);
+    return new Date().toLocaleTimeString(locale);
+  }
+}
+
 // Export the service instance
 export const finnhubMarketDataService = new FinnhubMarketDataService();
