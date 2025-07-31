@@ -302,8 +302,17 @@ class AccurateMarketDataService {
         throw new Error('All crypto endpoints failed');
       }
 
-      const data = await response.json();
-      
+      let data = await response.json();
+
+      // Handle CORS proxy response for crypto data
+      if (data.contents) {
+        try {
+          data = JSON.parse(data.contents);
+        } catch (parseError) {
+          throw new Error('Failed to parse crypto proxy response');
+        }
+      }
+
       return this.cryptos.map(crypto => {
         const coinData = data[crypto.id];
         if (!coinData) return null;
