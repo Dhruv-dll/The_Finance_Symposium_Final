@@ -45,39 +45,13 @@ export default function MarketSidebar() {
       setTopPerformers(sorted.slice(0, 3));
     });
 
-    // Mock crypto data updates
-    const cryptoInterval = setInterval(() => {
-      setCryptoData(prev => ({
-        BTC: {
-          price: prev.BTC.price * (1 + (Math.random() - 0.5) * 0.02),
-          change: (Math.random() - 0.5) * 6
-        },
-        ETH: {
-          price: prev.ETH.price * (1 + (Math.random() - 0.5) * 0.02),
-          change: (Math.random() - 0.5) * 6
-        }
-      }));
-    }, 15000);
-
-    // Mock forex data updates
-    const forexInterval = setInterval(() => {
-      setForexData(prev => ({
-        USDINR: {
-          price: prev.USDINR.price * (1 + (Math.random() - 0.5) * 0.005),
-          change: (Math.random() - 0.5) * 0.5
-        }
-      }));
-    }, 20000);
-
     return () => {
       unsubscribe();
-      clearInterval(cryptoInterval);
-      clearInterval(forexInterval);
     };
   }, []);
 
   const getSentimentColor = () => {
-    switch (marketSentiment) {
+    switch (marketSentiment.sentiment) {
       case 'bullish': return {
         bg: 'from-finance-green/20 to-finance-green/5',
         border: 'border-finance-green/30',
