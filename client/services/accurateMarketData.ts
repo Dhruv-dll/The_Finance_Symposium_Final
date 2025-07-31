@@ -258,85 +258,53 @@ class AccurateMarketDataService {
     }
   }
 
-  // Fetch cryptocurrency data with CORS handling
+  // Fetch cryptocurrency data - using fallback only due to CORS issues
   async fetchCryptoData(): Promise<CryptoData[]> {
     try {
+      // Skip API calls and use fallback data to prevent CORS errors
+      console.log('Generating fallback crypto data (API disabled due to CORS)');
+      return this.getFallbackCryptoData();
+
+      /*
+      // Commented out API calls due to persistent CORS issues
+      // This can be re-enabled when a proper backend proxy is available
+
       await this.rateLimitCheck();
 
-      // CoinGecko typically allows CORS, but add fallback
-      const endpoints = [
+      const response = await fetch(
         'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=inr&include_24hr_change=true&include_last_updated_at=true',
-        `https://api.allorigins.win/get?url=${encodeURIComponent('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=inr&include_24hr_change=true&include_last_updated_at=true')}`
-      ];
-
-      let response;
-      let lastError;
-
-      for (let i = 0; i < endpoints.length; i++) {
-        try {
-          response = await fetch(endpoints[i], {
-            method: 'GET',
-            headers: {
-              'Accept': 'application/json',
-            },
-          });
-
-          if (response.ok) {
-            break;
-          } else {
-            throw new Error(`Crypto API error: ${response.status}`);
-          }
-        } catch (error) {
-          lastError = error;
-          console.warn(`Crypto endpoint ${i + 1} failed:`, error);
-          if (i === endpoints.length - 1) {
-            throw lastError;
-          }
-          continue;
+        {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+          },
+          signal: AbortSignal.timeout(5000), // 5 second timeout
         }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Crypto API error: ${response.status}`);
       }
 
-      if (!response || !response.ok) {
-        throw new Error('All crypto endpoints failed');
-      }
-
-      let data = await response.json();
-
-      // Handle CORS proxy response for crypto data
-      if (data.contents) {
-        try {
-          data = JSON.parse(data.contents);
-        } catch (parseError) {
-          throw new Error('Failed to parse crypto proxy response');
-        }
-      }
+      const data = await response.json();
 
       return this.cryptos.map(crypto => {
         const coinData = data[crypto.id];
         if (!coinData) return null;
 
-        // Ensure timestamp is always a proper Date object
-        let timestamp: Date;
-        try {
-          timestamp = coinData.last_updated_at
-            ? new Date(coinData.last_updated_at * 1000)
-            : new Date();
-        } catch (error) {
-          timestamp = new Date();
-        }
-
         return {
           symbol: crypto.symbol,
           name: crypto.name,
           price: coinData.inr || 0,
-          change: 0, // CoinGecko doesn't provide absolute change
+          change: 0,
           changePercent: coinData.inr_24h_change || 0,
-          timestamp: timestamp
+          timestamp: new Date(coinData.last_updated_at ? coinData.last_updated_at * 1000 : Date.now())
         };
       }).filter(Boolean) as CryptoData[];
+      */
 
     } catch (error) {
-      console.error('Error fetching crypto data:', error);
+      console.warn('Crypto data fetch failed, using fallback:', error);
       return this.getFallbackCryptoData();
     }
   }
