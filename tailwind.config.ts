@@ -57,6 +57,17 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // Finance-themed colors
+        finance: {
+          navy: "#000012",
+          gold: "#FFD700",
+          electric: "#00FFFF",
+          green: "#00FF00",
+          red: "#FF4444",
+          "navy-light": "#1a1a2e",
+          "gold-light": "#ffe55c",
+          "electric-light": "#4dffff",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -80,10 +91,43 @@ export default {
             height: "0",
           },
         },
+        glow: {
+          "0%, 100%": { boxShadow: "0 0 20px var(--glow-color, #FFD700)" },
+          "50%": { boxShadow: "0 0 40px var(--glow-color, #FFD700), 0 0 60px var(--glow-color, #FFD700)" },
+        },
+        "pulse-glow": {
+          "0%, 100%": { opacity: "1", transform: "scale(1)" },
+          "50%": { opacity: "0.8", transform: "scale(1.05)" },
+        },
+        "float": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        "light-sweep": {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(100%)" },
+        },
+        "market-pulse": {
+          "0%, 100%": { transform: "scale(1)", opacity: "1" },
+          "50%": { transform: "scale(1.1)", opacity: "0.9" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        glow: "glow 2s ease-in-out infinite alternate",
+        "pulse-glow": "pulse-glow 3s ease-in-out infinite",
+        float: "float 6s ease-in-out infinite",
+        "light-sweep": "light-sweep 2s ease-in-out",
+        "market-pulse": "market-pulse 2s ease-in-out infinite",
+      },
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "mesh-gradient": "linear-gradient(45deg, var(--tw-gradient-stops))",
+      },
+      backdropBlur: {
+        xs: "2px",
       },
     },
   },
