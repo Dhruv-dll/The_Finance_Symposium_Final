@@ -144,15 +144,20 @@ class FinnhubMarketDataService {
 
   // Public method to get all stock data
   async getAllStocks(): Promise<FinnhubStockData[]> {
-    const results = await Promise.all(
-      this.stocks.map(stock =>
-        this.fetchStockFromFinnhub(stock.symbol, stock.finnhubSymbol, stock.isIndex)
-      )
-    );
-    return results.filter((result): result is FinnhubStockData => result !== null);
+    if (this.fallbackMode) {
+      const results = await Promise.all(
+        this.stocks.map(stock =>
+          this.fetchStockFromFinnhub(stock.symbol, stock.finnhubSymbol, stock.isIndex)
+        )
+      );
+      return results.filter((result): result is FinnhubStockData => result !== null);
+    }
+
+    const data = await this.fetchAllMarketData();
+    return data ? data.stocks : [];
   }
 
-  // Calculate market sentiment
+  // Calculate market sentiment (fallback method)
   calculateMarketSentiment(stocks: FinnhubStockData[]): MarketSentiment {
     const stocksOnly = stocks.filter(
       stock => !["^NSEI", "^BSESN"].includes(stock.symbol)
@@ -182,9 +187,23 @@ class FinnhubMarketDataService {
   // Public method to update all data and notify subscribers
   async updateAllData(): Promise<void> {
     try {
-      const stocks = await this.getAllStocks();
-      const sentiment = this.calculateMarketSentiment(stocks);
-      this.subscribers.forEach(callback => callback({ stocks, sentiment }));
+      if (this.fallbackMode) {
+        const stocks = await this.getAllStocks();
+        const sentiment = this.calculateMarketSentiment(stocks);
+        this.subscribers.forEach(callback => callback({ stocks, sentiment }));
+        return;
+      }
+
+      const data = await this.fetchAllMarketData();
+      if (data) {
+        this.subscribers.forEach(callback => callback(data));
+      } else {
+        // Fallback if server API fails
+        this.fallbackMode = true;
+        const stocks = await this.getAllStocks();
+        const sentiment = this.calculateMarketSentiment(stocks);
+        this.subscribers.forEach(callback => callback({ stocks, sentiment }));
+      }
     } catch (error) {
       console.error("Failed to update market data:", error);
     }
