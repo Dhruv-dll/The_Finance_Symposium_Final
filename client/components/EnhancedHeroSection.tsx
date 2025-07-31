@@ -166,17 +166,30 @@ function EnhancedMarketTicker() {
   }, []);
 
   const isMarketOpen = () => {
-    const hour = currentTime.getHours();
-    const day = currentTime.getDay();
-    return day >= 1 && day <= 5 && hour >= 9 && hour < 16;
+    return accurateMarketDataService.isMarketOpen();
   };
 
   const getSentimentColor = () => {
-    switch (marketSentiment) {
+    switch (marketSentiment.sentiment) {
       case 'bullish': return 'from-finance-green/20 to-finance-green/5';
       case 'bearish': return 'from-finance-red/20 to-finance-red/5';
       default: return 'from-finance-electric/20 to-finance-electric/5';
     }
+  };
+
+  const getConnectionStatusColor = () => {
+    switch (connectionStatus) {
+      case 'connected': return 'text-finance-green';
+      case 'disconnected': return 'text-finance-red';
+      case 'reconnecting': return 'text-finance-gold';
+    }
+  };
+
+  const formatPrice = (symbol: string, price: number) => {
+    if (symbol.includes('^')) { // Index symbols
+      return price.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    return `₹${price.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   };
 
   return (
