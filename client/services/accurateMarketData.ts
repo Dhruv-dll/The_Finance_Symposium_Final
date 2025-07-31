@@ -333,19 +333,41 @@ class AccurateMarketDataService {
     }
   }
 
-  // Fetch forex data
+  // Fetch forex data with CORS handling
   async fetchForexData(): Promise<ForexData[]> {
     try {
       await this.rateLimitCheck();
-      
+
       const forexPromises = this.forex.map(async (pair) => {
-        const response = await fetch(
-          `https://query1.finance.yahoo.com/v8/finance/chart/${pair.symbol}?interval=1d&range=1d`
-        );
-        
-        if (!response.ok) throw new Error(`Forex API error: ${response.status}`);
-        
-        const data = await response.json();
+        const endpoints = [
+          `https://query1.finance.yahoo.com/v8/finance/chart/${pair.symbol}?interval=1d&range=1d`,
+          `https://api.allorigins.win/get?url=${encodeURIComponent(`https://query1.finance.yahoo.com/v8/finance/chart/${pair.symbol}?interval=1d&range=1d`)}`
+        ];
+
+        let response;
+        for (let i = 0; i < endpoints.length; i++) {
+          try {
+            response = await fetch(endpoints[i]);
+            if (response.ok) break;
+            throw new Error(`Forex API error: ${response.status}`);
+          } catch (error) {
+            if (i === endpoints.length - 1) throw error;
+            continue;
+          }
+        }
+
+        if (!response || !response.ok) throw new Error(`Forex API error: ${response?.status}`);
+
+        let data = await response.json();
+
+        // Handle CORS proxy response
+        if (data.contents) {
+          try {
+            data = JSON.parse(data.contents);
+          } catch (parseError) {
+            throw new Error('Failed to parse forex proxy response');
+          }
+        }
         const result = data.chart?.result?.[0];
         
         if (!result?.meta) return null;
