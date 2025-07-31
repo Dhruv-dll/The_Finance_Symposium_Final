@@ -210,36 +210,7 @@ class FinnhubMarketDataService {
 
       const sentiment = this.calculateMarketSentiment(stockResults);
 
-      // Update cache
-      this.cache = {
-        stocks: stockResults,
-        lastUpdate: new Date()
-      };
-
-      this.saveCachedData();
-
-      // Notify subscribers
-      const data = {
-        stocks: stockResults,
-        sentiment
-      };
-
-      this.subscribers.forEach(callback => {
-        try {
-          callback(data);
-        } catch (error) {
-          console.error('Error in subscriber callback:', error);
-        }
-      });
-
-      console.log('✅ Finnhub market data updated successfully', {
-        stocks: stockResults.length,
-        sentiment: sentiment.sentiment,
-        positiveStocks: sentiment.positiveStocks,
-        totalStocks: sentiment.totalStocks,
-        marketOpen: this.isMarketOpen(),
-        timestamp: new Date().toISOString()
-      });
+      this.handleDataUpdate(stockResults, sentiment);
 
     } catch (error) {
       console.error('❌ Error updating market data:', error);
