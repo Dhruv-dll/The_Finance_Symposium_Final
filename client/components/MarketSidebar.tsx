@@ -335,37 +335,37 @@ export default function MarketSidebar() {
               className="p-4 space-y-4"
             >
               {/* Sentiment indicator only */}
-              <motion.div 
+              <motion.div
                 className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                  marketSentiment === 'bullish' ? 'bg-finance-green' :
-                  marketSentiment === 'bearish' ? 'bg-finance-red' :
+                  marketSentiment.sentiment === 'bullish' ? 'bg-finance-green' :
+                  marketSentiment.sentiment === 'bearish' ? 'bg-finance-red' :
                   'bg-finance-electric'
                 }`}
-                animate={{ 
+                animate={{
                   scale: [1, 1.1, 1],
                   boxShadow: [
                     `0 0 10px ${
-                      marketSentiment === 'bullish' ? 'rgba(0,255,0,0.5)' :
-                      marketSentiment === 'bearish' ? 'rgba(255,68,68,0.5)' :
+                      marketSentiment.sentiment === 'bullish' ? 'rgba(0,255,0,0.5)' :
+                      marketSentiment.sentiment === 'bearish' ? 'rgba(255,68,68,0.5)' :
                       'rgba(0,255,255,0.5)'
                     }`,
                     `0 0 20px ${
-                      marketSentiment === 'bullish' ? 'rgba(0,255,0,0.8)' :
-                      marketSentiment === 'bearish' ? 'rgba(255,68,68,0.8)' :
+                      marketSentiment.sentiment === 'bullish' ? 'rgba(0,255,0,0.8)' :
+                      marketSentiment.sentiment === 'bearish' ? 'rgba(255,68,68,0.8)' :
                       'rgba(0,255,255,0.8)'
                     }`,
                     `0 0 10px ${
-                      marketSentiment === 'bullish' ? 'rgba(0,255,0,0.5)' :
-                      marketSentiment === 'bearish' ? 'rgba(255,68,68,0.5)' :
+                      marketSentiment.sentiment === 'bullish' ? 'rgba(0,255,0,0.5)' :
+                      marketSentiment.sentiment === 'bearish' ? 'rgba(255,68,68,0.5)' :
                       'rgba(0,255,255,0.5)'
                     }`
                   ]
                 }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
-                {marketSentiment === 'bullish' ? (
+                {marketSentiment.sentiment === 'bullish' ? (
                   <TrendingUp className="w-4 h-4 text-finance-navy" />
-                ) : marketSentiment === 'bearish' ? (
+                ) : marketSentiment.sentiment === 'bearish' ? (
                   <TrendingDown className="w-4 h-4 text-finance-navy" />
                 ) : (
                   <Activity className="w-4 h-4 text-finance-navy" />
@@ -376,7 +376,7 @@ export default function MarketSidebar() {
               <div className="space-y-2">
                 {stockData.slice(0, 2).map((stock, index) => (
                   <div key={stock.symbol} className="text-center">
-                    <div className="text-xs text-finance-gold font-medium">{stock.symbol}</div>
+                    <div className="text-xs text-finance-gold font-medium">{stock.name}</div>
                     <div className={`text-xs ${getChangeColor(stock.changePercent)}`}>
                       {formatChange(stock.changePercent)}
                     </div>
