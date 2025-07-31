@@ -313,7 +313,7 @@ function EnhancedMarketTicker() {
 
             <div className="flex items-center space-x-2 text-xs">
               <div className="w-2 h-2 bg-finance-electric rounded-full animate-pulse"></div>
-              <span className="text-finance-electric">Finnhub Live</span>
+              <span className="text-finance-electric">📈 Yahoo Finance Live</span>
             </div>
 
             {isLoading && (
