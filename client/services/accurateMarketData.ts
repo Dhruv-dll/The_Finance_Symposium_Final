@@ -202,7 +202,18 @@ class AccurateMarketDataService {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
 
-      const data = await response.json();
+      let data = await response.json();
+
+      // Handle CORS proxy response format
+      if (data.contents) {
+        // allorigins.win proxy response
+        try {
+          data = JSON.parse(data.contents);
+        } catch (parseError) {
+          throw new Error('Failed to parse proxy response');
+        }
+      }
+
       const result = data.chart?.result?.[0];
       
       if (!result || !result.meta) {
