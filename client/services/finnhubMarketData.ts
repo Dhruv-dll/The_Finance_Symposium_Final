@@ -149,7 +149,7 @@ class FinnhubMarketDataService {
   }
 
   // Market timing for Indian markets (IST)
-  private isMarketOpen(): boolean {
+  private checkMarketOpen(): boolean {
     const now = new Date();
     const ist = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
     const day = ist.getDay(); // 0 = Sunday, 6 = Saturday
