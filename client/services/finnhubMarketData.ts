@@ -246,7 +246,7 @@ class FinnhubMarketDataService {
   }
 
   // Subscription management
-  subscribeToUpdates(callback: (data: { stocks: FinnhubStockData[] }) => void): () => void {
+  subscribeToUpdates(callback: (data: { stocks: FinnhubStockData[]; sentiment: MarketSentiment }) => void): () => void {
     this.subscribers.push(callback);
 
     // Start update interval if not already running
