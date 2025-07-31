@@ -274,7 +274,7 @@ class FinnhubMarketDataService {
       }
     });
 
-    const apiMode = stockResults.every(stock => stock.price > 0) ? 'Finnhub API' : 'Fallback';
+    const apiMode = this.fallbackMode ? 'Fallback Mode' : 'Finnhub API';
     console.log(`✅ Market data updated successfully (${apiMode})`, {
       stocks: stockResults.length,
       sentiment: calculatedSentiment.sentiment,
