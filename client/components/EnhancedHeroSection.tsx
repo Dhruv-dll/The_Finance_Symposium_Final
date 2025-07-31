@@ -236,12 +236,17 @@ function EnhancedMarketTicker() {
               {currentTime.toLocaleTimeString('en-IN')} IST
             </div>
 
+            <div className="flex items-center space-x-2 text-xs">
+              <div className="w-2 h-2 bg-finance-electric rounded-full animate-pulse"></div>
+              <span className="text-finance-electric">Simulation Mode</span>
+            </div>
+
             {isLoading && (
               <div className="flex items-center space-x-2 text-finance-gold text-xs">
                 <div className="w-1 h-1 bg-finance-gold rounded-full animate-bounce"></div>
                 <div className="w-1 h-1 bg-finance-gold rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
                 <div className="w-1 h-1 bg-finance-gold rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                <span className="ml-2">Loading live data...</span>
+                <span className="ml-2">Generating data...</span>
               </div>
             )}
 
