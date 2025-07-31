@@ -141,20 +141,17 @@ export default function EnhancedNavigation({ scrolled }: EnhancedNavigationProps
                 whileHover={{ scale: 1.1 }}
                 transition={{ duration: 0.3 }}
               >
-                <div className="w-14 h-14 bg-gradient-to-br from-finance-gold to-finance-electric rounded-xl flex items-center justify-center relative overflow-hidden">
-                  <span className="text-finance-navy font-bold text-xl relative z-10">TFS</span>
-                  <motion.div 
-                    className="absolute inset-0 bg-gradient-to-br from-finance-electric to-finance-gold opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    animate={{
-                      rotate: [0, 360],
-                    }}
-                    transition={{
-                      duration: 20,
-                      repeat: Infinity,
-                      ease: "linear"
-                    }}
-                  />
-                </div>
+                <div
+                  className="flex items-center justify-center rounded-xl relative overflow-hidden"
+                  style={{
+                    backgroundImage: "url(https://cdn.builder.io/api/v1/image/assets%2F929e4df9940a4d789ccda51924367667%2F738f11e9971c4f0f8ef4fd148b7ae990)",
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center",
+                    backgroundSize: "cover",
+                    width: "60px",
+                    height: "60px"
+                  }}
+                />
                 <motion.div 
                   className="absolute inset-0 bg-gradient-to-br from-finance-gold to-finance-electric rounded-xl opacity-50 blur-md -z-10"
                   animate={{
