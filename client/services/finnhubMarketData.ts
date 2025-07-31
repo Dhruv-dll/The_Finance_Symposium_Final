@@ -200,7 +200,21 @@ class FinnhubMarketDataService {
 
   // Public method to check if market is open
   isMarketOpen(): boolean {
-    return this.isMarketOpen();
+    const now = new Date();
+    const ist = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+    const day = ist.getDay(); // 0 = Sunday, 6 = Saturday
+    const hours = ist.getHours();
+    const minutes = ist.getMinutes();
+    const timeInMinutes = hours * 60 + minutes;
+
+    // Market closed on weekends
+    if (day === 0 || day === 6) return false;
+
+    // Indian market hours: 9:15 AM to 3:30 PM IST
+    const marketOpen = 9 * 60 + 15; // 9:15 AM
+    const marketClose = 15 * 60 + 30; // 3:30 PM
+
+    return timeInMinutes >= marketOpen && timeInMinutes <= marketClose;
   }
 
   // Subscription management
