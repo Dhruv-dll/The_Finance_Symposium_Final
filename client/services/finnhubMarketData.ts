@@ -100,9 +100,10 @@ class FinnhubMarketDataService {
 
       const data = await response.json();
 
-      // Validate Finnhub response structure
-      if (typeof data.c !== 'number' || data.c <= 0) {
-        throw new Error(`Invalid price data for ${symbol}: ${JSON.stringify(data)}`);
+      // Validate Finnhub response structure - more lenient validation
+      if (typeof data.c !== 'number' || data.c <= 0 || data.c === null || isNaN(data.c)) {
+        console.warn(`Invalid price data for ${symbol}, using fallback:`, data);
+        return this.getFallbackStockData(symbol);
       }
 
       const currentPrice = data.c; // Current price
