@@ -3,7 +3,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Float, Text3D, OrbitControls, Sphere, Box } from "@react-three/drei";
 import { motion, useScroll, useTransform, useMotionValue } from "framer-motion";
 import * as THREE from "three";
-import { marketDataService, StockData } from "../services/marketData";
+import { accurateMarketDataService, AccurateStockData, MarketSentiment } from "../services/accurateMarketData";
 
 // Enhanced Particle System with Financial Symbols
 function FinancialParticles() {
