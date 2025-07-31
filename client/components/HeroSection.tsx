@@ -2,16 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Float, Text3D, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
-
-// Mock market data - in a real app, this would come from an API
-const mockStocks = [
-  { symbol: "RELIANCE", price: 2456.75, change: 12.45, changePercent: 0.51 },
-  { symbol: "TCS", price: 3891.20, change: -23.10, changePercent: -0.59 },
-  { symbol: "HDFC", price: 1687.35, change: 8.90, changePercent: 0.53 },
-  { symbol: "INFOSYS", price: 1542.85, change: 15.60, changePercent: 1.02 },
-  { symbol: "SENSEX", price: 65432.18, change: 234.56, changePercent: 0.36 },
-  { symbol: "NIFTY", price: 19876.45, change: 78.90, changePercent: 0.40 },
-];
+import { marketDataService, StockData } from "../services/marketData";
 
 // 3D Floating Financial Elements
 function FloatingElement({ position, children }: { position: [number, number, number]; children: React.ReactNode }) {
