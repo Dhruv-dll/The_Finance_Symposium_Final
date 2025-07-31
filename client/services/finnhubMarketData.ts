@@ -66,30 +66,33 @@ class FinnhubMarketDataService {
 
       const data = await response.json();
 
-      // ✅ Better validation for Finnhub response
+      // ✅ Better validation for Yahoo Finance response
       if (!data || typeof data !== 'object') {
         console.warn(`Invalid response format for ${symbol}:`, data);
         return this.getFallbackStockData(symbol);
       }
 
-      // Check if Finnhub returned an error (they sometimes return empty objects)
-      if (data.c === 0 && data.d === 0 && data.dp === 0) {
-        console.warn(`No data available for ${symbol} on Finnhub`);
+      const result = data.chart?.result?.[0];
+      if (!result) {
+        console.warn(`No data available for ${symbol} on Yahoo Finance`);
         return this.getFallbackStockData(symbol);
       }
+
+      const meta = result.meta;
+      const currentPrice = meta.regularMarketPrice || meta.previousClose || 0;
+      const previousClose = meta.previousClose || currentPrice;
 
       // Validate price data
-      if (typeof data.c !== "number" || data.c <= 0 || isNaN(data.c)) {
-        console.warn(`Invalid price data for ${symbol}:`, data.c);
+      if (typeof currentPrice !== "number" || currentPrice <= 0 || isNaN(currentPrice)) {
+        console.warn(`Invalid price data for ${symbol}:`, currentPrice);
         return this.getFallbackStockData(symbol);
       }
 
-      const currentPrice = data.c;
-      const change = data.d || 0;
-      const changePercent = data.dp || 0;
-      const dayHigh = data.h || currentPrice;
-      const dayLow = data.l || currentPrice;
-      const timestamp = data.t ? new Date(data.t * 1000) : new Date();
+      const change = currentPrice - previousClose;
+      const changePercent = previousClose > 0 ? (change / previousClose) * 100 : 0;
+      const dayHigh = meta.regularMarketDayHigh || currentPrice;
+      const dayLow = meta.regularMarketDayLow || currentPrice;
+      const timestamp = new Date();
 
       const stockInfo = this.stocks.find((s) => s.symbol === symbol);
 
