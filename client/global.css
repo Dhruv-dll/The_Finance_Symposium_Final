@@ -546,6 +546,56 @@
     }
   }
 
+  /* Enhanced navigation glow effects */
+  .nav-glow-hover {
+    transition: all 0.3s ease-in-out;
+    text-shadow: 0 0 4px rgba(255, 215, 0, 0.5);
+  }
+
+  .nav-glow-hover:hover {
+    text-shadow:
+      0 0 5px rgba(255, 255, 255, 0.8),
+      0 0 15px rgba(255, 215, 0, 0.6),
+      0 0 25px rgba(255, 215, 0, 0.4);
+    letter-spacing: 0.5px;
+    transform: scale(1.05);
+  }
+
+  /* Floating icon optimized animations */
+  .floating-icon-pulse {
+    animation: floating-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes floating-pulse {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.3), 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.5), 0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  .floating-icon-glow {
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
+    transition: filter 0.3s ease;
+  }
+
+  .floating-icon-glow:hover {
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8));
+  }
+
+  /* Touch-friendly hover effects for mobile */
+  @media (hover: none) and (pointer: coarse) {
+    .nav-glow-hover:hover {
+      transform: scale(1.02);
+      text-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
+    }
+
+    .floating-icon-glow:hover {
+      filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.7));
+    }
+  }
+
   /* Accessibility improvements */
   @media (prefers-reduced-motion: reduce) {
     .animate-scroll {
@@ -561,6 +611,15 @@
     .shimmer {
       animation: none;
       background: rgba(255, 215, 0, 0.1);
+    }
+
+    .floating-icon-pulse {
+      animation: none;
+    }
+
+    .nav-glow-hover:hover {
+      transform: none;
+      animation: none;
     }
   }
 
