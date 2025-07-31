@@ -55,6 +55,8 @@ class FinnhubMarketDataService {
   private retryCount = 0;
   private maxRetries = 3;
   private readonly UPDATE_INTERVAL = 60000; // 60 seconds as requested
+  private apiFailureCount = 0;
+  private fallbackMode = false;
 
   constructor() {
     this.loadCachedData();
