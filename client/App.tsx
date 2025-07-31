@@ -10,6 +10,8 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import PlaceholderPage from "./components/PlaceholderPage";
+import { SoundProvider } from "./components/SoundSystem";
+import SoundControls from "./components/SoundSystem";
 
 const queryClient = new QueryClient();
 
