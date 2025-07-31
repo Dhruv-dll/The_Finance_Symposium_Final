@@ -251,7 +251,10 @@ export default function MarketSidebar() {
                             {formatChange(crypto.changePercent)}
                           </div>
                           <div className="text-xs text-muted-foreground">
-                            {crypto.timestamp.toLocaleTimeString('en-IN')}
+                            {crypto.timestamp instanceof Date
+                              ? crypto.timestamp.toLocaleTimeString('en-IN')
+                              : new Date(crypto.timestamp).toLocaleTimeString('en-IN')
+                            }
                           </div>
                         </div>
                       </div>
