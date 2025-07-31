@@ -123,11 +123,11 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
             <div className="bg-black border-l border-r border-finance-gold/30 p-6 min-h-[400px] font-mono text-sm">
               {/* System Info */}
               <div className="text-finance-electric mb-4">
-                <div>████████  ████████   ██████</div>
-                <div>   ██     ██        ██    </div>
-                <div>   ██     ██████    ██████</div>
-                <div>   ██     ██            ██</div>
-                <div>   ██     ██        ██████</div>
+                <div>████████   ███████   ███████</div>
+                <div>   ██      ██        ██    </div>
+                <div>   ██      █████     ███████</div>
+                <div>   ██      ██              ██</div>
+                <div>   ██      ██        ███████</div>
                 <div className="mt-2 text-finance-gold">
                   THE FINANCE SYMPOSIUM
                 </div>
