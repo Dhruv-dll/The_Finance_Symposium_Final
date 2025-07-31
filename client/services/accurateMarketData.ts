@@ -575,7 +575,7 @@ class AccurateMarketDataService {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  // Fallback data functions with dynamic realistic variations
+  // Enhanced fallback data with realistic market behavior simulation
   private getFallbackStockData(symbol: string): AccurateStockData | null {
     const baseData: Record<string, { price: number; name: string; volatility: number }> = {
       '^NSEI': { price: 24500, name: 'NIFTY 50', volatility: 0.8 },
@@ -593,30 +593,51 @@ class AccurateMarketDataService {
     const base = baseData[symbol];
     if (!base) return null;
 
-    // Generate realistic random variations
-    const randomVariation = (Math.random() - 0.5) * 2; // -1 to 1
-    const volatilityFactor = base.volatility / 100; // Convert to percentage
-    const changePercent = randomVariation * volatilityFactor * (this.isMarketOpen() ? 1 : 0.3);
-    const change = (base.price * changePercent) / 100;
-    const currentPrice = base.price + change;
+    // Create a seed based on symbol and current hour for consistent but varying data
+    const currentHour = new Date().getHours();
+    const symbolSeed = symbol.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const timeSeed = Math.floor(Date.now() / (1000 * 60 * 5)); // Change every 5 minutes
+    const seed = symbolSeed + timeSeed;
 
-    // Add some time-based variation to make it feel more real
-    const timeVariation = Math.sin(Date.now() / 100000) * 0.2;
-    const finalChangePercent = changePercent + timeVariation;
-    const finalChange = (base.price * finalChangePercent) / 100;
-    const finalPrice = Math.max(base.price + finalChange, base.price * 0.95); // Don't go below 95% of base
+    // Pseudo-random function based on seed
+    const seededRandom = (seed: number) => {
+      const x = Math.sin(seed) * 10000;
+      return x - Math.floor(x);
+    };
+
+    // Market hours affect volatility and trend
+    const isMarketHours = this.isMarketOpen();
+    const marketMultiplier = isMarketHours ? 1.0 : 0.3;
+
+    // Simulate daily market patterns
+    const marketPattern = isMarketHours ?
+      Math.sin((currentHour - 9) * Math.PI / 6.5) * 0.5 : // 9AM to 3:30PM pattern
+      0;
+
+    // Generate consistent variation for this time period
+    const randomVariation = (seededRandom(seed) - 0.5) * 2; // -1 to 1
+    const volatilityFactor = base.volatility / 100;
+
+    // Combine random, pattern, and time-based factors
+    const changePercent = (randomVariation * volatilityFactor + marketPattern * 0.3) * marketMultiplier;
+    const change = (base.price * changePercent) / 100;
+    const currentPrice = Math.max(base.price + change, base.price * 0.90); // Don't go below 90% of base
+
+    // Generate consistent volume based on volatility
+    const baseVolume = symbol.includes('^') ? 0 : Math.floor(seededRandom(seed + 1) * 5000000) + 2000000;
+    const volumeMultiplier = isMarketHours ? 1.5 : 0.2;
 
     return {
       symbol,
       name: base.name,
-      price: Math.round(finalPrice * 100) / 100,
-      change: Math.round(finalChange * 100) / 100,
-      changePercent: Math.round(finalChangePercent * 100) / 100,
+      price: Math.round(currentPrice * 100) / 100,
+      change: Math.round(change * 100) / 100,
+      changePercent: Math.round(changePercent * 100) / 100,
       timestamp: new Date(),
-      marketState: this.isMarketOpen() ? 'REGULAR' : 'CLOSED',
-      volume: Math.floor(Math.random() * 10000000) + 1000000, // Random volume
-      dayHigh: Math.round((finalPrice * 1.02) * 100) / 100,
-      dayLow: Math.round((finalPrice * 0.98) * 100) / 100
+      marketState: isMarketHours ? 'REGULAR' : 'CLOSED',
+      volume: Math.floor(baseVolume * volumeMultiplier),
+      dayHigh: Math.round((currentPrice * (1 + Math.abs(changePercent)/100 + 0.01)) * 100) / 100,
+      dayLow: Math.round((currentPrice * (1 - Math.abs(changePercent)/100 - 0.01)) * 100) / 100
     };
   }
 
