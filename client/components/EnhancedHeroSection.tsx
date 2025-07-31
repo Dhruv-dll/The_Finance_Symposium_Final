@@ -9,7 +9,7 @@ import {
   MarketSentiment,
   safeFormatTimestamp,
 } from "../services/finnhubMarketData";
-import MarketDashboardDialog from "./MarketDashboardDialog";
+import FloatingMarketIcon from "./FloatingMarketIcon";
 
 // Enhanced Particle System with Financial Symbols
 function FinancialParticles() {
