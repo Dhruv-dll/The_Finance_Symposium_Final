@@ -88,6 +88,23 @@ class AccurateMarketDataService {
 
   constructor() {
     this.loadCachedData();
+
+    // Initialize with fallback data if no cache exists
+    if (this.cache.stocks.length === 0) {
+      console.log('📊 Initializing with fallback market data...');
+      const fallbackStocks = this.stocks.map(stock => this.getFallbackStockData(stock.symbol)).filter(Boolean) as AccurateStockData[];
+      const fallbackCrypto = this.getFallbackCryptoData();
+      const fallbackForex = this.getFallbackForexData();
+
+      this.cache = {
+        stocks: fallbackStocks,
+        crypto: fallbackCrypto,
+        forex: fallbackForex,
+        lastUpdate: new Date()
+      };
+
+      console.log('✅ Fallback data initialized successfully');
+    }
   }
 
   // Market hours detection for IST
