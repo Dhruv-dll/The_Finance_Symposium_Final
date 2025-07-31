@@ -560,24 +560,31 @@ class AccurateMarketDataService {
   }
 
   private getFallbackCryptoData(): CryptoData[] {
-    return [
-      {
-        symbol: 'BTC',
-        name: 'Bitcoin',
-        price: 3500000, // ~$43,000 in INR
-        change: 0,
-        changePercent: 0,
-        timestamp: new Date()
-      },
-      {
-        symbol: 'ETH',
-        name: 'Ethereum',
-        price: 220000, // ~$2,700 in INR
-        change: 0,
-        changePercent: 0,
-        timestamp: new Date()
-      }
+    const cryptoBase = [
+      { symbol: 'BTC', name: 'Bitcoin', basePrice: 3500000, volatility: 3.0 },
+      { symbol: 'ETH', name: 'Ethereum', basePrice: 220000, volatility: 4.0 }
     ];
+
+    return cryptoBase.map(crypto => {
+      // Crypto is more volatile, especially during certain hours
+      const hour = new Date().getHours();
+      const isVolatileHour = hour >= 14 && hour <= 16; // 2-4 PM IST (volatile trading hours)
+      const volatilityMultiplier = isVolatileHour ? 1.5 : 1.0;
+
+      const randomVariation = (Math.random() - 0.5) * 2; // -1 to 1
+      const changePercent = randomVariation * crypto.volatility * volatilityMultiplier;
+      const change = (crypto.basePrice * changePercent) / 100;
+      const currentPrice = Math.max(crypto.basePrice + change, crypto.basePrice * 0.85); // Don't go below 85%
+
+      return {
+        symbol: crypto.symbol,
+        name: crypto.name,
+        price: Math.round(currentPrice),
+        change: Math.round(change),
+        changePercent: Math.round(changePercent * 100) / 100,
+        timestamp: new Date()
+      };
+    });
   }
 
   private getFallbackForexData(): ForexData[] {
