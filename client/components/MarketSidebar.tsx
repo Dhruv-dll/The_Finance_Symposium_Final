@@ -11,7 +11,7 @@ import {
   Eye,
   EyeOff
 } from "lucide-react";
-import { marketDataService, StockData } from "../services/marketData";
+import { accurateMarketDataService, AccurateStockData, MarketSentiment, CryptoData, ForexData } from "../services/accurateMarketData";
 
 export default function MarketSidebar() {
   const [isVisible, setIsVisible] = useState(true);
