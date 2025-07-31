@@ -260,6 +260,13 @@ export interface FinnhubStockData {
   dayLow: number;
 }
 
+export interface MarketSentiment {
+  sentiment: "bullish" | "bearish" | "neutral";
+  advanceDeclineRatio: number;
+  positiveStocks: number;
+  totalStocks: number;
+}
+
 // Utility function for safe timestamp formatting
 export function safeFormatTimestamp(
   timestamp: Date | string | number,
