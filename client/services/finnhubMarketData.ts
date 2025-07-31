@@ -90,7 +90,7 @@ class FinnhubMarketDataService {
         change: Math.round(change * 100) / 100,
         changePercent: Math.round(changePercent * 100) / 100,
         timestamp: timestamp,
-        marketState: this.isMarketOpen() ? "REGULAR" : "CLOSED",
+        marketState: this.checkMarketOpen() ? "REGULAR" : "CLOSED",
         dayHigh: Math.round(dayHigh * 100) / 100,
         dayLow: Math.round(dayLow * 100) / 100,
       };
