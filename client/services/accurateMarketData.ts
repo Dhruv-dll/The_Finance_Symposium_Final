@@ -643,20 +643,32 @@ class AccurateMarketDataService {
 
   private getFallbackCryptoData(): CryptoData[] {
     const cryptoBase = [
-      { symbol: 'BTC', name: 'Bitcoin', basePrice: 3500000, volatility: 3.0 },
-      { symbol: 'ETH', name: 'Ethereum', basePrice: 220000, volatility: 4.0 }
+      { symbol: 'BTC', name: 'Bitcoin', basePrice: 3500000, volatility: 3.0, seed: 1001 },
+      { symbol: 'ETH', name: 'Ethereum', basePrice: 220000, volatility: 4.0, seed: 1002 }
     ];
 
     return cryptoBase.map(crypto => {
-      // Crypto is more volatile, especially during certain hours
+      // Crypto trades 24/7, but has peak hours
       const hour = new Date().getHours();
-      const isVolatileHour = hour >= 14 && hour <= 16; // 2-4 PM IST (volatile trading hours)
-      const volatilityMultiplier = isVolatileHour ? 1.5 : 1.0;
+      const isPeakHour = (hour >= 14 && hour <= 16) || (hour >= 20 && hour <= 22); // Peak trading times
+      const volatilityMultiplier = isPeakHour ? 1.8 : 1.0;
 
-      const randomVariation = (Math.random() - 0.5) * 2; // -1 to 1
-      const changePercent = randomVariation * crypto.volatility * volatilityMultiplier;
+      // Create consistent variation based on time and crypto symbol
+      const timeSeed = Math.floor(Date.now() / (1000 * 60 * 10)); // Change every 10 minutes
+      const cryptoSeed = crypto.seed + timeSeed;
+
+      const seededRandom = (seed: number) => {
+        const x = Math.sin(seed) * 10000;
+        return x - Math.floor(x);
+      };
+
+      // Crypto follows different patterns than stocks
+      const cryptoPattern = Math.sin(hour * Math.PI / 12) * 0.8; // 24-hour cycle
+      const randomVariation = (seededRandom(cryptoSeed) - 0.5) * 2; // -1 to 1
+
+      const changePercent = (randomVariation * crypto.volatility + cryptoPattern * 0.5) * volatilityMultiplier;
       const change = (crypto.basePrice * changePercent) / 100;
-      const currentPrice = Math.max(crypto.basePrice + change, crypto.basePrice * 0.85); // Don't go below 85%
+      const currentPrice = Math.max(crypto.basePrice + change, crypto.basePrice * 0.80); // Crypto can be more volatile
 
       return {
         symbol: crypto.symbol,
@@ -664,7 +676,7 @@ class AccurateMarketDataService {
         price: Math.round(currentPrice),
         change: Math.round(change),
         changePercent: Math.round(changePercent * 100) / 100,
-        timestamp: new Date() // Ensure this is always a new Date object
+        timestamp: new Date()
       };
     });
   }
