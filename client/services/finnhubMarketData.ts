@@ -140,17 +140,26 @@ class FinnhubMarketDataService {
       };
 
     } catch (error) {
-      console.error(`Error fetching Finnhub data for ${symbol}:`, error);
-      
-      // Retry logic
-      if (this.retryCount < this.maxRetries) {
+      console.warn(`Finnhub API failed for ${symbol}:`, error.message);
+
+      // Track API failures
+      this.apiFailureCount++;
+
+      // If we have too many failures, switch to fallback mode
+      if (this.apiFailureCount >= 5) {
+        this.fallbackMode = true;
+        console.log('🔄 Switching to fallback mode due to repeated API failures');
+      }
+
+      // Retry logic (but not for 403 errors)
+      if (this.retryCount < this.maxRetries && !error.message.includes('403')) {
         this.retryCount++;
         await this.delay(2000 * this.retryCount); // Exponential backoff
         return this.fetchStockFromFinnhub(symbol, finnhubSymbol);
       }
-      
+
       this.retryCount = 0;
-      
+
       // Return fallback data if API fails
       return this.getFallbackStockData(symbol);
     }
