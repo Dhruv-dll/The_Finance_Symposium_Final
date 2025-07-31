@@ -21,6 +21,7 @@ import {
 
 export default function Index() {
   const [scrolled, setScrolled] = useState(false);
+  const [showLoader, setShowLoader] = useState(true);
   const { scrollYProgress } = useScroll();
   
   // Color temperature transformation based on scroll
