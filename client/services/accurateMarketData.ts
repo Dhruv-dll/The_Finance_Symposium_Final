@@ -750,7 +750,7 @@ class AccurateMarketDataService {
         price: Math.round(currentPrice * 100) / 100,
         change: Math.round(change * 100) / 100,
         changePercent: Math.round(changePercent * 100) / 100,
-        timestamp: new Date()
+        timestamp: new Date() // Ensure this is always a new Date object
       };
     });
   }
