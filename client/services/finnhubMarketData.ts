@@ -214,21 +214,50 @@ class FinnhubMarketDataService {
 
     } catch (error) {
       console.error('❌ Error updating market data:', error);
-      
+
       // Use cached or fallback data on error
       if (this.cache.stocks.length === 0) {
         const fallbackStocks = this.stocks.map(stock => this.getFallbackStockData(stock.symbol)).filter(Boolean) as FinnhubStockData[];
-        const fallbackSentiment = this.calculateMarketSentiment(fallbackStocks);
-        
-        this.subscribers.forEach(callback => {
-          try {
-            callback({ stocks: fallbackStocks, sentiment: fallbackSentiment });
-          } catch (callbackError) {
-            console.error('Error in fallback callback:', callbackError);
-          }
-        });
+        this.handleDataUpdate(fallbackStocks);
       }
     }
+  }
+
+  // Helper method to handle data updates
+  private handleDataUpdate(stockResults: FinnhubStockData[], sentiment?: MarketSentiment): void {
+    const calculatedSentiment = sentiment || this.calculateMarketSentiment(stockResults);
+
+    // Update cache
+    this.cache = {
+      stocks: stockResults,
+      lastUpdate: new Date()
+    };
+
+    this.saveCachedData();
+
+    // Notify subscribers
+    const data = {
+      stocks: stockResults,
+      sentiment: calculatedSentiment
+    };
+
+    this.subscribers.forEach(callback => {
+      try {
+        callback(data);
+      } catch (error) {
+        console.error('Error in subscriber callback:', error);
+      }
+    });
+
+    const apiMode = stockResults.every(stock => stock.price > 0) ? 'Finnhub API' : 'Fallback';
+    console.log(`✅ Market data updated successfully (${apiMode})`, {
+      stocks: stockResults.length,
+      sentiment: calculatedSentiment.sentiment,
+      positiveStocks: calculatedSentiment.positiveStocks,
+      totalStocks: calculatedSentiment.totalStocks,
+      marketOpen: this.isMarketOpen(),
+      timestamp: new Date().toISOString()
+    });
   }
 
   // Subscription management
