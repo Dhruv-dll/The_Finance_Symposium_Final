@@ -13,8 +13,8 @@ class FinnhubMarketDataService {
     { symbol: "ITC.NS", name: "ITC", finnhubSymbol: "ITC.NS" },
     { symbol: "KOTAKBANK.NS", name: "KOTAK", finnhubSymbol: "KOTAKBANK.NS" },
 
-    // ⚠️ Indices - may need to be handled differently or excluded
-    // Finnhub might not support Indian indices in free tier
+    // ✅ Indices - Yahoo Finance supports Indian indices
+    // NIFTY 50 and SENSEX are well supported
     { symbol: "^NSEI", name: "NIFTY 50", finnhubSymbol: "^NSEI", isIndex: true },
     { symbol: "^BSESN", name: "SENSEX", finnhubSymbol: "^BSESN", isIndex: true },
   ];
