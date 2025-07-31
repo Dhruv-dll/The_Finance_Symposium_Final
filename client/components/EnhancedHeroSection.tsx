@@ -202,7 +202,7 @@ function EnhancedMarketTicker() {
   }, []);
 
   useEffect(() => {
-    // Subscribe to Finnhub real-time market updates
+    // Subscribe to Yahoo Finance real-time market updates
     setConnectionStatus("reconnecting");
     const unsubscribe = finnhubMarketDataService.subscribeToUpdates((data) => {
       setStockData(data.stocks);
