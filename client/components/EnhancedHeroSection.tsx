@@ -323,7 +323,10 @@ function EnhancedMarketTicker() {
                         </div>
                       )}
                       <div className="text-xs text-finance-electric">
-                        Updated: {stock.timestamp.toLocaleTimeString('en-IN')}
+                        Updated: {stock.timestamp instanceof Date
+                          ? stock.timestamp.toLocaleTimeString('en-IN')
+                          : new Date(stock.timestamp).toLocaleTimeString('en-IN')
+                        }
                       </div>
                     </div>
                   </div>
