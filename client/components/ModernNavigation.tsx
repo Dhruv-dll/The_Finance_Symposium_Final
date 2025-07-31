@@ -135,7 +135,7 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
               transition={{ duration: 0.3 }}
             >
               <div 
-                className="flex items-center justify-center rounded-xl relative overflow-hidden shadow-[0_0_16px_4px_rgba(255,215,0,0.7)]"
+                className="flex items-center justify-center rounded-xl relative overflow-hidden"
                 style={{
                   backgroundImage: "url(https://cdn.builder.io/api/v1/image/assets%2F929e4df9940a4d789ccda51924367667%2F738f11e9971c4f0f8ef4fd148b7ae990)",
                   backgroundRepeat: "no-repeat",
@@ -143,7 +143,8 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                   backgroundSize: "cover",
                   width: "75px",
                   height: "75px",
-                  marginTop: "-5px"
+                  marginTop: "1px",
+                  boxShadow: "1px 1px 3px 0px rgba(0, 0, 0, 1)"
                 }}
               />
               <motion.div 
@@ -167,7 +168,7 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
               transition={{ duration: 0.3 }}
             >
               <div 
-                className="flex items-center justify-center border border-finance-electric/30 rounded-xl shadow-[0_0_16px_4px_rgba(255,215,0,0.7)]"
+                className="flex items-center justify-center rounded-xl"
                 style={{
                   backgroundImage: "url(https://cdn.builder.io/api/v1/image/assets%2F929e4df9940a4d789ccda51924367667%2F73bba102e8354fd08a042b5f690f50cd)",
                   backgroundRepeat: "no-repeat",
@@ -175,7 +176,9 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                   backgroundSize: "cover",
                   width: "75px",
                   height: "75px",
-                  margin: "1px 0 0 -5px"
+                  margin: "1px 0 0 -5px",
+                  borderColor: "rgba(255, 236, 179, 1)",
+                  boxShadow: "1px 1px 3px 0 rgba(0, 0, 0, 1)"
                 }}
               />
               <motion.div 
