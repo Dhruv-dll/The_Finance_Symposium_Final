@@ -170,7 +170,7 @@ class FinnhubMarketDataService {
   // Fallback mode tracking
   private fallbackMode = false;
   private apiFailureCount = 0;
-  private subscribers: ((data: { stocks: FinnhubStockData[] }) => void)[] = [];
+  private subscribers: ((data: { stocks: FinnhubStockData[]; sentiment: MarketSentiment }) => void)[] = [];
   private updateInterval: NodeJS.Timeout | null = null;
 
   // Utility delay function
