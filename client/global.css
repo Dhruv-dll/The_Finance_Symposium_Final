@@ -293,4 +293,261 @@
     0% { background-position: -200% 0; }
     100% { background-position: 200% 0; }
   }
+
+  /* Enhanced Financial Data Styling */
+  .stock-ticker {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stock-ticker::before,
+  .stock-ticker::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 50px;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .stock-ticker::before {
+    left: 0;
+    background: linear-gradient(90deg, rgba(0, 0, 18, 1) 0%, rgba(0, 0, 18, 0) 100%);
+  }
+
+  .stock-ticker::after {
+    right: 0;
+    background: linear-gradient(270deg, rgba(0, 0, 18, 1) 0%, rgba(0, 0, 18, 0) 100%);
+  }
+
+  .market-status.live {
+    background: linear-gradient(45deg, #00FF00, #32CD32);
+    color: #000012;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-shadow: none;
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .market-status.closed {
+    background: linear-gradient(45deg, #FF4444, #FF6666);
+    color: #000012;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-shadow: none;
+  }
+
+  .stock-item {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    margin: 0 4px;
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .stock-item:hover {
+    background: rgba(255, 215, 0, 0.2);
+    border-color: rgba(255, 215, 0, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+  }
+
+  .stock-item.positive {
+    border-color: rgba(0, 255, 0, 0.3);
+    background: rgba(0, 255, 0, 0.1);
+  }
+
+  .stock-item.negative {
+    border-color: rgba(255, 68, 68, 0.3);
+    background: rgba(255, 68, 68, 0.1);
+  }
+
+  .crypto-item, .forex-item {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    margin: 0 4px;
+    background: rgba(0, 255, 255, 0.1);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .crypto-item:hover, .forex-item:hover {
+    background: rgba(0, 255, 255, 0.2);
+    border-color: rgba(0, 255, 255, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 255, 255, 0.3);
+  }
+
+  .positive {
+    color: #00FF00 !important;
+    text-shadow: 0 0 4px rgba(0, 255, 0, 0.5);
+  }
+
+  .negative {
+    color: #FF4444 !important;
+    text-shadow: 0 0 4px rgba(255, 68, 68, 0.5);
+  }
+
+  .neutral {
+    color: #00FFFF !important;
+    text-shadow: 0 0 4px rgba(0, 255, 255, 0.5);
+  }
+
+  /* Market Data Card Styling */
+  .market-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .market-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 215, 0, 0.4);
+    box-shadow: 0 8px 32px rgba(255, 215, 0, 0.2);
+    transform: translateY(-4px);
+  }
+
+  .last-updated {
+    font-size: 0.75rem;
+    color: rgba(255, 215, 0, 0.7);
+    font-style: italic;
+  }
+
+  .ticker-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.75rem;
+    color: rgba(0, 255, 255, 0.8);
+  }
+
+  .connection-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  .connection-status.connected {
+    color: #00FF00;
+    border: 1px solid rgba(0, 255, 0, 0.3);
+  }
+
+  .connection-status.disconnected {
+    color: #FF4444;
+    border: 1px solid rgba(255, 68, 68, 0.3);
+  }
+
+  .connection-status.reconnecting {
+    color: #FFD700;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    animation: pulse 1s ease-in-out infinite;
+  }
+
+  /* Volume indicator styling */
+  .volume-indicator {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.6);
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1px 4px;
+    border-radius: 3px;
+  }
+
+  /* Market state indicators */
+  .market-state-pre {
+    background: rgba(255, 165, 0, 0.2);
+    color: #FFA500;
+    border: 1px solid rgba(255, 165, 0, 0.3);
+  }
+
+  .market-state-post {
+    background: rgba(138, 43, 226, 0.2);
+    color: #8A2BE2;
+    border: 1px solid rgba(138, 43, 226, 0.3);
+  }
+
+  /* High volatility indicator */
+  .high-volatility {
+    animation: warning-pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes warning-pulse {
+    0%, 100% {
+      opacity: 0.7;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .stock-ticker {
+      font-size: 0.875rem;
+    }
+
+    .stock-item, .crypto-item, .forex-item {
+      padding: 2px 8px;
+      margin: 0 2px;
+    }
+
+    .market-card {
+      padding: 12px;
+    }
+  }
+
+  /* Accessibility improvements */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-scroll {
+      animation: none;
+      transform: none;
+    }
+
+    .animate-pulse, .animate-bounce {
+      animation: none;
+    }
+
+    .shimmer {
+      animation: none;
+      background: rgba(255, 215, 0, 0.1);
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .stock-item, .crypto-item, .forex-item {
+      border-width: 2px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .positive {
+      color: #00FF00 !important;
+      font-weight: bold;
+    }
+
+    .negative {
+      color: #FF0000 !important;
+      font-weight: bold;
+    }
+
+    .neutral {
+      color: #FFFFFF !important;
+      font-weight: bold;
+    }
+  }
 }
