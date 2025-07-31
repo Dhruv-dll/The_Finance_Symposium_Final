@@ -19,115 +19,58 @@ class FinnhubMarketDataService {
     { symbol: "^BSESN", name: "SENSEX", finnhubSymbol: "^BSESN", isIndex: true },
   ];
 
-  // ✅ Enhanced fetch using Yahoo Finance for Indian markets
+  // ✅ Fetch real-time data from our server-side API
+  async fetchAllMarketData(): Promise<{ stocks: FinnhubStockData[]; sentiment: MarketSentiment } | null> {
+    try {
+      console.log("📊 Fetching real-time market data from server...");
+
+      const response = await fetch('/api/market-data', {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
+        signal: AbortSignal.timeout(15000),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+
+      if (!data.stocks || !Array.isArray(data.stocks)) {
+        throw new Error("Invalid response format from server");
+      }
+
+      console.log(`✅ Successfully fetched ${data.stocks.length} real-time stocks`);
+
+      return {
+        stocks: data.stocks,
+        sentiment: data.sentiment,
+      };
+    } catch (error) {
+      console.warn(`🔄 Server API failed:`, error.message);
+
+      // Track API failures
+      this.apiFailureCount++;
+
+      if (this.apiFailureCount >= 3) {
+        this.fallbackMode = true;
+        console.log("⚠️ Switching to fallback mode due to API issues");
+      }
+
+      return null;
+    }
+  }
+
+  // Legacy method for compatibility (now uses server API)
   async fetchStockFromFinnhub(
     symbol: string,
     finnhubSymbol: string,
     isIndex: boolean = false
   ): Promise<FinnhubStockData | null> {
-    if (this.fallbackMode) {
-      return this.getFallbackStockData(symbol);
-    }
-
-    try {
-      // Convert to Yahoo Finance symbol format
-      let yahooSymbol = finnhubSymbol;
-      if (finnhubSymbol.endsWith('.NS')) {
-        yahooSymbol = finnhubSymbol; // Keep .NS for Yahoo
-      } else if (symbol === "^NSEI") {
-        yahooSymbol = "^NSEI";
-      } else if (symbol === "^BSESN") {
-        yahooSymbol = "^BSESN";
-      }
-
-      const response = await fetch(
-        `https://api.allorigins.win/get?url=${encodeURIComponent(`https://query1.finance.yahoo.com/v8/finance/chart/${yahooSymbol}?interval=1d&range=1d`)}`,
-        {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-          },
-          signal: AbortSignal.timeout(10000),
-        },
-      );
-
-      if (!response.ok) {
-        if (response.status === 403) {
-          console.warn(`❌ Yahoo Finance API access denied for ${symbol} (403 Forbidden)`);
-          return this.getFallbackStockData(symbol);
-        }
-        if (response.status === 429) {
-          console.warn(`⏱️ Rate limit exceeded for ${symbol}`);
-          await this.delay(1000);
-          return this.getFallbackStockData(symbol);
-        }
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-
-      const proxyData = await response.json();
-
-      // ✅ Handle CORS proxy response format
-      if (!proxyData.contents) {
-        console.warn(`CORS proxy failed for ${symbol}:`, proxyData);
-        return this.getFallbackStockData(symbol);
-      }
-
-      const data = JSON.parse(proxyData.contents);
-
-      // ✅ Better validation for Yahoo Finance response
-      if (!data || typeof data !== 'object') {
-        console.warn(`Invalid response format for ${symbol}:`, data);
-        return this.getFallbackStockData(symbol);
-      }
-
-      const result = data.chart?.result?.[0];
-      if (!result) {
-        console.warn(`No data available for ${symbol} on Yahoo Finance`);
-        return this.getFallbackStockData(symbol);
-      }
-
-      const meta = result.meta;
-      const currentPrice = meta.regularMarketPrice || meta.previousClose || 0;
-      const previousClose = meta.previousClose || currentPrice;
-
-      // Validate price data
-      if (typeof currentPrice !== "number" || currentPrice <= 0 || isNaN(currentPrice)) {
-        console.warn(`Invalid price data for ${symbol}:`, currentPrice);
-        return this.getFallbackStockData(symbol);
-      }
-
-      const change = currentPrice - previousClose;
-      const changePercent = previousClose > 0 ? (change / previousClose) * 100 : 0;
-      const dayHigh = meta.regularMarketDayHigh || currentPrice;
-      const dayLow = meta.regularMarketDayLow || currentPrice;
-      const timestamp = new Date();
-
-      const stockInfo = this.stocks.find((s) => s.symbol === symbol);
-
-      return {
-        symbol: symbol,
-        name: stockInfo?.name || symbol,
-        price: Math.round(currentPrice * 100) / 100,
-        change: Math.round(change * 100) / 100,
-        changePercent: Math.round(changePercent * 100) / 100,
-        timestamp: timestamp,
-        marketState: this.checkMarketOpen() ? "REGULAR" : "CLOSED",
-        dayHigh: Math.round(dayHigh * 100) / 100,
-        dayLow: Math.round(dayLow * 100) / 100,
-      };
-    } catch (error) {
-      console.warn(`🔄 Finnhub API failed for ${symbol}:`, error.message);
-
-      // Track API failures
-      this.apiFailureCount++;
-
-      if (this.apiFailureCount >= 3) { // Reduced threshold
-        this.fallbackMode = true;
-        console.log("⚠️ Switching to fallback mode due to API issues");
-      }
-
-      return this.getFallbackStockData(symbol);
-    }
+    // This method is now handled by fetchAllMarketData
+    return this.getFallbackStockData(symbol);
   }
 
   // ✅ Enhanced fallback data with more realistic Indian market prices (Updated for 2025)
