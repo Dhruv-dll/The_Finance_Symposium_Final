@@ -333,7 +333,7 @@ export default function MarketDashboardDialog({ className }: MarketDashboardDial
               <div className="flex items-center justify-center space-x-2">
                 <Activity className="w-4 h-4" />
                 <span>
-                  Updates every 60 seconds • Powered by Finnhub API
+                  Updates every 60 seconds • Live Market Data
                 </span>
               </div>
               <div className="mt-1">
