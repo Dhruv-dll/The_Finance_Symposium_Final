@@ -111,6 +111,10 @@ export default {
           "0%, 100%": { transform: "scale(1)", opacity: "1" },
           "50%": { transform: "scale(1.1)", opacity: "0.9" },
         },
+        "scroll": {
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(-100%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -120,6 +124,7 @@ export default {
         float: "float 6s ease-in-out infinite",
         "light-sweep": "light-sweep 2s ease-in-out",
         "market-pulse": "market-pulse 2s ease-in-out infinite",
+        scroll: "scroll 30s linear infinite",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
