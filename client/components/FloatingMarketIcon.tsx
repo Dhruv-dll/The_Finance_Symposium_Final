@@ -314,6 +314,10 @@ export default function FloatingMarketIcon({
               </DialogTitle>
             </DialogHeader>
 
+            <div id="market-dashboard-description" className="sr-only">
+              Live market dashboard showing real-time stock prices, market sentiment, and financial data powered by Yahoo Finance API
+            </div>
+
             <div className="mt-4 space-y-4">
               {/* Market Summary */}
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
