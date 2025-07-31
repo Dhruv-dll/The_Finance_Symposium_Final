@@ -15,33 +15,33 @@ import { accurateMarketDataService, AccurateStockData, MarketSentiment, CryptoDa
 
 export default function MarketSidebar() {
   const [isVisible, setIsVisible] = useState(true);
-  const [stockData, setStockData] = useState<StockData[]>([]);
-  const [marketSentiment, setMarketSentiment] = useState<'bullish' | 'bearish' | 'neutral'>('neutral');
-  const [cryptoData, setCryptoData] = useState({
-    BTC: { price: 43250.50, change: 2.45 },
-    ETH: { price: 2680.75, change: -1.23 }
+  const [stockData, setStockData] = useState<AccurateStockData[]>([]);
+  const [marketSentiment, setMarketSentiment] = useState<MarketSentiment>({
+    sentiment: 'neutral',
+    advanceDeclineRatio: 0.5,
+    positiveStocks: 0,
+    totalStocks: 0
   });
-  const [forexData, setForexData] = useState({
-    USDINR: { price: 83.15, change: 0.12 }
-  });
-  const [topPerformers, setTopPerformers] = useState<StockData[]>([]);
+  const [cryptoData, setCryptoData] = useState<CryptoData[]>([]);
+  const [forexData, setForexData] = useState<ForexData[]>([]);
+  const [topPerformers, setTopPerformers] = useState<AccurateStockData[]>([]);
   const [isMinimized, setIsMinimized] = useState(false);
+  const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
+  const [connectionStatus, setConnectionStatus] = useState<'connected' | 'disconnected' | 'reconnecting'>('connected');
 
   useEffect(() => {
-    const unsubscribe = marketDataService.subscribeToUpdates((data) => {
-      setStockData(data);
-      
-      // Calculate market sentiment
-      const positiveChanges = data.filter(stock => stock.change > 0).length;
-      const totalStocks = data.length;
-      const bullishRatio = positiveChanges / totalStocks;
-      
-      if (bullishRatio > 0.6) setMarketSentiment('bullish');
-      else if (bullishRatio < 0.4) setMarketSentiment('bearish');
-      else setMarketSentiment('neutral');
+    setConnectionStatus('reconnecting');
+    const unsubscribe = accurateMarketDataService.subscribeToUpdates((data) => {
+      setStockData(data.stocks);
+      setMarketSentiment(data.sentiment);
+      setCryptoData(data.crypto);
+      setForexData(data.forex);
+      setLastUpdate(new Date());
+      setConnectionStatus('connected');
 
-      // Get top performers
-      const sorted = [...data].sort((a, b) => b.changePercent - a.changePercent);
+      // Get top performers from stocks only (not indices)
+      const stocksOnly = data.stocks.filter(stock => !stock.symbol.includes('^'));
+      const sorted = [...stocksOnly].sort((a, b) => b.changePercent - a.changePercent);
       setTopPerformers(sorted.slice(0, 3));
     });
 
