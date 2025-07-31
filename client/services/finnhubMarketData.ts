@@ -84,6 +84,11 @@ class FinnhubMarketDataService {
 
   // Fetch individual stock data from Finnhub
   async fetchStockFromFinnhub(symbol: string, finnhubSymbol: string): Promise<FinnhubStockData | null> {
+    // If we're in fallback mode due to repeated API failures, skip API calls
+    if (this.fallbackMode) {
+      return this.getFallbackStockData(symbol);
+    }
+
     try {
       const response = await fetch(
         `${this.BASE_URL}/quote?symbol=${finnhubSymbol}&token=${this.API_KEY}`,
