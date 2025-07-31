@@ -149,7 +149,8 @@ export default function EnhancedNavigation({ scrolled }: EnhancedNavigationProps
                     backgroundPosition: "center",
                     backgroundSize: "cover",
                     width: "75px",
-                    height: "75px"
+                    height: "75px",
+                    marginTop: "-5px"
                   }}
                 />
                 <motion.div 
@@ -172,9 +173,18 @@ export default function EnhancedNavigation({ scrolled }: EnhancedNavigationProps
                 whileHover={{ scale: 1.1 }}
                 transition={{ duration: 0.3 }}
               >
-                <div className="w-14 h-14 bg-gradient-to-br from-finance-navy-light to-finance-electric rounded-xl flex items-center justify-center border border-finance-electric/30">
-                  <span className="text-finance-gold font-bold text-sm">SXC</span>
-                </div>
+                <div
+                  className="flex items-center justify-center border border-finance-electric/30 rounded-xl"
+                  style={{
+                    backgroundImage: "url(https://cdn.builder.io/api/v1/image/assets%2F929e4df9940a4d789ccda51924367667%2F73bba102e8354fd08a042b5f690f50cd)",
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center",
+                    backgroundSize: "cover",
+                    width: "75px",
+                    height: "75px",
+                    margin: "1px 0 0 -5px"
+                  }}
+                />
                 <div className="absolute inset-0 bg-gradient-to-br from-finance-navy-light to-finance-electric rounded-xl opacity-0 group-hover:opacity-40 blur-lg -z-10 transition-opacity duration-300"></div>
               </motion.div>
             </div>
