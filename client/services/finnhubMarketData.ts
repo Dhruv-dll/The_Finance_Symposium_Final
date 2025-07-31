@@ -128,7 +128,7 @@ class FinnhubMarketDataService {
     if (!base) return null;
 
     // Create more realistic market movement simulation
-    const isMarketOpen = this.isMarketOpen();
+    const isMarketOpen = this.checkMarketOpen();
     const volatilityFactor = isMarketOpen ? 1.0 : 0.1; // Reduce movement when market closed
 
     const changePercent = (Math.random() - 0.5) * 2 * volatilityFactor; // More realistic range
