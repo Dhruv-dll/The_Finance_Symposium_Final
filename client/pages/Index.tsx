@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
-import Navigation from "../components/Navigation";
-import HeroSection from "../components/HeroSection";
+import EnhancedNavigation from "../components/EnhancedNavigation";
+import EnhancedHeroSection from "../components/EnhancedHeroSection";
 import TerminalLoader from "../components/TerminalLoader";
+import MarketSidebar from "../components/MarketSidebar";
+import EnhancedTeamSection from "../components/EnhancedTeamSection";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { 
   Users, 
@@ -219,10 +221,13 @@ export default function Index() {
       {/* Main Content */}
       {!showLoader && (
         <>
-          <Navigation scrolled={scrolled} />
+          <EnhancedNavigation scrolled={scrolled} />
+
+          {/* Market Sidebar */}
+          <MarketSidebar />
 
           {/* Hero Section */}
-          <HeroSection />
+          <EnhancedHeroSection />
 
       {/* About TFS Section */}
       <motion.section 
