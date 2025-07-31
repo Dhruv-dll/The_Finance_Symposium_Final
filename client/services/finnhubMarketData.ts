@@ -26,16 +26,16 @@ class FinnhubMarketDataService {
   private readonly BASE_URL = 'https://finnhub.io/api/v1';
   
   private stocks = [
-    { symbol: '^NSEI', name: 'NIFTY 50', finnhubSymbol: 'NIFTY50.NSE' },
-    { symbol: '^BSESN', name: 'SENSEX', finnhubSymbol: 'BSE.BSE' },
-    { symbol: 'RELIANCE.NS', name: 'RELIANCE', finnhubSymbol: 'RELIANCE.NSE' },
-    { symbol: 'TCS.NS', name: 'TCS', finnhubSymbol: 'TCS.NSE' },
-    { symbol: 'HDFCBANK.NS', name: 'HDFC BANK', finnhubSymbol: 'HDFCBANK.NSE' },
-    { symbol: 'INFY.NS', name: 'INFOSYS', finnhubSymbol: 'INFY.NSE' },
-    { symbol: 'ICICIBANK.NS', name: 'ICICI BANK', finnhubSymbol: 'ICICIBANK.NSE' },
-    { symbol: 'HINDUNILVR.NS', name: 'HUL', finnhubSymbol: 'HINDUNILVR.NSE' },
-    { symbol: 'ITC.NS', name: 'ITC', finnhubSymbol: 'ITC.NSE' },
-    { symbol: 'KOTAKBANK.NS', name: 'KOTAK', finnhubSymbol: 'KOTAKBANK.NSE' }
+    { symbol: '^NSEI', name: 'NIFTY 50', finnhubSymbol: 'NIFTY_50' },
+    { symbol: '^BSESN', name: 'SENSEX', finnhubSymbol: 'BSE_SENSEX' },
+    { symbol: 'RELIANCE.NS', name: 'RELIANCE', finnhubSymbol: 'RELIANCE.NS' },
+    { symbol: 'TCS.NS', name: 'TCS', finnhubSymbol: 'TCS.NS' },
+    { symbol: 'HDFCBANK.NS', name: 'HDFC BANK', finnhubSymbol: 'HDFCBANK.NS' },
+    { symbol: 'INFY.NS', name: 'INFOSYS', finnhubSymbol: 'INFY.NS' },
+    { symbol: 'ICICIBANK.NS', name: 'ICICI BANK', finnhubSymbol: 'ICICIBANK.NS' },
+    { symbol: 'HINDUNILVR.NS', name: 'HUL', finnhubSymbol: 'HINDUNILVR.NS' },
+    { symbol: 'ITC.NS', name: 'ITC', finnhubSymbol: 'ITC.NS' },
+    { symbol: 'KOTAKBANK.NS', name: 'KOTAK', finnhubSymbol: 'KOTAKBANK.NS' }
   ];
 
   private updateInterval: NodeJS.Timeout | null = null;
