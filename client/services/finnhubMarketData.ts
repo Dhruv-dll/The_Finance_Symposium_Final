@@ -168,7 +168,12 @@ class FinnhubMarketDataService {
   // Fetch all stock data
   async fetchAllStocksData(): Promise<FinnhubStockData[]> {
     const results: FinnhubStockData[] = [];
-    
+
+    if (this.fallbackMode) {
+      console.log('📊 Using fallback mode for market data...');
+      return this.stocks.map(stock => this.getFallbackStockData(stock.symbol)).filter(Boolean) as FinnhubStockData[];
+    }
+
     console.log('📡 Fetching live data from Finnhub API...');
 
     // Fetch stocks with proper rate limiting
