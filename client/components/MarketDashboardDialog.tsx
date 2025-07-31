@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  TrendingUp, 
-  TrendingDown, 
-  Activity, 
-  DollarSign, 
-  Refresh,
+import {
+  TrendingUp,
+  TrendingDown,
+  Activity,
+  DollarSign,
+  RefreshCw,
   X,
   Filter,
   ArrowUpRight,
