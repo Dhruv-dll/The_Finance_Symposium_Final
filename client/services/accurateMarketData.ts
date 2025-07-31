@@ -344,13 +344,23 @@ class AccurateMarketDataService {
         const coinData = data[crypto.id];
         if (!coinData) return null;
 
+        // Ensure timestamp is always a proper Date object
+        let timestamp: Date;
+        try {
+          timestamp = coinData.last_updated_at
+            ? new Date(coinData.last_updated_at * 1000)
+            : new Date();
+        } catch (error) {
+          timestamp = new Date();
+        }
+
         return {
           symbol: crypto.symbol,
           name: crypto.name,
           price: coinData.inr || 0,
           change: 0, // CoinGecko doesn't provide absolute change
           changePercent: coinData.inr_24h_change || 0,
-          timestamp: new Date(coinData.last_updated_at ? coinData.last_updated_at * 1000 : Date.now())
+          timestamp: timestamp
         };
       }).filter(Boolean) as CryptoData[];
 
