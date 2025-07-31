@@ -148,8 +148,8 @@ export default function EnhancedNavigation({ scrolled }: EnhancedNavigationProps
                     backgroundRepeat: "no-repeat",
                     backgroundPosition: "center",
                     backgroundSize: "cover",
-                    width: "60px",
-                    height: "60px"
+                    width: "75px",
+                    height: "75px"
                   }}
                 />
                 <motion.div 
