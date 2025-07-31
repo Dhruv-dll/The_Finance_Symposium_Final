@@ -124,10 +124,10 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
               {/* System Info */}
               <div className="text-finance-electric mb-4">
                 <div> ████████....███████.....███████</div>
-                <div>  ..██.......██.........██</div>
-                <div>  ..██.......██████......███████</div>
-                <div>  ..██.......██................██</div>
-                <div>  ..██.......██..........███████</div>
+                <div> ...██.......██.........██</div>
+                <div> ...██.......██████......███████</div>
+                <div> ...██.......██................██</div>
+                <div> ...██.......██..........███████</div>
                 <div className="mt-2 text-finance-gold">
                   THE FINANCE SYMPOSIUM
                 </div>
