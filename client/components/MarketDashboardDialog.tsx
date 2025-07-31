@@ -142,11 +142,11 @@ export default function MarketDashboardDialog({ className }: MarketDashboardDial
               <span className="text-xl font-bold bg-gradient-to-r from-finance-gold to-finance-electric bg-clip-text text-transparent">
                 Live Market Dashboard
               </span>
-              <Badge 
-                variant="outline" 
-                className="bg-green-500/20 border-green-500/50 text-green-400 animate-pulse"
+              <Badge
+                variant="outline"
+                className="bg-blue-500/20 border-blue-500/50 text-blue-400 animate-pulse"
               >
-                LIVE • Finnhub API
+                LIVE • Market Data
               </Badge>
             </div>
             
