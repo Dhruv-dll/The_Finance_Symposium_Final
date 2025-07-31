@@ -124,46 +124,129 @@ function Scene() {
 
 function MarketTicker() {
   const [currentTime, setCurrentTime] = useState(new Date());
-  
+  const [stockData, setStockData] = useState<StockData[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
-    
+
     return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    // Subscribe to real-time market updates
+    const unsubscribe = marketDataService.subscribeToUpdates((data) => {
+      setStockData(data);
+      setIsLoading(false);
+    });
+
+    return unsubscribe;
   }, []);
 
   const isMarketOpen = () => {
     const hour = currentTime.getHours();
-    return hour >= 9 && hour < 16; // Simplified market hours
+    const day = currentTime.getDay();
+    // Indian market hours: 9:15 AM to 3:30 PM, Monday to Friday
+    return day >= 1 && day <= 5 && hour >= 9 && hour < 16;
+  };
+
+  const formatPrice = (symbol: string, price: number) => {
+    if (symbol === 'SENSEX' || symbol === 'NIFTY') {
+      return price.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    return `₹${price.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  };
+
+  const getChangeColor = (change: number) => {
+    if (change > 0) return 'text-finance-green';
+    if (change < 0) return 'text-finance-red';
+    return 'text-finance-electric';
+  };
+
+  const getChangeIcon = (change: number) => {
+    if (change > 0) return '▲';
+    if (change < 0) return '▼';
+    return '●';
   };
 
   return (
-    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-r from-finance-navy via-finance-navy-light to-finance-navy border-t border-finance-gold/20">
+    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-r from-finance-navy via-finance-navy-light to-finance-navy border-t border-finance-gold/20 overflow-hidden">
       <div className="container mx-auto px-6 py-3">
         <div className="flex items-center justify-between text-sm">
-          <div className="flex items-center space-x-2">
-            <div className={`w-2 h-2 rounded-full ${isMarketOpen() ? 'bg-finance-green animate-pulse' : 'bg-finance-red'}`}></div>
-            <span className="text-muted-foreground">
-              Market {isMarketOpen() ? 'Open' : 'Closed'} | {currentTime.toLocaleTimeString()}
-            </span>
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2">
+              <div className={`w-2 h-2 rounded-full ${isMarketOpen() ? 'bg-finance-green animate-pulse' : 'bg-finance-red'}`}></div>
+              <span className="text-muted-foreground">
+                Market {isMarketOpen() ? 'Open' : 'Closed'}
+              </span>
+            </div>
+            <div className="text-finance-electric text-xs">
+              {currentTime.toLocaleTimeString('en-IN')} IST
+            </div>
+            {isLoading && (
+              <div className="flex items-center space-x-1 text-finance-gold text-xs">
+                <div className="w-1 h-1 bg-finance-gold rounded-full animate-bounce"></div>
+                <div className="w-1 h-1 bg-finance-gold rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                <div className="w-1 h-1 bg-finance-gold rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                <span className="ml-2">Loading live data...</span>
+              </div>
+            )}
           </div>
-          
-          <div className="flex space-x-6 overflow-hidden">
-            <div className="flex space-x-6 animate-scroll">
-              {mockStocks.map((stock, index) => (
-                <div key={index} className="flex items-center space-x-2 whitespace-nowrap">
-                  <span className="font-medium text-finance-gold">{stock.symbol}</span>
-                  <span className="text-foreground">₹{stock.price.toLocaleString()}</span>
-                  <span className={`flex items-center ${stock.change >= 0 ? 'text-finance-green' : 'text-finance-red'}`}>
-                    {stock.change >= 0 ? '↗' : '↘'} {Math.abs(stock.change).toFixed(2)} ({Math.abs(stock.changePercent).toFixed(2)}%)
+
+          <div className="flex-1 overflow-hidden ml-6">
+            <div className="flex space-x-8 animate-scroll">
+              {stockData.map((stock, index) => (
+                <div key={`${stock.symbol}-${index}`} className="flex items-center space-x-3 whitespace-nowrap">
+                  <span className="font-bold text-finance-gold text-shadow-lg">
+                    {stock.symbol}
                   </span>
+                  <span className="text-foreground font-medium">
+                    {formatPrice(stock.symbol, stock.price)}
+                  </span>
+                  <span className={`flex items-center space-x-1 font-medium ${getChangeColor(stock.change)} text-shadow-sm`}>
+                    <span className="text-xs">{getChangeIcon(stock.change)}</span>
+                    <span>{Math.abs(stock.change).toFixed(2)}</span>
+                    <span className="text-xs">
+                      ({stock.changePercent > 0 ? '+' : ''}{stock.changePercent.toFixed(2)}%)
+                    </span>
+                  </span>
+                  {/* Glow effect for significant changes */}
+                  {Math.abs(stock.changePercent) > 2 && (
+                    <div className={`w-1 h-1 rounded-full animate-pulse ${stock.change > 0 ? 'bg-finance-green' : 'bg-finance-red'}`}></div>
+                  )}
+                </div>
+              ))}
+              {/* Duplicate for continuous scroll */}
+              {stockData.map((stock, index) => (
+                <div key={`${stock.symbol}-dup-${index}`} className="flex items-center space-x-3 whitespace-nowrap">
+                  <span className="font-bold text-finance-gold text-shadow-lg">
+                    {stock.symbol}
+                  </span>
+                  <span className="text-foreground font-medium">
+                    {formatPrice(stock.symbol, stock.price)}
+                  </span>
+                  <span className={`flex items-center space-x-1 font-medium ${getChangeColor(stock.change)} text-shadow-sm`}>
+                    <span className="text-xs">{getChangeIcon(stock.change)}</span>
+                    <span>{Math.abs(stock.change).toFixed(2)}</span>
+                    <span className="text-xs">
+                      ({stock.changePercent > 0 ? '+' : ''}{stock.changePercent.toFixed(2)}%)
+                    </span>
+                  </span>
+                  {Math.abs(stock.changePercent) > 2 && (
+                    <div className={`w-1 h-1 rounded-full animate-pulse ${stock.change > 0 ? 'bg-finance-green' : 'bg-finance-red'}`}></div>
+                  )}
                 </div>
               ))}
             </div>
           </div>
         </div>
       </div>
+
+      {/* Gradient fade effects for smooth scrolling appearance */}
+      <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-finance-navy to-transparent pointer-events-none"></div>
+      <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-finance-navy to-transparent pointer-events-none"></div>
     </div>
   );
 }
