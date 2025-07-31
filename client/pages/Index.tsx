@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import EnhancedNavigation from "../components/EnhancedNavigation";
+import ModernNavigation from "../components/ModernNavigation";
 import EnhancedHeroSection from "../components/EnhancedHeroSection";
 import TerminalLoader from "../components/TerminalLoader";
-import MarketSidebar from "../components/MarketSidebar";
 import EnhancedTeamSection from "../components/EnhancedTeamSection";
 import MarketDataErrorBoundary from "../components/MarketDataErrorBoundary";
+import MarketDashboardDialog from "../components/MarketDashboardDialog";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { 
   Users, 
@@ -222,12 +222,7 @@ export default function Index() {
       {/* Main Content */}
       {!showLoader && (
         <>
-          <EnhancedNavigation scrolled={scrolled} />
-
-          {/* Market Sidebar */}
-          <MarketDataErrorBoundary>
-            <MarketSidebar />
-          </MarketDataErrorBoundary>
+          <ModernNavigation scrolled={scrolled} />
 
           {/* Hero Section */}
           <MarketDataErrorBoundary>
