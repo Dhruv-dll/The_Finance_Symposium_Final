@@ -418,17 +418,41 @@ class AccurateMarketDataService {
     };
   }
 
-  // Main update function
+  // Main update function with enhanced error handling
   async updateAllData(): Promise<void> {
     try {
       console.log('🔄 Fetching accurate market data...');
-      
-      // Fetch all data in parallel for better performance
-      const [stockResults, cryptoResults, forexResults] = await Promise.all([
-        Promise.all(this.stocks.map(stock => this.fetchStockData(stock.symbol))),
-        this.fetchCryptoData(),
-        this.fetchForexData()
-      ]);
+
+      // Fetch data with individual error handling
+      const stockPromises = this.stocks.map(async (stock) => {
+        try {
+          return await this.fetchStockData(stock.symbol);
+        } catch (error) {
+          console.warn(`Failed to fetch ${stock.symbol}, using fallback:`, error);
+          return this.getFallbackStockData(stock.symbol);
+        }
+      });
+
+      let cryptoResults: CryptoData[] = [];
+      try {
+        cryptoResults = await this.fetchCryptoData();
+        console.log('✅ Crypto data fetched successfully');
+      } catch (error) {
+        console.warn('Crypto API failed, using fallback data:', error);
+        cryptoResults = this.getFallbackCryptoData();
+      }
+
+      let forexResults: ForexData[] = [];
+      try {
+        forexResults = await this.fetchForexData();
+        console.log('✅ Forex data fetched successfully');
+      } catch (error) {
+        console.warn('Forex API failed, using fallback data:', error);
+        forexResults = this.getFallbackForexData();
+      }
+
+      // Wait for all stock data (with fallbacks)
+      const stockResults = await Promise.all(stockPromises);
 
       // Filter out null results and validate data
       const validStocks = stockResults.filter(Boolean) as AccurateStockData[];
@@ -460,27 +484,47 @@ class AccurateMarketDataService {
         }
       });
 
+      const successfulApiCalls = validStocks.filter(s => s.timestamp.getTime() > Date.now() - 60000).length;
+      const fallbackCount = validStocks.length - successfulApiCalls;
+
       console.log('✅ Market data updated successfully', {
         stocks: validStocks.length,
         crypto: cryptoResults.length,
         forex: forexResults.length,
-        sentiment: sentiment.sentiment
+        sentiment: sentiment.sentiment,
+        apiSuccess: successfulApiCalls,
+        fallbackUsed: fallbackCount,
+        marketOpen: this.isMarketOpen()
       });
 
     } catch (error) {
-      console.error('❌ Error updating market data:', error);
-      // Use cached data if available
-      if (this.cache.stocks.length > 0) {
-        console.log('📦 Using cached data due to API error');
-        const sentiment = this.calculateMarketSentiment(this.cache.stocks);
+      console.error('❌ Critical error updating market data:', error);
+
+      // Always try to provide some data, even if it's all fallback
+      try {
+        const fallbackStocks = this.stocks.map(stock => this.getFallbackStockData(stock.symbol)).filter(Boolean) as AccurateStockData[];
+        const fallbackCrypto = this.getFallbackCryptoData();
+        const fallbackForex = this.getFallbackForexData();
+        const sentiment = this.calculateMarketSentiment(fallbackStocks);
+
+        const fallbackData = {
+          stocks: fallbackStocks,
+          crypto: fallbackCrypto,
+          forex: fallbackForex,
+          sentiment
+        };
+
         this.subscribers.forEach(callback => {
-          callback({
-            stocks: this.cache.stocks,
-            crypto: this.cache.crypto,
-            forex: this.cache.forex,
-            sentiment
-          });
+          try {
+            callback(fallbackData);
+          } catch (callbackError) {
+            console.error('Error in fallback subscriber callback:', callbackError);
+          }
         });
+
+        console.log('📦 Using complete fallback data due to critical error');
+      } catch (fallbackError) {
+        console.error('💥 Even fallback data failed:', fallbackError);
       }
     }
   }
