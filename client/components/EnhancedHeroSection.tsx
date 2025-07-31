@@ -738,8 +738,8 @@ export default function EnhancedHeroSection() {
               />
             </motion.button>
 
-            {/* Market Dashboard Button */}
-            <MarketDashboardDialog className="" />
+            {/* Floating Market Dashboard Icon - now positioned as fixed element */}
+            <FloatingMarketIcon />
 
             <motion.button
               className="px-10 py-4 border-2 border-finance-gold text-finance-gold rounded-xl hover:bg-finance-gold hover:text-finance-navy transition-all duration-500 relative overflow-hidden group"
