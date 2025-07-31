@@ -829,4 +829,11 @@ class AccurateMarketDataService {
 
 // Export singleton instance
 export const accurateMarketDataService = new AccurateMarketDataService();
+
+// Add to global window for debugging (development only)
+if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+  (window as any).marketDataService = accurateMarketDataService;
+  console.log('🛠️ Market data service available as window.marketDataService for debugging');
+}
+
 export default AccurateMarketDataService;
