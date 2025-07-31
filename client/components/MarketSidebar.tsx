@@ -168,19 +168,24 @@ export default function MarketSidebar() {
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
-                      {marketSentiment === 'bullish' ? (
+                      {marketSentiment.sentiment === 'bullish' ? (
                         <TrendingUp className="w-5 h-5 text-finance-green" />
-                      ) : marketSentiment === 'bearish' ? (
+                      ) : marketSentiment.sentiment === 'bearish' ? (
                         <TrendingDown className="w-5 h-5 text-finance-red" />
                       ) : (
                         <Activity className="w-5 h-5 text-finance-electric" />
                       )}
-                      <span className="font-medium capitalize text-foreground">{marketSentiment}</span>
+                      <div>
+                        <span className="font-medium capitalize text-foreground">{marketSentiment.sentiment}</span>
+                        <div className="text-xs text-muted-foreground">
+                          {marketSentiment.positiveStocks}/{marketSentiment.totalStocks} up ({(marketSentiment.advanceDeclineRatio * 100).toFixed(1)}%)
+                        </div>
+                      </div>
                     </div>
-                    <motion.div 
+                    <motion.div
                       className={`w-3 h-3 rounded-full ${
-                        marketSentiment === 'bullish' ? 'bg-finance-green' :
-                        marketSentiment === 'bearish' ? 'bg-finance-red' :
+                        marketSentiment.sentiment === 'bullish' ? 'bg-finance-green' :
+                        marketSentiment.sentiment === 'bearish' ? 'bg-finance-red' :
                         'bg-finance-electric'
                       }`}
                       animate={{ scale: [1, 1.2, 1], opacity: [0.7, 1, 0.7] }}
