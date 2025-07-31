@@ -309,43 +309,32 @@ class AccurateMarketDataService {
     }
   }
 
-  // Fetch forex data with CORS handling
+  // Fetch forex data - using fallback only due to CORS issues
   async fetchForexData(): Promise<ForexData[]> {
     try {
+      // Skip API calls and use fallback data to prevent CORS errors
+      console.log('Generating fallback forex data (API disabled due to CORS)');
+      return this.getFallbackForexData();
+
+      /*
+      // Commented out API calls due to persistent CORS issues
+      // This can be re-enabled when a proper backend proxy is available
+
       await this.rateLimitCheck();
 
       const forexPromises = this.forex.map(async (pair) => {
-        const endpoints = [
+        const response = await fetch(
           `https://query1.finance.yahoo.com/v8/finance/chart/${pair.symbol}?interval=1d&range=1d`,
-          `https://api.allorigins.win/get?url=${encodeURIComponent(`https://query1.finance.yahoo.com/v8/finance/chart/${pair.symbol}?interval=1d&range=1d`)}`
-        ];
-
-        let response;
-        for (let i = 0; i < endpoints.length; i++) {
-          try {
-            response = await fetch(endpoints[i]);
-            if (response.ok) break;
-            throw new Error(`Forex API error: ${response.status}`);
-          } catch (error) {
-            if (i === endpoints.length - 1) throw error;
-            continue;
+          {
+            signal: AbortSignal.timeout(5000), // 5 second timeout
           }
-        }
+        );
 
-        if (!response || !response.ok) throw new Error(`Forex API error: ${response?.status}`);
+        if (!response.ok) throw new Error(`Forex API error: ${response.status}`);
 
-        let data = await response.json();
-
-        // Handle CORS proxy response
-        if (data.contents) {
-          try {
-            data = JSON.parse(data.contents);
-          } catch (parseError) {
-            throw new Error('Failed to parse forex proxy response');
-          }
-        }
+        const data = await response.json();
         const result = data.chart?.result?.[0];
-        
+
         if (!result?.meta) return null;
 
         const meta = result.meta;
@@ -354,30 +343,21 @@ class AccurateMarketDataService {
         const change = currentPrice - previousClose;
         const changePercent = previousClose !== 0 ? (change / previousClose) * 100 : 0;
 
-        // Ensure timestamp is always a proper Date object
-        let timestamp: Date;
-        try {
-          timestamp = meta.regularMarketTime
-            ? new Date(meta.regularMarketTime * 1000)
-            : new Date();
-        } catch (error) {
-          timestamp = new Date();
-        }
-
         return {
           pair: pair.pair,
           price: currentPrice,
           change: change,
           changePercent: changePercent,
-          timestamp: timestamp
+          timestamp: new Date(meta.regularMarketTime ? meta.regularMarketTime * 1000 : Date.now())
         };
       });
 
       const results = await Promise.all(forexPromises);
       return results.filter(Boolean) as ForexData[];
+      */
 
     } catch (error) {
-      console.error('Error fetching forex data:', error);
+      console.warn('Forex data fetch failed, using fallback:', error);
       return this.getFallbackForexData();
     }
   }
