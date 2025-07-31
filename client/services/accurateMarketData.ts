@@ -770,6 +770,61 @@ class AccurateMarketDataService {
       lastUpdate: this.cache.lastUpdate
     };
   }
+
+  // Test method to verify fallback data generation
+  async testFallbackData(): Promise<void> {
+    console.log('🧪 Testing fallback data generation...');
+
+    try {
+      const testStocks = this.stocks.slice(0, 3).map(stock => this.getFallbackStockData(stock.symbol)).filter(Boolean);
+      const testCrypto = this.getFallbackCryptoData();
+      const testForex = this.getFallbackForexData();
+
+      console.log('📊 Fallback Test Results:', {
+        stocks: testStocks,
+        crypto: testCrypto,
+        forex: testForex,
+        marketOpen: this.isMarketOpen(),
+        timestamp: new Date().toISOString()
+      });
+
+      console.log('✅ Fallback data test completed successfully');
+    } catch (error) {
+      console.error('❌ Fallback data test failed:', error);
+    }
+  }
+
+  // Force fallback mode for testing
+  async testWithFallbackOnly(): Promise<void> {
+    console.log('🔄 Testing with fallback data only...');
+
+    const fallbackStocks = this.stocks.map(stock => this.getFallbackStockData(stock.symbol)).filter(Boolean) as AccurateStockData[];
+    const fallbackCrypto = this.getFallbackCryptoData();
+    const fallbackForex = this.getFallbackForexData();
+    const sentiment = this.calculateMarketSentiment(fallbackStocks);
+
+    const data = {
+      stocks: fallbackStocks,
+      crypto: fallbackCrypto,
+      forex: fallbackForex,
+      sentiment
+    };
+
+    this.subscribers.forEach(callback => {
+      try {
+        callback(data);
+      } catch (error) {
+        console.error('Error in test callback:', error);
+      }
+    });
+
+    console.log('✅ Fallback-only test completed', {
+      stocks: fallbackStocks.length,
+      crypto: fallbackCrypto.length,
+      forex: fallbackForex.length,
+      sentiment: sentiment.sentiment
+    });
+  }
 }
 
 // Export singleton instance
