@@ -225,10 +225,14 @@ export default function Index() {
           <EnhancedNavigation scrolled={scrolled} />
 
           {/* Market Sidebar */}
-          <MarketSidebar />
+          <MarketDataErrorBoundary>
+            <MarketSidebar />
+          </MarketDataErrorBoundary>
 
           {/* Hero Section */}
-          <EnhancedHeroSection />
+          <MarketDataErrorBoundary>
+            <EnhancedHeroSection />
+          </MarketDataErrorBoundary>
 
       {/* About TFS Section */}
       <motion.section 
