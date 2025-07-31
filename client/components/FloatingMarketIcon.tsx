@@ -208,11 +208,12 @@ export default function FloatingMarketIcon({
             }}
             transition={{ duration: 0.3 }}
           >
-            <BarChart3 
-              className="w-6 h-6 md:w-7 md:h-7 text-finance-gold group-hover:text-white transition-colors duration-300" 
+            <BarChart3
+              className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-finance-gold group-hover:text-white transition-colors duration-300"
               style={{
                 filter: "drop-shadow(0 0 8px rgba(255, 215, 0, 0.6))",
               }}
+              aria-hidden="true"
             />
           </motion.div>
 
