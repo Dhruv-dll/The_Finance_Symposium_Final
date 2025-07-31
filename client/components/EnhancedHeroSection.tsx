@@ -201,11 +201,11 @@ function EnhancedMarketTicker() {
     >
       {/* Market sentiment glow effect */}
       <div className={`absolute inset-0 ${
-        marketSentiment === 'bullish' ? 'shadow-[0_0_50px_rgba(0,255,0,0.1)]' :
-        marketSentiment === 'bearish' ? 'shadow-[0_0_50px_rgba(255,68,68,0.1)]' :
+        marketSentiment.sentiment === 'bullish' ? 'shadow-[0_0_50px_rgba(0,255,0,0.1)]' :
+        marketSentiment.sentiment === 'bearish' ? 'shadow-[0_0_50px_rgba(255,68,68,0.1)]' :
         'shadow-[0_0_50px_rgba(0,255,255,0.1)]'
       }`}></div>
-      
+
       <div className="container mx-auto px-6 py-4 relative">
         <div className="flex items-center justify-between text-sm">
           <div className="flex items-center space-x-6">
@@ -215,20 +215,38 @@ function EnhancedMarketTicker() {
                 Market {isMarketOpen() ? 'Open' : 'Closed'}
               </span>
             </div>
-            
+
             <div className="flex items-center space-x-2">
               <div className={`w-2 h-2 rounded-full ${
-                marketSentiment === 'bullish' ? 'bg-finance-green' :
-                marketSentiment === 'bearish' ? 'bg-finance-red' :
+                marketSentiment.sentiment === 'bullish' ? 'bg-finance-green' :
+                marketSentiment.sentiment === 'bearish' ? 'bg-finance-red' :
                 'bg-finance-electric'
               } animate-pulse`}></div>
               <span className="text-finance-gold text-xs font-medium capitalize">
-                {marketSentiment} Sentiment
+                {marketSentiment.sentiment} Sentiment ({marketSentiment.positiveStocks}/{marketSentiment.totalStocks})
               </span>
             </div>
-            
+
+            <div className={`flex items-center space-x-2 ${getConnectionStatusColor()}`}>
+              <div className={`w-1 h-1 rounded-full ${getConnectionStatusColor().replace('text-', 'bg-')} animate-pulse`}></div>
+              <span className="text-xs capitalize">{connectionStatus}</span>
+            </div>
+
             <div className="text-finance-electric text-xs">
               {currentTime.toLocaleTimeString('en-IN')} IST
+            </div>
+
+            {isLoading && (
+              <div className="flex items-center space-x-2 text-finance-gold text-xs">
+                <div className="w-1 h-1 bg-finance-gold rounded-full animate-bounce"></div>
+                <div className="w-1 h-1 bg-finance-gold rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                <div className="w-1 h-1 bg-finance-gold rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                <span className="ml-2">Loading live data...</span>
+              </div>
+            )}
+
+            <div className="text-xs text-muted-foreground">
+              Updated: {lastUpdate.toLocaleTimeString('en-IN')}
             </div>
           </div>
           
