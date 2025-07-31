@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Navigation from "../components/Navigation";
 import HeroSection from "../components/HeroSection";
+import TerminalLoader from "../components/TerminalLoader";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { 
   Users, 
