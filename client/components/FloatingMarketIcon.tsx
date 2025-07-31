@@ -106,9 +106,18 @@ export default function FloatingMarketIcon({
       >
         <motion.button
           onClick={handleIconClick}
-          className="relative w-12 h-12 md:w-14 md:h-14 rounded-full bg-finance-navy/80 backdrop-blur-md border border-finance-gold/30 shadow-2xl flex items-center justify-center group"
+          className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-finance-navy/80 backdrop-blur-md border border-finance-gold/30 shadow-2xl flex items-center justify-center group focus:outline-none focus:ring-2 focus:ring-finance-gold focus:ring-offset-2 focus:ring-offset-finance-navy"
           style={{
             boxShadow: "0 0 20px rgba(255, 215, 0, 0.3), 0 8px 32px rgba(0, 0, 0, 0.3)",
+          }}
+          aria-label="Open live market dashboard"
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              handleIconClick();
+            }
           }}
           // Idle floating animation
           animate={{
