@@ -95,6 +95,10 @@ class FinnhubMarketDataService {
       );
 
       if (!response.ok) {
+        if (response.status === 403) {
+          console.warn(`Finnhub API access denied for ${symbol} (403). Using fallback data.`);
+          return this.getFallbackStockData(symbol);
+        }
         throw new Error(`Finnhub API error: ${response.status} ${response.statusText}`);
       }
 
