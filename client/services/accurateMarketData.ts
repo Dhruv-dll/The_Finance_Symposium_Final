@@ -772,11 +772,26 @@ class AccurateMarketDataService {
       const cached = localStorage.getItem('tfs-market-cache');
       if (cached) {
         const data = JSON.parse(cached);
-        this.cache = {
-          ...data,
-          lastUpdate: new Date(data.lastUpdate)
+
+        // Validate and fix timestamps in cached data
+        const validatedData = {
+          stocks: (data.stocks || []).map((stock: any) => ({
+            ...stock,
+            timestamp: new Date(stock.timestamp || Date.now())
+          })),
+          crypto: (data.crypto || []).map((crypto: any) => ({
+            ...crypto,
+            timestamp: new Date(crypto.timestamp || Date.now())
+          })),
+          forex: (data.forex || []).map((forex: any) => ({
+            ...forex,
+            timestamp: new Date(forex.timestamp || Date.now())
+          })),
+          lastUpdate: new Date(data.lastUpdate || Date.now())
         };
-        
+
+        this.cache = validatedData;
+
         // Check if cache is not too old (max 1 hour)
         const cacheAge = Date.now() - this.cache.lastUpdate.getTime();
         if (cacheAge > 60 * 60 * 1000) {
@@ -785,6 +800,7 @@ class AccurateMarketDataService {
       }
     } catch (error) {
       console.warn('Failed to load market data cache:', error);
+      this.cache = { stocks: [], crypto: [], forex: [], lastUpdate: new Date() };
     }
   }
 
