@@ -260,23 +260,46 @@ class AccurateMarketDataService {
     }
   }
 
-  // Fetch cryptocurrency data
+  // Fetch cryptocurrency data with CORS handling
   async fetchCryptoData(): Promise<CryptoData[]> {
     try {
       await this.rateLimitCheck();
-      
-      const response = await fetch(
-        'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=inr&include_24hr_change=true&include_last_updated_at=true',
-        {
-          method: 'GET',
-          headers: {
-            'Accept': 'application/json',
-          },
-        }
-      );
 
-      if (!response.ok) {
-        throw new Error(`Crypto API error: ${response.status}`);
+      // CoinGecko typically allows CORS, but add fallback
+      const endpoints = [
+        'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=inr&include_24hr_change=true&include_last_updated_at=true',
+        `https://api.allorigins.win/get?url=${encodeURIComponent('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=inr&include_24hr_change=true&include_last_updated_at=true')}`
+      ];
+
+      let response;
+      let lastError;
+
+      for (let i = 0; i < endpoints.length; i++) {
+        try {
+          response = await fetch(endpoints[i], {
+            method: 'GET',
+            headers: {
+              'Accept': 'application/json',
+            },
+          });
+
+          if (response.ok) {
+            break;
+          } else {
+            throw new Error(`Crypto API error: ${response.status}`);
+          }
+        } catch (error) {
+          lastError = error;
+          console.warn(`Crypto endpoint ${i + 1} failed:`, error);
+          if (i === endpoints.length - 1) {
+            throw lastError;
+          }
+          continue;
+        }
+      }
+
+      if (!response || !response.ok) {
+        throw new Error('All crypto endpoints failed');
       }
 
       const data = await response.json();
