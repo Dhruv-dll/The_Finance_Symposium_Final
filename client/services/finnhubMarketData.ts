@@ -188,11 +188,39 @@ class FinnhubMarketDataService {
     return results.filter((result): result is FinnhubStockData => result !== null);
   }
 
+  // Calculate market sentiment
+  calculateMarketSentiment(stocks: FinnhubStockData[]): MarketSentiment {
+    const stocksOnly = stocks.filter(
+      stock => !["^NSEI", "^BSESN"].includes(stock.symbol)
+    );
+
+    const positiveStocks = stocksOnly.filter(stock => stock.change > 0).length;
+    const totalStocks = stocksOnly.length;
+    const advanceDeclineRatio = totalStocks > 0 ? positiveStocks / totalStocks : 0.5;
+
+    let sentiment: "bullish" | "bearish" | "neutral";
+    if (advanceDeclineRatio >= 0.6) {
+      sentiment = "bullish";
+    } else if (advanceDeclineRatio <= 0.4) {
+      sentiment = "bearish";
+    } else {
+      sentiment = "neutral";
+    }
+
+    return {
+      sentiment,
+      advanceDeclineRatio,
+      positiveStocks,
+      totalStocks,
+    };
+  }
+
   // Public method to update all data and notify subscribers
   async updateAllData(): Promise<void> {
     try {
       const stocks = await this.getAllStocks();
-      this.subscribers.forEach(callback => callback({ stocks }));
+      const sentiment = this.calculateMarketSentiment(stocks);
+      this.subscribers.forEach(callback => callback({ stocks, sentiment }));
     } catch (error) {
       console.error("Failed to update market data:", error);
     }
