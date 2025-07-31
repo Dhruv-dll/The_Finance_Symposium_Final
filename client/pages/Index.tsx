@@ -211,10 +211,18 @@ export default function Index() {
 
   return (
     <div className="min-h-screen">
-      <Navigation scrolled={scrolled} />
-      
-      {/* Hero Section */}
-      <HeroSection />
+      {/* Terminal Loader */}
+      {showLoader && (
+        <TerminalLoader onComplete={() => setShowLoader(false)} />
+      )}
+
+      {/* Main Content */}
+      {!showLoader && (
+        <>
+          <Navigation scrolled={scrolled} />
+
+          {/* Hero Section */}
+          <HeroSection />
 
       {/* About TFS Section */}
       <motion.section 
@@ -584,6 +592,8 @@ export default function Index() {
           </div>
         </div>
       </footer>
+        </>
+      )}
     </div>
   );
 }
