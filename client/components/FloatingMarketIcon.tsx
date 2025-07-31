@@ -259,11 +259,12 @@ export default function FloatingMarketIcon({
 
       {/* Enhanced Dialog with slide-up animation */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent 
+        <DialogContent
           className="max-w-6xl max-h-[90vh] bg-finance-navy/95 backdrop-blur-xl border border-finance-gold/20 text-foreground"
           style={{
             background: "linear-gradient(135deg, rgba(0, 0, 18, 0.95) 0%, rgba(26, 26, 46, 0.95) 100%)",
           }}
+          aria-describedby="market-dashboard-description"
         >
           <motion.div
             initial={{ opacity: 0, y: 50 }}
