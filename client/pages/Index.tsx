@@ -435,6 +435,9 @@ export default function Index() {
         </div>
       </section>
 
+      {/* Enhanced Team Section */}
+      <EnhancedTeamSection />
+
       {/* Contact Section */}
       <section className="py-20 px-6 bg-gradient-to-br from-finance-navy to-finance-navy-light">
         <div className="container mx-auto">
