@@ -199,6 +199,15 @@ class FinnhubMarketDataService {
       console.log('🔄 Updating market data from Finnhub...');
 
       const stockResults = await this.fetchAllStocksData();
+
+      // If no valid data from API, use fallback data
+      if (stockResults.length === 0) {
+        console.log('⚠️ No valid data from Finnhub API, using fallback data');
+        const fallbackStocks = this.stocks.map(stock => this.getFallbackStockData(stock.symbol)).filter(Boolean) as FinnhubStockData[];
+        this.handleDataUpdate(fallbackStocks);
+        return;
+      }
+
       const sentiment = this.calculateMarketSentiment(stockResults);
 
       // Update cache
