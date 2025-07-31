@@ -132,15 +132,7 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
-  const getGlowColor = (item: any) => {
-    if (item.color === "text-finance-gold")
-      return "shadow-[0_0_20px_rgba(255,215,0,0.5)]";
-    if (item.color === "text-finance-electric")
-      return "shadow-[0_0_20px_rgba(0,255,255,0.5)]";
-    if (item.color === "text-finance-green")
-      return "shadow-[0_0_20px_rgba(0,255,0,0.5)]";
-    return "shadow-[0_0_20px_rgba(255,215,0,0.5)]";
-  };
+
 
   return (
     <motion.nav
