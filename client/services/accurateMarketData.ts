@@ -415,12 +415,22 @@ class AccurateMarketDataService {
         const change = currentPrice - previousClose;
         const changePercent = previousClose !== 0 ? (change / previousClose) * 100 : 0;
 
+        // Ensure timestamp is always a proper Date object
+        let timestamp: Date;
+        try {
+          timestamp = meta.regularMarketTime
+            ? new Date(meta.regularMarketTime * 1000)
+            : new Date();
+        } catch (error) {
+          timestamp = new Date();
+        }
+
         return {
           pair: pair.pair,
           price: currentPrice,
           change: change,
           changePercent: changePercent,
-          timestamp: new Date(meta.regularMarketTime ? meta.regularMarketTime * 1000 : Date.now())
+          timestamp: timestamp
         };
       });
 
