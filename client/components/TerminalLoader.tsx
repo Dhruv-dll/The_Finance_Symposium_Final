@@ -21,7 +21,7 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
     "Market data synchronized.",
     "Authentication verified.",
     "Welcome to The Finance Symposium.",
-    "SYSTEM READY."
+    "SYSTEM READY.",
   ];
 
   const marketData = [
@@ -30,13 +30,14 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
     "RELIANCE: 2,456.75 (+12.45)",
     "TCS: 3,891.20 (-23.10)",
     "HDFC: 1,687.35 (+8.90)",
-    "INFY: 1,542.85 (+15.60)"
+    "INFY: 1,542.85 (+15.60)",
   ];
 
   // Mechanical keyboard sound simulation
   const playKeystrokeSound = () => {
     if (!audioContextRef.current) {
-      audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+      audioContextRef.current = new (window.AudioContext ||
+        (window as any).webkitAudioContext)();
     }
 
     const ctx = audioContextRef.current;
@@ -46,8 +47,11 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
     oscillator.connect(gainNode);
     gainNode.connect(ctx.destination);
 
-    oscillator.frequency.setValueAtTime(800 + Math.random() * 200, ctx.currentTime);
-    oscillator.type = 'square';
+    oscillator.frequency.setValueAtTime(
+      800 + Math.random() * 200,
+      ctx.currentTime,
+    );
+    oscillator.type = "square";
 
     gainNode.gain.setValueAtTime(0.1, ctx.currentTime);
     gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
@@ -59,7 +63,7 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
   useEffect(() => {
     const timer = setInterval(() => {
       playKeystrokeSound();
-      setCurrentStep(prev => {
+      setCurrentStep((prev) => {
         if (prev >= terminalSteps.length - 1) {
           clearInterval(timer);
           setTimeout(() => setShowClickPrompt(true), 500);
@@ -119,11 +123,11 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
             <div className="bg-black border-l border-r border-finance-gold/30 p-6 min-h-[400px] font-mono text-sm">
               {/* System Info */}
               <div className="text-finance-electric mb-4">
-                <div>████████  ███████   ██████</div>
-                <div>   ██     ██        ██</div>
-                <div>   ██     █████     ██████</div>
-                <div>   ██     ██              ██</div>
-                <div>   ██     ███████   ██████</div>
+                <div>████████ ███████ ██████</div>
+                <div> ██ ██ ██</div>
+                <div> ██ █████ ██████</div>
+                <div> ██ ██ ██</div>
+                <div> ██ ███████ ██████</div>
                 <div className="mt-2 text-finance-gold">
                   THE FINANCE SYMPOSIUM - ST. XAVIER'S COLLEGE
                 </div>
@@ -160,7 +164,9 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
                   animate={{ opacity: 1, y: 0 }}
                   className="border border-finance-electric/30 rounded p-4 mb-4"
                 >
-                  <div className="text-finance-electric mb-2">LIVE MARKET FEED:</div>
+                  <div className="text-finance-electric mb-2">
+                    LIVE MARKET FEED:
+                  </div>
                   <div className="grid grid-cols-2 gap-2 text-xs">
                     {marketData.map((data, index) => (
                       <motion.div
@@ -186,11 +192,18 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
                       <motion.div
                         className="bg-gradient-to-r from-finance-gold to-finance-electric h-2 rounded-full"
                         initial={{ width: 0 }}
-                        animate={{ width: `${((currentStep + 1) / terminalSteps.length) * 100}%` }}
+                        animate={{
+                          width: `${((currentStep + 1) / terminalSteps.length) * 100}%`,
+                        }}
                         transition={{ duration: 0.3 }}
                       />
                     </div>
-                    <span>{Math.round(((currentStep + 1) / terminalSteps.length) * 100)}%</span>
+                    <span>
+                      {Math.round(
+                        ((currentStep + 1) / terminalSteps.length) * 100,
+                      )}
+                      %
+                    </span>
                   </div>
                 </div>
               )}
@@ -203,13 +216,13 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
                   className="text-center"
                 >
                   <motion.div
-                    animate={{ 
+                    animate={{
                       scale: [1, 1.1, 1],
                       textShadow: [
                         "0 0 10px rgba(255, 215, 0, 0.5)",
                         "0 0 20px rgba(255, 215, 0, 0.8)",
-                        "0 0 10px rgba(255, 215, 0, 0.5)"
-                      ]
+                        "0 0 10px rgba(255, 215, 0, 0.5)",
+                      ],
                     }}
                     transition={{ duration: 2, repeat: Infinity }}
                     className="text-finance-gold text-lg font-bold"

@@ -93,13 +93,16 @@ export default {
         },
         glow: {
           "0%, 100%": { boxShadow: "0 0 20px var(--glow-color, #FFD700)" },
-          "50%": { boxShadow: "0 0 40px var(--glow-color, #FFD700), 0 0 60px var(--glow-color, #FFD700)" },
+          "50%": {
+            boxShadow:
+              "0 0 40px var(--glow-color, #FFD700), 0 0 60px var(--glow-color, #FFD700)",
+          },
         },
         "pulse-glow": {
           "0%, 100%": { opacity: "1", transform: "scale(1)" },
           "50%": { opacity: "0.8", transform: "scale(1.05)" },
         },
-        "float": {
+        float: {
           "0%, 100%": { transform: "translateY(0px)" },
           "50%": { transform: "translateY(-10px)" },
         },
@@ -111,7 +114,7 @@ export default {
           "0%, 100%": { transform: "scale(1)", opacity: "1" },
           "50%": { transform: "scale(1.1)", opacity: "0.9" },
         },
-        "scroll": {
+        scroll: {
           "0%": { transform: "translateX(100%)" },
           "100%": { transform: "translateX(-100%)" },
         },
@@ -128,7 +131,8 @@ export default {
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "gradient-conic":
+          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
         "mesh-gradient": "linear-gradient(45deg, var(--tw-gradient-stops))",
       },
       backdropBlur: {

@@ -5,17 +5,32 @@ import * as THREE from "three";
 import { marketDataService, StockData } from "../services/marketData";
 
 // 3D Floating Financial Elements
-function FloatingElement({ position, children }: { position: [number, number, number]; children: React.ReactNode }) {
+function FloatingElement({
+  position,
+  children,
+}: {
+  position: [number, number, number];
+  children: React.ReactNode;
+}) {
   return (
-    <Float speed={1.5} rotationIntensity={1} floatIntensity={0.5} position={position}>
+    <Float
+      speed={1.5}
+      rotationIntensity={1}
+      floatIntensity={0.5}
+      position={position}
+    >
       {children}
     </Float>
   );
 }
 
-function CandlestickChart({ position }: { position: [number, number, number] }) {
+function CandlestickChart({
+  position,
+}: {
+  position: [number, number, number];
+}) {
   const mesh = useRef<THREE.Mesh>(null);
-  
+
   useFrame((state) => {
     if (mesh.current) {
       mesh.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.3;
@@ -25,14 +40,18 @@ function CandlestickChart({ position }: { position: [number, number, number] }) 
   return (
     <mesh ref={mesh} position={position}>
       <boxGeometry args={[0.2, 2, 0.2]} />
-      <meshStandardMaterial color="#FFD700" emissive="#FFD700" emissiveIntensity={0.2} />
+      <meshStandardMaterial
+        color="#FFD700"
+        emissive="#FFD700"
+        emissiveIntensity={0.2}
+      />
     </mesh>
   );
 }
 
 function FinancialGraph({ position }: { position: [number, number, number] }) {
   const mesh = useRef<THREE.Mesh>(null);
-  
+
   useFrame((state) => {
     if (mesh.current) {
       mesh.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.3) * 0.1;
@@ -43,13 +62,17 @@ function FinancialGraph({ position }: { position: [number, number, number] }) {
   for (let i = 0; i < 10; i++) {
     points.push(new THREE.Vector3(i * 0.3 - 1.5, Math.sin(i * 0.5) * 0.5, 0));
   }
-  
+
   const curve = new THREE.CatmullRomCurve3(points);
 
   return (
     <mesh ref={mesh} position={position}>
       <tubeGeometry args={[curve, 20, 0.02, 8, false]} />
-      <meshStandardMaterial color="#00FFFF" emissive="#00FFFF" emissiveIntensity={0.3} />
+      <meshStandardMaterial
+        color="#00FFFF"
+        emissive="#00FFFF"
+        emissiveIntensity={0.3}
+      />
     </mesh>
   );
 }
@@ -57,23 +80,29 @@ function FinancialGraph({ position }: { position: [number, number, number] }) {
 function MarketParticles() {
   const particlesRef = useRef<THREE.Points>(null);
   const particleCount = 50;
-  
+
   const positions = new Float32Array(particleCount * 3);
   const colors = new Float32Array(particleCount * 3);
-  
+
   for (let i = 0; i < particleCount; i++) {
     positions[i * 3] = (Math.random() - 0.5) * 10;
     positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
     positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
-    
+
     // Random colors between gold, electric blue, and green
     const colorChoice = Math.random();
     if (colorChoice < 0.33) {
-      colors[i * 3] = 1; colors[i * 3 + 1] = 0.84; colors[i * 3 + 2] = 0; // Gold
+      colors[i * 3] = 1;
+      colors[i * 3 + 1] = 0.84;
+      colors[i * 3 + 2] = 0; // Gold
     } else if (colorChoice < 0.66) {
-      colors[i * 3] = 0; colors[i * 3 + 1] = 1; colors[i * 3 + 2] = 1; // Electric blue
+      colors[i * 3] = 0;
+      colors[i * 3 + 1] = 1;
+      colors[i * 3 + 2] = 1; // Electric blue
     } else {
-      colors[i * 3] = 0; colors[i * 3 + 1] = 1; colors[i * 3 + 2] = 0; // Green
+      colors[i * 3] = 0;
+      colors[i * 3 + 1] = 1;
+      colors[i * 3 + 2] = 0; // Green
     }
   }
 
@@ -100,21 +129,21 @@ function Scene() {
       <ambientLight intensity={0.3} />
       <pointLight position={[10, 10, 10]} intensity={1} color="#FFD700" />
       <pointLight position={[-10, -10, 10]} intensity={0.5} color="#00FFFF" />
-      
+
       <MarketParticles />
-      
+
       <FloatingElement position={[-3, 1, 0]}>
         <CandlestickChart position={[0, 0, 0]} />
       </FloatingElement>
-      
+
       <FloatingElement position={[3, -1, 0]}>
         <FinancialGraph position={[0, 0, 0]} />
       </FloatingElement>
-      
+
       <FloatingElement position={[0, 2, -2]}>
         <CandlestickChart position={[0, 0, 0]} />
       </FloatingElement>
-      
+
       <FloatingElement position={[-2, -2, 1]}>
         <FinancialGraph position={[0, 0, 0]} />
       </FloatingElement>
@@ -153,22 +182,25 @@ function MarketTicker() {
   };
 
   const formatPrice = (symbol: string, price: number) => {
-    if (symbol === 'SENSEX' || symbol === 'NIFTY') {
-      return price.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (symbol === "SENSEX" || symbol === "NIFTY") {
+      return price.toLocaleString("en-IN", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
     }
-    return `₹${price.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    return `₹${price.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   };
 
   const getChangeColor = (change: number) => {
-    if (change > 0) return 'text-finance-green';
-    if (change < 0) return 'text-finance-red';
-    return 'text-finance-electric';
+    if (change > 0) return "text-finance-green";
+    if (change < 0) return "text-finance-red";
+    return "text-finance-electric";
   };
 
   const getChangeIcon = (change: number) => {
-    if (change > 0) return '▲';
-    if (change < 0) return '▼';
-    return '●';
+    if (change > 0) return "▲";
+    if (change < 0) return "▼";
+    return "●";
   };
 
   return (
@@ -177,19 +209,27 @@ function MarketTicker() {
         <div className="flex items-center justify-between text-sm">
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
-              <div className={`w-2 h-2 rounded-full ${isMarketOpen() ? 'bg-finance-green animate-pulse' : 'bg-finance-red'}`}></div>
+              <div
+                className={`w-2 h-2 rounded-full ${isMarketOpen() ? "bg-finance-green animate-pulse" : "bg-finance-red"}`}
+              ></div>
               <span className="text-muted-foreground">
-                Market {isMarketOpen() ? 'Open' : 'Closed'}
+                Market {isMarketOpen() ? "Open" : "Closed"}
               </span>
             </div>
             <div className="text-finance-electric text-xs">
-              {currentTime.toLocaleTimeString('en-IN')} IST
+              {currentTime.toLocaleTimeString("en-IN")} IST
             </div>
             {isLoading && (
               <div className="flex items-center space-x-1 text-finance-gold text-xs">
                 <div className="w-1 h-1 bg-finance-gold rounded-full animate-bounce"></div>
-                <div className="w-1 h-1 bg-finance-gold rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                <div className="w-1 h-1 bg-finance-gold rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                <div
+                  className="w-1 h-1 bg-finance-gold rounded-full animate-bounce"
+                  style={{ animationDelay: "0.1s" }}
+                ></div>
+                <div
+                  className="w-1 h-1 bg-finance-gold rounded-full animate-bounce"
+                  style={{ animationDelay: "0.2s" }}
+                ></div>
                 <span className="ml-2">Loading live data...</span>
               </div>
             )}
@@ -198,44 +238,64 @@ function MarketTicker() {
           <div className="flex-1 overflow-hidden ml-6">
             <div className="flex space-x-8 animate-scroll">
               {stockData.map((stock, index) => (
-                <div key={`${stock.symbol}-${index}`} className="flex items-center space-x-3 whitespace-nowrap">
+                <div
+                  key={`${stock.symbol}-${index}`}
+                  className="flex items-center space-x-3 whitespace-nowrap"
+                >
                   <span className="font-bold text-finance-gold text-shadow-lg">
                     {stock.symbol}
                   </span>
                   <span className="text-foreground font-medium">
                     {formatPrice(stock.symbol, stock.price)}
                   </span>
-                  <span className={`flex items-center space-x-1 font-medium ${getChangeColor(stock.change)} text-shadow-sm`}>
-                    <span className="text-xs">{getChangeIcon(stock.change)}</span>
+                  <span
+                    className={`flex items-center space-x-1 font-medium ${getChangeColor(stock.change)} text-shadow-sm`}
+                  >
+                    <span className="text-xs">
+                      {getChangeIcon(stock.change)}
+                    </span>
                     <span>{Math.abs(stock.change).toFixed(2)}</span>
                     <span className="text-xs">
-                      ({stock.changePercent > 0 ? '+' : ''}{stock.changePercent.toFixed(2)}%)
+                      ({stock.changePercent > 0 ? "+" : ""}
+                      {stock.changePercent.toFixed(2)}%)
                     </span>
                   </span>
                   {/* Glow effect for significant changes */}
                   {Math.abs(stock.changePercent) > 2 && (
-                    <div className={`w-1 h-1 rounded-full animate-pulse ${stock.change > 0 ? 'bg-finance-green' : 'bg-finance-red'}`}></div>
+                    <div
+                      className={`w-1 h-1 rounded-full animate-pulse ${stock.change > 0 ? "bg-finance-green" : "bg-finance-red"}`}
+                    ></div>
                   )}
                 </div>
               ))}
               {/* Duplicate for continuous scroll */}
               {stockData.map((stock, index) => (
-                <div key={`${stock.symbol}-dup-${index}`} className="flex items-center space-x-3 whitespace-nowrap">
+                <div
+                  key={`${stock.symbol}-dup-${index}`}
+                  className="flex items-center space-x-3 whitespace-nowrap"
+                >
                   <span className="font-bold text-finance-gold text-shadow-lg">
                     {stock.symbol}
                   </span>
                   <span className="text-foreground font-medium">
                     {formatPrice(stock.symbol, stock.price)}
                   </span>
-                  <span className={`flex items-center space-x-1 font-medium ${getChangeColor(stock.change)} text-shadow-sm`}>
-                    <span className="text-xs">{getChangeIcon(stock.change)}</span>
+                  <span
+                    className={`flex items-center space-x-1 font-medium ${getChangeColor(stock.change)} text-shadow-sm`}
+                  >
+                    <span className="text-xs">
+                      {getChangeIcon(stock.change)}
+                    </span>
                     <span>{Math.abs(stock.change).toFixed(2)}</span>
                     <span className="text-xs">
-                      ({stock.changePercent > 0 ? '+' : ''}{stock.changePercent.toFixed(2)}%)
+                      ({stock.changePercent > 0 ? "+" : ""}
+                      {stock.changePercent.toFixed(2)}%)
                     </span>
                   </span>
                   {Math.abs(stock.changePercent) > 2 && (
-                    <div className={`w-1 h-1 rounded-full animate-pulse ${stock.change > 0 ? 'bg-finance-green' : 'bg-finance-red'}`}></div>
+                    <div
+                      className={`w-1 h-1 rounded-full animate-pulse ${stock.change > 0 ? "bg-finance-green" : "bg-finance-red"}`}
+                    ></div>
                   )}
                 </div>
               ))}
@@ -272,7 +332,7 @@ export default function HeroSection() {
       <div className="absolute inset-0">
         <Canvas
           camera={{ position: [0, 0, 5], fov: 75 }}
-          style={{ background: 'transparent' }}
+          style={{ background: "transparent" }}
         >
           <Scene />
         </Canvas>
@@ -284,7 +344,7 @@ export default function HeroSection() {
         style={{
           left: mousePosition.x * 50 + window.innerWidth / 2,
           top: -mousePosition.y * 50 + window.innerHeight / 2,
-          transform: 'translate(-50%, -50%)',
+          transform: "translate(-50%, -50%)",
         }}
       >
         <div className="w-full h-full bg-finance-gold rounded-full animate-pulse opacity-60"></div>
@@ -302,7 +362,7 @@ export default function HeroSection() {
               Symposium
             </span>
           </h1>
-          
+
           <div className="relative mb-8">
             <div className="absolute inset-0 bg-gradient-to-r from-finance-gold to-finance-electric opacity-20 blur-2xl"></div>
             <p className="relative text-xl md:text-2xl text-foreground/90 font-medium">
@@ -324,10 +384,27 @@ export default function HeroSection() {
 
           {/* Floating Financial Symbols */}
           <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-1/4 left-1/4 text-finance-gold text-4xl animate-float opacity-60">₹</div>
-            <div className="absolute top-1/3 right-1/4 text-finance-electric text-3xl animate-float opacity-50" style={{ animationDelay: '1s' }}>$</div>
-            <div className="absolute bottom-1/3 left-1/3 text-finance-green text-3xl animate-float opacity-40" style={{ animationDelay: '2s' }}>€</div>
-            <div className="absolute top-1/2 right-1/3 text-finance-gold text-5xl animate-float opacity-30" style={{ animationDelay: '0.5s' }}>📈</div>
+            <div className="absolute top-1/4 left-1/4 text-finance-gold text-4xl animate-float opacity-60">
+              ₹
+            </div>
+            <div
+              className="absolute top-1/3 right-1/4 text-finance-electric text-3xl animate-float opacity-50"
+              style={{ animationDelay: "1s" }}
+            >
+              $
+            </div>
+            <div
+              className="absolute bottom-1/3 left-1/3 text-finance-green text-3xl animate-float opacity-40"
+              style={{ animationDelay: "2s" }}
+            >
+              €
+            </div>
+            <div
+              className="absolute top-1/2 right-1/3 text-finance-gold text-5xl animate-float opacity-30"
+              style={{ animationDelay: "0.5s" }}
+            >
+              📈
+            </div>
           </div>
         </div>
       </div>

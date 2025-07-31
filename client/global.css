@@ -49,10 +49,10 @@
     --sidebar-ring: 180 100% 50%;
 
     /* Finance-specific variables */
-    --glow-primary: #FFD700;
-    --glow-secondary: #00FFFF;
-    --glow-success: #00FF00;
-    --glow-danger: #FF4444;
+    --glow-primary: #ffd700;
+    --glow-secondary: #00ffff;
+    --glow-success: #00ff00;
+    --glow-danger: #ff4444;
     --gradient-start: #000012;
     --gradient-end: #1a1a2e;
   }
@@ -118,7 +118,7 @@
   }
 
   .glow-effect::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: -100%;
@@ -173,8 +173,12 @@
   }
 
   @keyframes matrix-scroll {
-    0% { background-position: 0 0; }
-    100% { background-position: 20px 20px; }
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 20px 20px;
+    }
   }
 
   .text-shadow-sm {
@@ -182,7 +186,9 @@
   }
 
   .text-shadow-lg {
-    text-shadow: 0 0 10px currentColor, 0 2px 4px rgba(0, 0, 0, 0.8);
+    text-shadow:
+      0 0 10px currentColor,
+      0 2px 4px rgba(0, 0, 0, 0.8);
   }
 
   /* Custom Scrollbar */
@@ -196,18 +202,24 @@
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: linear-gradient(to bottom, #FFD700, #FFA500);
+    background: linear-gradient(to bottom, #ffd700, #ffa500);
     border-radius: 3px;
     transition: background 0.3s ease;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(to bottom, #FFA500, #FFD700);
+    background: linear-gradient(to bottom, #ffa500, #ffd700);
   }
 
   /* Range Slider Styling */
   .slider {
-    background: linear-gradient(to right, #FFD700 0%, #FFD700 var(--value, 30%), #1a1a2e var(--value, 30%), #1a1a2e 100%);
+    background: linear-gradient(
+      to right,
+      #ffd700 0%,
+      #ffd700 var(--value, 30%),
+      #1a1a2e var(--value, 30%),
+      #1a1a2e 100%
+    );
   }
 
   .slider::-webkit-slider-thumb {
@@ -215,7 +227,7 @@
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    background: linear-gradient(45deg, #FFD700, #00FFFF);
+    background: linear-gradient(45deg, #ffd700, #00ffff);
     cursor: pointer;
     border: 2px solid #000012;
     box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
@@ -242,7 +254,7 @@
   }
 
   .btn-glow::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: -100%;
@@ -263,7 +275,7 @@
 
   /* Gradient text animation */
   .gradient-text {
-    background: linear-gradient(-45deg, #FFD700, #00FFFF, #00FF00, #FF4444);
+    background: linear-gradient(-45deg, #ffd700, #00ffff, #00ff00, #ff4444);
     background-size: 400% 400%;
     -webkit-background-clip: text;
     background-clip: text;
@@ -272,9 +284,15 @@
   }
 
   @keyframes gradient-shift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
 
   /* Loading shimmer effect */
@@ -290,8 +308,12 @@
   }
 
   @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
   }
 
   /* Enhanced Financial Data Styling */
@@ -302,7 +324,7 @@
 
   .stock-ticker::before,
   .stock-ticker::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     width: 50px;
@@ -313,16 +335,24 @@
 
   .stock-ticker::before {
     left: 0;
-    background: linear-gradient(90deg, rgba(0, 0, 18, 1) 0%, rgba(0, 0, 18, 0) 100%);
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 18, 1) 0%,
+      rgba(0, 0, 18, 0) 100%
+    );
   }
 
   .stock-ticker::after {
     right: 0;
-    background: linear-gradient(270deg, rgba(0, 0, 18, 1) 0%, rgba(0, 0, 18, 0) 100%);
+    background: linear-gradient(
+      270deg,
+      rgba(0, 0, 18, 1) 0%,
+      rgba(0, 0, 18, 0) 100%
+    );
   }
 
   .market-status.live {
-    background: linear-gradient(45deg, #00FF00, #32CD32);
+    background: linear-gradient(45deg, #00ff00, #32cd32);
     color: #000012;
     padding: 2px 8px;
     border-radius: 4px;
@@ -332,7 +362,7 @@
   }
 
   .market-status.closed {
-    background: linear-gradient(45deg, #FF4444, #FF6666);
+    background: linear-gradient(45deg, #ff4444, #ff6666);
     color: #000012;
     padding: 2px 8px;
     border-radius: 4px;
@@ -368,7 +398,8 @@
     background: rgba(255, 68, 68, 0.1);
   }
 
-  .crypto-item, .forex-item {
+  .crypto-item,
+  .forex-item {
     display: inline-flex;
     align-items: center;
     padding: 4px 12px;
@@ -379,7 +410,8 @@
     transition: all 0.3s ease;
   }
 
-  .crypto-item:hover, .forex-item:hover {
+  .crypto-item:hover,
+  .forex-item:hover {
     background: rgba(0, 255, 255, 0.2);
     border-color: rgba(0, 255, 255, 0.4);
     transform: translateY(-2px);
@@ -387,17 +419,17 @@
   }
 
   .positive {
-    color: #00FF00 !important;
+    color: #00ff00 !important;
     text-shadow: 0 0 4px rgba(0, 255, 0, 0.5);
   }
 
   .negative {
-    color: #FF4444 !important;
+    color: #ff4444 !important;
     text-shadow: 0 0 4px rgba(255, 68, 68, 0.5);
   }
 
   .neutral {
-    color: #00FFFF !important;
+    color: #00ffff !important;
     text-shadow: 0 0 4px rgba(0, 255, 255, 0.5);
   }
 
@@ -442,17 +474,17 @@
   }
 
   .connection-status.connected {
-    color: #00FF00;
+    color: #00ff00;
     border: 1px solid rgba(0, 255, 0, 0.3);
   }
 
   .connection-status.disconnected {
-    color: #FF4444;
+    color: #ff4444;
     border: 1px solid rgba(255, 68, 68, 0.3);
   }
 
   .connection-status.reconnecting {
-    color: #FFD700;
+    color: #ffd700;
     border: 1px solid rgba(255, 215, 0, 0.3);
     animation: pulse 1s ease-in-out infinite;
   }
@@ -469,13 +501,13 @@
   /* Market state indicators */
   .market-state-pre {
     background: rgba(255, 165, 0, 0.2);
-    color: #FFA500;
+    color: #ffa500;
     border: 1px solid rgba(255, 165, 0, 0.3);
   }
 
   .market-state-post {
     background: rgba(138, 43, 226, 0.2);
-    color: #8A2BE2;
+    color: #8a2be2;
     border: 1px solid rgba(138, 43, 226, 0.3);
   }
 
@@ -485,7 +517,8 @@
   }
 
   @keyframes warning-pulse {
-    0%, 100% {
+    0%,
+    100% {
       opacity: 0.7;
       transform: scale(1);
     }
@@ -501,7 +534,9 @@
       font-size: 0.875rem;
     }
 
-    .stock-item, .crypto-item, .forex-item {
+    .stock-item,
+    .crypto-item,
+    .forex-item {
       padding: 2px 8px;
       margin: 0 2px;
     }
@@ -518,7 +553,8 @@
       transform: none;
     }
 
-    .animate-pulse, .animate-bounce {
+    .animate-pulse,
+    .animate-bounce {
       animation: none;
     }
 
@@ -530,23 +566,25 @@
 
   /* High contrast mode support */
   @media (prefers-contrast: high) {
-    .stock-item, .crypto-item, .forex-item {
+    .stock-item,
+    .crypto-item,
+    .forex-item {
       border-width: 2px;
       background: rgba(255, 255, 255, 0.1);
     }
 
     .positive {
-      color: #00FF00 !important;
+      color: #00ff00 !important;
       font-weight: bold;
     }
 
     .negative {
-      color: #FF0000 !important;
+      color: #ff0000 !important;
       font-weight: bold;
     }
 
     .neutral {
-      color: #FFFFFF !important;
+      color: #ffffff !important;
       font-weight: bold;
     }
   }

@@ -9,35 +9,58 @@ import {
   X,
   Filter,
   ArrowUpRight,
-  ArrowDownRight
+  ArrowDownRight,
 } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { ScrollArea } from "./ui/scroll-area";
 import { Separator } from "./ui/separator";
-import { finnhubMarketDataService, FinnhubStockData, MarketSentiment, safeFormatTimestamp } from "../services/finnhubMarketData";
+import {
+  finnhubMarketDataService,
+  FinnhubStockData,
+  MarketSentiment,
+  safeFormatTimestamp,
+} from "../services/finnhubMarketData";
 
 interface MarketDashboardDialogProps {
   className?: string;
 }
 
-export default function MarketDashboardDialog({ className }: MarketDashboardDialogProps) {
+export default function MarketDashboardDialog({
+  className,
+}: MarketDashboardDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [marketData, setMarketData] = useState<{
     stocks: FinnhubStockData[];
     sentiment: MarketSentiment;
-  }>({ stocks: [], sentiment: { sentiment: 'neutral', advanceDeclineRatio: 0.5, positiveStocks: 0, totalStocks: 0 } });
+  }>({
+    stocks: [],
+    sentiment: {
+      sentiment: "neutral",
+      advanceDeclineRatio: 0.5,
+      positiveStocks: 0,
+      totalStocks: 0,
+    },
+  });
   const [isLoading, setIsLoading] = useState(false);
-  const [filter, setFilter] = useState<'all' | 'gainers' | 'losers'>('all');
+  const [filter, setFilter] = useState<"all" | "gainers" | "losers">("all");
 
   useEffect(() => {
     if (isOpen) {
-      const unsubscribe = finnhubMarketDataService.subscribeToUpdates((data) => {
-        setMarketData(data);
-        setIsLoading(false);
-      });
+      const unsubscribe = finnhubMarketDataService.subscribeToUpdates(
+        (data) => {
+          setMarketData(data);
+          setIsLoading(false);
+        },
+      );
 
       return unsubscribe;
     }
@@ -48,25 +71,31 @@ export default function MarketDashboardDialog({ className }: MarketDashboardDial
     finnhubMarketDataService.updateAllData();
   };
 
-  const filteredStocks = marketData.stocks.filter(stock => {
-    if (filter === 'gainers') return stock.change > 0;
-    if (filter === 'losers') return stock.change < 0;
+  const filteredStocks = marketData.stocks.filter((stock) => {
+    if (filter === "gainers") return stock.change > 0;
+    if (filter === "losers") return stock.change < 0;
     return true;
   });
 
   const getSentimentColor = (sentiment: string) => {
     switch (sentiment) {
-      case 'bullish': return 'text-green-400';
-      case 'bearish': return 'text-red-400';
-      default: return 'text-yellow-400';
+      case "bullish":
+        return "text-green-400";
+      case "bearish":
+        return "text-red-400";
+      default:
+        return "text-yellow-400";
     }
   };
 
   const getSentimentIcon = (sentiment: string) => {
     switch (sentiment) {
-      case 'bullish': return <TrendingUp className="w-4 h-4" />;
-      case 'bearish': return <TrendingDown className="w-4 h-4" />;
-      default: return <Activity className="w-4 h-4" />;
+      case "bullish":
+        return <TrendingUp className="w-4 h-4" />;
+      case "bearish":
+        return <TrendingDown className="w-4 h-4" />;
+      default:
+        return <Activity className="w-4 h-4" />;
     }
   };
 
@@ -92,24 +121,24 @@ export default function MarketDashboardDialog({ className }: MarketDashboardDial
               transition={{
                 duration: 3,
                 repeat: Infinity,
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
             />
-            
+
             {/* Pulse effect */}
             <motion.div
               className="absolute inset-0 bg-gradient-to-r from-finance-gold to-finance-electric rounded-xl opacity-30"
               animate={{
                 scale: [1, 1.1, 1],
-                opacity: [0.3, 0.6, 0.3]
+                opacity: [0.3, 0.6, 0.3],
               }}
               transition={{
                 duration: 2,
                 repeat: Infinity,
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
             />
-            
+
             <div className="relative z-10 flex items-center space-x-3">
               <motion.div
                 animate={{ rotate: [0, 360] }}
@@ -120,7 +149,11 @@ export default function MarketDashboardDialog({ className }: MarketDashboardDial
               <span className="text-lg">Market Dashboard</span>
               <motion.div
                 animate={{ y: [0, -2, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
               >
                 📈
               </motion.div>
@@ -128,7 +161,7 @@ export default function MarketDashboardDialog({ className }: MarketDashboardDial
           </Button>
         </motion.div>
       </DialogTrigger>
-      
+
       <DialogContent className="max-w-6xl max-h-[90vh] bg-finance-navy/95 backdrop-blur-xl border border-finance-gold/20 text-foreground">
         <DialogHeader>
           <DialogTitle className="flex items-center justify-between">
@@ -149,7 +182,7 @@ export default function MarketDashboardDialog({ className }: MarketDashboardDial
                 LIVE • Market Data
               </Badge>
             </div>
-            
+
             <div className="flex items-center space-x-2">
               <Button
                 variant="outline"
@@ -160,7 +193,11 @@ export default function MarketDashboardDialog({ className }: MarketDashboardDial
               >
                 <motion.div
                   animate={isLoading ? { rotate: 360 } : {}}
-                  transition={{ duration: 1, repeat: isLoading ? Infinity : 0, ease: "linear" }}
+                  transition={{
+                    duration: 1,
+                    repeat: isLoading ? Infinity : 0,
+                    ease: "linear",
+                  }}
                 >
                   <RefreshCw className="w-4 h-4 text-finance-gold" />
                 </motion.div>
@@ -181,11 +218,14 @@ export default function MarketDashboardDialog({ className }: MarketDashboardDial
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className={`text-2xl font-bold ${getSentimentColor(marketData.sentiment.sentiment)} capitalize`}>
+                  <div
+                    className={`text-2xl font-bold ${getSentimentColor(marketData.sentiment.sentiment)} capitalize`}
+                  >
                     {marketData.sentiment.sentiment}
                   </div>
                   <div className="text-sm text-muted-foreground mt-1">
-                    {marketData.sentiment.positiveStocks}/{marketData.sentiment.totalStocks} stocks advancing
+                    {marketData.sentiment.positiveStocks}/
+                    {marketData.sentiment.totalStocks} stocks advancing
                   </div>
                 </CardContent>
               </Card>
@@ -199,7 +239,7 @@ export default function MarketDashboardDialog({ className }: MarketDashboardDial
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold text-green-400">
-                    {marketData.stocks.filter(s => s.change > 0).length}
+                    {marketData.stocks.filter((s) => s.change > 0).length}
                   </div>
                   <div className="text-sm text-muted-foreground mt-1">
                     Stocks in green
@@ -216,7 +256,7 @@ export default function MarketDashboardDialog({ className }: MarketDashboardDial
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold text-red-400">
-                    {marketData.stocks.filter(s => s.change < 0).length}
+                    {marketData.stocks.filter((s) => s.change < 0).length}
                   </div>
                   <div className="text-sm text-muted-foreground mt-1">
                     Stocks in red
@@ -231,18 +271,21 @@ export default function MarketDashboardDialog({ className }: MarketDashboardDial
               <span className="text-sm font-medium">Filter:</span>
               <div className="flex space-x-2">
                 {[
-                  { key: 'all', label: 'All Stocks', icon: '📊' },
-                  { key: 'gainers', label: 'Gainers', icon: '📈' },
-                  { key: 'losers', label: 'Losers', icon: '📉' }
+                  { key: "all", label: "All Stocks", icon: "📊" },
+                  { key: "gainers", label: "Gainers", icon: "📈" },
+                  { key: "losers", label: "Losers", icon: "📉" },
                 ].map((filterOption) => (
                   <Button
                     key={filterOption.key}
-                    variant={filter === filterOption.key ? "default" : "outline"}
+                    variant={
+                      filter === filterOption.key ? "default" : "outline"
+                    }
                     size="sm"
                     onClick={() => setFilter(filterOption.key as any)}
-                    className={filter === filterOption.key 
-                      ? "bg-finance-gold text-finance-navy hover:bg-finance-gold/90" 
-                      : "border-finance-gold/30 hover:border-finance-gold hover:bg-finance-gold/10"
+                    className={
+                      filter === filterOption.key
+                        ? "bg-finance-gold text-finance-navy hover:bg-finance-gold/90"
+                        : "border-finance-gold/30 hover:border-finance-gold hover:bg-finance-gold/10"
                     }
                   >
                     <span className="mr-1">{filterOption.icon}</span>
@@ -271,10 +314,10 @@ export default function MarketDashboardDialog({ className }: MarketDashboardDial
                           <div className="flex items-center space-x-4">
                             <div className="text-center">
                               <div className="text-lg font-bold text-finance-gold">
-                                {stock.symbol.includes('^') ? '📈' : '🏢'}
+                                {stock.symbol.includes("^") ? "📈" : "🏢"}
                               </div>
                             </div>
-                            
+
                             <div>
                               <div className="font-semibold text-foreground">
                                 {stock.name}
@@ -290,21 +333,30 @@ export default function MarketDashboardDialog({ className }: MarketDashboardDial
 
                           <div className="text-right">
                             <div className="text-xl font-bold text-foreground">
-                              ₹{stock.price.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                              ₹
+                              {stock.price.toLocaleString("en-IN", {
+                                minimumFractionDigits: 2,
+                              })}
                             </div>
-                            <div className={`flex items-center space-x-1 ${
-                              stock.change >= 0 ? 'text-green-400' : 'text-red-400'
-                            }`}>
+                            <div
+                              className={`flex items-center space-x-1 ${
+                                stock.change >= 0
+                                  ? "text-green-400"
+                                  : "text-red-400"
+                              }`}
+                            >
                               {stock.change >= 0 ? (
                                 <ArrowUpRight className="w-4 h-4" />
                               ) : (
                                 <ArrowDownRight className="w-4 h-4" />
                               )}
                               <span className="font-medium">
-                                {stock.change >= 0 ? '+' : ''}{stock.change.toFixed(2)}
+                                {stock.change >= 0 ? "+" : ""}
+                                {stock.change.toFixed(2)}
                               </span>
                               <span className="text-sm">
-                                ({stock.changePercent >= 0 ? '+' : ''}{stock.changePercent.toFixed(2)}%)
+                                ({stock.changePercent >= 0 ? "+" : ""}
+                                {stock.changePercent.toFixed(2)}%)
                               </span>
                             </div>
                             {stock.dayHigh && stock.dayLow && (
@@ -332,12 +384,11 @@ export default function MarketDashboardDialog({ className }: MarketDashboardDial
             <div className="text-center text-sm text-muted-foreground pt-4 border-t border-finance-gold/20">
               <div className="flex items-center justify-center space-x-2">
                 <Activity className="w-4 h-4" />
-                <span>
-                  Updates every 60 seconds • Live Market Data
-                </span>
+                <span>Updates every 60 seconds • Live Market Data</span>
               </div>
               <div className="mt-1">
-                Market {finnhubMarketDataService.isMarketOpen() ? 'OPEN' : 'CLOSED'}
+                Market{" "}
+                {finnhubMarketDataService.isMarketOpen() ? "OPEN" : "CLOSED"}
               </div>
             </div>
           </div>

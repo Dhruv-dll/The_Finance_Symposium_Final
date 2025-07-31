@@ -1,44 +1,46 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Menu, 
-  X, 
-  ChevronDown, 
-  TrendingUp, 
-  BarChart3, 
-  Users, 
+import {
+  Menu,
+  X,
+  ChevronDown,
+  TrendingUp,
+  BarChart3,
+  Users,
   Calendar,
   DollarSign,
   PieChart,
   Building2,
   Mail,
-  Home
+  Home,
 } from "lucide-react";
 
 interface EnhancedNavigationProps {
   scrolled: boolean;
 }
 
-export default function EnhancedNavigation({ scrolled }: EnhancedNavigationProps) {
+export default function EnhancedNavigation({
+  scrolled,
+}: EnhancedNavigationProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [eventsDropdownOpen, setEventsDropdownOpen] = useState(false);
   const [sponsorsDropdownOpen, setSponsorsDropdownOpen] = useState(false);
 
   const navItems = [
-    { 
-      name: "Home", 
-      href: "/", 
+    {
+      name: "Home",
+      href: "/",
       icon: Home,
       color: "text-finance-electric",
-      hoverIcon: "🏠"
+      hoverIcon: "🏠",
     },
-    { 
-      name: "About TFS", 
-      href: "/about", 
+    {
+      name: "About TFS",
+      href: "/about",
       icon: BarChart3,
       color: "text-finance-gold",
-      hoverIcon: "📊"
+      hoverIcon: "📊",
     },
     {
       name: "EVENTS",
@@ -47,19 +49,23 @@ export default function EnhancedNavigation({ scrolled }: EnhancedNavigationProps
       color: "text-finance-green",
       hoverIcon: "₹",
       dropdown: [
-        { name: "Saturday Sessions", href: "/events/saturday-sessions", icon: "📚" },
+        {
+          name: "Saturday Sessions",
+          href: "/events/saturday-sessions",
+          icon: "📚",
+        },
         { name: "Networking", href: "/events/networking", icon: "🤝" },
         { name: "Flagship Conclave", href: "/events/conclave", icon: "🏆" },
         { type: "separator" },
         { name: "Upcoming Events", href: "/events/upcoming", icon: "📅" },
       ],
     },
-    { 
-      name: "Finsight", 
-      href: "/finsight", 
+    {
+      name: "Finsight",
+      href: "/finsight",
       icon: TrendingUp,
       color: "text-finance-electric",
-      hoverIcon: "📈"
+      hoverIcon: "📈",
     },
     {
       name: "SPONSORS",
@@ -72,19 +78,19 @@ export default function EnhancedNavigation({ scrolled }: EnhancedNavigationProps
         { name: "Present Sponsors", href: "/sponsors/present", icon: "🤝" },
       ],
     },
-    { 
-      name: "Meet the Team", 
-      href: "/team", 
+    {
+      name: "Meet the Team",
+      href: "/team",
       icon: Users,
       color: "text-finance-green",
-      hoverIcon: "👥"
+      hoverIcon: "👥",
     },
-    { 
-      name: "Contact Us", 
-      href: "/contact", 
+    {
+      name: "Contact Us",
+      href: "/contact",
       icon: Mail,
       color: "text-finance-electric",
-      hoverIcon: "📧"
+      hoverIcon: "📧",
     },
   ];
 
@@ -99,9 +105,12 @@ export default function EnhancedNavigation({ scrolled }: EnhancedNavigationProps
   }, []);
 
   const getGlowColor = (item: any) => {
-    if (item.color === "text-finance-gold") return "shadow-[0_0_20px_rgba(255,215,0,0.5)]";
-    if (item.color === "text-finance-electric") return "shadow-[0_0_20px_rgba(0,255,255,0.5)]";
-    if (item.color === "text-finance-green") return "shadow-[0_0_20px_rgba(0,255,0,0.5)]";
+    if (item.color === "text-finance-gold")
+      return "shadow-[0_0_20px_rgba(255,215,0,0.5)]";
+    if (item.color === "text-finance-electric")
+      return "shadow-[0_0_20px_rgba(0,255,255,0.5)]";
+    if (item.color === "text-finance-green")
+      return "shadow-[0_0_20px_rgba(0,255,0,0.5)]";
     return "shadow-[0_0_20px_rgba(255,215,0,0.5)]";
   };
 
@@ -118,7 +127,7 @@ export default function EnhancedNavigation({ scrolled }: EnhancedNavigationProps
     >
       {/* Glassmorphic background effect */}
       {scrolled && (
-        <motion.div 
+        <motion.div
           className="absolute inset-0 bg-gradient-to-r from-finance-navy/30 via-finance-navy-light/20 to-finance-navy/30 backdrop-blur-xl"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -129,14 +138,14 @@ export default function EnhancedNavigation({ scrolled }: EnhancedNavigationProps
       <div className="container mx-auto px-6 py-4 relative">
         <div className="flex items-center justify-between">
           {/* Enhanced Logo Section */}
-          <motion.div 
+          <motion.div
             className="flex items-center space-x-4"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.3 }}
           >
             <div className="flex items-center space-x-3">
               {/* TFS Logo with enhanced glow */}
-              <motion.div 
+              <motion.div
                 className="relative group cursor-pointer"
                 whileHover={{ scale: 1.1 }}
                 transition={{ duration: 0.3 }}
@@ -144,31 +153,32 @@ export default function EnhancedNavigation({ scrolled }: EnhancedNavigationProps
                 <div
                   className="flex items-center justify-center rounded-xl relative overflow-hidden"
                   style={{
-                    backgroundImage: "url(https://cdn.builder.io/api/v1/image/assets%2F929e4df9940a4d789ccda51924367667%2F738f11e9971c4f0f8ef4fd148b7ae990)",
+                    backgroundImage:
+                      "url(https://cdn.builder.io/api/v1/image/assets%2F929e4df9940a4d789ccda51924367667%2F738f11e9971c4f0f8ef4fd148b7ae990)",
                     backgroundRepeat: "no-repeat",
                     backgroundPosition: "center",
                     backgroundSize: "cover",
                     width: "75px",
                     height: "75px",
-                    marginTop: "-5px"
+                    marginTop: "-5px",
                   }}
                 />
-                <motion.div 
+                <motion.div
                   className="absolute inset-0 bg-gradient-to-br from-finance-gold to-finance-electric rounded-xl opacity-50 blur-md -z-10"
                   animate={{
                     scale: [1, 1.2, 1],
-                    opacity: [0.3, 0.7, 0.3]
+                    opacity: [0.3, 0.7, 0.3],
                   }}
                   transition={{
                     duration: 3,
                     repeat: Infinity,
-                    ease: "easeInOut"
+                    ease: "easeInOut",
                   }}
                 />
               </motion.div>
-              
+
               {/* St. Xavier's Logo with hover effect */}
-              <motion.div 
+              <motion.div
                 className="relative group cursor-pointer"
                 whileHover={{ scale: 1.1 }}
                 transition={{ duration: 0.3 }}
@@ -176,21 +186,22 @@ export default function EnhancedNavigation({ scrolled }: EnhancedNavigationProps
                 <div
                   className="flex items-center justify-center border border-finance-electric/30 rounded-xl"
                   style={{
-                    backgroundImage: "url(https://cdn.builder.io/api/v1/image/assets%2F929e4df9940a4d789ccda51924367667%2F73bba102e8354fd08a042b5f690f50cd)",
+                    backgroundImage:
+                      "url(https://cdn.builder.io/api/v1/image/assets%2F929e4df9940a4d789ccda51924367667%2F73bba102e8354fd08a042b5f690f50cd)",
                     backgroundRepeat: "no-repeat",
                     backgroundPosition: "center",
                     backgroundSize: "cover",
                     width: "75px",
                     height: "75px",
-                    margin: "1px 0 0 -5px"
+                    margin: "1px 0 0 -5px",
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-br from-finance-navy-light to-finance-electric rounded-xl opacity-0 group-hover:opacity-40 blur-lg -z-10 transition-opacity duration-300"></div>
               </motion.div>
             </div>
-            
+
             <div className="hidden md:block">
-              <motion.h1 
+              <motion.h1
                 className="text-xl font-bold bg-gradient-to-r from-finance-gold to-finance-electric bg-clip-text text-transparent"
                 animate={{
                   backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
@@ -198,20 +209,22 @@ export default function EnhancedNavigation({ scrolled }: EnhancedNavigationProps
                 transition={{
                   duration: 5,
                   repeat: Infinity,
-                  ease: "easeInOut"
+                  ease: "easeInOut",
                 }}
               >
                 The Finance Symposium
               </motion.h1>
-              <p className="text-sm text-muted-foreground">St. Xavier's College Mumbai</p>
+              <p className="text-sm text-muted-foreground">
+                St. Xavier's College Mumbai
+              </p>
             </div>
           </motion.div>
 
           {/* Enhanced Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-8">
             {navItems.map((item, index) => (
-              <motion.div 
-                key={index} 
+              <motion.div
+                key={index}
                 className="relative group"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -235,17 +248,19 @@ export default function EnhancedNavigation({ scrolled }: EnhancedNavigationProps
                       whileTap={{ scale: 0.95 }}
                     >
                       {/* Hover glow background */}
-                      <motion.div 
+                      <motion.div
                         className={`absolute inset-0 ${getGlowColor(item)} opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg`}
                         initial={false}
                       />
-                      
+
                       <item.icon className="w-4 h-4 relative z-10" />
-                      <span className="font-medium relative z-10">{item.name}</span>
+                      <span className="font-medium relative z-10">
+                        {item.name}
+                      </span>
                       <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180 relative z-10" />
-                      
+
                       {/* Hover icon */}
-                      <motion.span 
+                      <motion.span
                         className="text-lg ml-2 relative z-10"
                         initial={{ opacity: 0, scale: 0 }}
                         whileHover={{ opacity: 1, scale: 1 }}
@@ -268,7 +283,7 @@ export default function EnhancedNavigation({ scrolled }: EnhancedNavigationProps
                         >
                           {/* Glow effect background */}
                           <div className="absolute inset-0 bg-gradient-to-br from-finance-gold/10 to-finance-electric/10 -z-10"></div>
-                          
+
                           {item.dropdown.map((dropdownItem, dropdownIndex) => {
                             if (dropdownItem.type === "separator") {
                               return (
@@ -277,7 +292,10 @@ export default function EnhancedNavigation({ scrolled }: EnhancedNavigationProps
                                   className="h-px bg-gradient-to-r from-transparent via-finance-gold to-transparent my-2 mx-4"
                                   initial={{ scaleX: 0 }}
                                   animate={{ scaleX: 1 }}
-                                  transition={{ duration: 0.5, delay: dropdownIndex * 0.1 }}
+                                  transition={{
+                                    duration: 0.5,
+                                    delay: dropdownIndex * 0.1,
+                                  }}
                                 />
                               );
                             }
@@ -286,7 +304,10 @@ export default function EnhancedNavigation({ scrolled }: EnhancedNavigationProps
                                 key={dropdownIndex}
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.3, delay: dropdownIndex * 0.05 }}
+                                transition={{
+                                  duration: 0.3,
+                                  delay: dropdownIndex * 0.05,
+                                }}
                               >
                                 <Link
                                   to={dropdownItem.href}
@@ -295,8 +316,10 @@ export default function EnhancedNavigation({ scrolled }: EnhancedNavigationProps
                                   <span className="text-lg group-hover:scale-110 transition-transform duration-200">
                                     {dropdownItem.icon}
                                   </span>
-                                  <span className="font-medium">{dropdownItem.name}</span>
-                                  <motion.div 
+                                  <span className="font-medium">
+                                    {dropdownItem.name}
+                                  </span>
+                                  <motion.div
                                     className="ml-auto w-2 h-2 bg-finance-electric rounded-full opacity-0 group-hover:opacity-100"
                                     whileHover={{ scale: 1.5 }}
                                   />
@@ -314,16 +337,18 @@ export default function EnhancedNavigation({ scrolled }: EnhancedNavigationProps
                     className={`flex items-center space-x-2 text-foreground hover:${item.color} transition-all duration-300 group relative px-4 py-2 rounded-lg overflow-hidden`}
                   >
                     {/* Hover glow background */}
-                    <motion.div 
+                    <motion.div
                       className={`absolute inset-0 ${getGlowColor(item)} opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg`}
                       initial={false}
                     />
-                    
+
                     <item.icon className="w-4 h-4 relative z-10" />
-                    <span className="font-medium relative z-10">{item.name}</span>
-                    
+                    <span className="font-medium relative z-10">
+                      {item.name}
+                    </span>
+
                     {/* Hover icon */}
-                    <motion.span 
+                    <motion.span
                       className="text-lg ml-2 relative z-10"
                       initial={{ opacity: 0, scale: 0 }}
                       whileHover={{ opacity: 1, scale: 1 }}
@@ -344,9 +369,7 @@ export default function EnhancedNavigation({ scrolled }: EnhancedNavigationProps
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <motion.div 
-              className="absolute inset-0 bg-gradient-to-br from-finance-gold/20 to-finance-electric/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            />
+            <motion.div className="absolute inset-0 bg-gradient-to-br from-finance-gold/20 to-finance-electric/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <AnimatePresence mode="wait">
               {mobileMenuOpen ? (
                 <motion.div
@@ -384,10 +407,10 @@ export default function EnhancedNavigation({ scrolled }: EnhancedNavigationProps
               className="lg:hidden mt-4 backdrop-blur-xl bg-finance-navy/80 rounded-xl p-4 border border-finance-gold/20 overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-finance-gold/10 to-finance-electric/10 -z-10"></div>
-              
+
               <div className="space-y-2">
                 {navItems.map((item, index) => (
-                  <motion.div 
+                  <motion.div
                     key={index}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -412,37 +435,40 @@ export default function EnhancedNavigation({ scrolled }: EnhancedNavigationProps
                           </div>
                           <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
                         </button>
-                        
+
                         <AnimatePresence>
                           {((item.name === "EVENTS" && eventsDropdownOpen) ||
-                            (item.name === "SPONSORS" && sponsorsDropdownOpen)) && (
+                            (item.name === "SPONSORS" &&
+                              sponsorsDropdownOpen)) && (
                             <motion.div
                               initial={{ opacity: 0, height: 0 }}
                               animate={{ opacity: 1, height: "auto" }}
                               exit={{ opacity: 0, height: 0 }}
                               className="ml-6 mt-2 space-y-1 overflow-hidden"
                             >
-                              {item.dropdown.map((dropdownItem, dropdownIndex) => {
-                                if (dropdownItem.type === "separator") {
+                              {item.dropdown.map(
+                                (dropdownItem, dropdownIndex) => {
+                                  if (dropdownItem.type === "separator") {
+                                    return (
+                                      <div
+                                        key={dropdownIndex}
+                                        className="h-px bg-gradient-to-r from-transparent via-finance-gold to-transparent my-2"
+                                      />
+                                    );
+                                  }
                                   return (
-                                    <div
+                                    <Link
                                       key={dropdownIndex}
-                                      className="h-px bg-gradient-to-r from-transparent via-finance-gold to-transparent my-2"
-                                    />
+                                      to={dropdownItem.href}
+                                      className="flex items-center space-x-3 py-2 px-3 text-muted-foreground hover:text-finance-gold hover:bg-finance-gold/5 rounded-lg transition-colors duration-200"
+                                      onClick={() => setMobileMenuOpen(false)}
+                                    >
+                                      <span>{dropdownItem.icon}</span>
+                                      <span>{dropdownItem.name}</span>
+                                    </Link>
                                   );
-                                }
-                                return (
-                                  <Link
-                                    key={dropdownIndex}
-                                    to={dropdownItem.href}
-                                    className="flex items-center space-x-3 py-2 px-3 text-muted-foreground hover:text-finance-gold hover:bg-finance-gold/5 rounded-lg transition-colors duration-200"
-                                    onClick={() => setMobileMenuOpen(false)}
-                                  >
-                                    <span>{dropdownItem.icon}</span>
-                                    <span>{dropdownItem.name}</span>
-                                  </Link>
-                                );
-                              })}
+                                },
+                              )}
                             </motion.div>
                           )}
                         </AnimatePresence>

@@ -1,6 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, ChevronDown, TrendingUp, BarChart3, Users, Calendar } from "lucide-react";
+import {
+  Menu,
+  X,
+  ChevronDown,
+  TrendingUp,
+  BarChart3,
+  Users,
+  Calendar,
+} from "lucide-react";
 
 interface NavigationProps {
   scrolled: boolean;
@@ -66,25 +74,31 @@ export default function Navigation({ scrolled }: NavigationProps) {
               {/* TFS Logo */}
               <div className="relative">
                 <div className="w-12 h-12 bg-gradient-to-br from-finance-gold to-finance-electric rounded-lg flex items-center justify-center market-glow">
-                  <span className="text-finance-navy font-bold text-xl">TFS</span>
+                  <span className="text-finance-navy font-bold text-xl">
+                    TFS
+                  </span>
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-br from-finance-gold to-finance-electric rounded-lg opacity-50 blur-md -z-10"></div>
               </div>
-              
+
               {/* St. Xavier's Logo */}
               <div className="relative">
                 <div className="w-12 h-12 bg-gradient-to-br from-finance-navy-light to-finance-electric rounded-lg flex items-center justify-center">
-                  <span className="text-finance-gold font-bold text-sm">SXC</span>
+                  <span className="text-finance-gold font-bold text-sm">
+                    SXC
+                  </span>
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-br from-finance-navy-light to-finance-electric rounded-lg opacity-30 blur-md -z-10"></div>
               </div>
             </div>
-            
+
             <div className="hidden md:block">
               <h1 className="text-xl font-bold text-glow bg-gradient-to-r from-finance-gold to-finance-electric bg-clip-text text-transparent">
                 The Finance Symposium
               </h1>
-              <p className="text-sm text-muted-foreground">St. Xavier's College Mumbai</p>
+              <p className="text-sm text-muted-foreground">
+                St. Xavier's College Mumbai
+              </p>
             </div>
           </div>
 
@@ -147,11 +161,16 @@ export default function Navigation({ scrolled }: NavigationProps) {
                   >
                     {item.icon && <item.icon className="w-4 h-4" />}
                     <span className="font-medium">{item.name}</span>
-                    {(item.name === "About TFS" || item.name === "SPONSORS") && (
-                      <span className="text-finance-electric text-lg ml-1">📊</span>
+                    {(item.name === "About TFS" ||
+                      item.name === "SPONSORS") && (
+                      <span className="text-finance-electric text-lg ml-1">
+                        📊
+                      </span>
                     )}
                     {item.name === "Meet the Team" && (
-                      <span className="text-finance-green text-lg ml-1">💼</span>
+                      <span className="text-finance-green text-lg ml-1">
+                        💼
+                      </span>
                     )}
                   </Link>
                 )}

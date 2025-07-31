@@ -1,6 +1,13 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, X, Mail, Linkedin, Twitter } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  X,
+  Mail,
+  Linkedin,
+  Twitter,
+} from "lucide-react";
 
 interface TeamMember {
   name: string;
@@ -31,7 +38,8 @@ export default function EnhancedTeamSection() {
       name: "Faculty",
       theme: "academic",
       color: "from-blue-500 to-indigo-600",
-      description: "Distinguished faculty leading financial education excellence",
+      description:
+        "Distinguished faculty leading financial education excellence",
       members: [
         {
           name: "Dr. Rajesh Sharma",
@@ -40,7 +48,11 @@ export default function EnhancedTeamSection() {
           bio: "Dr. Sharma brings over 20 years of academic and industry experience in finance. His research focuses on behavioral finance and emerging market dynamics. He has published extensively in leading finance journals and regularly consults for major financial institutions.",
           email: "rajesh.sharma@xaviers.edu",
           linkedin: "#",
-          achievements: ["PhD in Finance from IIM Bangalore", "Author of 15+ research papers", "Consultant to RBI"]
+          achievements: [
+            "PhD in Finance from IIM Bangalore",
+            "Author of 15+ research papers",
+            "Consultant to RBI",
+          ],
         },
         {
           name: "Prof. Priya Mehta",
@@ -49,7 +61,11 @@ export default function EnhancedTeamSection() {
           bio: "Prof. Mehta is a former investment banker with Goldman Sachs who transitioned to academia. She specializes in corporate finance and mergers & acquisitions, bringing real-world experience to the classroom.",
           email: "priya.mehta@xaviers.edu",
           linkedin: "#",
-          achievements: ["15 years at Goldman Sachs", "MBA from Wharton", "Expert in M&A transactions"]
+          achievements: [
+            "15 years at Goldman Sachs",
+            "MBA from Wharton",
+            "Expert in M&A transactions",
+          ],
         },
         {
           name: "Dr. Anil Kumar",
@@ -58,9 +74,13 @@ export default function EnhancedTeamSection() {
           bio: "Dr. Kumar's expertise lies in financial risk management and derivatives. He has worked with major banks in developing risk assessment models and regularly speaks at international finance conferences.",
           email: "anil.kumar@xaviers.edu",
           linkedin: "#",
-          achievements: ["CFA Charter holder", "Risk management expert", "Published author on derivatives"]
-        }
-      ]
+          achievements: [
+            "CFA Charter holder",
+            "Risk management expert",
+            "Published author on derivatives",
+          ],
+        },
+      ],
     },
     {
       name: "Trio Leadership",
@@ -75,7 +95,11 @@ export default function EnhancedTeamSection() {
           bio: "Final year BAF student with exceptional leadership skills. Arjun has spearheaded multiple successful initiatives including the digital transformation of TFS events and expansion of industry partnerships.",
           email: "arjun.patel@student.xaviers.edu",
           linkedin: "#",
-          achievements: ["President of Finance Club", "Goldman Sachs Summer Intern", "Dean's List for 3 consecutive years"]
+          achievements: [
+            "President of Finance Club",
+            "Goldman Sachs Summer Intern",
+            "Dean's List for 3 consecutive years",
+          ],
         },
         {
           name: "Sneha Reddy",
@@ -84,7 +108,11 @@ export default function EnhancedTeamSection() {
           bio: "Known for her strategic thinking and organizational excellence, Sneha has been instrumental in planning and executing large-scale events. She's passionate about sustainable finance and ESG investing.",
           email: "sneha.reddy@student.xaviers.edu",
           linkedin: "#",
-          achievements: ["National Finance Olympiad Winner", "JPMorgan Chase Scholarship Recipient", "ESG Research Publication"]
+          achievements: [
+            "National Finance Olympiad Winner",
+            "JPMorgan Chase Scholarship Recipient",
+            "ESG Research Publication",
+          ],
         },
         {
           name: "Rahul Singh",
@@ -93,9 +121,13 @@ export default function EnhancedTeamSection() {
           bio: "Rahul combines technical expertise with communication skills. He manages all TFS communications and has developed innovative digital platforms for member engagement and event management.",
           email: "rahul.singh@student.xaviers.edu",
           linkedin: "#",
-          achievements: ["Full-stack developer", "Created TFS mobile app", "McKinsey Insight Series participant"]
-        }
-      ]
+          achievements: [
+            "Full-stack developer",
+            "Created TFS mobile app",
+            "McKinsey Insight Series participant",
+          ],
+        },
+      ],
     },
     {
       name: "Networking Team",
@@ -110,7 +142,11 @@ export default function EnhancedTeamSection() {
           bio: "Kavya has built an extensive network of industry professionals and alumni. She coordinates guest lectures, industry visits, and internship opportunities for students.",
           email: "kavya.joshi@student.xaviers.edu",
           linkedin: "#",
-          achievements: ["Connected 500+ students with industry", "Organized 50+ networking events", "KPMG Scholarship Recipient"]
+          achievements: [
+            "Connected 500+ students with industry",
+            "Organized 50+ networking events",
+            "KPMG Scholarship Recipient",
+          ],
         },
         {
           name: "Rohan Gupta",
@@ -119,7 +155,11 @@ export default function EnhancedTeamSection() {
           bio: "Rohan manages relationships with corporate partners and organizes industry-academic collaboration programs. His efforts have secured multiple sponsorships and partnership deals.",
           email: "rohan.gupta@student.xaviers.edu",
           linkedin: "#",
-          achievements: ["Secured 20+ corporate partnerships", "Investment banking internship at UBS", "National debate champion"]
+          achievements: [
+            "Secured 20+ corporate partnerships",
+            "Investment banking internship at UBS",
+            "National debate champion",
+          ],
         },
         {
           name: "Anisha Shah",
@@ -128,9 +168,13 @@ export default function EnhancedTeamSection() {
           bio: "Anisha maintains strong connections with TFS alumni who are now successful professionals in the finance industry. She organizes alumni events and mentorship programs.",
           email: "anisha.shah@student.xaviers.edu",
           linkedin: "#",
-          achievements: ["Manages 1000+ alumni network", "Established mentorship program", "Deloitte internship recipient"]
-        }
-      ]
+          achievements: [
+            "Manages 1000+ alumni network",
+            "Established mentorship program",
+            "Deloitte internship recipient",
+          ],
+        },
+      ],
     },
     {
       name: "Management",
@@ -145,7 +189,11 @@ export default function EnhancedTeamSection() {
           bio: "Vikram orchestrates all TFS events with meticulous attention to detail. His project management skills ensure seamless execution of complex multi-day conferences and workshops.",
           email: "vikram.agarwal@student.xaviers.edu",
           linkedin: "#",
-          achievements: ["Managed 25+ successful events", "Project Management Certification", "Ernst & Young internship"]
+          achievements: [
+            "Managed 25+ successful events",
+            "Project Management Certification",
+            "Ernst & Young internship",
+          ],
         },
         {
           name: "Isha Bansal",
@@ -154,7 +202,11 @@ export default function EnhancedTeamSection() {
           bio: "Isha leads TFS's digital marketing and brand management efforts. Her creative campaigns have significantly increased TFS's visibility and engagement across social media platforms.",
           email: "isha.bansal@student.xaviers.edu",
           linkedin: "#",
-          achievements: ["Grew social media following by 300%", "Digital marketing expert", "PwC Digital Academy graduate"]
+          achievements: [
+            "Grew social media following by 300%",
+            "Digital marketing expert",
+            "PwC Digital Academy graduate",
+          ],
         },
         {
           name: "Karan Malhotra",
@@ -163,53 +215,57 @@ export default function EnhancedTeamSection() {
           bio: "Karan ensures smooth day-to-day operations of TFS activities. His systematic approach and attention to detail keep all initiatives running efficiently and on schedule.",
           email: "karan.malhotra@student.xaviers.edu",
           linkedin: "#",
-          achievements: ["Operations excellence award", "Six Sigma Yellow Belt", "Accenture Strategy internship"]
-        }
-      ]
-    }
+          achievements: [
+            "Operations excellence award",
+            "Six Sigma Yellow Belt",
+            "Accenture Strategy internship",
+          ],
+        },
+      ],
+    },
   ];
 
   const getThemeColors = (theme: string) => {
     switch (theme) {
-      case 'academic':
+      case "academic":
         return {
-          primary: 'text-blue-400',
-          secondary: 'text-indigo-300',
-          bg: 'from-blue-600/20 to-indigo-600/20',
-          border: 'border-blue-400/30',
-          glow: 'shadow-[0_0_30px_rgba(59,130,246,0.3)]'
+          primary: "text-blue-400",
+          secondary: "text-indigo-300",
+          bg: "from-blue-600/20 to-indigo-600/20",
+          border: "border-blue-400/30",
+          glow: "shadow-[0_0_30px_rgba(59,130,246,0.3)]",
         };
-      case 'leadership':
+      case "leadership":
         return {
-          primary: 'text-purple-400',
-          secondary: 'text-pink-300',
-          bg: 'from-purple-600/20 to-pink-600/20',
-          border: 'border-purple-400/30',
-          glow: 'shadow-[0_0_30px_rgba(147,51,234,0.3)]'
+          primary: "text-purple-400",
+          secondary: "text-pink-300",
+          bg: "from-purple-600/20 to-pink-600/20",
+          border: "border-purple-400/30",
+          glow: "shadow-[0_0_30px_rgba(147,51,234,0.3)]",
         };
-      case 'networking':
+      case "networking":
         return {
-          primary: 'text-green-400',
-          secondary: 'text-teal-300',
-          bg: 'from-green-600/20 to-teal-600/20',
-          border: 'border-green-400/30',
-          glow: 'shadow-[0_0_30px_rgba(34,197,94,0.3)]'
+          primary: "text-green-400",
+          secondary: "text-teal-300",
+          bg: "from-green-600/20 to-teal-600/20",
+          border: "border-green-400/30",
+          glow: "shadow-[0_0_30px_rgba(34,197,94,0.3)]",
         };
-      case 'executive':
+      case "executive":
         return {
-          primary: 'text-finance-gold',
-          secondary: 'text-yellow-300',
-          bg: 'from-finance-gold/20 to-yellow-600/20',
-          border: 'border-finance-gold/30',
-          glow: 'shadow-[0_0_30px_rgba(255,215,0,0.3)]'
+          primary: "text-finance-gold",
+          secondary: "text-yellow-300",
+          bg: "from-finance-gold/20 to-yellow-600/20",
+          border: "border-finance-gold/30",
+          glow: "shadow-[0_0_30px_rgba(255,215,0,0.3)]",
         };
       default:
         return {
-          primary: 'text-finance-gold',
-          secondary: 'text-finance-electric',
-          bg: 'from-finance-gold/20 to-finance-electric/20',
-          border: 'border-finance-gold/30',
-          glow: 'shadow-[0_0_30px_rgba(255,215,0,0.3)]'
+          primary: "text-finance-gold",
+          secondary: "text-finance-electric",
+          bg: "from-finance-gold/20 to-finance-electric/20",
+          border: "border-finance-gold/30",
+          glow: "shadow-[0_0_30px_rgba(255,215,0,0.3)]",
         };
     }
   };
@@ -221,7 +277,10 @@ export default function EnhancedTeamSection() {
 
   const prevMember = () => {
     const currentGroup = teamGroups[selectedGroup];
-    setCurrentMemberIndex((prev) => (prev - 1 + currentGroup.members.length) % currentGroup.members.length);
+    setCurrentMemberIndex(
+      (prev) =>
+        (prev - 1 + currentGroup.members.length) % currentGroup.members.length,
+    );
   };
 
   const currentGroup = teamGroups[selectedGroup];
@@ -231,7 +290,9 @@ export default function EnhancedTeamSection() {
     <section className="py-20 px-6 bg-gradient-to-br from-finance-navy via-finance-navy-light to-finance-navy relative overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 opacity-20">
-        <div className={`absolute inset-0 bg-gradient-to-br ${themeColors.bg}`}></div>
+        <div
+          className={`absolute inset-0 bg-gradient-to-br ${themeColors.bg}`}
+        ></div>
       </div>
 
       <div className="container mx-auto relative z-10">
@@ -261,7 +322,7 @@ export default function EnhancedTeamSection() {
               className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 relative overflow-hidden ${
                 selectedGroup === index
                   ? `bg-gradient-to-r ${group.color} text-white ${getThemeColors(group.theme).glow}`
-                  : 'bg-finance-navy/50 text-muted-foreground hover:text-foreground border border-finance-gold/20'
+                  : "bg-finance-navy/50 text-muted-foreground hover:text-foreground border border-finance-gold/20"
               }`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -314,23 +375,28 @@ export default function EnhancedTeamSection() {
               <div className="flex items-center justify-center space-x-8">
                 {currentGroup.members.map((member, index) => {
                   const isActive = index === currentMemberIndex;
-                  const isPrev = index === (currentMemberIndex - 1 + currentGroup.members.length) % currentGroup.members.length;
-                  const isNext = index === (currentMemberIndex + 1) % currentGroup.members.length;
-                  
-                  let transform = 'translateX(0px) rotateY(0deg) scale(0.7)';
+                  const isPrev =
+                    index ===
+                    (currentMemberIndex - 1 + currentGroup.members.length) %
+                      currentGroup.members.length;
+                  const isNext =
+                    index ===
+                    (currentMemberIndex + 1) % currentGroup.members.length;
+
+                  let transform = "translateX(0px) rotateY(0deg) scale(0.7)";
                   let zIndex = 1;
                   let opacity = 0.5;
 
                   if (isActive) {
-                    transform = 'translateX(0px) rotateY(0deg) scale(1)';
+                    transform = "translateX(0px) rotateY(0deg) scale(1)";
                     zIndex = 10;
                     opacity = 1;
                   } else if (isPrev) {
-                    transform = 'translateX(-100px) rotateY(25deg) scale(0.85)';
+                    transform = "translateX(-100px) rotateY(25deg) scale(0.85)";
                     zIndex = 5;
                     opacity = 0.7;
                   } else if (isNext) {
-                    transform = 'translateX(100px) rotateY(-25deg) scale(0.85)';
+                    transform = "translateX(100px) rotateY(-25deg) scale(0.85)";
                     zIndex = 5;
                     opacity = 0.7;
                   }
@@ -338,7 +404,7 @@ export default function EnhancedTeamSection() {
                   return (
                     <motion.div
                       key={index}
-                      className={`absolute w-80 cursor-pointer ${isActive ? 'pointer-events-auto' : 'pointer-events-none'}`}
+                      className={`absolute w-80 cursor-pointer ${isActive ? "pointer-events-auto" : "pointer-events-none"}`}
                       style={{
                         transform,
                         zIndex,
@@ -353,10 +419,14 @@ export default function EnhancedTeamSection() {
                       whileHover={isActive ? { scale: 1.05 } : {}}
                       onClick={() => isActive && setSelectedMember(member)}
                     >
-                      <div className={`backdrop-blur-xl bg-gradient-to-br ${themeColors.bg} rounded-2xl p-6 border ${themeColors.border} ${isActive ? themeColors.glow : ''} transition-all duration-500`}>
+                      <div
+                        className={`backdrop-blur-xl bg-gradient-to-br ${themeColors.bg} rounded-2xl p-6 border ${themeColors.border} ${isActive ? themeColors.glow : ""} transition-all duration-500`}
+                      >
                         <div className="text-center">
                           <div className="relative mb-4 mx-auto w-32 h-32">
-                            <div className={`absolute inset-0 bg-gradient-to-br ${currentGroup.color} rounded-full opacity-20 blur-lg`}></div>
+                            <div
+                              className={`absolute inset-0 bg-gradient-to-br ${currentGroup.color} rounded-full opacity-20 blur-lg`}
+                            ></div>
                             <img
                               src={member.image}
                               alt={member.name}
@@ -366,18 +436,24 @@ export default function EnhancedTeamSection() {
                               <motion.div
                                 className={`absolute inset-0 rounded-full border-2 ${themeColors.primary} opacity-50`}
                                 animate={{ rotate: 360 }}
-                                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                                transition={{
+                                  duration: 20,
+                                  repeat: Infinity,
+                                  ease: "linear",
+                                }}
                               />
                             )}
                           </div>
-                          
-                          <h3 className={`text-xl font-bold ${themeColors.primary} mb-2`}>
+
+                          <h3
+                            className={`text-xl font-bold ${themeColors.primary} mb-2`}
+                          >
                             {member.name}
                           </h3>
                           <p className={`${themeColors.secondary} mb-4`}>
                             {member.role}
                           </p>
-                          
+
                           {isActive && (
                             <motion.button
                               initial={{ opacity: 0, y: 10 }}
@@ -405,8 +481,8 @@ export default function EnhancedTeamSection() {
                 onClick={() => setCurrentMemberIndex(index)}
                 className={`w-3 h-3 rounded-full transition-all duration-300 ${
                   index === currentMemberIndex
-                    ? `${themeColors.primary.replace('text-', 'bg-')} ${themeColors.glow}`
-                    : 'bg-finance-navy border border-finance-gold/30'
+                    ? `${themeColors.primary.replace("text-", "bg-")} ${themeColors.glow}`
+                    : "bg-finance-navy border border-finance-gold/30"
                 }`}
               />
             ))}
@@ -444,7 +520,9 @@ export default function EnhancedTeamSection() {
                 {/* Member Image */}
                 <div className="flex-shrink-0">
                   <div className="relative w-48 h-48 mx-auto md:mx-0">
-                    <div className={`absolute inset-0 bg-gradient-to-br ${currentGroup.color} rounded-xl opacity-20 blur-xl`}></div>
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-br ${currentGroup.color} rounded-xl opacity-20 blur-xl`}
+                    ></div>
                     <img
                       src={selectedMember.image}
                       alt={selectedMember.name}
@@ -453,7 +531,11 @@ export default function EnhancedTeamSection() {
                     <motion.div
                       className={`absolute inset-0 rounded-xl border-2 ${themeColors.primary} opacity-30`}
                       animate={{ rotate: 360 }}
-                      transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                      transition={{
+                        duration: 30,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
                     />
                   </div>
                 </div>
@@ -468,7 +550,7 @@ export default function EnhancedTeamSection() {
                   >
                     {selectedMember.name}
                   </motion.h3>
-                  
+
                   <motion.p
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -497,22 +579,30 @@ export default function EnhancedTeamSection() {
                       transition={{ delay: 0.4 }}
                       className="mb-6"
                     >
-                      <h4 className={`text-lg font-semibold ${themeColors.primary} mb-3`}>
+                      <h4
+                        className={`text-lg font-semibold ${themeColors.primary} mb-3`}
+                      >
                         Key Achievements
                       </h4>
                       <ul className="space-y-2">
-                        {selectedMember.achievements.map((achievement, index) => (
-                          <motion.li
-                            key={index}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.5 + index * 0.1 }}
-                            className="flex items-start space-x-3"
-                          >
-                            <div className={`w-2 h-2 rounded-full ${themeColors.primary.replace('text-', 'bg-')} mt-2 flex-shrink-0`}></div>
-                            <span className="text-foreground/80">{achievement}</span>
-                          </motion.li>
-                        ))}
+                        {selectedMember.achievements.map(
+                          (achievement, index) => (
+                            <motion.li
+                              key={index}
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.5 + index * 0.1 }}
+                              className="flex items-start space-x-3"
+                            >
+                              <div
+                                className={`w-2 h-2 rounded-full ${themeColors.primary.replace("text-", "bg-")} mt-2 flex-shrink-0`}
+                              ></div>
+                              <span className="text-foreground/80">
+                                {achievement}
+                              </span>
+                            </motion.li>
+                          ),
+                        )}
                       </ul>
                     </motion.div>
                   )}
@@ -537,7 +627,9 @@ export default function EnhancedTeamSection() {
                         href={selectedMember.linkedin}
                         className={`p-3 rounded-full backdrop-blur-md bg-finance-navy/50 ${themeColors.border} border hover:scale-110 transition-all duration-300`}
                       >
-                        <Linkedin className={`w-5 h-5 ${themeColors.primary}`} />
+                        <Linkedin
+                          className={`w-5 h-5 ${themeColors.primary}`}
+                        />
                       </a>
                     )}
                     {selectedMember.twitter && (
