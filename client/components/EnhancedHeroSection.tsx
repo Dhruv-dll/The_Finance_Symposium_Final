@@ -3,7 +3,8 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Float, Text3D, OrbitControls, Sphere, Box } from "@react-three/drei";
 import { motion, useScroll, useTransform, useMotionValue } from "framer-motion";
 import * as THREE from "three";
-import { accurateMarketDataService, AccurateStockData, MarketSentiment, safeFormatTimestamp } from "../services/accurateMarketData";
+import { finnhubMarketDataService, FinnhubStockData, MarketSentiment, safeFormatTimestamp } from "../services/finnhubMarketData";
+import MarketDashboardDialog from "./MarketDashboardDialog";
 
 // Enhanced Particle System with Financial Symbols
 function FinancialParticles() {
@@ -132,7 +133,7 @@ function FloatingGeometry() {
 // Enhanced Market Ticker with Accurate Real-Time Data
 function EnhancedMarketTicker() {
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [stockData, setStockData] = useState<AccurateStockData[]>([]);
+  const [stockData, setStockData] = useState<FinnhubStockData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [marketSentiment, setMarketSentiment] = useState<MarketSentiment>({
     sentiment: 'neutral',
@@ -152,9 +153,9 @@ function EnhancedMarketTicker() {
   }, []);
 
   useEffect(() => {
-    // Subscribe to accurate real-time market updates
+    // Subscribe to Finnhub real-time market updates
     setConnectionStatus('reconnecting');
-    const unsubscribe = accurateMarketDataService.subscribeToUpdates((data) => {
+    const unsubscribe = finnhubMarketDataService.subscribeToUpdates((data) => {
       setStockData(data.stocks);
       setMarketSentiment(data.sentiment);
       setLastUpdate(new Date());
@@ -166,7 +167,7 @@ function EnhancedMarketTicker() {
   }, []);
 
   const isMarketOpen = () => {
-    return accurateMarketDataService.isMarketOpen();
+    return finnhubMarketDataService.isMarketOpen();
   };
 
   const getSentimentColor = () => {
@@ -238,7 +239,7 @@ function EnhancedMarketTicker() {
 
             <div className="flex items-center space-x-2 text-xs">
               <div className="w-2 h-2 bg-finance-electric rounded-full animate-pulse"></div>
-              <span className="text-finance-electric">Simulation Mode</span>
+              <span className="text-finance-electric">Finnhub Live</span>
             </div>
 
             {isLoading && (
@@ -599,19 +600,19 @@ export default function EnhancedHeroSection() {
             </p>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.5 }}
           >
-            <motion.button 
+            <motion.button
               className="px-10 py-4 bg-gradient-to-r from-finance-gold to-finance-electric text-finance-navy font-bold rounded-xl relative overflow-hidden group"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               <span className="relative z-10">Explore Events</span>
-              <motion.div 
+              <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-finance-electric to-finance-gold opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 animate={{
                   boxShadow: [
@@ -623,14 +624,17 @@ export default function EnhancedHeroSection() {
                 transition={{ duration: 2, repeat: Infinity }}
               />
             </motion.button>
-            
-            <motion.button 
+
+            {/* Market Dashboard Button */}
+            <MarketDashboardDialog className="" />
+
+            <motion.button
               className="px-10 py-4 border-2 border-finance-gold text-finance-gold rounded-xl hover:bg-finance-gold hover:text-finance-navy transition-all duration-500 relative overflow-hidden group"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               <span className="relative z-10">Join Community</span>
-              <motion.div 
+              <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-finance-gold/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"
               />
             </motion.button>
