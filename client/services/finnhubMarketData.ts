@@ -132,7 +132,7 @@ class FinnhubMarketDataService {
   }
 
   // Fallback mode tracking
-  private fallbackMode = true; // Start in fallback mode to avoid CORS issues
+  private fallbackMode = false; // Start with server API, fallback if needed
   private apiFailureCount = 0;
   private subscribers: ((data: { stocks: FinnhubStockData[]; sentiment: MarketSentiment }) => void)[] = [];
   private updateInterval: NodeJS.Timeout | null = null;
