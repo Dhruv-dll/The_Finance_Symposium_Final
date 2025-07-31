@@ -19,7 +19,7 @@ class FinnhubMarketDataService {
     { symbol: "^BSESN", name: "SENSEX", finnhubSymbol: "^BSESN", isIndex: true },
   ];
 
-  // ✅ Enhanced fetch with better error handling for Indian markets
+  // ✅ Enhanced fetch using Yahoo Finance for Indian markets
   async fetchStockFromFinnhub(
     symbol: string,
     finnhubSymbol: string,
@@ -30,8 +30,18 @@ class FinnhubMarketDataService {
     }
 
     try {
+      // Convert to Yahoo Finance symbol format
+      let yahooSymbol = finnhubSymbol;
+      if (finnhubSymbol.endsWith('.NS')) {
+        yahooSymbol = finnhubSymbol; // Keep .NS for Yahoo
+      } else if (symbol === "^NSEI") {
+        yahooSymbol = "^NSEI";
+      } else if (symbol === "^BSESN") {
+        yahooSymbol = "^BSESN";
+      }
+
       const response = await fetch(
-        `${this.BASE_URL}/quote?symbol=${finnhubSymbol}&token=${this.API_KEY}`,
+        `https://query1.finance.yahoo.com/v8/finance/chart/${yahooSymbol}?interval=1d&range=1d`,
         {
           method: "GET",
           headers: {
@@ -43,12 +53,12 @@ class FinnhubMarketDataService {
 
       if (!response.ok) {
         if (response.status === 403) {
-          console.warn(`❌ Finnhub API access denied for ${symbol} (403 Forbidden)`);
+          console.warn(`❌ Yahoo Finance API access denied for ${symbol} (403 Forbidden)`);
           return this.getFallbackStockData(symbol);
         }
         if (response.status === 429) {
           console.warn(`⏱️ Rate limit exceeded for ${symbol}`);
-          await this.delay(1000); // Wait 1 second and retry
+          await this.delay(1000);
           return this.getFallbackStockData(symbol);
         }
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
