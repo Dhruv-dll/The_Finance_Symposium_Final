@@ -3,7 +3,7 @@ class FinnhubMarketDataService {
   private readonly BASE_URL = "https://finnhub.io/api/v1";
 
   private stocks = [
-    // ✅ Focus on stocks that Finnhub definitely supports
+    // ✅ Focus on stocks that Yahoo Finance supports
     { symbol: "RELIANCE.NS", name: "RELIANCE", finnhubSymbol: "RELIANCE.NS" },
     { symbol: "TCS.NS", name: "TCS", finnhubSymbol: "TCS.NS" },
     { symbol: "HDFCBANK.NS", name: "HDFC BANK", finnhubSymbol: "HDFCBANK.NS" },
