@@ -227,9 +227,9 @@ export default function MarketSidebar() {
               <div className="space-y-3">
                 <h4 className="text-sm font-semibold text-finance-electric">Cryptocurrency</h4>
                 <div className="space-y-2">
-                  {Object.entries(cryptoData).map(([symbol, data], index) => (
+                  {cryptoData.map((crypto, index) => (
                     <motion.div
-                      key={symbol}
+                      key={crypto.symbol}
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
@@ -238,14 +238,20 @@ export default function MarketSidebar() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-2">
                           <Bitcoin className="w-4 h-4 text-finance-gold" />
-                          <span className="font-medium text-finance-electric text-sm">{symbol}</span>
+                          <div>
+                            <span className="font-medium text-finance-electric text-sm">{crypto.symbol}</span>
+                            <div className="text-xs text-muted-foreground">{crypto.name}</div>
+                          </div>
                         </div>
                         <div className="text-right">
                           <div className="text-xs text-foreground">
-                            ${formatPrice(data.price)}
+                            ₹{formatPrice(crypto.price)}
                           </div>
-                          <div className={`text-xs ${getChangeColor(data.change)}`}>
-                            {formatChange(data.change)}
+                          <div className={`text-xs ${getChangeColor(crypto.changePercent)}`}>
+                            {formatChange(crypto.changePercent)}
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            {crypto.timestamp.toLocaleTimeString('en-IN')}
                           </div>
                         </div>
                       </div>
@@ -254,29 +260,38 @@ export default function MarketSidebar() {
                 </div>
               </div>
 
-              {/* USD/INR Exchange Rate */}
+              {/* Forex Exchange Rates */}
               <div className="space-y-3">
                 <h4 className="text-sm font-semibold text-finance-electric">Forex</h4>
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  className="p-3 rounded-lg bg-finance-navy/30 border border-finance-green/20 hover:border-finance-green/40 transition-all duration-300"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <DollarSign className="w-4 h-4 text-finance-gold" />
-                      <span className="font-medium text-finance-green text-sm">USD/INR</span>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-xs text-foreground">
-                        ₹{formatPrice(forexData.USDINR.price)}
+                <div className="space-y-2">
+                  {forexData.map((forex, index) => (
+                    <motion.div
+                      key={forex.pair}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="p-3 rounded-lg bg-finance-navy/30 border border-finance-green/20 hover:border-finance-green/40 transition-all duration-300"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-2">
+                          <DollarSign className="w-4 h-4 text-finance-gold" />
+                          <span className="font-medium text-finance-green text-sm">{forex.pair}</span>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-xs text-foreground">
+                            ₹{formatPrice(forex.price)}
+                          </div>
+                          <div className={`text-xs ${getChangeColor(forex.changePercent)}`}>
+                            {formatChange(forex.changePercent)}
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            {forex.timestamp.toLocaleTimeString('en-IN')}
+                          </div>
+                        </div>
                       </div>
-                      <div className={`text-xs ${getChangeColor(forexData.USDINR.change)}`}>
-                        {formatChange(forexData.USDINR.change)}
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
 
               {/* Economic Calendar */}
