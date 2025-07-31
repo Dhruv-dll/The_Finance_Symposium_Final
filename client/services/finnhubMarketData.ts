@@ -64,7 +64,15 @@ class FinnhubMarketDataService {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
 
-      const data = await response.json();
+      const proxyData = await response.json();
+
+      // ✅ Handle CORS proxy response format
+      if (!proxyData.contents) {
+        console.warn(`CORS proxy failed for ${symbol}:`, proxyData);
+        return this.getFallbackStockData(symbol);
+      }
+
+      const data = JSON.parse(proxyData.contents);
 
       // ✅ Better validation for Yahoo Finance response
       if (!data || typeof data !== 'object') {
