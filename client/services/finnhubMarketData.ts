@@ -147,4 +147,104 @@ class FinnhubMarketDataService {
       dayLow: Math.round(currentPrice * 0.985 * 100) / 100,
     };
   }
+
+  // Market timing for Indian markets (IST)
+  private isMarketOpen(): boolean {
+    const now = new Date();
+    const ist = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+    const day = ist.getDay(); // 0 = Sunday, 6 = Saturday
+    const hours = ist.getHours();
+    const minutes = ist.getMinutes();
+    const timeInMinutes = hours * 60 + minutes;
+
+    // Market closed on weekends
+    if (day === 0 || day === 6) return false;
+
+    // Indian market hours: 9:15 AM to 3:30 PM IST
+    const marketOpen = 9 * 60 + 15; // 9:15 AM
+    const marketClose = 15 * 60 + 30; // 3:30 PM
+
+    return timeInMinutes >= marketOpen && timeInMinutes <= marketClose;
+  }
+
+  // Fallback mode tracking
+  private fallbackMode = false;
+  private apiFailureCount = 0;
+  private subscribers: ((data: { stocks: FinnhubStockData[] }) => void)[] = [];
+  private updateInterval: NodeJS.Timeout | null = null;
+
+  // Utility delay function
+  private delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  // Public method to get all stock data
+  async getAllStocks(): Promise<FinnhubStockData[]> {
+    const results = await Promise.all(
+      this.stocks.map(stock =>
+        this.fetchStockFromFinnhub(stock.symbol, stock.finnhubSymbol, stock.isIndex)
+      )
+    );
+    return results.filter((result): result is FinnhubStockData => result !== null);
+  }
+
+  // Public method to update all data and notify subscribers
+  async updateAllData(): Promise<void> {
+    try {
+      const stocks = await this.getAllStocks();
+      this.subscribers.forEach(callback => callback({ stocks }));
+    } catch (error) {
+      console.error("Failed to update market data:", error);
+    }
+  }
+
+  // Public method to check if market is open
+  isMarketOpen(): boolean {
+    return this.isMarketOpen();
+  }
+
+  // Subscription management
+  subscribeToUpdates(callback: (data: { stocks: FinnhubStockData[] }) => void): () => void {
+    this.subscribers.push(callback);
+
+    // Start update interval if not already running
+    if (!this.updateInterval) {
+      this.updateInterval = setInterval(() => {
+        this.updateAllData();
+      }, 10000); // Update every 10 seconds
+
+      // Initial fetch
+      this.updateAllData();
+    }
+
+    // Return unsubscribe function
+    return () => {
+      const index = this.subscribers.indexOf(callback);
+      if (index > -1) {
+        this.subscribers.splice(index, 1);
+      }
+
+      // Stop updates if no subscribers
+      if (this.subscribers.length === 0 && this.updateInterval) {
+        clearInterval(this.updateInterval);
+        this.updateInterval = null;
+      }
+    };
+  }
 }
+
+// Type definitions
+export interface FinnhubStockData {
+  symbol: string;
+  name: string;
+  price: number;
+  change: number;
+  changePercent: number;
+  timestamp: Date;
+  marketState: string;
+  dayHigh: number;
+  dayLow: number;
+}
+
+// Export the service instance
+export const finnhubMarketDataService = new FinnhubMarketDataService();
