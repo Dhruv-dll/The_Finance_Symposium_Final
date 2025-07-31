@@ -250,13 +250,23 @@ class AccurateMarketDataService {
 
       const stockInfo = this.stocks.find(s => s.symbol === symbol);
       
+      // Ensure timestamp is always a proper Date object
+      let timestamp: Date;
+      try {
+        timestamp = meta.regularMarketTime
+          ? new Date(meta.regularMarketTime * 1000)
+          : new Date();
+      } catch (error) {
+        timestamp = new Date();
+      }
+
       return {
         symbol: symbol,
         name: stockInfo?.name || symbol,
         price: currentPrice,
         change: change,
         changePercent: changePercent,
-        timestamp: new Date(meta.regularMarketTime ? meta.regularMarketTime * 1000 : Date.now()),
+        timestamp: timestamp,
         marketState: meta.marketState || 'CLOSED',
         volume: meta.regularMarketVolume || undefined,
         dayHigh: meta.regularMarketDayHigh || undefined,
