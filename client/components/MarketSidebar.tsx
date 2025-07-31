@@ -288,7 +288,10 @@ export default function MarketSidebar() {
                             {formatChange(forex.changePercent)}
                           </div>
                           <div className="text-xs text-muted-foreground">
-                            {forex.timestamp.toLocaleTimeString('en-IN')}
+                            {forex.timestamp instanceof Date
+                              ? forex.timestamp.toLocaleTimeString('en-IN')
+                              : new Date(forex.timestamp).toLocaleTimeString('en-IN')
+                            }
                           </div>
                         </div>
                       </div>
