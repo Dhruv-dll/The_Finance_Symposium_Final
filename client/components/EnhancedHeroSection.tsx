@@ -258,16 +258,13 @@ function EnhancedMarketTicker() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: index * 0.1 }}
-                  className="flex items-center space-x-3 whitespace-nowrap"
+                  className="flex items-center space-x-3 whitespace-nowrap relative group"
                 >
-                  <span className="font-bold text-finance-gold text-shadow-lg">
-                    {stock.symbol}
+                  <span className="font-bold text-finance-gold text-shadow-lg group-hover:text-finance-electric transition-colors duration-300">
+                    {stock.name}
                   </span>
                   <span className="text-foreground font-medium">
-                    {stock.symbol === 'SENSEX' || stock.symbol === 'NIFTY' 
-                      ? stock.price.toLocaleString('en-IN', { minimumFractionDigits: 2 })
-                      : `₹${stock.price.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`
-                    }
+                    {formatPrice(stock.symbol, stock.price)}
                   </span>
                   <span className={`flex items-center space-x-1 font-medium ${
                     stock.change > 0 ? 'text-finance-green' :
@@ -282,7 +279,87 @@ function EnhancedMarketTicker() {
                       ({stock.changePercent > 0 ? '+' : ''}{stock.changePercent.toFixed(2)}%)
                     </span>
                   </span>
-                  {Math.abs(stock.changePercent) > 2 && (
+
+                  {/* Volume indicator for stocks */}
+                  {stock.volume && stock.volume > 0 && (
+                    <span className="text-xs text-muted-foreground">
+                      Vol: {(stock.volume / 1000000).toFixed(1)}M
+                    </span>
+                  )}
+
+                  {/* High volatility indicator */}
+                  {Math.abs(stock.changePercent) > 3 && (
+                    <motion.div
+                      className={`w-2 h-2 rounded-full ${
+                        stock.change > 0 ? 'bg-finance-green' : 'bg-finance-red'
+                      } shadow-lg`}
+                      animate={{
+                        scale: [1, 1.3, 1],
+                        opacity: [0.7, 1, 0.7]
+                      }}
+                      transition={{
+                        duration: 1.5,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                    />
+                  )}
+
+                  {/* Market state indicator */}
+                  {stock.marketState && stock.marketState !== 'REGULAR' && (
+                    <span className="text-xs text-finance-electric bg-finance-electric/20 px-2 py-1 rounded">
+                      {stock.marketState}
+                    </span>
+                  )}
+
+                  {/* Enhanced hover tooltip */}
+                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                    <div className="bg-finance-navy-light/90 backdrop-blur-sm border border-finance-gold/20 rounded-lg p-3 text-xs whitespace-nowrap">
+                      <div className="font-medium text-finance-gold">{stock.name}</div>
+                      <div className="text-foreground">Price: {formatPrice(stock.symbol, stock.price)}</div>
+                      {stock.dayHigh && stock.dayLow && (
+                        <div className="text-muted-foreground">
+                          Range: {formatPrice(stock.symbol, stock.dayLow)} - {formatPrice(stock.symbol, stock.dayHigh)}
+                        </div>
+                      )}
+                      <div className="text-xs text-finance-electric">
+                        Updated: {stock.timestamp.toLocaleTimeString('en-IN')}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+
+              {/* Duplicate for continuous scroll */}
+              {stockData.map((stock, index) => (
+                <motion.div
+                  key={`${stock.symbol}-dup-${index}`}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: (index + stockData.length) * 0.1 }}
+                  className="flex items-center space-x-3 whitespace-nowrap"
+                >
+                  <span className="font-bold text-finance-gold text-shadow-lg">
+                    {stock.name}
+                  </span>
+                  <span className="text-foreground font-medium">
+                    {formatPrice(stock.symbol, stock.price)}
+                  </span>
+                  <span className={`flex items-center space-x-1 font-medium ${
+                    stock.change > 0 ? 'text-finance-green' :
+                    stock.change < 0 ? 'text-finance-red' :
+                    'text-finance-electric'
+                  } text-shadow-sm`}>
+                    <span className="text-xs">
+                      {stock.change > 0 ? '▲' : stock.change < 0 ? '▼' : '●'}
+                    </span>
+                    <span>{Math.abs(stock.change).toFixed(2)}</span>
+                    <span className="text-xs">
+                      ({stock.changePercent > 0 ? '+' : ''}{stock.changePercent.toFixed(2)}%)
+                    </span>
+                  </span>
+
+                  {Math.abs(stock.changePercent) > 3 && (
                     <div className={`w-1 h-1 rounded-full animate-pulse ${
                       stock.change > 0 ? 'bg-finance-green' : 'bg-finance-red'
                     } shadow-lg`}></div>
