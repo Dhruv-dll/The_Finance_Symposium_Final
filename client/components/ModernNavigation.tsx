@@ -327,7 +327,12 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                         </NavigationMenuTrigger>
 
                         <NavigationMenuContent>
-                          <div className="w-64 p-4 bg-finance-navy/90 backdrop-blur-xl border border-finance-gold/20 rounded-xl">
+                          <div
+                            className="w-64 p-4 bg-finance-navy/90 backdrop-blur-xl border border-finance-gold/20 rounded-xl"
+                            style={{
+                              boxShadow: "0 8px 32px rgba(255, 215, 0, 0.2), 0 0 20px rgba(255, 215, 0, 0.1)",
+                            }}
+                          >
                             <div className="space-y-2">
                               {item.dropdown.map(
                                 (dropdownItem, dropdownIndex) => {
