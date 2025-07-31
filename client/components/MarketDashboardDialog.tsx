@@ -162,7 +162,7 @@ export default function MarketDashboardDialog({ className }: MarketDashboardDial
                   animate={isLoading ? { rotate: 360 } : {}}
                   transition={{ duration: 1, repeat: isLoading ? Infinity : 0, ease: "linear" }}
                 >
-                  <Refresh className="w-4 h-4 text-finance-gold" />
+                  <RefreshCw className="w-4 h-4 text-finance-gold" />
                 </motion.div>
               </Button>
             </div>
