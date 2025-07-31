@@ -90,8 +90,12 @@ export default function FloatingMarketIcon({
     })}`;
   };
 
-  // Floating icon click animation
+  // Floating icon click animation with haptic feedback
   const handleIconClick = () => {
+    // Haptic feedback for mobile devices
+    if ('vibrate' in navigator) {
+      navigator.vibrate(50); // Short vibration
+    }
     setIsOpen(true);
   };
 
