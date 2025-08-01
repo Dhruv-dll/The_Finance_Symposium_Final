@@ -408,9 +408,8 @@ export const getMarketData: RequestHandler = async (req, res) => {
       fetchCurrencyData(currency.symbol),
     );
 
-    const cryptoPromises = CRYPTO_SYMBOLS.map((crypto) =>
-      fetchCryptoData(crypto.symbol, crypto.name, crypto.inrMultiplier),
-    );
+    // Fetch all crypto data in one batch call
+    const cryptoDataPromise = fetchAllCryptoData();
 
     const [stockResults, currencyResults, cryptoResults] = await Promise.all([
       Promise.all(stockPromises),
