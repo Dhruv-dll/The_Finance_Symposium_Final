@@ -50,6 +50,8 @@ export default function FloatingMarketIcon({
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
   const [connectionStatus, setConnectionStatus] = useState<"connected" | "loading" | "error">("loading");
   const [dataJustUpdated, setDataJustUpdated] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
     setConnectionStatus("loading");
