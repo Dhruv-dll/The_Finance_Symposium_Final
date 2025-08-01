@@ -31,7 +31,7 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
 
   const terminalSteps = getTerminalSteps();
 
-  const marketData = [
+  const staticMarketData = [
     "SENSEX: 73,721.42 (+234.56)",
     "NIFTY: 22,361.75 (+78.90)",
     "RELIANCE: 2,456.75 (+12.45)",
