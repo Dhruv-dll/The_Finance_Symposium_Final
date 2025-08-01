@@ -414,7 +414,7 @@ export const getMarketData: RequestHandler = async (req, res) => {
     const [stockResults, currencyResults, cryptoResults] = await Promise.all([
       Promise.all(stockPromises),
       Promise.all(currencyPromises),
-      Promise.all(cryptoPromises),
+      cryptoDataPromise,
     ]);
 
     const stocks = stockResults.filter(
