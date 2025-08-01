@@ -4,6 +4,9 @@ import EnhancedHeroSection from "../components/EnhancedHeroSection";
 import TerminalLoader from "../components/TerminalLoader";
 import EnhancedTeamSection from "../components/EnhancedTeamSection";
 import MarketDataErrorBoundary from "../components/MarketDataErrorBoundary";
+import EventsSection from "../components/EventsSection";
+import AboutSection from "../components/AboutSection";
+import ContactSection from "../components/ContactSection";
 import MarketDashboardDialog from "../components/MarketDashboardDialog";
 import { motion, useScroll, useTransform } from "framer-motion";
 import {
