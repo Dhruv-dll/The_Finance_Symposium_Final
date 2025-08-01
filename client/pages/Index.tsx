@@ -386,64 +386,15 @@ export default function Index() {
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
-                className="text-center mb-16"
+                className="text-center"
               >
                 <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-finance-gold via-finance-electric to-finance-gold bg-clip-text text-transparent animate-glow">
                   Finsight - Financial Insights
                 </h2>
                 <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
-                  The official Magazine of the Department of Accounting and Finance (BAF) at St. Xavier's College (Autonomous), Mumbai.
-                  As the world of finance becomes more progressive and dynamic, we aspire to become the premier compilation providing knowledge
-                  that delves into the multitudes of finance and management - a valuable asset in our readers' lives.
+                  Finsight, the official Magazine of the Department of Accounting and Finance (BAF) at St. Xavier's College (Autonomous), Mumbai, is thrilled to announce the second edition of the publication. As the world of finance continues to become more progressive and dynamic, we aspire to become the premier compilation to provide knowledge that delves into the multitudes of finance and management. Ranging from behavioural and personal finance to analyzing market trends and deconstructing economic news and laws, 'FINSIGHT' serves to become a valuable asset in its readers' lives.
                 </p>
               </motion.div>
-
-              <div className="grid md:grid-cols-3 gap-8">
-                {finsightIssues.map((issue, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: index * 0.2 }}
-                    className="group cursor-pointer"
-                  >
-                    <div className="relative glassmorphism rounded-2xl overflow-hidden market-glow group-hover:scale-105 group-hover:rotate-1 transition-all duration-500">
-                      <div className="aspect-[3/4] bg-gradient-to-br from-finance-gold/20 to-finance-electric/20 p-8 flex flex-col justify-between">
-                        <div>
-                          <div className="text-finance-electric text-sm font-medium mb-2">
-                            {issue.issue}
-                          </div>
-                          <h3 className="text-2xl font-bold text-finance-gold mb-4">
-                            {issue.title}
-                          </h3>
-                          <div className="text-muted-foreground text-sm">
-                            {issue.date}
-                          </div>
-                        </div>
-
-                        <div>
-                          <div className="space-y-2 mb-6">
-                            {issue.topics.map((topic, idx) => (
-                              <div
-                                key={idx}
-                                className="text-sm text-foreground/80 flex items-center space-x-2"
-                              >
-                                <div className="w-1 h-1 bg-finance-gold rounded-full"></div>
-                                <span>{topic}</span>
-                              </div>
-                            ))}
-                          </div>
-
-                          <button className="flex items-center space-x-2 text-finance-gold hover:text-finance-electric transition-colors group-hover:glow">
-                            <Download className="w-4 h-4" />
-                            <span>Download</span>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
             </div>
           </section>
 
