@@ -66,9 +66,7 @@ export default function ScrollProgressIndicator({ className }: ScrollProgressInd
                 }}
                 transition={{ duration: 0.5 }}
               >
-                <div className="text-xs font-medium text-finance-electric mb-1">
-                  {levelInfo.tier}
-                </div>
+
                 <div className="text-2xl font-bold text-finance-gold">
                   Level {currentLevel}%
                 </div>
