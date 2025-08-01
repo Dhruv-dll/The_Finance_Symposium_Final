@@ -291,44 +291,38 @@ export default function SponsorsSection() {
             </div>
 
             {/* Hover Information Panel */}
-            <AnimatePresence>
-              {hoveredSponsor === sponsor.id && (
-                <motion.div
-                  className="absolute inset-0 bg-finance-navy/95 backdrop-blur-sm p-6 flex flex-col justify-center"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <h4 className="text-lg font-bold text-finance-gold mb-3">{sponsor.name}</h4>
-                  <p className="text-sm text-foreground/80 mb-4 leading-relaxed">
-                    {sponsor.description}
-                  </p>
-                  
-                  {sponsor.achievements && (
-                    <div className="space-y-2 mb-4">
-                      <div className="text-xs font-semibold text-finance-electric">Key Achievements:</div>
-                      {sponsor.achievements.slice(0, 2).map((achievement, idx) => (
-                        <div key={idx} className="flex items-center space-x-2 text-xs">
-                          <Award className="w-3 h-3 text-finance-gold" />
-                          <span className="text-foreground/70">{achievement}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
+            <motion.div
+              className={`absolute inset-0 bg-finance-navy/95 backdrop-blur-sm p-6 flex flex-col justify-center transition-opacity duration-300 ${
+                hoveredSponsor === sponsor.id ? 'opacity-100' : 'opacity-0 pointer-events-none'
+              }`}
+            >
+              <h4 className="text-lg font-bold text-finance-gold mb-3">{sponsor.name}</h4>
+              <p className="text-sm text-foreground/80 mb-4 leading-relaxed">
+                {sponsor.description}
+              </p>
 
-                  {sponsor.website && (
-                    <Button
-                      size="sm"
-                      className="bg-gradient-to-r from-finance-gold to-finance-electric text-finance-navy hover:scale-105 transition-transform duration-200"
-                    >
-                      Visit Website
-                      <ExternalLink className="w-3 h-3 ml-2" />
-                    </Button>
-                  )}
-                </motion.div>
+              {sponsor.achievements && (
+                <div className="space-y-2 mb-4">
+                  <div className="text-xs font-semibold text-finance-electric">Key Achievements:</div>
+                  {sponsor.achievements.slice(0, 2).map((achievement, idx) => (
+                    <div key={idx} className="flex items-center space-x-2 text-xs">
+                      <Award className="w-3 h-3 text-finance-gold" />
+                      <span className="text-foreground/70">{achievement}</span>
+                    </div>
+                  ))}
+                </div>
               )}
-            </AnimatePresence>
+
+              {sponsor.website && (
+                <Button
+                  size="sm"
+                  className="bg-gradient-to-r from-finance-gold to-finance-electric text-finance-navy hover:scale-105 transition-transform duration-200"
+                >
+                  Visit Website
+                  <ExternalLink className="w-3 h-3 ml-2" />
+                </Button>
+              )}
+            </motion.div>
 
             {/* Glow Effect */}
             <motion.div
