@@ -64,18 +64,18 @@ const STOCK_SYMBOLS = [
 
 // Currency pairs for exchange rates
 const CURRENCY_SYMBOLS = [
-  { symbol: "USDINR=X", name: "USD/INR" },
-  { symbol: "EURINR=X", name: "EUR/INR" },
-  { symbol: "GBPINR=X", name: "GBP/INR" },
-  { symbol: "JPYINR=X", name: "JPY/INR" },
+  { symbol: "USDINR=X", name: "USD/INR", fallbackRate: 84.25 },
+  { symbol: "EURINR=X", name: "EUR/INR", fallbackRate: 91.75 },
+  { symbol: "GBPINR=X", name: "GBP/INR", fallbackRate: 103.45 },
+  { symbol: "JPYINR=X", name: "JPY/INR", fallbackRate: 0.56 },
 ];
 
 // Cryptocurrency symbols
 const CRYPTO_SYMBOLS = [
-  { symbol: "BTC-USD", name: "Bitcoin", inrMultiplier: 84.25 },
-  { symbol: "ETH-USD", name: "Ethereum", inrMultiplier: 84.25 },
-  { symbol: "ADA-USD", name: "Cardano", inrMultiplier: 84.25 },
-  { symbol: "DOT-USD", name: "Polkadot", inrMultiplier: 84.25 },
+  { symbol: "BTC-USD", name: "Bitcoin", inrMultiplier: 84.25, fallbackPriceUSD: 42350 },
+  { symbol: "ETH-USD", name: "Ethereum", inrMultiplier: 84.25, fallbackPriceUSD: 2613 },
+  { symbol: "ADA-USD", name: "Cardano", inrMultiplier: 84.25, fallbackPriceUSD: 0.42 },
+  { symbol: "DOT-USD", name: "Polkadot", inrMultiplier: 84.25, fallbackPriceUSD: 5.05 },
 ];
 
 // Check if Indian market is open
