@@ -146,19 +146,15 @@ export default function EventsSection() {
       >
         {/* 3D Card Container */}
         <motion.div
-          className="relative h-80 preserve-3d cursor-pointer"
-          whileHover={{ 
-            scale: 1.05,
-            rotateY: activeCard === event.id ? 5 : 0,
-            rotateX: activeCard === event.id ? -5 : 0,
-            z: 50
+          className="relative h-80 preserve-3d cursor-pointer rounded-xl overflow-hidden"
+          whileHover={{
+            scale: 1.02,
+            y: -5
           }}
           transition={{ duration: 0.3, ease: "easeOut" }}
           style={{
             background: `linear-gradient(135deg, ${event.backgroundGradient})`,
-            boxShadow: activeCard === event.id 
-              ? `0 25px 60px -12px ${event.hoverColor}, 0 0 40px ${event.hoverColor}`
-              : "0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+            boxShadow: "0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
           }}
         >
           {/* Premium Badge */}
