@@ -652,12 +652,13 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                   >
                     {item.dropdown ? (
                       <div className="space-y-2">
-                        <div className="flex items-center justify-between py-3 px-4 text-foreground">
+                        <div className="flex items-center justify-between py-3 px-4 text-foreground border-b border-finance-gold/20">
                           <div className="flex items-center space-x-3">
-                            <item.icon className="w-5 h-5" />
-                            <span className="font-medium">{item.name}</span>
+                            <item.icon className="w-5 h-5 text-finance-gold" />
+                            <span className="font-medium text-finance-gold">{item.name}</span>
                             <span className="text-lg">{item.hoverIcon}</span>
                           </div>
+                          <ChevronDown className="w-4 h-4 text-finance-gold" />
                         </div>
 
                         <div className="ml-6 space-y-1">
