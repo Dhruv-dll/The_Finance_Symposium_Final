@@ -83,7 +83,7 @@ export default function TabbedMarketDashboard({ isOpen, onOpenChange }: TabbedMa
     });
 
     return unsubscribe;
-  }, [isOpen]);
+  }, []);
 
   const handleRefresh = async () => {
     setIsLoading(true);
