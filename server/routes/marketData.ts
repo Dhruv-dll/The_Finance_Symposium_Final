@@ -349,15 +349,14 @@ async function fetchCryptoData(
     // Since we don't have previous close from scraping, simulate a small change
     const changePercentage = (Math.random() - 0.5) * 6; // Random change between -3% to +3%
     const changeINR = currentPriceINR * (changePercentage / 100);
-    const changePercent =
-      previousCloseINR > 0 ? (changeINR / previousCloseINR) * 100 : 0;
+    const changePercent = changePercentage;
 
     // Mock volume and market cap data (in INR)
     const volume24h = Math.random() * 5000000000; // Random volume
     const marketCap = currentPriceINR * 20000000; // Estimated market cap
 
     return {
-      symbol: symbol.replace("-USD", "-INR"),
+      symbol: symbol.replace("USDT", ""),
       name,
       price: Math.round(currentPriceINR),
       change: Math.round(changeINR),
