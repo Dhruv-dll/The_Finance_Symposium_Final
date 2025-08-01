@@ -28,6 +28,7 @@ import {
   ChevronRight,
   Play,
   Download,
+  ExternalLink,
 } from "lucide-react";
 
 export default function Index() {
