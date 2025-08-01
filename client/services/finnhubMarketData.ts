@@ -363,8 +363,7 @@ class FinnhubMarketDataService {
         const stocks = await this.getAllStocks();
         const sentiment = this.calculateMarketSentiment(stocks);
         const currencies = this.getFallbackCurrencyData();
-        const crypto = this.getFallbackCryptoData();
-        const data = { stocks, sentiment, currencies, crypto };
+        const data = { stocks, sentiment, currencies };
         this.lastSuccessfulData = data;
         this.subscribers.forEach((callback) => callback(data));
       }
