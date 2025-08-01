@@ -123,7 +123,7 @@ export const useSmoothScroll = (options: SmoothScrollOptions = {}) => {
   // Detect active section based on scroll position
   useEffect(() => {
     // Safety guard for HMR
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     const handleScroll = () => {
       if (isScrolling) return; // Don't update during programmatic scroll
@@ -149,7 +149,7 @@ export const useSmoothScroll = (options: SmoothScrollOptions = {}) => {
         }
       } catch (error) {
         // Silently handle errors during HMR
-        console.warn('Active section detection error:', error);
+        console.warn("Active section detection error:", error);
       }
     };
 
@@ -168,7 +168,7 @@ export const useSmoothScroll = (options: SmoothScrollOptions = {}) => {
   // Handle browser back/forward navigation
   useEffect(() => {
     // Safety guard for HMR
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     const handlePopState = () => {
       const hash = window.location.hash;
@@ -181,7 +181,10 @@ export const useSmoothScroll = (options: SmoothScrollOptions = {}) => {
 
     // Handle initial hash on page load
     if (window.location.hash) {
-      const timeout = setTimeout(() => scrollToElement(window.location.hash), 100);
+      const timeout = setTimeout(
+        () => scrollToElement(window.location.hash),
+        100,
+      );
       return () => {
         clearTimeout(timeout);
         window.removeEventListener("popstate", handlePopState);
@@ -205,7 +208,7 @@ export const useScrollProgress = () => {
 
   useEffect(() => {
     // Safety guard for HMR
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     const updateScrollProgress = () => {
       try {
@@ -216,7 +219,7 @@ export const useScrollProgress = () => {
         setScrollProgress(Math.min(progress, 100));
       } catch (error) {
         // Silently handle errors during HMR
-        console.warn('Scroll progress update error:', error);
+        console.warn("Scroll progress update error:", error);
       }
     };
 
