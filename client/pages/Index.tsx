@@ -152,7 +152,7 @@ export default function Index() {
         status: "Open",
       },
       {
-        title: "Saturday Session: Crypto & Blockchain",
+        title: "Saturday Session: Financial Technology",
         date: "February 24, 2024",
         type: "Educational",
         description: "Deep dive into cryptocurrency and blockchain technology",
