@@ -145,22 +145,24 @@ export default function TabbedMarketDashboard({
   };
 
   // Navigation handlers for clickable items
-  const handleStockClick = (symbol: string) => {
-    // Remove .NS suffix for Yahoo Finance URL
-    const cleanSymbol = symbol.replace('.NS', '');
-    const url = `https://finance.yahoo.com/quote/${cleanSymbol}.NS`;
+  const handleStockClick = (stock: FinnhubStockData) => {
+    // Create Google search URL for stock current price
+    const searchQuery = `${stock.displayName || stock.name} current stock price`;
+    const url = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
     window.open(url, '_blank');
   };
 
-  const handleCurrencyClick = (symbol: string) => {
-    // Create Yahoo Finance currency URL
-    const url = `https://finance.yahoo.com/quote/${symbol}=X`;
+  const handleCurrencyClick = (currency: CurrencyRate) => {
+    // Create Google search URL for currency conversion
+    const searchQuery = `${currency.name} current exchange rate conversion`;
+    const url = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
     window.open(url, '_blank');
   };
 
-  const handleCryptoClick = (symbol: string) => {
-    // Create Yahoo Finance crypto URL
-    const url = `https://finance.yahoo.com/quote/${symbol}-INR`;
+  const handleCryptoClick = (crypto: CryptoData) => {
+    // Create Google search URL for crypto current price
+    const searchQuery = `${crypto.name} current price INR`;
+    const url = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
     window.open(url, '_blank');
   };
 
