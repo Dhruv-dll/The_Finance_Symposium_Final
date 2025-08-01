@@ -122,33 +122,47 @@ export const useSmoothScroll = (options: SmoothScrollOptions = {}) => {
 
   // Detect active section based on scroll position
   useEffect(() => {
+    // Safety guard for HMR
+    if (typeof window === 'undefined') return;
+
     const handleScroll = () => {
       if (isScrolling) return; // Don't update during programmatic scroll
 
-      const sections = [
-        "hero",
-        "about",
-        "team",
-        "events",
-        "insights",
-        "sponsors",
-        "contact",
-      ];
-      const scrollPosition = window.scrollY + offset + 100;
+      try {
+        const sections = [
+          "hero",
+          "about",
+          "team",
+          "events",
+          "insights",
+          "sponsors",
+          "contact",
+        ];
+        const scrollPosition = window.scrollY + offset + 100;
 
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const element = document.getElementById(sections[i]);
-        if (element && element.offsetTop <= scrollPosition) {
-          setActiveSection(sections[i]);
-          break;
+        for (let i = sections.length - 1; i >= 0; i--) {
+          const element = document.getElementById(sections[i]);
+          if (element && element.offsetTop <= scrollPosition) {
+            setActiveSection(sections[i]);
+            break;
+          }
         }
+      } catch (error) {
+        // Silently handle errors during HMR
+        console.warn('Active section detection error:', error);
       }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll(); // Check initial position
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      try {
+        window.removeEventListener("scroll", handleScroll);
+      } catch (error) {
+        // Silently handle cleanup errors during HMR
+      }
+    };
   }, [offset, isScrolling]);
 
   // Handle browser back/forward navigation
