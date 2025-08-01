@@ -133,11 +133,7 @@ export default function TabbedMarketDashboard({ isOpen, onOpenChange }: TabbedMa
     return `${changePercent > 0 ? "+" : ""}${changePercent.toFixed(2)}%`;
   };
 
-  const tabVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -20 }
-  };
+
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
