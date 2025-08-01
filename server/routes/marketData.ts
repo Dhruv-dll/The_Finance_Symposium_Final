@@ -74,28 +74,28 @@ const CURRENCY_SYMBOLS = [
   { symbol: "JPYINR=X", name: "JPY/INR", fallbackRate: 0.56 },
 ];
 
-// Cryptocurrency symbols
+// Cryptocurrency symbols - Updated for better accuracy
 const CRYPTO_SYMBOLS = [
   {
-    symbol: "BTC-USD",
+    symbol: "BTCUSDT",
     name: "Bitcoin",
     inrMultiplier: 84.25,
-    fallbackPriceUSD: 42350,
+    fallbackPriceUSD: 98250,
   },
   {
-    symbol: "ETH-USD",
+    symbol: "ETHUSDT",
     name: "Ethereum",
     inrMultiplier: 84.25,
-    fallbackPriceUSD: 2613,
+    fallbackPriceUSD: 3580,
   },
   {
-    symbol: "ADA-USD",
+    symbol: "ADAUSDT",
     name: "Cardano",
     inrMultiplier: 84.25,
-    fallbackPriceUSD: 0.42,
+    fallbackPriceUSD: 1.08,
   },
   {
-    symbol: "DOT-USD",
+    symbol: "DOTUSDT",
     name: "Polkadot",
     inrMultiplier: 84.25,
     fallbackPriceUSD: 5.05,
