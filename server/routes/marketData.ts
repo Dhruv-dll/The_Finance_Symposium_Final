@@ -180,7 +180,7 @@ async function fetchCurrencyData(symbol: string): Promise<CurrencyData | null> {
           'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
           'Accept': 'application/json',
         },
-        timeout: 8000,
+        timeout: 12000,
       }
     );
 
@@ -253,7 +253,7 @@ async function fetchCryptoData(symbol: string, name: string, inrMultiplier: numb
           'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
           'Accept': 'application/json',
         },
-        timeout: 8000,
+        timeout: 12000,
       }
     );
 
