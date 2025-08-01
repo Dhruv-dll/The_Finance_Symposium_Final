@@ -386,7 +386,7 @@ export default function Index() {
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
-                className="text-center"
+                className="text-center mb-16"
               >
                 <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-finance-gold via-finance-electric to-finance-gold bg-clip-text text-transparent animate-glow">
                   Finsight - Financial Insights
@@ -395,6 +395,55 @@ export default function Index() {
                   Finsight, the official Magazine of the Department of Accounting and Finance (BAF) at St. Xavier's College (Autonomous), Mumbai, is thrilled to announce the second edition of the publication. As the world of finance continues to become more progressive and dynamic, we aspire to become the premier compilation to provide knowledge that delves into the multitudes of finance and management. Ranging from behavioural and personal finance to analyzing market trends and deconstructing economic news and laws, 'FINSIGHT' serves to become a valuable asset in its readers' lives.
                 </p>
               </motion.div>
+
+              <div className="flex justify-center">
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  className="group cursor-pointer max-w-sm"
+                >
+                  <div className="relative glassmorphism rounded-2xl overflow-hidden market-glow group-hover:scale-105 group-hover:rotate-1 transition-all duration-500">
+                    <div className="aspect-[3/4] bg-gradient-to-br from-finance-gold/20 to-finance-electric/20 p-8 flex flex-col justify-between">
+                      <div>
+                        <div className="text-finance-electric text-sm font-medium mb-2">
+                          Second Edition
+                        </div>
+                        <h3 className="text-2xl font-bold text-finance-gold mb-4">
+                          Finsight Magazine
+                        </h3>
+                        <div className="text-muted-foreground text-sm">
+                          2024
+                        </div>
+                      </div>
+
+                      <div>
+                        <div className="space-y-2 mb-6">
+                          {["Behavioral Finance", "Personal Finance", "Market Trends Analysis"].map((topic, idx) => (
+                            <div
+                              key={idx}
+                              className="text-sm text-foreground/80 flex items-center space-x-2"
+                            >
+                              <div className="w-1 h-1 bg-finance-gold rounded-full"></div>
+                              <span>{topic}</span>
+                            </div>
+                          ))}
+                        </div>
+
+                        <a
+                          href="https://heyzine.com/flip-book/3f3a9a2239.html#page/1"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center space-x-2 text-finance-gold hover:text-finance-electric transition-colors group-hover:glow bg-finance-navy/50 rounded-lg py-2 px-4 border border-finance-gold/30 hover:border-finance-electric/50"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          <span>Link To Magazine</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
             </div>
           </section>
 
