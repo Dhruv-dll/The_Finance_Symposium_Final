@@ -245,18 +245,28 @@ export default function Index() {
       color: "from-blue-500 to-indigo-600",
       members: [
         {
-          name: "Dr. Rajesh Sharma",
-          role: "Head of Department",
+          name: "Dr. Sanjay Parab",
+          role: "Vice Principal and Associate Professor",
           image: "/api/placeholder/200/200",
         },
         {
-          name: "Prof. Priya Mehta",
-          role: "Senior Faculty",
+          name: "Mr. Pratik Purohit",
+          role: "Assistant Professor",
           image: "/api/placeholder/200/200",
         },
         {
-          name: "Dr. Anil Kumar",
-          role: "Associate Professor",
+          name: "Ms. Kamalika Ray",
+          role: "Assistant Professor",
+          image: "/api/placeholder/200/200",
+        },
+        {
+          name: "Mr. Vinayak Thool",
+          role: "Assistant Professor",
+          image: "/api/placeholder/200/200",
+        },
+        {
+          name: "Mr. Lloyd Serrao",
+          role: "Assistant Professor",
           image: "/api/placeholder/200/200",
         },
       ],
