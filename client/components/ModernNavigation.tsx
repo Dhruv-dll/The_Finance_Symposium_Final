@@ -378,9 +378,9 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                                       key={dropdownIndex}
                                       asChild
                                     >
-                                      <Link
-                                        to={dropdownItem.href}
-                                        className="group flex items-start space-x-3 p-3 rounded-lg hover:bg-finance-gold/10 transition-all duration-300"
+                                      <button
+                                        onClick={() => dropdownItem.section && scrollToElement(`#${dropdownItem.section}`)}
+                                        className="group flex items-start space-x-3 p-3 rounded-lg hover:bg-finance-gold/10 transition-all duration-300 w-full text-left"
                                       >
                                         <span className="text-lg mt-0.5 group-hover:scale-110 transition-transform duration-200">
                                           {dropdownItem.icon}
@@ -395,7 +395,7 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                                             </div>
                                           )}
                                         </div>
-                                      </Link>
+                                      </button>
                                     </NavigationMenuLink>
                                   );
                                 },
