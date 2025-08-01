@@ -87,10 +87,18 @@ export default function FloatingMarketIcon({
     return unsubscribe;
   }, []);
 
-  const handleRefresh = () => {
+  const handleRefresh = async () => {
     setIsLoading(true);
     setConnectionStatus("loading");
-    finnhubMarketDataService.updateAllData();
+    setErrorMessage("");
+
+    try {
+      await finnhubMarketDataService.updateAllData();
+    } catch (error) {
+      setConnectionStatus("error");
+      setErrorMessage(error.message || "Failed to refresh data");
+      setIsLoading(false);
+    }
   };
 
   const getSentimentColor = (sentiment: string) => {
