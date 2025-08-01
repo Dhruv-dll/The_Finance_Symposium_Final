@@ -279,7 +279,7 @@ export default function EnhancedNavigation({
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: -10, scale: 0.95 }}
                           transition={{ duration: 0.2, ease: "easeOut" }}
-                          className="absolute top-full left-0 mt-2 w-56 backdrop-blur-xl bg-finance-navy/80 rounded-xl shadow-2xl border border-finance-gold/20 overflow-hidden"
+                          className={`absolute top-full mt-2 w-56 backdrop-blur-xl bg-finance-navy/80 rounded-xl shadow-2xl border border-finance-gold/20 overflow-hidden z-50 ${item.name === "SPONSORS" ? "right-0" : "left-0"}`}
                         >
                           {/* Glow effect background */}
                           <div className="absolute inset-0 bg-gradient-to-br from-finance-gold/10 to-finance-electric/10 -z-10"></div>
