@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useState, useEffect } from "react";
 import ModernNavigation from "../components/ModernNavigation";
 import EnhancedHeroSection from "../components/EnhancedHeroSection";
 import TerminalLoader from "../components/TerminalLoader";
