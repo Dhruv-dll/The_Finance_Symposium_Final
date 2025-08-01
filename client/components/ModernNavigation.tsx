@@ -12,6 +12,7 @@ import {
   Calendar,
   Building2,
   Mail,
+  GraduationCap,
 } from "lucide-react";
 import {
   NavigationMenu,
