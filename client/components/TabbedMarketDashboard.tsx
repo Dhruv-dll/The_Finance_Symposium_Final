@@ -144,6 +144,26 @@ export default function TabbedMarketDashboard({
     return `${changePercent > 0 ? "+" : ""}${changePercent.toFixed(2)}%`;
   };
 
+  // Navigation handlers for clickable items
+  const handleStockClick = (symbol: string) => {
+    // Remove .NS suffix for Yahoo Finance URL
+    const cleanSymbol = symbol.replace('.NS', '');
+    const url = `https://finance.yahoo.com/quote/${cleanSymbol}.NS`;
+    window.open(url, '_blank');
+  };
+
+  const handleCurrencyClick = (symbol: string) => {
+    // Create Yahoo Finance currency URL
+    const url = `https://finance.yahoo.com/quote/${symbol}=X`;
+    window.open(url, '_blank');
+  };
+
+  const handleCryptoClick = (symbol: string) => {
+    // Create Yahoo Finance crypto URL
+    const url = `https://finance.yahoo.com/quote/${symbol}-INR`;
+    window.open(url, '_blank');
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent
