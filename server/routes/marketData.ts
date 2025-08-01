@@ -277,10 +277,10 @@ async function fetchCurrencyData(symbol: string): Promise<CurrencyData | null> {
 // Helper function to validate crypto prices based on expected ranges
 function isValidCryptoPrice(cryptoName: string, price: number): boolean {
   const priceRanges = {
-    "Bitcoin": { min: 30000, max: 120000 },
-    "Ethereum": { min: 1500, max: 6000 },
-    "Cardano": { min: 0.2, max: 3 },
-    "Polkadot": { min: 3, max: 20 },
+    "Bitcoin": { min: 40000, max: 120000 },
+    "Ethereum": { min: 1800, max: 5000 },
+    "Cardano": { min: 0.25, max: 1.5 },
+    "Polkadot": { min: 4, max: 15 },
   };
 
   const range = priceRanges[cryptoName];
