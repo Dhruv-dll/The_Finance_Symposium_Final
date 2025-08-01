@@ -120,7 +120,7 @@ const upcomingEvents: UpcomingEvent[] = [
 export default function EventsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
-  const [activeCard, setActiveCard] = useState<string | null>(null);
+
 
 
   const EventCard3D = ({ event, index }: { event: EventCard; index: number }) => {
