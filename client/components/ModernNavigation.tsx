@@ -202,14 +202,30 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
         />
       )}
 
-      {/* Scroll Progress Indicator */}
+      {/* Enhanced Scroll Progress Indicator */}
       <motion.div
-        className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-finance-gold to-finance-electric origin-left"
+        className={`absolute bottom-0 left-0 h-1 origin-left transition-all duration-300 ${
+          isScrolling
+            ? "bg-gradient-to-r from-finance-electric via-finance-gold to-finance-electric animate-pulse"
+            : "bg-gradient-to-r from-finance-gold to-finance-electric"
+        }`}
         style={{
-          scaleX: scrollProgress / 100,
+          scaleX: (isScrolling ? smoothScrollProgress : pageScrollProgress) / 100,
         }}
-        transition={{ duration: 0.1 }}
+        transition={{ duration: isScrolling ? 0.05 : 0.1 }}
       />
+
+      {/* Smooth Scroll Indicator */}
+      {isScrolling && (
+        <motion.div
+          className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1 bg-finance-navy/90 backdrop-blur-sm rounded-full border border-finance-gold/30 text-xs text-finance-gold"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+        >
+          Navigating... {Math.round(smoothScrollProgress)}%
+        </motion.div>
+      )}
 
       <div className="container mx-auto px-6 py-4 relative">
         <div className="flex items-start justify-between">
