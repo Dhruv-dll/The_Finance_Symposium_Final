@@ -217,8 +217,12 @@ class FinnhubMarketDataService {
   private subscribers: ((data: {
     stocks: FinnhubStockData[];
     sentiment: MarketSentiment;
+    currencies?: CurrencyRate[];
+    crypto?: CryptoData[];
   }) => void)[] = [];
   private updateInterval: NodeJS.Timeout | null = null;
+  private isUpdating = false; // Prevent concurrent updates
+  private lastSuccessfulData: any = null; // Cache last successful data
 
   // Utility delay function
   private delay(ms: number): Promise<void> {
