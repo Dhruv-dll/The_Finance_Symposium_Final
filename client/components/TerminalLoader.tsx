@@ -10,6 +10,9 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [showClickPrompt, setShowClickPrompt] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
+  const [marketData, setMarketData] = useState<FinnhubStockData[]>([]);
+  const [marketStatus, setMarketStatus] = useState<string>("LOADING");
+  const [lastUpdate, setLastUpdate] = useState<string>("");
   const audioContextRef = useRef<AudioContext | null>(null);
 
   const terminalSteps = [
