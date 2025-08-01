@@ -30,7 +30,7 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
     marketData.length > 3
       ? `TCS: ₹${marketData.find((s) => s.symbol === "TCS.NS")?.price?.toFixed(2) || "4,156.30"} ●●● LOADED`
       : "Loading portfolio management system...",
-    "BTC: ₹35,67,890 (+2.1%) | ETH: ₹2,20,145 (-0.5%)",
+    "NIFTY: 23,567 (+1.2%) | SENSEX: 78,145 (+0.8%)",
     `${marketStatus === "OPEN" ? "🟢 MARKETS OPEN" : "🔴 MARKETS CLOSED"}`,
     `Authenticating with Yahoo Finance API...`,
     lastUpdate
