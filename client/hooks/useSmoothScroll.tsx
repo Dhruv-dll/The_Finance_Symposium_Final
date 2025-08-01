@@ -77,7 +77,6 @@ export const useSmoothScroll = (options: SmoothScrollOptions = {}) => {
 
     let startTime: number | null = null;
     setIsScrolling(true);
-    setScrollProgress(0);
 
     // Apply scroll lock to prevent conflicts
     document.body.style.overflow = 'hidden';
