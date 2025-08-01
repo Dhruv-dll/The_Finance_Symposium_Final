@@ -74,13 +74,6 @@ export default function AboutBAFSection() {
                   "The BAF programme was effectively initiated at St. Xavier's College from start of academic year 2022-23, as a self –financed 3-year undergraduate program affiliated to the University of Mumbai. The aim is to provide solid platform of updated content in the domain field to students who wish to transform themselves through professional in the field of accounting and finance."
                 </p>
               </div>
-              
-              <div>
-                <h4 className="text-xl font-semibold text-finance-electric mb-3">TFS Connection</h4>
-                <p className="text-lg">
-                  "The Finance Symposium is not merely an event; it is an invaluable experience where all the different dimensions of finance are explored effortlessly converging with knowledge based amusement, knowledge which fosters innovation, networking which cultivates opportunities. Get ready to be engrossed in stimulating discussions, gaining insights from the industry stalwarts and top business leaders, and enjoy an invigorating atmosphere designed to both inspire and educate."
-                </p>
-              </div>
             </div>
           </motion.div>
 
