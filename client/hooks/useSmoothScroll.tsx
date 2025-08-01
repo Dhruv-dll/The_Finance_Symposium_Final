@@ -132,6 +132,7 @@ export const useSmoothScroll = (options: SmoothScrollOptions = {}) => {
         const sections = [
           "hero",
           "about",
+          "about-baf",
           "team",
           "events",
           "insights",
