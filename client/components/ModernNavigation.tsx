@@ -69,7 +69,7 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
         {
           name: "Events Portfolio",
           href: "#events",
-          icon: "📅",
+          icon: "��",
           description: "All our events in one place",
           section: "events",
         },
@@ -169,6 +169,15 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
           transition={{ duration: 0.5 }}
         />
       )}
+
+      {/* Scroll Progress Indicator */}
+      <motion.div
+        className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-finance-gold to-finance-electric origin-left"
+        style={{
+          scaleX: scrollProgress / 100,
+        }}
+        transition={{ duration: 0.1 }}
+      />
 
       <div className="container mx-auto px-6 py-4 relative">
         <div className="flex items-start justify-between">
