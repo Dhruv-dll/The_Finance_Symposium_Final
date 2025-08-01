@@ -98,7 +98,7 @@ const CRYPTO_SYMBOLS = [
     symbol: "DOTUSDT",
     name: "Polkadot",
     inrMultiplier: 84.25,
-    fallbackPriceUSD: 5.05,
+    fallbackPriceUSD: 7.25, // More realistic current Polkadot price
   },
 ];
 
