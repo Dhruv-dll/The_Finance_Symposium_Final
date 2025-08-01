@@ -50,7 +50,11 @@ interface CryptoData {
 
 // Stock symbols mapping for accurate data
 const STOCK_SYMBOLS = [
-  { symbol: "RELIANCE.NS", name: "RELIANCE", displayName: "Reliance Industries" },
+  {
+    symbol: "RELIANCE.NS",
+    name: "RELIANCE",
+    displayName: "Reliance Industries",
+  },
   { symbol: "TCS.NS", name: "TCS", displayName: "Tata Consultancy Services" },
   { symbol: "HDFCBANK.NS", name: "HDFC BANK", displayName: "HDFC Bank Ltd" },
   { symbol: "INFY.NS", name: "INFOSYS", displayName: "Infosys Limited" },
@@ -72,16 +76,38 @@ const CURRENCY_SYMBOLS = [
 
 // Cryptocurrency symbols
 const CRYPTO_SYMBOLS = [
-  { symbol: "BTC-USD", name: "Bitcoin", inrMultiplier: 84.25, fallbackPriceUSD: 42350 },
-  { symbol: "ETH-USD", name: "Ethereum", inrMultiplier: 84.25, fallbackPriceUSD: 2613 },
-  { symbol: "ADA-USD", name: "Cardano", inrMultiplier: 84.25, fallbackPriceUSD: 0.42 },
-  { symbol: "DOT-USD", name: "Polkadot", inrMultiplier: 84.25, fallbackPriceUSD: 5.05 },
+  {
+    symbol: "BTC-USD",
+    name: "Bitcoin",
+    inrMultiplier: 84.25,
+    fallbackPriceUSD: 42350,
+  },
+  {
+    symbol: "ETH-USD",
+    name: "Ethereum",
+    inrMultiplier: 84.25,
+    fallbackPriceUSD: 2613,
+  },
+  {
+    symbol: "ADA-USD",
+    name: "Cardano",
+    inrMultiplier: 84.25,
+    fallbackPriceUSD: 0.42,
+  },
+  {
+    symbol: "DOT-USD",
+    name: "Polkadot",
+    inrMultiplier: 84.25,
+    fallbackPriceUSD: 5.05,
+  },
 ];
 
 // Check if Indian market is open
 function isMarketOpen(): boolean {
   const now = new Date();
-  const ist = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+  const ist = new Date(
+    now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }),
+  );
   const day = ist.getDay(); // 0 = Sunday, 6 = Saturday
   const hours = ist.getHours();
   const minutes = ist.getMinutes();
@@ -101,16 +127,17 @@ function isMarketOpen(): boolean {
 async function fetchStockData(symbol: string): Promise<StockData | null> {
   try {
     console.log(`🔍 Fetching real data for ${symbol}...`);
-    
+
     const response = await fetch(
       `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1d&range=1d`,
       {
         headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-          'Accept': 'application/json',
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+          Accept: "application/json",
         },
         timeout: 10000,
-      }
+      },
     );
 
     if (!response.ok) {
@@ -143,17 +170,18 @@ async function fetchStockData(symbol: string): Promise<StockData | null> {
       // If no previous close, simulate small market movement
       const randomMovement = (Math.random() - 0.5) * 0.02; // ±1% max
       changePercent = randomMovement * 100;
-      change = (currentPrice * randomMovement);
+      change = currentPrice * randomMovement;
     }
     const dayHigh = meta.regularMarketDayHigh || currentPrice;
     const dayLow = meta.regularMarketDayLow || currentPrice;
 
-    const stockInfo = STOCK_SYMBOLS.find(s => s.symbol === symbol);
+    const stockInfo = STOCK_SYMBOLS.find((s) => s.symbol === symbol);
 
     return {
       symbol,
       name: stockInfo?.name || meta.longName || symbol,
-      displayName: stockInfo?.displayName || stockInfo?.name || meta.longName || symbol,
+      displayName:
+        stockInfo?.displayName || stockInfo?.name || meta.longName || symbol,
       price: Math.round(currentPrice * 100) / 100,
       change: Math.round(change * 100) / 100,
       changePercent: Math.round(changePercent * 100) / 100,
@@ -177,11 +205,12 @@ async function fetchCurrencyData(symbol: string): Promise<CurrencyData | null> {
       `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1d&range=1d`,
       {
         headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-          'Accept': 'application/json',
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+          Accept: "application/json",
         },
         timeout: 12000,
-      }
+      },
     );
 
     if (!response.ok) {
@@ -204,8 +233,9 @@ async function fetchCurrencyData(symbol: string): Promise<CurrencyData | null> {
     }
 
     const change = currentRate - previousClose;
-    const changePercent = previousClose > 0 ? (change / previousClose) * 100 : 0;
-    const currencyInfo = CURRENCY_SYMBOLS.find(c => c.symbol === symbol);
+    const changePercent =
+      previousClose > 0 ? (change / previousClose) * 100 : 0;
+    const currencyInfo = CURRENCY_SYMBOLS.find((c) => c.symbol === symbol);
 
     return {
       symbol,
@@ -216,10 +246,13 @@ async function fetchCurrencyData(symbol: string): Promise<CurrencyData | null> {
       timestamp: new Date(),
     };
   } catch (error) {
-    console.warn(`❌ Failed to fetch currency ${symbol}, using fallback data:`, error.message);
+    console.warn(
+      `❌ Failed to fetch currency ${symbol}, using fallback data:`,
+      error.message,
+    );
 
     // Return fallback data with simulated movement
-    const currencyInfo = CURRENCY_SYMBOLS.find(c => c.symbol === symbol);
+    const currencyInfo = CURRENCY_SYMBOLS.find((c) => c.symbol === symbol);
     if (currencyInfo) {
       const baseRate = currencyInfo.fallbackRate;
       const randomMovement = (Math.random() - 0.5) * 0.04; // ±2% movement
@@ -242,7 +275,11 @@ async function fetchCurrencyData(symbol: string): Promise<CurrencyData | null> {
 }
 
 // Fetch cryptocurrency data
-async function fetchCryptoData(symbol: string, name: string, inrMultiplier: number): Promise<CryptoData | null> {
+async function fetchCryptoData(
+  symbol: string,
+  name: string,
+  inrMultiplier: number,
+): Promise<CryptoData | null> {
   try {
     console.log(`₿ Fetching crypto data for ${symbol}...`);
 
@@ -250,11 +287,12 @@ async function fetchCryptoData(symbol: string, name: string, inrMultiplier: numb
       `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1d&range=1d`,
       {
         headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-          'Accept': 'application/json',
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+          Accept: "application/json",
         },
         timeout: 12000,
-      }
+      },
     );
 
     if (!response.ok) {
@@ -280,14 +318,15 @@ async function fetchCryptoData(symbol: string, name: string, inrMultiplier: numb
     const currentPriceINR = currentPriceUSD * inrMultiplier;
     const previousCloseINR = previousCloseUSD * inrMultiplier;
     const changeINR = currentPriceINR - previousCloseINR;
-    const changePercent = previousCloseINR > 0 ? (changeINR / previousCloseINR) * 100 : 0;
+    const changePercent =
+      previousCloseINR > 0 ? (changeINR / previousCloseINR) * 100 : 0;
 
     // Mock volume and market cap data (in INR)
     const volume24h = Math.random() * 5000000000; // Random volume
     const marketCap = currentPriceINR * 20000000; // Estimated market cap
 
     return {
-      symbol: symbol.replace('-USD', '-INR'),
+      symbol: symbol.replace("-USD", "-INR"),
       name,
       price: Math.round(currentPriceINR),
       change: Math.round(changeINR),
@@ -297,10 +336,13 @@ async function fetchCryptoData(symbol: string, name: string, inrMultiplier: numb
       timestamp: new Date(),
     };
   } catch (error) {
-    console.warn(`❌ Failed to fetch crypto ${symbol}, using fallback data:`, error.message);
+    console.warn(
+      `❌ Failed to fetch crypto ${symbol}, using fallback data:`,
+      error.message,
+    );
 
     // Return fallback data with simulated movement
-    const cryptoInfo = CRYPTO_SYMBOLS.find(c => c.symbol === symbol);
+    const cryptoInfo = CRYPTO_SYMBOLS.find((c) => c.symbol === symbol);
     if (cryptoInfo) {
       const basePriceUSD = cryptoInfo.fallbackPriceUSD;
       const randomMovement = (Math.random() - 0.5) * 0.1; // ±5% movement
@@ -317,7 +359,7 @@ async function fetchCryptoData(symbol: string, name: string, inrMultiplier: numb
       const marketCap = currentPriceINR * 20000000;
 
       return {
-        symbol: symbol.replace('-USD', '-INR'),
+        symbol: symbol.replace("-USD", "-INR"),
         name,
         price: Math.round(currentPriceINR),
         change: Math.round(changeINR),
@@ -338,45 +380,56 @@ export const getMarketData: RequestHandler = async (req, res) => {
     console.log("📊 Fetching comprehensive market data from server...");
 
     // Fetch stocks, currencies, and crypto in parallel
-    const stockPromises = STOCK_SYMBOLS.map(stock =>
-      fetchStockData(stock.symbol)
+    const stockPromises = STOCK_SYMBOLS.map((stock) =>
+      fetchStockData(stock.symbol),
     );
 
-    const currencyPromises = CURRENCY_SYMBOLS.map(currency =>
-      fetchCurrencyData(currency.symbol)
+    const currencyPromises = CURRENCY_SYMBOLS.map((currency) =>
+      fetchCurrencyData(currency.symbol),
     );
 
-    const cryptoPromises = CRYPTO_SYMBOLS.map(crypto =>
-      fetchCryptoData(crypto.symbol, crypto.name, crypto.inrMultiplier)
+    const cryptoPromises = CRYPTO_SYMBOLS.map((crypto) =>
+      fetchCryptoData(crypto.symbol, crypto.name, crypto.inrMultiplier),
     );
 
     const [stockResults, currencyResults, cryptoResults] = await Promise.all([
       Promise.all(stockPromises),
       Promise.all(currencyPromises),
-      Promise.all(cryptoPromises)
+      Promise.all(cryptoPromises),
     ]);
 
-    const stocks = stockResults.filter((stock): stock is StockData => stock !== null);
-    const currencies = currencyResults.filter((currency): currency is CurrencyData => currency !== null);
-    const crypto = cryptoResults.filter((cryptoData): cryptoData is CryptoData => cryptoData !== null);
+    const stocks = stockResults.filter(
+      (stock): stock is StockData => stock !== null,
+    );
+    const currencies = currencyResults.filter(
+      (currency): currency is CurrencyData => currency !== null,
+    );
+    const crypto = cryptoResults.filter(
+      (cryptoData): cryptoData is CryptoData => cryptoData !== null,
+    );
 
-    console.log(`📊 Results: ${stocks.length} stocks, ${currencies.length} currencies, ${crypto.length} crypto`);
+    console.log(
+      `📊 Results: ${stocks.length} stocks, ${currencies.length} currencies, ${crypto.length} crypto`,
+    );
     if (currencies.length > 0) {
       console.log(`💱 Currency sample:`, currencies[0]);
     }
     if (crypto.length > 0) {
       console.log(`₿ Crypto sample:`, crypto[0]);
     }
-    
+
     // Calculate market sentiment
     const stocksOnly = stocks.filter(
-      stock => !["^NSEI", "^BSESN"].includes(stock.symbol)
+      (stock) => !["^NSEI", "^BSESN"].includes(stock.symbol),
     );
-    
-    const positiveStocks = stocksOnly.filter(stock => stock.change > 0).length;
+
+    const positiveStocks = stocksOnly.filter(
+      (stock) => stock.change > 0,
+    ).length;
     const totalStocks = stocksOnly.length;
-    const advanceDeclineRatio = totalStocks > 0 ? positiveStocks / totalStocks : 0.5;
-    
+    const advanceDeclineRatio =
+      totalStocks > 0 ? positiveStocks / totalStocks : 0.5;
+
     let sentiment: "bullish" | "bearish" | "neutral";
     if (advanceDeclineRatio >= 0.6) {
       sentiment = "bullish";
@@ -385,15 +438,17 @@ export const getMarketData: RequestHandler = async (req, res) => {
     } else {
       sentiment = "neutral";
     }
-    
+
     const marketSentiment = {
       sentiment,
       advanceDeclineRatio,
       positiveStocks,
       totalStocks,
     };
-    
-    console.log(`✅ Successfully fetched ${stocks.length} stocks, ${currencies.length} currencies, ${crypto.length} crypto with ${sentiment} sentiment`);
+
+    console.log(
+      `✅ Successfully fetched ${stocks.length} stocks, ${currencies.length} currencies, ${crypto.length} crypto with ${sentiment} sentiment`,
+    );
 
     res.json({
       stocks,
@@ -403,13 +458,12 @@ export const getMarketData: RequestHandler = async (req, res) => {
       timestamp: new Date(),
       marketState: isMarketOpen() ? "OPEN" : "CLOSED",
     });
-    
   } catch (error) {
     console.error("❌ Error fetching comprehensive market data:", error);
     res.status(500).json({
       error: "Failed to fetch market data",
       message: error.message,
-      timestamp: new Date()
+      timestamp: new Date(),
     });
   }
 };

@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { finnhubMarketDataService, FinnhubStockData } from "../services/finnhubMarketData";
+import {
+  finnhubMarketDataService,
+  FinnhubStockData,
+} from "../services/finnhubMarketData";
 
 interface TerminalLoaderProps {
   onComplete: () => void;
@@ -18,20 +21,26 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
   const getTerminalSteps = () => [
     "TFS_FINANCIAL_TERMINAL v3.1.4 initializing...",
     "Fetching live market data...",
-    marketData.length > 0 ? `SENSEX: ₹${marketData.find(s => s.symbol === '^BSESN')?.price?.toLocaleString('en-IN') || '81,234'} | NIFTY: ₹${marketData.find(s => s.symbol === '^NSEI')?.price?.toLocaleString('en-IN') || '24,789'}` : "Connecting to BSE/NSE feeds...",
-    marketData.length > 2 ? `RELIANCE: ₹${marketData.find(s => s.symbol === 'RELIANCE.NS')?.price?.toFixed(2) || '2,847.65'} ●●● LOADED` : "Initializing real-time analytics...",
-    marketData.length > 3 ? `TCS: ₹${marketData.find(s => s.symbol === 'TCS.NS')?.price?.toFixed(2) || '4,156.30'} ●●● LOADED` : "Loading portfolio management system...",
+    marketData.length > 0
+      ? `SENSEX: ₹${marketData.find((s) => s.symbol === "^BSESN")?.price?.toLocaleString("en-IN") || "81,234"} | NIFTY: ₹${marketData.find((s) => s.symbol === "^NSEI")?.price?.toLocaleString("en-IN") || "24,789"}`
+      : "Connecting to BSE/NSE feeds...",
+    marketData.length > 2
+      ? `RELIANCE: ₹${marketData.find((s) => s.symbol === "RELIANCE.NS")?.price?.toFixed(2) || "2,847.65"} ●●● LOADED`
+      : "Initializing real-time analytics...",
+    marketData.length > 3
+      ? `TCS: ₹${marketData.find((s) => s.symbol === "TCS.NS")?.price?.toFixed(2) || "4,156.30"} ●●● LOADED`
+      : "Loading portfolio management system...",
     "BTC: ₹35,67,890 (+2.1%) | ETH: ₹2,20,145 (-0.5%)",
     `${marketStatus === "OPEN" ? "🟢 MARKETS OPEN" : "🔴 MARKETS CLOSED"}`,
     `Authenticating with Yahoo Finance API...`,
-    lastUpdate ? `Last updated: ${lastUpdate} IST` : "Market data synchronized.",
+    lastUpdate
+      ? `Last updated: ${lastUpdate} IST`
+      : "Market data synchronized.",
     "Market feed synchronized ✓",
     "SYSTEM READY.",
   ];
 
   const terminalSteps = getTerminalSteps();
-
-
 
   // Mechanical keyboard sound simulation
   const playKeystrokeSound = () => {
@@ -80,8 +89,10 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
   useEffect(() => {
     const unsubscribe = finnhubMarketDataService.subscribeToUpdates((data) => {
       setMarketData(data.stocks);
-      setMarketStatus(finnhubMarketDataService.isMarketOpen() ? "OPEN" : "CLOSED");
-      setLastUpdate(new Date().toLocaleTimeString('en-IN'));
+      setMarketStatus(
+        finnhubMarketDataService.isMarketOpen() ? "OPEN" : "CLOSED",
+      );
+      setLastUpdate(new Date().toLocaleTimeString("en-IN"));
     });
 
     return unsubscribe;
@@ -167,8 +178,6 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
                   </motion.div>
                 ))}
               </div>
-
-
 
               {/* Progress Bar */}
               {currentStep < terminalSteps.length - 1 && (

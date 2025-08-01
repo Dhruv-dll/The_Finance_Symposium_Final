@@ -23,21 +23,25 @@ export default function FloatingMarketIcon({
     totalStocks: 0,
   });
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
-  const [connectionStatus, setConnectionStatus] = useState<"connected" | "loading" | "error">("loading");
+  const [connectionStatus, setConnectionStatus] = useState<
+    "connected" | "loading" | "error"
+  >("loading");
   const [dataJustUpdated, setDataJustUpdated] = useState(false);
 
   useEffect(() => {
     setConnectionStatus("loading");
     const unsubscribe = finnhubMarketDataService.subscribeToUpdates((data) => {
-      setMarketSentiment(data.sentiment || {
-        sentiment: "neutral",
-        advanceDeclineRatio: 0.5,
-        positiveStocks: 0,
-        totalStocks: 0,
-      });
+      setMarketSentiment(
+        data.sentiment || {
+          sentiment: "neutral",
+          advanceDeclineRatio: 0.5,
+          positiveStocks: 0,
+          totalStocks: 0,
+        },
+      );
       setLastUpdate(new Date());
       setConnectionStatus("connected");
-      
+
       // Flash effect when new data arrives
       setDataJustUpdated(true);
       setTimeout(() => setDataJustUpdated(false), 1000);
@@ -60,7 +64,7 @@ export default function FloatingMarketIcon({
   // Floating icon click animation with haptic feedback
   const handleIconClick = () => {
     // Haptic feedback for mobile devices
-    if ('vibrate' in navigator) {
+    if ("vibrate" in navigator) {
       navigator.vibrate(50); // Short vibration
     }
     setIsOpen(true);
@@ -79,7 +83,8 @@ export default function FloatingMarketIcon({
           onClick={handleIconClick}
           className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-finance-navy/80 backdrop-blur-md border border-finance-gold/30 shadow-2xl flex items-center justify-center group focus:outline-none focus:ring-2 focus:ring-finance-gold focus:ring-offset-2 focus:ring-offset-finance-navy"
           style={{
-            boxShadow: "0 0 20px rgba(255, 215, 0, 0.3), 0 8px 32px rgba(0, 0, 0, 0.3)",
+            boxShadow:
+              "0 0 20px rgba(255, 215, 0, 0.3), 0 8px 32px rgba(0, 0, 0, 0.3)",
           }}
           aria-label="Open live market dashboard"
           role="button"
@@ -106,7 +111,8 @@ export default function FloatingMarketIcon({
           whileHover={{
             scale: 1.1,
             rotate: 5,
-            boxShadow: "0 0 40px rgba(255, 215, 0, 0.8), 0 16px 48px rgba(0, 0, 0, 0.5)",
+            boxShadow:
+              "0 0 40px rgba(255, 215, 0, 0.8), 0 16px 48px rgba(0, 0, 0, 0.5)",
           }}
           whileTap={{
             scale: 0.95,
@@ -193,10 +199,10 @@ export default function FloatingMarketIcon({
             className="absolute inset-0 rounded-full bg-finance-gold/20"
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 0, opacity: 0 }}
-            whileTap={{ 
-              scale: [0, 2], 
+            whileTap={{
+              scale: [0, 2],
               opacity: [0.6, 0],
-              transition: { duration: 0.4 }
+              transition: { duration: 0.4 },
             }}
           />
         </motion.button>
@@ -208,7 +214,9 @@ export default function FloatingMarketIcon({
           whileHover={{ y: 0, opacity: 1 }}
         >
           <div className="bg-finance-navy/90 backdrop-blur-sm border border-finance-gold/20 rounded-lg p-3 text-xs whitespace-nowrap shadow-xl">
-            <div className="font-medium text-finance-gold mb-1">📈 Live Market Data</div>
+            <div className="font-medium text-finance-gold mb-1">
+              📈 Live Market Data
+            </div>
             <div className="text-foreground flex items-center gap-2">
               <span className={getSentimentColor(marketSentiment.sentiment)}>
                 {marketSentiment.sentiment.toUpperCase()}
@@ -225,10 +233,7 @@ export default function FloatingMarketIcon({
       </motion.div>
 
       {/* Tabbed Market Dashboard */}
-      <TabbedMarketDashboard 
-        isOpen={isOpen} 
-        onOpenChange={setIsOpen}
-      />
+      <TabbedMarketDashboard isOpen={isOpen} onOpenChange={setIsOpen} />
     </>
   );
 }

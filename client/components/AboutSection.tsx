@@ -7,26 +7,26 @@ const stats = [
     icon: Users,
     value: "1000+",
     label: "Active Members",
-    gradient: "from-finance-gold to-orange-400"
+    gradient: "from-finance-gold to-orange-400",
   },
   {
     icon: TrendingUp,
     value: "50+",
     label: "Industry Partners",
-    gradient: "from-finance-electric to-blue-400"
+    gradient: "from-finance-electric to-blue-400",
   },
   {
     icon: Award,
     value: "25+",
     label: "Annual Events",
-    gradient: "from-finance-green to-emerald-400"
+    gradient: "from-finance-green to-emerald-400",
   },
   {
     icon: Target,
     value: "5+",
     label: "Years of Excellence",
-    gradient: "from-purple-500 to-finance-gold"
-  }
+    gradient: "from-purple-500 to-finance-gold",
+  },
 ];
 
 export default function AboutSection() {
@@ -34,17 +34,18 @@ export default function AboutSection() {
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       id="about"
       className="relative py-20 overflow-hidden"
       style={{
-        background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
+        background:
+          "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
       }}
     >
       <div className="container mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <motion.div 
+        <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: -30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -68,19 +69,27 @@ export default function AboutSection() {
             </h3>
             <div className="space-y-4 text-foreground/80 leading-relaxed">
               <p>
-                The Finance Symposium (TFS) at St. Xavier's College, Mumbai, is more than just a student organization—it's a thriving ecosystem where financial theory meets real-world application.
+                The Finance Symposium (TFS) at St. Xavier's College, Mumbai, is
+                more than just a student organization—it's a thriving ecosystem
+                where financial theory meets real-world application.
               </p>
               <p>
-                Since our inception, we've been committed to nurturing the next generation of finance professionals through comprehensive educational programs, industry networking, and hands-on learning experiences.
+                Since our inception, we've been committed to nurturing the next
+                generation of finance professionals through comprehensive
+                educational programs, industry networking, and hands-on learning
+                experiences.
               </p>
               <p>
-                Our mission extends beyond traditional academic boundaries, creating bridges between students and industry leaders, fostering innovation, and building a community passionate about financial excellence.
+                Our mission extends beyond traditional academic boundaries,
+                creating bridges between students and industry leaders,
+                fostering innovation, and building a community passionate about
+                financial excellence.
               </p>
             </div>
           </motion.div>
 
           {/* Stats Grid */}
-          <motion.div 
+          <motion.div
             className="grid grid-cols-2 gap-6"
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -94,14 +103,22 @@ export default function AboutSection() {
                 transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
                 className="relative group"
               >
-                <div className={`bg-gradient-to-br ${stat.gradient} p-6 rounded-xl text-center transform transition-all duration-300 group-hover:scale-105 group-hover:shadow-2xl`}>
+                <div
+                  className={`bg-gradient-to-br ${stat.gradient} p-6 rounded-xl text-center transform transition-all duration-300 group-hover:scale-105 group-hover:shadow-2xl`}
+                >
                   <stat.icon className="w-8 h-8 mx-auto mb-3 text-white drop-shadow-lg" />
-                  <div className="text-3xl font-bold text-white mb-1">{stat.value}</div>
-                  <div className="text-white/90 text-sm font-medium">{stat.label}</div>
+                  <div className="text-3xl font-bold text-white mb-1">
+                    {stat.value}
+                  </div>
+                  <div className="text-white/90 text-sm font-medium">
+                    {stat.label}
+                  </div>
                 </div>
-                
+
                 {/* Glow effect */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${stat.gradient} rounded-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300 -z-10 blur-xl`} />
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${stat.gradient} rounded-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300 -z-10 blur-xl`}
+                />
               </motion.div>
             ))}
           </motion.div>

@@ -30,7 +30,12 @@ interface ModernNavigationProps {
 
 export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { scrollToElement, activeSection, isScrolling, scrollProgress: smoothScrollProgress } = useSmoothScroll();
+  const {
+    scrollToElement,
+    activeSection,
+    isScrolling,
+    scrollProgress: smoothScrollProgress,
+  } = useSmoothScroll();
   const pageScrollProgress = useScrollProgress();
 
   const navItems = [
@@ -147,8 +152,6 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
-
-
   return (
     <motion.nav
       initial={{ y: -100, opacity: 0 }}
@@ -160,26 +163,25 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
           : "bg-transparent"
       }`}
       style={{
-        background: scrolled
-          ? "rgba(0, 0, 0, 0.7)"
-          : "transparent",
+        background: scrolled ? "rgba(0, 0, 0, 0.7)" : "transparent",
         backdropFilter: scrolled ? "blur(15px)" : "none",
         transition: "all 0.7s ease-in-out",
       }}
       onMouseEnter={() => {
         if (scrolled) {
-          const nav = document.querySelector('nav');
+          const nav = document.querySelector("nav");
           if (nav) {
             nav.style.background = "rgba(0, 0, 0, 0.85)";
             nav.style.backdropFilter = "blur(20px) saturate(150%)";
             nav.style.transform = "scale(1.02)";
-            nav.style.boxShadow = "0 8px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 215, 0, 0.2)";
+            nav.style.boxShadow =
+              "0 8px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 215, 0, 0.2)";
           }
         }
       }}
       onMouseLeave={() => {
         if (scrolled) {
-          const nav = document.querySelector('nav');
+          const nav = document.querySelector("nav");
           if (nav) {
             nav.style.background = "rgba(0, 0, 0, 0.7)";
             nav.style.backdropFilter = "blur(15px)";
@@ -210,7 +212,8 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
             : "bg-gradient-to-r from-finance-gold to-finance-electric"
         }`}
         style={{
-          scaleX: (isScrolling ? smoothScrollProgress : pageScrollProgress) / 100,
+          scaleX:
+            (isScrolling ? smoothScrollProgress : pageScrollProgress) / 100,
         }}
         transition={{ duration: isScrolling ? 0.05 : 0.1 }}
       />
@@ -241,11 +244,11 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.3 }}
-              onClick={() => scrollToElement('#hero')}
+              onClick={() => scrollToElement("#hero")}
               onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
+                if (e.key === "Enter" || e.key === " ") {
                   e.preventDefault();
-                  scrollToElement('#hero');
+                  scrollToElement("#hero");
                 }
               }}
               tabIndex={0}
@@ -287,11 +290,11 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.3 }}
-              onClick={() => scrollToElement('#hero')}
+              onClick={() => scrollToElement("#hero")}
               onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
+                if (e.key === "Enter" || e.key === " ") {
                   e.preventDefault();
-                  scrollToElement('#hero');
+                  scrollToElement("#hero");
                 }
               }}
               tabIndex={0}
@@ -360,26 +363,32 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                         <NavigationMenuTrigger
                           className={cn(
                             "group flex items-center space-x-2 bg-transparent",
-                            activeSection === item.section ? "text-white" : "text-finance-gold",
+                            activeSection === item.section
+                              ? "text-white"
+                              : "text-finance-gold",
                             "hover:bg-transparent hover:text-white",
                             "data-[active]:bg-transparent data-[state=open]:bg-transparent",
                             "focus:bg-transparent focus:text-white",
                             "relative overflow-hidden px-4 py-2 rounded-lg transition-all duration-300",
                             "hover:scale-105 hover:tracking-wider",
-                            activeSection === item.section && "scale-105"
+                            activeSection === item.section && "scale-105",
                           )}
                           style={{
-                            textShadow: activeSection === item.section
-                              ? "0 0 5px rgba(255,255,255,0.8), 0 0 15px rgba(255,215,0,0.6), 0 0 25px rgba(255,215,0,0.4)"
-                              : "0 0 4px rgba(255, 215, 0, 0.5)",
+                            textShadow:
+                              activeSection === item.section
+                                ? "0 0 5px rgba(255,255,255,0.8), 0 0 15px rgba(255,215,0,0.6), 0 0 25px rgba(255,215,0,0.4)"
+                                : "0 0 4px rgba(255, 215, 0, 0.5)",
                             transition: "all 0.3s ease-in-out",
                           }}
-                          onClick={() => item.section && scrollToElement(`#${item.section}`)}
+                          onClick={() =>
+                            item.section && scrollToElement(`#${item.section}`)
+                          }
                         >
                           <item.icon
                             className="w-4 h-4 relative z-10 transition-all duration-300 group-hover:text-white"
                             style={{
-                              filter: "drop-shadow(0 0 5px rgba(255,255,255,0.8)) drop-shadow(0 0 15px rgba(255,215,0,0.6)) drop-shadow(0 0 25px rgba(255,215,0,0.4))",
+                              filter:
+                                "drop-shadow(0 0 5px rgba(255,255,255,0.8)) drop-shadow(0 0 15px rgba(255,215,0,0.6)) drop-shadow(0 0 25px rgba(255,215,0,0.4))",
                               opacity: 0,
                             }}
                             onMouseEnter={(e) => {
@@ -397,11 +406,13 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                               textShadow: "0 0 4px rgba(255, 215, 0, 0.5)",
                             }}
                             onMouseEnter={(e) => {
-                              e.currentTarget.style.textShadow = "0 0 5px rgba(255,255,255,0.8), 0 0 15px rgba(255,215,0,0.6), 0 0 25px rgba(255,215,0,0.4)";
+                              e.currentTarget.style.textShadow =
+                                "0 0 5px rgba(255,255,255,0.8), 0 0 15px rgba(255,215,0,0.6), 0 0 25px rgba(255,215,0,0.4)";
                               e.currentTarget.style.letterSpacing = "0.5px";
                             }}
                             onMouseLeave={(e) => {
-                              e.currentTarget.style.textShadow = "0 0 4px rgba(255, 215, 0, 0.5)";
+                              e.currentTarget.style.textShadow =
+                                "0 0 4px rgba(255, 215, 0, 0.5)";
                               e.currentTarget.style.letterSpacing = "normal";
                             }}
                           >
@@ -434,7 +445,8 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                               background: "rgba(0, 0, 0, 0.9)",
                               backdropFilter: "blur(25px)",
                               borderColor: "rgba(255, 215, 0, 0.6)",
-                              boxShadow: "0 10px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 215, 0, 0.3)",
+                              boxShadow:
+                                "0 10px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 215, 0, 0.3)",
                             }}
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -458,7 +470,12 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                                       asChild
                                     >
                                       <button
-                                        onClick={() => dropdownItem.section && scrollToElement(`#${dropdownItem.section}`)}
+                                        onClick={() =>
+                                          dropdownItem.section &&
+                                          scrollToElement(
+                                            `#${dropdownItem.section}`,
+                                          )
+                                        }
                                         className="group flex items-start space-x-3 p-3 rounded-lg hover:bg-finance-gold/10 transition-all duration-300 w-full text-left"
                                       >
                                         <span className="text-lg mt-0.5 group-hover:scale-110 transition-transform duration-200">
@@ -486,19 +503,24 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                     ) : (
                       <Button
                         variant="ghost"
-                        onClick={() => item.section && scrollToElement(`#${item.section}`)}
+                        onClick={() =>
+                          item.section && scrollToElement(`#${item.section}`)
+                        }
                         className={cn(
                           "group flex items-center space-x-2 bg-transparent",
-                          activeSection === item.section ? "text-white" : "text-finance-gold",
+                          activeSection === item.section
+                            ? "text-white"
+                            : "text-finance-gold",
                           "hover:bg-transparent hover:text-white",
                           "relative overflow-hidden px-4 py-2 rounded-lg transition-all duration-300",
                           "hover:scale-105 hover:tracking-wider",
-                          activeSection === item.section && "scale-105"
+                          activeSection === item.section && "scale-105",
                         )}
                         style={{
-                          textShadow: activeSection === item.section
-                            ? "0 0 5px rgba(255,255,255,0.8), 0 0 15px rgba(255,215,0,0.6), 0 0 25px rgba(255,215,0,0.4)"
-                            : "0 0 4px rgba(255, 215, 0, 0.5)",
+                          textShadow:
+                            activeSection === item.section
+                              ? "0 0 5px rgba(255,255,255,0.8), 0 0 15px rgba(255,215,0,0.6), 0 0 25px rgba(255,215,0,0.4)"
+                              : "0 0 4px rgba(255, 215, 0, 0.5)",
                           transition: "all 0.3s ease-in-out",
                         }}
                       >

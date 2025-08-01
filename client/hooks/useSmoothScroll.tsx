@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef } from "react";
 
 interface SmoothScrollOptions {
   duration?: number;
@@ -12,7 +12,7 @@ const easeInOutCubic = (t: number): number => {
 };
 
 const easeInOutQuart = (t: number): number => {
-  return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * (--t) * t * t * t;
+  return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t;
 };
 
 // Professional cubic-bezier equivalent (0.25, 0.8, 0.25, 1)
@@ -22,106 +22,118 @@ const professionalEase = (t: number): number => {
   const c3 = 0.25;
   const c4 = 1;
 
-  return t === 0 ? 0 : t === 1 ? 1 :
-    t < 0.5
-      ? 2 * t * t * ((c1 + 1) * 2 * t - c1)
-      : 1 + 2 * (t - 1) * (t - 1) * ((c1 + 1) * 2 * (t - 1) + c1);
+  return t === 0
+    ? 0
+    : t === 1
+      ? 1
+      : t < 0.5
+        ? 2 * t * t * ((c1 + 1) * 2 * t - c1)
+        : 1 + 2 * (t - 1) * (t - 1) * ((c1 + 1) * 2 * (t - 1) + c1);
 };
 
 export const useSmoothScroll = (options: SmoothScrollOptions = {}) => {
   const {
     duration = 0, // Make instant
     offset = 80,
-    easing = professionalEase
+    easing = professionalEase,
   } = options;
 
   const [isScrolling, setIsScrolling] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>('');
+  const [activeSection, setActiveSection] = useState<string>("");
   const [scrollProgress, setScrollProgress] = useState(0);
   const scrollRequestRef = useRef<number | null>(null);
   const lastClickTime = useRef<number>(0);
 
   // Enhanced smooth scroll to element with performance optimizations
-  const scrollToElement = useCallback((
-    target: string | HTMLElement,
-    customOffset?: number
-  ) => {
-    // Prevent multiple rapid clicks
-    const now = Date.now();
-    if (now - lastClickTime.current < 100) return;
-    lastClickTime.current = now;
+  const scrollToElement = useCallback(
+    (target: string | HTMLElement, customOffset?: number) => {
+      // Prevent multiple rapid clicks
+      const now = Date.now();
+      if (now - lastClickTime.current < 100) return;
+      lastClickTime.current = now;
 
-    const element = typeof target === 'string'
-      ? document.getElementById(target.replace('#', ''))
-      : target;
+      const element =
+        typeof target === "string"
+          ? document.getElementById(target.replace("#", ""))
+          : target;
 
-    if (!element) return;
+      if (!element) return;
 
-    // Cancel any existing scroll animation
-    if (scrollRequestRef.current) {
-      cancelAnimationFrame(scrollRequestRef.current);
-    }
-
-    const targetPosition = element.offsetTop - (customOffset ?? offset);
-    const startPosition = window.pageYOffset;
-    const distance = targetPosition - startPosition;
-
-    // Skip animation for very small distances
-    if (Math.abs(distance) < 10) {
-      window.scrollTo(0, targetPosition);
-      if (typeof target === 'string' && target.startsWith('#')) {
-        window.history.pushState(null, '', target);
+      // Cancel any existing scroll animation
+      if (scrollRequestRef.current) {
+        cancelAnimationFrame(scrollRequestRef.current);
       }
-      return;
-    }
 
-    let startTime: number | null = null;
-    setIsScrolling(true);
+      const targetPosition = element.offsetTop - (customOffset ?? offset);
+      const startPosition = window.pageYOffset;
+      const distance = targetPosition - startPosition;
 
-    // Apply scroll lock to prevent conflicts
-    document.body.style.overflow = 'hidden';
-
-    const animation = (currentTime: number) => {
-      if (startTime === null) startTime = currentTime;
-      const timeElapsed = currentTime - startTime;
-      const progress = Math.min(timeElapsed / duration, 1);
-
-      const easeProgress = easing(progress);
-      const currentPosition = startPosition + (distance * easeProgress);
-
-      window.scrollTo(0, currentPosition);
-
-      if (progress < 1) {
-        scrollRequestRef.current = requestAnimationFrame(animation);
-      } else {
-        // Animation complete
-        setIsScrolling(false);
-        document.body.style.overflow = '';
-        scrollRequestRef.current = null;
-
-        // Gentle deceleration effect
-        const finalPosition = targetPosition;
-        window.scrollTo({
-          top: finalPosition,
-          behavior: 'auto'
-        });
-
-        // Update URL hash
-        if (typeof target === 'string' && target.startsWith('#')) {
-          window.history.pushState(null, '', target);
+      // Skip animation for very small distances
+      if (Math.abs(distance) < 10) {
+        window.scrollTo(0, targetPosition);
+        if (typeof target === "string" && target.startsWith("#")) {
+          window.history.pushState(null, "", target);
         }
+        return;
       }
-    };
 
-    scrollRequestRef.current = requestAnimationFrame(animation);
-  }, [duration, offset, easing]);
+      let startTime: number | null = null;
+      setIsScrolling(true);
+
+      // Apply scroll lock to prevent conflicts
+      document.body.style.overflow = "hidden";
+
+      const animation = (currentTime: number) => {
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const progress = Math.min(timeElapsed / duration, 1);
+
+        const easeProgress = easing(progress);
+        const currentPosition = startPosition + distance * easeProgress;
+
+        window.scrollTo(0, currentPosition);
+
+        if (progress < 1) {
+          scrollRequestRef.current = requestAnimationFrame(animation);
+        } else {
+          // Animation complete
+          setIsScrolling(false);
+          document.body.style.overflow = "";
+          scrollRequestRef.current = null;
+
+          // Gentle deceleration effect
+          const finalPosition = targetPosition;
+          window.scrollTo({
+            top: finalPosition,
+            behavior: "auto",
+          });
+
+          // Update URL hash
+          if (typeof target === "string" && target.startsWith("#")) {
+            window.history.pushState(null, "", target);
+          }
+        }
+      };
+
+      scrollRequestRef.current = requestAnimationFrame(animation);
+    },
+    [duration, offset, easing],
+  );
 
   // Detect active section based on scroll position
   useEffect(() => {
     const handleScroll = () => {
       if (isScrolling) return; // Don't update during programmatic scroll
 
-      const sections = ['hero', 'about', 'team', 'events', 'insights', 'sponsors', 'contact'];
+      const sections = [
+        "hero",
+        "about",
+        "team",
+        "events",
+        "insights",
+        "sponsors",
+        "contact",
+      ];
       const scrollPosition = window.scrollY + offset + 100;
 
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -133,10 +145,10 @@ export const useSmoothScroll = (options: SmoothScrollOptions = {}) => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll(); // Check initial position
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [offset, isScrolling]);
 
   // Handle browser back/forward navigation
@@ -148,14 +160,14 @@ export const useSmoothScroll = (options: SmoothScrollOptions = {}) => {
       }
     };
 
-    window.addEventListener('popstate', handlePopState);
-    
+    window.addEventListener("popstate", handlePopState);
+
     // Handle initial hash on page load
     if (window.location.hash) {
       setTimeout(() => scrollToElement(window.location.hash), 100);
     }
 
-    return () => window.removeEventListener('popstate', handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
   }, [scrollToElement]);
 
   return {
@@ -173,15 +185,16 @@ export const useScrollProgress = () => {
   useEffect(() => {
     const updateScrollProgress = () => {
       const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const docHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
       const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
       setScrollProgress(Math.min(progress, 100));
     };
 
-    window.addEventListener('scroll', updateScrollProgress, { passive: true });
+    window.addEventListener("scroll", updateScrollProgress, { passive: true });
     updateScrollProgress();
 
-    return () => window.removeEventListener('scroll', updateScrollProgress);
+    return () => window.removeEventListener("scroll", updateScrollProgress);
   }, []);
 
   return scrollProgress;

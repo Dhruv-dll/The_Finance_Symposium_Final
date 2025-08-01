@@ -3,7 +3,9 @@ import ModernNavigation from "../components/ModernNavigation";
 import EnhancedHeroSection from "../components/EnhancedHeroSection";
 import TerminalLoader from "../components/TerminalLoader";
 import EnhancedTeamSection from "../components/EnhancedTeamSection";
-import MarketDataErrorBoundary, { NetworkStatusIndicator } from "../components/MarketDataErrorBoundary";
+import MarketDataErrorBoundary, {
+  NetworkStatusIndicator,
+} from "../components/MarketDataErrorBoundary";
 import EventsSection from "../components/EventsSection";
 import AboutSection from "../components/AboutSection";
 import ContactSection from "../components/ContactSection";

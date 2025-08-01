@@ -1,6 +1,15 @@
 import React, { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { Mail, MapPin, Phone, Send, MessageCircle, Instagram, Linkedin, Twitter } from "lucide-react";
+import {
+  Mail,
+  MapPin,
+  Phone,
+  Send,
+  MessageCircle,
+  Instagram,
+  Linkedin,
+  Twitter,
+} from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
@@ -10,64 +19,82 @@ const contactInfo = [
     icon: MapPin,
     title: "Location",
     details: "St. Xavier's College, Mumbai",
-    subDetails: "5, Mahapalika Marg, Mumbai 400001"
+    subDetails: "5, Mahapalika Marg, Mumbai 400001",
   },
   {
     icon: Mail,
     title: "Email",
     details: "contact@tfsxaviers.com",
-    subDetails: "info@tfsxaviers.com"
+    subDetails: "info@tfsxaviers.com",
   },
   {
     icon: Phone,
     title: "Phone",
     details: "+91 98765 43210",
-    subDetails: "Mon-Fri, 9:00 AM - 6:00 PM"
-  }
+    subDetails: "Mon-Fri, 9:00 AM - 6:00 PM",
+  },
 ];
 
 const socialLinks = [
-  { icon: Instagram, href: "#", label: "Instagram", color: "hover:text-pink-400" },
-  { icon: Linkedin, href: "#", label: "LinkedIn", color: "hover:text-blue-400" },
+  {
+    icon: Instagram,
+    href: "#",
+    label: "Instagram",
+    color: "hover:text-pink-400",
+  },
+  {
+    icon: Linkedin,
+    href: "#",
+    label: "LinkedIn",
+    color: "hover:text-blue-400",
+  },
   { icon: Twitter, href: "#", label: "Twitter", color: "hover:text-sky-400" },
-  { icon: MessageCircle, href: "#", label: "Discord", color: "hover:text-purple-400" },
+  {
+    icon: MessageCircle,
+    href: "#",
+    label: "Discord",
+    color: "hover:text-purple-400",
+  },
 ];
 
 export default function ContactSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission
-    console.log('Form submitted:', formData);
+    console.log("Form submitted:", formData);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   };
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       id="contact"
       className="relative py-20 overflow-hidden"
       style={{
-        background: "linear-gradient(135deg, #000012 0%, #1a1a2e 50%, #0a0a23 100%)",
+        background:
+          "linear-gradient(135deg, #000012 0%, #1a1a2e 50%, #0a0a23 100%)",
       }}
     >
       <div className="container mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <motion.div 
+        <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: -30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -111,8 +138,12 @@ export default function ContactSection() {
                     <h4 className="text-lg font-semibold text-finance-gold mb-1">
                       {info.title}
                     </h4>
-                    <p className="text-foreground font-medium">{info.details}</p>
-                    <p className="text-foreground/60 text-sm">{info.subDetails}</p>
+                    <p className="text-foreground font-medium">
+                      {info.details}
+                    </p>
+                    <p className="text-foreground/60 text-sm">
+                      {info.subDetails}
+                    </p>
                   </div>
                 </motion.div>
               ))}

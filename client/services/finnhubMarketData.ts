@@ -1,22 +1,76 @@
 class FinnhubMarketDataService {
-  private readonly API_KEY = import.meta.env.VITE_FINNHUB_API_KEY || "crm3ck9r01qsa2l9t5u0crm3ck9r01qsa2l9t5ug"; // ✅ Use environment variable
+  private readonly API_KEY =
+    import.meta.env.VITE_FINNHUB_API_KEY ||
+    "crm3ck9r01qsa2l9t5u0crm3ck9r01qsa2l9t5ug"; // ✅ Use environment variable
   private readonly BASE_URL = "https://finnhub.io/api/v1";
 
   private stocks = [
     // ✅ Focus on stocks that Yahoo Finance supports
-    { symbol: "RELIANCE.NS", name: "RELIANCE", displayName: "Reliance Industries", finnhubSymbol: "RELIANCE.NS" },
-    { symbol: "TCS.NS", name: "TCS", displayName: "Tata Consultancy Services", finnhubSymbol: "TCS.NS" },
-    { symbol: "HDFCBANK.NS", name: "HDFC BANK", displayName: "HDFC Bank Ltd", finnhubSymbol: "HDFCBANK.NS" },
-    { symbol: "INFY.NS", name: "INFOSYS", displayName: "Infosys Limited", finnhubSymbol: "INFY.NS" },
-    { symbol: "ICICIBANK.NS", name: "ICICI BANK", displayName: "ICICI Bank Ltd", finnhubSymbol: "ICICIBANK.NS" },
-    { symbol: "HINDUNILVR.NS", name: "HUL", displayName: "Hindustan Unilever", finnhubSymbol: "HINDUNILVR.NS" },
-    { symbol: "ITC.NS", name: "ITC", displayName: "ITC Limited", finnhubSymbol: "ITC.NS" },
-    { symbol: "KOTAKBANK.NS", name: "KOTAK", displayName: "Kotak Mahindra Bank", finnhubSymbol: "KOTAKBANK.NS" },
+    {
+      symbol: "RELIANCE.NS",
+      name: "RELIANCE",
+      displayName: "Reliance Industries",
+      finnhubSymbol: "RELIANCE.NS",
+    },
+    {
+      symbol: "TCS.NS",
+      name: "TCS",
+      displayName: "Tata Consultancy Services",
+      finnhubSymbol: "TCS.NS",
+    },
+    {
+      symbol: "HDFCBANK.NS",
+      name: "HDFC BANK",
+      displayName: "HDFC Bank Ltd",
+      finnhubSymbol: "HDFCBANK.NS",
+    },
+    {
+      symbol: "INFY.NS",
+      name: "INFOSYS",
+      displayName: "Infosys Limited",
+      finnhubSymbol: "INFY.NS",
+    },
+    {
+      symbol: "ICICIBANK.NS",
+      name: "ICICI BANK",
+      displayName: "ICICI Bank Ltd",
+      finnhubSymbol: "ICICIBANK.NS",
+    },
+    {
+      symbol: "HINDUNILVR.NS",
+      name: "HUL",
+      displayName: "Hindustan Unilever",
+      finnhubSymbol: "HINDUNILVR.NS",
+    },
+    {
+      symbol: "ITC.NS",
+      name: "ITC",
+      displayName: "ITC Limited",
+      finnhubSymbol: "ITC.NS",
+    },
+    {
+      symbol: "KOTAKBANK.NS",
+      name: "KOTAK",
+      displayName: "Kotak Mahindra Bank",
+      finnhubSymbol: "KOTAKBANK.NS",
+    },
 
     // ✅ Indices - Yahoo Finance supports Indian indices
     // NIFTY 50 and SENSEX are well supported
-    { symbol: "^NSEI", name: "NIFTY 50", displayName: "NIFTY 50 Index", finnhubSymbol: "^NSEI", isIndex: true },
-    { symbol: "^BSESN", name: "SENSEX", displayName: "BSE Sensex", finnhubSymbol: "^BSESN", isIndex: true },
+    {
+      symbol: "^NSEI",
+      name: "NIFTY 50",
+      displayName: "NIFTY 50 Index",
+      finnhubSymbol: "^NSEI",
+      isIndex: true,
+    },
+    {
+      symbol: "^BSESN",
+      name: "SENSEX",
+      displayName: "BSE Sensex",
+      finnhubSymbol: "^BSESN",
+      isIndex: true,
+    },
   ];
 
   // ✅ Fetch comprehensive market data including currencies and crypto
@@ -29,7 +83,7 @@ class FinnhubMarketDataService {
     try {
       console.log("📊 Fetching real-time market data from server...");
 
-      const response = await fetch('/api/market-data', {
+      const response = await fetch("/api/market-data", {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -47,17 +101,19 @@ class FinnhubMarketDataService {
         throw new Error("Invalid response format from server");
       }
 
-      console.log(`✅ Successfully fetched ${data.stocks.length} real-time stocks`);
+      console.log(
+        `✅ Successfully fetched ${data.stocks.length} real-time stocks`,
+      );
 
       // Enhance stock data with display names
       const enhancedStocks = data.stocks.map((stock: any) => {
-        const stockInfo = this.stocks.find(s => s.symbol === stock.symbol);
+        const stockInfo = this.stocks.find((s) => s.symbol === stock.symbol);
         return {
           ...stock,
           displayName: stockInfo?.displayName || stock.name,
           // Ensure percentage is properly formatted
           changePercent: stock.changePercent || 0,
-          change: stock.change || 0
+          change: stock.change || 0,
         };
       });
 
@@ -86,7 +142,7 @@ class FinnhubMarketDataService {
   async fetchStockFromFinnhub(
     symbol: string,
     finnhubSymbol: string,
-    isIndex: boolean = false
+    isIndex: boolean = false,
   ): Promise<FinnhubStockData | null> {
     // This method is now handled by fetchAllMarketData
     return this.getFallbackStockData(symbol);
@@ -96,7 +152,7 @@ class FinnhubMarketDataService {
   private getFallbackStockData(symbol: string): FinnhubStockData | null {
     const baseData: Record<string, { price: number; name: string }> = {
       "^NSEI": { price: 24768, name: "NIFTY 50" }, // Accurate 2025 levels
-      "^BSESN": { price: 81185, name: "SENSEX" },   // Accurate 2025 levels
+      "^BSESN": { price: 81185, name: "SENSEX" }, // Accurate 2025 levels
       "RELIANCE.NS": { price: 3085, name: "RELIANCE" }, // Updated to Jan 2025 levels
       "TCS.NS": { price: 4156, name: "TCS" }, // Updated to Jan 2025 levels
       "HDFCBANK.NS": { price: 1721, name: "HDFC BANK" }, // Updated to Jan 2025 levels
@@ -118,7 +174,7 @@ class FinnhubMarketDataService {
     const change = (base.price * changePercent) / 100;
     const currentPrice = base.price + change;
 
-    const stockInfo = this.stocks.find(s => s.symbol === symbol);
+    const stockInfo = this.stocks.find((s) => s.symbol === symbol);
 
     return {
       symbol,
@@ -137,7 +193,9 @@ class FinnhubMarketDataService {
   // Market timing for Indian markets (IST)
   private checkMarketOpen(): boolean {
     const now = new Date();
-    const ist = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+    const ist = new Date(
+      now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }),
+    );
     const day = ist.getDay(); // 0 = Sunday, 6 = Saturday
     const hours = ist.getHours();
     const minutes = ist.getMinutes();
@@ -156,23 +214,32 @@ class FinnhubMarketDataService {
   // Fallback mode tracking
   private fallbackMode = false; // Start with server API, fallback if needed
   private apiFailureCount = 0;
-  private subscribers: ((data: { stocks: FinnhubStockData[]; sentiment: MarketSentiment }) => void)[] = [];
+  private subscribers: ((data: {
+    stocks: FinnhubStockData[];
+    sentiment: MarketSentiment;
+  }) => void)[] = [];
   private updateInterval: NodeJS.Timeout | null = null;
 
   // Utility delay function
   private delay(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   // Public method to get all stock data
   async getAllStocks(): Promise<FinnhubStockData[]> {
     if (this.fallbackMode) {
       const results = await Promise.all(
-        this.stocks.map(stock =>
-          this.fetchStockFromFinnhub(stock.symbol, stock.finnhubSymbol, stock.isIndex)
-        )
+        this.stocks.map((stock) =>
+          this.fetchStockFromFinnhub(
+            stock.symbol,
+            stock.finnhubSymbol,
+            stock.isIndex,
+          ),
+        ),
       );
-      return results.filter((result): result is FinnhubStockData => result !== null);
+      return results.filter(
+        (result): result is FinnhubStockData => result !== null,
+      );
     }
 
     const data = await this.fetchAllMarketData();
@@ -182,12 +249,15 @@ class FinnhubMarketDataService {
   // Calculate market sentiment (fallback method)
   calculateMarketSentiment(stocks: FinnhubStockData[]): MarketSentiment {
     const stocksOnly = stocks.filter(
-      stock => !["^NSEI", "^BSESN"].includes(stock.symbol)
+      (stock) => !["^NSEI", "^BSESN"].includes(stock.symbol),
     );
 
-    const positiveStocks = stocksOnly.filter(stock => stock.change > 0).length;
+    const positiveStocks = stocksOnly.filter(
+      (stock) => stock.change > 0,
+    ).length;
     const totalStocks = stocksOnly.length;
-    const advanceDeclineRatio = totalStocks > 0 ? positiveStocks / totalStocks : 0.5;
+    const advanceDeclineRatio =
+      totalStocks > 0 ? positiveStocks / totalStocks : 0.5;
 
     let sentiment: "bullish" | "bearish" | "neutral";
     if (advanceDeclineRatio >= 0.6) {
@@ -220,7 +290,7 @@ class FinnhubMarketDataService {
         rate: Math.round(usdInr * 100) / 100,
         change: (Math.random() - 0.5) * 0.5,
         changePercent: (Math.random() - 0.5) * 0.6,
-        timestamp: new Date()
+        timestamp: new Date(),
       },
       {
         symbol: "EURINR=X",
@@ -228,7 +298,7 @@ class FinnhubMarketDataService {
         rate: Math.round(eurInr * 100) / 100,
         change: (Math.random() - 0.5) * 0.6,
         changePercent: (Math.random() - 0.5) * 0.7,
-        timestamp: new Date()
+        timestamp: new Date(),
       },
       {
         symbol: "GBPINR=X",
@@ -236,7 +306,7 @@ class FinnhubMarketDataService {
         rate: Math.round(gbpInr * 100) / 100,
         change: (Math.random() - 0.5) * 0.7,
         changePercent: (Math.random() - 0.5) * 0.8,
-        timestamp: new Date()
+        timestamp: new Date(),
       },
       {
         symbol: "JPYINR=X",
@@ -244,8 +314,8 @@ class FinnhubMarketDataService {
         rate: Math.round(jpyInr * 10000) / 10000,
         change: (Math.random() - 0.5) * 0.01,
         changePercent: (Math.random() - 0.5) * 0.5,
-        timestamp: new Date()
-      }
+        timestamp: new Date(),
+      },
     ];
   }
 
@@ -254,7 +324,7 @@ class FinnhubMarketDataService {
     const btcPrice = 3567890 + (Math.random() - 0.5) * 50000;
     const ethPrice = 220145 + (Math.random() - 0.5) * 5000;
     const adaPrice = 35.75 + (Math.random() - 0.5) * 2;
-    const dotPrice = 425.30 + (Math.random() - 0.5) * 20;
+    const dotPrice = 425.3 + (Math.random() - 0.5) * 20;
 
     return [
       {
@@ -265,7 +335,7 @@ class FinnhubMarketDataService {
         changePercent: (Math.random() - 0.5) * 8,
         volume24h: 125000000000,
         marketCap: 70000000000000,
-        timestamp: new Date()
+        timestamp: new Date(),
       },
       {
         symbol: "ETH-INR",
@@ -275,7 +345,7 @@ class FinnhubMarketDataService {
         changePercent: (Math.random() - 0.5) * 6,
         volume24h: 45000000000,
         marketCap: 26000000000000,
-        timestamp: new Date()
+        timestamp: new Date(),
       },
       {
         symbol: "ADA-INR",
@@ -285,7 +355,7 @@ class FinnhubMarketDataService {
         changePercent: (Math.random() - 0.5) * 5,
         volume24h: 2500000000,
         marketCap: 1200000000000,
-        timestamp: new Date()
+        timestamp: new Date(),
       },
       {
         symbol: "DOT-INR",
@@ -295,8 +365,8 @@ class FinnhubMarketDataService {
         changePercent: (Math.random() - 0.5) * 4,
         volume24h: 1800000000,
         marketCap: 950000000000,
-        timestamp: new Date()
-      }
+        timestamp: new Date(),
+      },
     ];
   }
 
@@ -308,7 +378,9 @@ class FinnhubMarketDataService {
         const sentiment = this.calculateMarketSentiment(stocks);
         const currencies = this.getFallbackCurrencyData();
         const crypto = this.getFallbackCryptoData();
-        this.subscribers.forEach(callback => callback({ stocks, sentiment, currencies, crypto }));
+        this.subscribers.forEach((callback) =>
+          callback({ stocks, sentiment, currencies, crypto }),
+        );
         return;
       }
 
@@ -321,7 +393,7 @@ class FinnhubMarketDataService {
         if (!data.crypto || data.crypto.length === 0) {
           data.crypto = this.getFallbackCryptoData();
         }
-        this.subscribers.forEach(callback => callback(data));
+        this.subscribers.forEach((callback) => callback(data));
       } else {
         // Fallback if server API fails
         this.fallbackMode = true;
@@ -329,7 +401,9 @@ class FinnhubMarketDataService {
         const sentiment = this.calculateMarketSentiment(stocks);
         const currencies = this.getFallbackCurrencyData();
         const crypto = this.getFallbackCryptoData();
-        this.subscribers.forEach(callback => callback({ stocks, sentiment, currencies, crypto }));
+        this.subscribers.forEach((callback) =>
+          callback({ stocks, sentiment, currencies, crypto }),
+        );
       }
     } catch (error) {
       console.error("Failed to update market data:", error);
@@ -339,7 +413,9 @@ class FinnhubMarketDataService {
   // Public method to check if market is open
   isMarketOpen(): boolean {
     const now = new Date();
-    const ist = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+    const ist = new Date(
+      now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }),
+    );
     const day = ist.getDay(); // 0 = Sunday, 6 = Saturday
     const hours = ist.getHours();
     const minutes = ist.getMinutes();
@@ -356,12 +432,14 @@ class FinnhubMarketDataService {
   }
 
   // Subscription management
-  subscribeToUpdates(callback: (data: {
-    stocks: FinnhubStockData[];
-    sentiment: MarketSentiment;
-    currencies?: CurrencyRate[];
-    crypto?: CryptoData[];
-  }) => void): () => void {
+  subscribeToUpdates(
+    callback: (data: {
+      stocks: FinnhubStockData[];
+      sentiment: MarketSentiment;
+      currencies?: CurrencyRate[];
+      crypto?: CryptoData[];
+    }) => void,
+  ): () => void {
     this.subscribers.push(callback);
 
     // Start update interval if not already running
