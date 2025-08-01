@@ -278,9 +278,7 @@ export const getMarketData: RequestHandler = async (req, res) => {
     if (currencies.length > 0) {
       console.log(`💱 Currency sample:`, currencies[0]);
     }
-    if (crypto.length > 0) {
-      console.log(`₿ Crypto sample:`, crypto[0]);
-    }
+
 
     // Calculate market sentiment
     const stocksOnly = stocks.filter(
