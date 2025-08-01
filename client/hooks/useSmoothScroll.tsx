@@ -32,44 +32,85 @@ export const useSmoothScroll = (options: SmoothScrollOptions = {}) => {
   const {
     duration = 800,
     offset = 80,
-    easing = easeInOutCubic
+    easing = professionalEase
   } = options;
 
   const [isScrolling, setIsScrolling] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('');
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const scrollRequestRef = useRef<number | null>(null);
+  const lastClickTime = useRef<number>(0);
 
-  // Smooth scroll to element
+  // Enhanced smooth scroll to element with performance optimizations
   const scrollToElement = useCallback((
     target: string | HTMLElement,
     customOffset?: number
   ) => {
-    const element = typeof target === 'string' 
+    // Prevent multiple rapid clicks
+    const now = Date.now();
+    if (now - lastClickTime.current < 100) return;
+    lastClickTime.current = now;
+
+    const element = typeof target === 'string'
       ? document.getElementById(target.replace('#', ''))
       : target;
-    
+
     if (!element) return;
+
+    // Cancel any existing scroll animation
+    if (scrollRequestRef.current) {
+      cancelAnimationFrame(scrollRequestRef.current);
+    }
 
     const targetPosition = element.offsetTop - (customOffset ?? offset);
     const startPosition = window.pageYOffset;
     const distance = targetPosition - startPosition;
-    let startTime: number | null = null;
 
+    // Skip animation for very small distances
+    if (Math.abs(distance) < 10) {
+      window.scrollTo(0, targetPosition);
+      if (typeof target === 'string' && target.startsWith('#')) {
+        window.history.pushState(null, '', target);
+      }
+      return;
+    }
+
+    let startTime: number | null = null;
     setIsScrolling(true);
+    setScrollProgress(0);
+
+    // Apply scroll lock to prevent conflicts
+    document.body.style.overflow = 'hidden';
 
     const animation = (currentTime: number) => {
       if (startTime === null) startTime = currentTime;
       const timeElapsed = currentTime - startTime;
       const progress = Math.min(timeElapsed / duration, 1);
-      
+
       const easeProgress = easing(progress);
       const currentPosition = startPosition + (distance * easeProgress);
-      
+
+      // Update scroll progress
+      setScrollProgress(progress * 100);
+
       window.scrollTo(0, currentPosition);
 
       if (progress < 1) {
-        requestAnimationFrame(animation);
+        scrollRequestRef.current = requestAnimationFrame(animation);
       } else {
+        // Animation complete
         setIsScrolling(false);
+        setScrollProgress(0);
+        document.body.style.overflow = '';
+        scrollRequestRef.current = null;
+
+        // Gentle deceleration effect
+        const finalPosition = targetPosition;
+        window.scrollTo({
+          top: finalPosition,
+          behavior: 'auto'
+        });
+
         // Update URL hash
         if (typeof target === 'string' && target.startsWith('#')) {
           window.history.pushState(null, '', target);
@@ -77,7 +118,7 @@ export const useSmoothScroll = (options: SmoothScrollOptions = {}) => {
       }
     };
 
-    requestAnimationFrame(animation);
+    scrollRequestRef.current = requestAnimationFrame(animation);
   }, [duration, offset, easing]);
 
   // Detect active section based on scroll position
