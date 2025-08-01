@@ -130,8 +130,7 @@ export default function EventsSection() {
         animate={isInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
         transition={{ duration: 0.8, delay: index * 0.2, ease: "easeOut" }}
         className="relative group perspective-1000"
-        onMouseEnter={() => setActiveCard(event.id)}
-        onMouseLeave={() => setActiveCard(null)}
+
 
       >
         {/* 3D Card Container */}
