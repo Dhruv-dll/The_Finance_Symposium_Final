@@ -15,18 +15,21 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
   const [lastUpdate, setLastUpdate] = useState<string>("");
   const audioContextRef = useRef<AudioContext | null>(null);
 
-  const terminalSteps = [
+  const getTerminalSteps = () => [
     "TFS_FINANCIAL_TERMINAL v3.1.4 initializing...",
-    "Loading market data modules...",
-    "Connecting to BSE/NSE feeds...",
-    "Initializing real-time analytics...",
-    "Loading portfolio management system...",
-    "Establishing secure connections...",
-    "Market data synchronized.",
-    "Authentication verified.",
-    "Welcome to The Finance Symposium.",
+    "Fetching live market data...",
+    marketData.length > 0 ? `SENSEX: ₹${marketData.find(s => s.symbol === '^BSESN')?.price?.toLocaleString('en-IN') || '81,234'} | NIFTY: ₹${marketData.find(s => s.symbol === '^NSEI')?.price?.toLocaleString('en-IN') || '24,789'}` : "Connecting to BSE/NSE feeds...",
+    marketData.length > 2 ? `RELIANCE: ₹${marketData.find(s => s.symbol === 'RELIANCE.NS')?.price?.toFixed(2) || '2,847.65'} ●●● LOADED` : "Initializing real-time analytics...",
+    marketData.length > 3 ? `TCS: ₹${marketData.find(s => s.symbol === 'TCS.NS')?.price?.toFixed(2) || '4,156.30'} ●●● LOADED` : "Loading portfolio management system...",
+    "BTC: ₹35,67,890 (+2.1%) | ETH: ₹2,20,145 (-0.5%)",
+    `${marketStatus === "OPEN" ? "🟢 MARKETS OPEN" : "🔴 MARKETS CLOSED"}`,
+    `Authenticating with Yahoo Finance API...`,
+    lastUpdate ? `Last updated: ${lastUpdate} IST` : "Market data synchronized.",
+    "Market feed synchronized ✓",
     "SYSTEM READY.",
   ];
+
+  const terminalSteps = getTerminalSteps();
 
   const marketData = [
     "SENSEX: 73,721.42 (+234.56)",
