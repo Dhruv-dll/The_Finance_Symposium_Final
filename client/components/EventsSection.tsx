@@ -197,13 +197,13 @@ export default function EventsSection() {
             </div>
 
             {/* Icon with 3D Effect */}
-            <motion.div 
+            <motion.div
               className="relative z-10"
-              animate={activeCard === event.id ? { 
-                rotateY: 360,
-                scale: [1, 1.2, 1]
-              } : {}}
-              transition={{ duration: 0.6 }}
+              whileHover={{
+                scale: 1.1,
+                rotate: 5
+              }}
+              transition={{ duration: 0.3 }}
             >
               <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center mb-4">
                 <event.icon 
