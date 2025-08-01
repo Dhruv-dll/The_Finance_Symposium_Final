@@ -5,7 +5,7 @@ class FinnhubMarketDataService {
   private readonly BASE_URL = "https://finnhub.io/api/v1";
 
   private stocks = [
-    // ✅ Focus on stocks that Yahoo Finance supports
+    // �� Focus on stocks that Yahoo Finance supports
     {
       symbol: "RELIANCE.NS",
       name: "RELIANCE",
@@ -121,7 +121,6 @@ class FinnhubMarketDataService {
         stocks: enhancedStocks,
         sentiment: data.sentiment,
         currencies: data.currencies || [],
-        crypto: data.crypto || [],
       };
     } catch (error) {
       console.warn(`🔄 Server API failed:`, error.message);
