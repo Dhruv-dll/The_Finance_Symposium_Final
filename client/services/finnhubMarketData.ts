@@ -376,15 +376,27 @@ class FinnhubMarketDataService {
 
   // Public method to update all data and notify subscribers
   async updateAllData(): Promise<void> {
+    // Prevent concurrent updates
+    if (this.isUpdating) {
+      console.log("📊 Update already in progress, skipping...");
+      // If we have cached data, notify subscribers immediately
+      if (this.lastSuccessfulData) {
+        this.subscribers.forEach((callback) => callback(this.lastSuccessfulData));
+      }
+      return;
+    }
+
+    this.isUpdating = true;
+
     try {
       if (this.fallbackMode) {
         const stocks = await this.getAllStocks();
         const sentiment = this.calculateMarketSentiment(stocks);
         const currencies = this.getFallbackCurrencyData();
         const crypto = this.getFallbackCryptoData();
-        this.subscribers.forEach((callback) =>
-          callback({ stocks, sentiment, currencies, crypto }),
-        );
+        const data = { stocks, sentiment, currencies, crypto };
+        this.lastSuccessfulData = data;
+        this.subscribers.forEach((callback) => callback(data));
         return;
       }
 
@@ -397,6 +409,7 @@ class FinnhubMarketDataService {
         if (!data.crypto || data.crypto.length === 0) {
           data.crypto = this.getFallbackCryptoData();
         }
+        this.lastSuccessfulData = data;
         this.subscribers.forEach((callback) => callback(data));
       } else {
         // Fallback if server API fails
@@ -405,12 +418,20 @@ class FinnhubMarketDataService {
         const sentiment = this.calculateMarketSentiment(stocks);
         const currencies = this.getFallbackCurrencyData();
         const crypto = this.getFallbackCryptoData();
-        this.subscribers.forEach((callback) =>
-          callback({ stocks, sentiment, currencies, crypto }),
-        );
+        const data = { stocks, sentiment, currencies, crypto };
+        this.lastSuccessfulData = data;
+        this.subscribers.forEach((callback) => callback(data));
       }
     } catch (error) {
       console.error("Failed to update market data:", error);
+
+      // If we have cached data from previous successful call, use it
+      if (this.lastSuccessfulData) {
+        console.log("📊 Using cached data due to fetch error");
+        this.subscribers.forEach((callback) => callback(this.lastSuccessfulData));
+      }
+    } finally {
+      this.isUpdating = false;
     }
   }
 
