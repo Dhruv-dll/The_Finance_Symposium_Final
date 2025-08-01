@@ -8,6 +8,7 @@ import MarketDataErrorBoundary, {
 } from "../components/MarketDataErrorBoundary";
 import EventsSection from "../components/EventsSection";
 import AboutSection from "../components/AboutSection";
+import AboutBAFSection from "../components/AboutBAFSection";
 import ContactSection from "../components/ContactSection";
 import SponsorsSection from "../components/SponsorsSection";
 import FloatingMarketIcon from "../components/FloatingMarketIcon";
