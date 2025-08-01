@@ -15,7 +15,7 @@ import {
   accurateMarketDataService,
   AccurateStockData,
   MarketSentiment,
-  CryptoData,
+
   ForexData,
   safeFormatTimestamp,
 } from "../services/accurateMarketData";
