@@ -434,7 +434,8 @@ export default function TabbedMarketDashboard({
                           key={crypto.symbol}
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: 1, x: 0 }}
-                          className="p-4 rounded-lg bg-finance-navy-light/30 border border-finance-gold/10 hover:border-finance-gold/30 transition-all duration-300"
+                          className="p-4 rounded-lg bg-finance-navy-light/30 border border-finance-gold/10 hover:border-finance-gold/30 transition-all duration-300 cursor-pointer hover:bg-finance-navy-light/50"
+                          onClick={() => handleCryptoClick(crypto.symbol)}
                         >
                           <div className="flex items-center justify-between mb-2">
                             <div>
@@ -450,7 +451,7 @@ export default function TabbedMarketDashboard({
                                 ₹{crypto.price.toLocaleString("en-IN")}
                               </div>
                               <div
-                                className={`text-sm flex items-center space-x-1 ${
+                                className={`text-sm ${
                                   crypto.change > 0
                                     ? "text-finance-green"
                                     : crypto.change < 0
@@ -461,9 +462,6 @@ export default function TabbedMarketDashboard({
                                 <span>
                                   {crypto.change > 0 ? "+" : ""}
                                   {crypto.change.toLocaleString("en-IN")}
-                                </span>
-                                <span>
-                                  ({formatPercentage(crypto.changePercent)})
                                 </span>
                               </div>
                             </div>
