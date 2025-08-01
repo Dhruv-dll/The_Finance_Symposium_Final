@@ -134,7 +134,7 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
             <div className="bg-black border-l border-r border-finance-gold/30 p-6 min-h-[400px] font-mono text-sm">
               {/* System Info */}
               <div className="text-finance-electric mb-4">
-                <div> .████████....███████.....███████</div>
+                <div> .█��██████....███████.....███████</div>
                 <div> ....██.......██.........██</div>
                 <div> ....██.......██████......███████</div>
                 <div> ....██.......██................██</div>
@@ -168,34 +168,7 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
                 ))}
               </div>
 
-              {/* Market Data Preview */}
-              {currentStep >= 5 && marketData.length > 0 && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="border border-finance-electric/30 rounded p-4 mb-4"
-                >
-                  <div className="text-finance-electric mb-2">
-                    LIVE MARKET FEED:
-                  </div>
-                  <div className="grid grid-cols-2 gap-2 text-xs">
-                    {marketData.slice(0, 6).map((stock, index) => (
-                      <motion.div
-                        key={stock.symbol}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: index * 0.1 }}
-                        className="text-finance-gold"
-                      >
-                        {stock.displayName}: ₹{stock.price?.toFixed(2) || 'N/A'}
-                        <span className={`ml-1 ${stock.changePercent && stock.changePercent > 0 ? 'text-green-400' : 'text-red-400'}`}>
-                          ({stock.changePercent ? (stock.changePercent > 0 ? '+' : '') + stock.changePercent.toFixed(2) + '%' : 'N/A'})
-                        </span>
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
+
 
               {/* Progress Bar */}
               {currentStep < terminalSteps.length - 1 && (
