@@ -56,19 +56,32 @@ export default function FloatingMarketIcon({
   useEffect(() => {
     setConnectionStatus("loading");
     const unsubscribe = finnhubMarketDataService.subscribeToUpdates((data) => {
-      setMarketData({
-        stocks: data.stocks,
-        sentiment: data.sentiment,
-        currencies: data.currencies || [],
-        crypto: data.crypto || [],
-      });
-      setLastUpdate(new Date());
-      setConnectionStatus("connected");
-      setIsLoading(false);
+      try {
+        setMarketData({
+          stocks: data.stocks || [],
+          sentiment: data.sentiment || {
+            sentiment: "neutral",
+            advanceDeclineRatio: 0.5,
+            positiveStocks: 0,
+            totalStocks: 0,
+          },
+          currencies: data.currencies || [],
+          crypto: data.crypto || [],
+        });
+        setLastUpdate(new Date());
+        setConnectionStatus("connected");
+        setIsLoading(false);
+        setErrorMessage("");
+        setRetryCount(0);
 
-      // Flash effect when new data arrives
-      setDataJustUpdated(true);
-      setTimeout(() => setDataJustUpdated(false), 1000);
+        // Flash effect when new data arrives
+        setDataJustUpdated(true);
+        setTimeout(() => setDataJustUpdated(false), 1000);
+      } catch (error) {
+        console.error("Error processing market data:", error);
+        setConnectionStatus("error");
+        setErrorMessage(error.message || "Failed to process market data");
+      }
     });
 
     return unsubscribe;
