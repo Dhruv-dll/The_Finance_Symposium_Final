@@ -357,15 +357,14 @@ async function fetchAllCryptoData(): Promise<CryptoData[]> {
 
     return cryptoResults;
   } catch (error) {
-    console.warn(
-      `❌ Failed to fetch crypto ${symbol}, using fallback data:`,
-      error.message,
-    );
+    console.warn(`❌ Failed to fetch crypto data from CoinGecko:`, error.message);
 
-    // Return fallback data with simulated movement
-    const cryptoInfo = CRYPTO_SYMBOLS.find((c) => c.symbol === symbol);
-    if (cryptoInfo) {
-      const basePriceUSD = cryptoInfo.fallbackPriceUSD;
+    // Return fallback data for all cryptos
+    const fallbackCryptos: CryptoData[] = [];
+    const inrMultiplier = 84.25;
+
+    for (const crypto of CRYPTO_SYMBOLS) {
+      const basePriceUSD = crypto.fallbackPriceUSD;
       const randomMovement = (Math.random() - 0.5) * 0.1; // ±5% movement
       const currentPriceUSD = basePriceUSD * (1 + randomMovement);
       const changeUSD = currentPriceUSD - basePriceUSD;
@@ -379,19 +378,19 @@ async function fetchAllCryptoData(): Promise<CryptoData[]> {
       const volume24h = Math.random() * 5000000000;
       const marketCap = currentPriceINR * 20000000;
 
-      return {
-        symbol: symbol.replace("USDT", ""),
-        name,
+      fallbackCryptos.push({
+        symbol: crypto.symbol.replace("USDT", ""),
+        name: crypto.name,
         price: Math.round(currentPriceINR),
         change: Math.round(changeINR),
         changePercent: Math.round(changePercent * 100) / 100,
         volume24h: Math.round(volume24h),
         marketCap: Math.round(marketCap),
         timestamp: new Date(),
-      };
+      });
     }
 
-    return null;
+    return fallbackCryptos;
   }
 }
 
