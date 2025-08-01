@@ -192,7 +192,7 @@ export default function Index() {
       issue: "Issue 15",
       date: "January 2024",
       cover: "/api/placeholder/300/400",
-      topics: ["AI in Banking", "Crypto Regulations", "Digital Payments"],
+      topics: ["AI in Banking", "Digital Payments", "Investment Strategies"],
     },
     {
       title: "ESG Investing Trends",
