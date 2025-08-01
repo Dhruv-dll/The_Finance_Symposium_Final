@@ -31,14 +31,7 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
 
   const terminalSteps = getTerminalSteps();
 
-  const staticMarketData = [
-    "SENSEX: 73,721.42 (+234.56)",
-    "NIFTY: 22,361.75 (+78.90)",
-    "RELIANCE: 2,456.75 (+12.45)",
-    "TCS: 3,891.20 (-23.10)",
-    "HDFC: 1,687.35 (+8.90)",
-    "INFY: 1,542.85 (+15.60)",
-  ];
+
 
   // Mechanical keyboard sound simulation
   const playKeystrokeSound = () => {
