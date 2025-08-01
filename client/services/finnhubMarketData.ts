@@ -314,11 +314,11 @@ class FinnhubMarketDataService {
 
       const data = await this.fetchAllMarketData();
       if (data) {
-        // Add fallback currency and crypto data if not provided by server
-        if (!data.currencies) {
+        // Add fallback currency and crypto data if not provided by server or empty
+        if (!data.currencies || data.currencies.length === 0) {
           data.currencies = this.getFallbackCurrencyData();
         }
-        if (!data.crypto) {
+        if (!data.crypto || data.crypto.length === 0) {
           data.crypto = this.getFallbackCryptoData();
         }
         this.subscribers.forEach(callback => callback(data));
