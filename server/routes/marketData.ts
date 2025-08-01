@@ -289,95 +289,62 @@ function isValidCryptoPrice(cryptoName: string, price: number): boolean {
   return price >= range.min && price <= range.max;
 }
 
-// Fetch cryptocurrency data using Google scraping
+// Fetch cryptocurrency data using CoinGecko free API
 async function fetchCryptoData(
   symbol: string,
   name: string,
   inrMultiplier: number,
 ): Promise<CryptoData | null> {
   try {
-    console.log(`₿ Scraping crypto data for ${name} from Google...`);
+    console.log(`₿ Fetching crypto data for ${name} from CoinGecko...`);
 
-    // Create search query for Google
-    const searchQuery = `${name} price USD current`;
-    const encodedQuery = encodeURIComponent(searchQuery);
-    const googleUrl = `https://www.google.com/search?q=${encodedQuery}`;
+    // Map crypto names to CoinGecko IDs
+    const coinGeckoIds = {
+      "Bitcoin": "bitcoin",
+      "Ethereum": "ethereum",
+      "Cardano": "cardano",
+      "Polkadot": "polkadot"
+    };
 
-    const response = await fetch(googleUrl, {
-      headers: {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.5",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Connection": "keep-alive",
-        "Upgrade-Insecure-Requests": "1",
-      },
-      timeout: 15000,
-    });
+    const coinId = coinGeckoIds[name];
+    if (!coinId) {
+      throw new Error(`Unsupported crypto: ${name}`);
+    }
+
+    // Use CoinGecko free API (no key required)
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd&include_24hr_change=true`,
+      {
+        headers: {
+          "Accept": "application/json",
+          "User-Agent": "Market-Data-App/1.0",
+        },
+        timeout: 10000,
+      }
+    );
 
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
 
-    const html = await response.text();
+    const data = await response.json();
+    const coinData = data[coinId];
 
-    // Extract price from Google's knowledge panel with multiple strategies
-    let currentPriceUSD = 0;
-
-    // Strategy 1: Look for common price patterns in Google results
-    const pricePatterns = [
-      // Pattern for dollar amounts with commas: $67,234.56
-      /\$([0-9]{1,3}(?:,[0-9]{3})*(?:\.[0-9]{1,2})?)/g,
-      // Pattern for price with USD: 67234.56 USD
-      /([0-9]{1,3}(?:,[0-9]{3})*(?:\.[0-9]{1,2})?)\s*USD/gi,
-      // Pattern for price context: Price: $67,234.56
-      /Price[^$]*\$([0-9,]+\.?[0-9]*)/gi,
-      // Pattern for current price context: Current: $67,234.56
-      /Current[^$]*\$([0-9,]+\.?[0-9]*)/gi,
-    ];
-
-    for (const pattern of pricePatterns) {
-      const matches = [...html.matchAll(pattern)];
-      for (const match of matches) {
-        const priceStr = match[1]?.replace(/,/g, '');
-        const price = parseFloat(priceStr);
-
-        if (price > 0 && isValidCryptoPrice(name, price)) {
-          currentPriceUSD = price;
-          console.log(`✅ Found ${name} price: $${currentPriceUSD}`);
-          break;
-        }
-      }
-      if (currentPriceUSD > 0) break;
+    if (!coinData || !coinData.usd) {
+      throw new Error(`No price data for ${name}`);
     }
 
-    // Strategy 2: If no price found, try fallback with more lenient validation
-    if (currentPriceUSD <= 0) {
-      console.log(`🔄 Trying fallback price extraction for ${name}...`);
+    const currentPriceUSD = coinData.usd;
+    const changePercent24h = coinData.usd_24h_change || 0;
 
-      // More aggressive price extraction - look for any dollar amount
-      const fallbackPattern = /\$([0-9,]+(?:\.[0-9]{1,2})?)/g;
-      const allMatches = [...html.matchAll(fallbackPattern)];
-
-      for (const match of allMatches) {
-        const priceStr = match[1]?.replace(/,/g, '');
-        const price = parseFloat(priceStr);
-
-        // Lenient validation - just check reasonable ranges
-        if (price > 0.01 && price < 200000) {
-          if (isValidCryptoPrice(name, price)) {
-            currentPriceUSD = price;
-            console.log(`✅ Found ${name} fallback price: $${currentPriceUSD}`);
-            break;
-          }
-        }
-      }
+    // Validate price
+    if (currentPriceUSD <= 0 || !isValidCryptoPrice(name, currentPriceUSD)) {
+      throw new Error(`Invalid price for ${name}: $${currentPriceUSD}`);
     }
 
-    // If still no price found, throw error for fallback
-    if (currentPriceUSD <= 0) {
-      throw new Error(`Could not extract valid price for ${name} from Google`);
-    }
+    console.log(`✅ Found ${name} price: $${currentPriceUSD} (${changePercent24h.toFixed(2)}% 24h)`);
+
+    let currentPriceUSD = coinData.usd;
 
     // Convert to INR
     const currentPriceINR = currentPriceUSD * inrMultiplier;
