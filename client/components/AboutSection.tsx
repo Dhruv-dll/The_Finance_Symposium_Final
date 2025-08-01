@@ -67,24 +67,13 @@ export default function AboutSection() {
             <h3 className="text-3xl font-bold text-finance-gold mb-6">
               Bridging Theory and Practice in Finance
             </h3>
-            <div className="space-y-4 text-foreground/80 leading-relaxed">
-              <p>
-                The Finance Symposium (TFS) at St. Xavier's College, Mumbai, is
-                more than just a student organization—it's a thriving ecosystem
-                where financial theory meets real-world application.
-              </p>
-              <p>
-                Since our inception, we've been committed to nurturing the next
-                generation of finance professionals through comprehensive
-                educational programs, industry networking, and hands-on learning
-                experiences.
-              </p>
-              <p>
-                Our mission extends beyond traditional academic boundaries,
-                creating bridges between students and industry leaders,
-                fostering innovation, and building a community passionate about
-                financial excellence.
-              </p>
+            <div className="space-y-6 text-foreground/80 leading-relaxed">
+              <div>
+                <h4 className="text-xl font-semibold text-finance-electric mb-3">Our Story</h4>
+                <p className="text-lg">
+                  "The Finance Symposium is not merely an event; it is an invaluable experience where all the different dimensions of finance are explored effortlessly converging with knowledge based amusement, knowledge which fosters innovation, networking which cultivates opportunities. Get ready to be engrossed in stimulating discussions, gaining insights from the industry stalwarts and top business leaders, and enjoy an invigorating atmosphere designed to both inspire and educate."
+                </p>
+              </div>
             </div>
           </motion.div>
 
