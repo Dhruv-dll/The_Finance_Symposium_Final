@@ -344,8 +344,6 @@ async function fetchCryptoData(
 
     console.log(`✅ Found ${name} price: $${currentPriceUSD} (${changePercent24h.toFixed(2)}% 24h)`);
 
-    let currentPriceUSD = coinData.usd;
-
     // Convert to INR
     const currentPriceINR = currentPriceUSD * inrMultiplier;
 
