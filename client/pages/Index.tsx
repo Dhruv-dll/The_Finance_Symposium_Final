@@ -9,6 +9,7 @@ import AboutSection from "../components/AboutSection";
 import ContactSection from "../components/ContactSection";
 import SponsorsSection from "../components/SponsorsSection";
 import MarketDashboardDialog from "../components/MarketDashboardDialog";
+import ScrollProgressIndicator from "../components/ScrollProgressIndicator";
 import { motion, useScroll, useTransform } from "framer-motion";
 import {
   Users,
@@ -322,6 +323,7 @@ export default function Index() {
       {!showLoader && (
         <>
           <ModernNavigation scrolled={scrolled} />
+          <ScrollProgressIndicator />
 
           {/* Hero Section */}
           <MarketDataErrorBoundary>
@@ -330,19 +332,23 @@ export default function Index() {
             </section>
           </MarketDataErrorBoundary>
 
-          {/* About Section */}
-          <AboutSection />
+          {/* About TFS Section */}
+          <section id="about">
+            <AboutSection />
+          </section>
 
-          {/* Events Section */}
-          <EventsSection />
-
-          {/* Team Section */}
+          {/* Meet the Team Section */}
           <section id="team">
             <EnhancedTeamSection />
           </section>
 
-          {/* Finsight Section */}
-          <section id="finsight" className="py-20 px-6 bg-mesh-gradient">
+          {/* Events Section */}
+          <section id="events">
+            <EventsSection />
+          </section>
+
+          {/* Insights Section */}
+          <section id="insights" className="py-20 px-6 bg-mesh-gradient">
             <div className="container mx-auto">
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
@@ -409,10 +415,14 @@ export default function Index() {
           </section>
 
           {/* Sponsors Section */}
-          <SponsorsSection />
+          <section id="sponsors">
+            <SponsorsSection />
+          </section>
 
-          {/* Contact Section */}
-          <ContactSection />
+          {/* Contact Us Section */}
+          <section id="contact">
+            <ContactSection />
+          </section>
 
           {/* Footer */}
           <footer className="py-12 px-6 bg-finance-navy border-t border-finance-gold/20">
