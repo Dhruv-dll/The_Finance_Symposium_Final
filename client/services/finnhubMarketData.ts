@@ -5,7 +5,7 @@ class FinnhubMarketDataService {
   private readonly BASE_URL = "https://finnhub.io/api/v1";
 
   private stocks = [
-    // �� Focus on stocks that Yahoo Finance supports
+    // ✅ Focus on stocks that Yahoo Finance supports
     {
       symbol: "RELIANCE.NS",
       name: "RELIANCE",
@@ -217,7 +217,6 @@ class FinnhubMarketDataService {
     stocks: FinnhubStockData[];
     sentiment: MarketSentiment;
     currencies?: CurrencyRate[];
-    crypto?: CryptoData[];
   }) => void)[] = [];
   private updateInterval: NodeJS.Timeout | null = null;
   private isUpdating = false; // Prevent concurrent updates
