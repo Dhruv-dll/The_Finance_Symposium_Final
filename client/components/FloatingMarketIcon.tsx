@@ -12,6 +12,7 @@ import { Badge } from "./ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { ScrollArea } from "./ui/scroll-area";
 import { Separator } from "./ui/separator";
+import { MarketDataLoader } from "./MarketDataErrorBoundary";
 import {
   finnhubMarketDataService,
   FinnhubStockData,
