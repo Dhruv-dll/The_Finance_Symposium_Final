@@ -255,8 +255,7 @@ export default function TabbedMarketDashboard({ isOpen, onOpenChange }: TabbedMa
                   </TabsTrigger>
                 </TabsList>
 
-                <AnimatePresence mode="wait">
-                  <TabsContent value="stocks" className="mt-6">
+                <TabsContent value="stocks" className="mt-6">
                     <motion.div
                       variants={tabVariants}
                       initial="hidden"
@@ -463,7 +462,6 @@ export default function TabbedMarketDashboard({ isOpen, onOpenChange }: TabbedMa
                       </div>
                     </motion.div>
                   </TabsContent>
-                </AnimatePresence>
               </Tabs>
             </div>
           )}
