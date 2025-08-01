@@ -121,17 +121,7 @@ export default function EventsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
   const [activeCard, setActiveCard] = useState<string | null>(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  const handleMouseMove = (e: React.MouseEvent, cardId: string) => {
-    if (activeCard === cardId) {
-      const rect = e.currentTarget.getBoundingClientRect();
-      setMousePosition({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      });
-    }
-  };
 
   const EventCard3D = ({ event, index }: { event: EventCard; index: number }) => {
     return (
@@ -142,7 +132,7 @@ export default function EventsSection() {
         className="relative group perspective-1000"
         onMouseEnter={() => setActiveCard(event.id)}
         onMouseLeave={() => setActiveCard(null)}
-        onMouseMove={(e) => handleMouseMove(e, event.id)}
+
       >
         {/* 3D Card Container */}
         <motion.div
@@ -253,15 +243,7 @@ export default function EventsSection() {
             </div>
 
             {/* Hover Glow Effect */}
-            <motion.div
-              className="absolute inset-0 rounded-xl opacity-0"
-              animate={{
-                opacity: activeCard === event.id ? 0.3 : 0,
-              }}
-              style={{
-                background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255,255,255,0.3) 0%, transparent 50%)`,
-              }}
-            />
+
           </div>
 
           {/* Floating Animation */}
