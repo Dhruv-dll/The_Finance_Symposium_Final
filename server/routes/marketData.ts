@@ -466,10 +466,9 @@ export const getMarketData: RequestHandler = async (req, res) => {
       cryptoData.push(data);
     }
 
-    const [stockResults, currencyResults, cryptoResults] = await Promise.all([
+    const [stockResults, currencyResults] = await Promise.all([
       Promise.all(stockPromises),
       Promise.all(currencyPromises),
-      Promise.all(cryptoPromises),
     ]);
 
     const stocks = stockResults.filter(
@@ -478,8 +477,8 @@ export const getMarketData: RequestHandler = async (req, res) => {
     const currencies = currencyResults.filter(
       (currency): currency is CurrencyData => currency !== null,
     );
-    const crypto = cryptoResults.filter(
-      (cryptoData): cryptoData is CryptoData => cryptoData !== null,
+    const crypto = cryptoData.filter(
+      (cryptoDataItem): cryptoDataItem is CryptoData => cryptoDataItem !== null,
     );
 
     console.log(
