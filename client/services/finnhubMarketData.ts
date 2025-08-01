@@ -87,6 +87,7 @@ class FinnhubMarketDataService {
         method: "GET",
         headers: {
           Accept: "application/json",
+          "Cache-Control": "no-cache",
         },
         signal: AbortSignal.timeout(15000),
       });
