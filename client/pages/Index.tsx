@@ -8,7 +8,7 @@ import EventsSection from "../components/EventsSection";
 import AboutSection from "../components/AboutSection";
 import ContactSection from "../components/ContactSection";
 import SponsorsSection from "../components/SponsorsSection";
-import FloatingMarketIcon from "../components/FloatingMarketIconUpdated";
+import FloatingMarketIcon from "../components/FloatingMarketIcon";
 import ScrollProgressIndicator from "../components/ScrollProgressIndicator";
 import { motion, useScroll, useTransform } from "framer-motion";
 import {
