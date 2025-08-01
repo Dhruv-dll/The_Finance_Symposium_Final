@@ -190,18 +190,32 @@ export const useScrollProgress = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
+    // Safety guard for HMR
+    if (typeof window === 'undefined') return;
+
     const updateScrollProgress = () => {
-      const scrollTop = window.scrollY;
-      const docHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-      setScrollProgress(Math.min(progress, 100));
+      try {
+        const scrollTop = window.scrollY;
+        const docHeight =
+          document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        setScrollProgress(Math.min(progress, 100));
+      } catch (error) {
+        // Silently handle errors during HMR
+        console.warn('Scroll progress update error:', error);
+      }
     };
 
     window.addEventListener("scroll", updateScrollProgress, { passive: true });
     updateScrollProgress();
 
-    return () => window.removeEventListener("scroll", updateScrollProgress);
+    return () => {
+      try {
+        window.removeEventListener("scroll", updateScrollProgress);
+      } catch (error) {
+        // Silently handle cleanup errors during HMR
+      }
+    };
   }, []);
 
   return scrollProgress;
