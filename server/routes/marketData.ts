@@ -222,10 +222,10 @@ async function fetchCurrencyData(symbol: string): Promise<CurrencyData | null> {
     const currencyInfo = CURRENCY_SYMBOLS.find(c => c.symbol === symbol);
     if (currencyInfo) {
       const baseRate = currencyInfo.fallbackRate;
-      const randomMovement = (Math.random() - 0.5) * 0.02; // ±1% movement
+      const randomMovement = (Math.random() - 0.5) * 0.04; // ±2% movement
       const currentRate = baseRate * (1 + randomMovement);
       const change = currentRate - baseRate;
-      const changePercent = (randomMovement * 100);
+      const changePercent = (change / baseRate) * 100;
 
       return {
         symbol,
