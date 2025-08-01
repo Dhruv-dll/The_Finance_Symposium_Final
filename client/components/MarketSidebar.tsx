@@ -5,7 +5,7 @@ import {
   TrendingDown,
   Calendar,
   DollarSign,
-  Bitcoin,
+
   Activity,
   ChevronRight,
   Eye,
