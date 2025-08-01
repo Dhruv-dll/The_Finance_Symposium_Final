@@ -381,7 +381,8 @@ export default function TabbedMarketDashboard({
                           key={currency.symbol}
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
-                          className="p-4 rounded-lg bg-finance-navy-light/30 border border-finance-gold/10 hover:border-finance-gold/30 transition-all duration-300"
+                          className="p-4 rounded-lg bg-finance-navy-light/30 border border-finance-gold/10 hover:border-finance-gold/30 transition-all duration-300 cursor-pointer hover:bg-finance-navy-light/50"
+                          onClick={() => handleCurrencyClick(currency.symbol)}
                         >
                           <div className="flex items-center justify-between">
                             <div>
@@ -397,7 +398,7 @@ export default function TabbedMarketDashboard({
                                 ₹{currency.rate.toFixed(4)}
                               </div>
                               <div
-                                className={`text-xs flex items-center space-x-1 ${
+                                className={`text-xs ${
                                   currency.change > 0
                                     ? "text-finance-green"
                                     : currency.change < 0
@@ -408,9 +409,6 @@ export default function TabbedMarketDashboard({
                                 <span>
                                   {currency.change > 0 ? "+" : ""}
                                   {currency.change.toFixed(4)}
-                                </span>
-                                <span>
-                                  ({formatPercentage(currency.changePercent)})
                                 </span>
                               </div>
                             </div>
