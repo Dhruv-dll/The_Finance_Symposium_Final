@@ -154,19 +154,51 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 group ${
         scrolled
-          ? "backdrop-blur-xl bg-finance-navy/20 border-b border-finance-gold/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
+          ? "backdrop-blur-[15px] border-b border-finance-gold/30 shadow-[0_4px_20px_rgba(0,0,0,0.3)]"
           : "bg-transparent"
       }`}
+      style={{
+        background: scrolled
+          ? "rgba(0, 0, 0, 0.7)"
+          : "transparent",
+        backdropFilter: scrolled ? "blur(15px)" : "none",
+        transition: "all 0.7s ease-in-out",
+      }}
+      onMouseEnter={() => {
+        if (scrolled) {
+          const nav = document.querySelector('nav');
+          if (nav) {
+            nav.style.background = "rgba(0, 0, 0, 0.85)";
+            nav.style.backdropFilter = "blur(20px) saturate(150%)";
+            nav.style.transform = "scale(1.02)";
+            nav.style.boxShadow = "0 8px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 215, 0, 0.2)";
+          }
+        }
+      }}
+      onMouseLeave={() => {
+        if (scrolled) {
+          const nav = document.querySelector('nav');
+          if (nav) {
+            nav.style.background = "rgba(0, 0, 0, 0.7)";
+            nav.style.backdropFilter = "blur(15px)";
+            nav.style.transform = "scale(1)";
+            nav.style.boxShadow = "0 4px 20px rgba(0, 0, 0, 0.3)";
+          }
+        }
+      }}
     >
-      {/* Glassmorphic background effect */}
+      {/* Enhanced Glassmorphic background effect */}
       {scrolled && (
         <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-finance-navy/30 via-finance-navy-light/20 to-finance-navy/30 backdrop-blur-xl"
+          className="absolute inset-0 bg-gradient-to-r from-finance-navy/30 via-finance-navy-light/20 to-finance-navy/30"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
+          style={{
+            backdropFilter: "blur(25px)",
+          }}
         />
       )}
 
