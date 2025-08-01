@@ -4,23 +4,28 @@ class FinnhubMarketDataService {
 
   private stocks = [
     // ✅ Focus on stocks that Yahoo Finance supports
-    { symbol: "RELIANCE.NS", name: "RELIANCE", finnhubSymbol: "RELIANCE.NS" },
-    { symbol: "TCS.NS", name: "TCS", finnhubSymbol: "TCS.NS" },
-    { symbol: "HDFCBANK.NS", name: "HDFC BANK", finnhubSymbol: "HDFCBANK.NS" },
-    { symbol: "INFY.NS", name: "INFOSYS", finnhubSymbol: "INFY.NS" },
-    { symbol: "ICICIBANK.NS", name: "ICICI BANK", finnhubSymbol: "ICICIBANK.NS" },
-    { symbol: "HINDUNILVR.NS", name: "HUL", finnhubSymbol: "HINDUNILVR.NS" },
-    { symbol: "ITC.NS", name: "ITC", finnhubSymbol: "ITC.NS" },
-    { symbol: "KOTAKBANK.NS", name: "KOTAK", finnhubSymbol: "KOTAKBANK.NS" },
+    { symbol: "RELIANCE.NS", name: "RELIANCE", displayName: "Reliance Industries", finnhubSymbol: "RELIANCE.NS" },
+    { symbol: "TCS.NS", name: "TCS", displayName: "Tata Consultancy Services", finnhubSymbol: "TCS.NS" },
+    { symbol: "HDFCBANK.NS", name: "HDFC BANK", displayName: "HDFC Bank Ltd", finnhubSymbol: "HDFCBANK.NS" },
+    { symbol: "INFY.NS", name: "INFOSYS", displayName: "Infosys Limited", finnhubSymbol: "INFY.NS" },
+    { symbol: "ICICIBANK.NS", name: "ICICI BANK", displayName: "ICICI Bank Ltd", finnhubSymbol: "ICICIBANK.NS" },
+    { symbol: "HINDUNILVR.NS", name: "HUL", displayName: "Hindustan Unilever", finnhubSymbol: "HINDUNILVR.NS" },
+    { symbol: "ITC.NS", name: "ITC", displayName: "ITC Limited", finnhubSymbol: "ITC.NS" },
+    { symbol: "KOTAKBANK.NS", name: "KOTAK", displayName: "Kotak Mahindra Bank", finnhubSymbol: "KOTAKBANK.NS" },
 
     // ✅ Indices - Yahoo Finance supports Indian indices
     // NIFTY 50 and SENSEX are well supported
-    { symbol: "^NSEI", name: "NIFTY 50", finnhubSymbol: "^NSEI", isIndex: true },
-    { symbol: "^BSESN", name: "SENSEX", finnhubSymbol: "^BSESN", isIndex: true },
+    { symbol: "^NSEI", name: "NIFTY 50", displayName: "NIFTY 50 Index", finnhubSymbol: "^NSEI", isIndex: true },
+    { symbol: "^BSESN", name: "SENSEX", displayName: "BSE Sensex", finnhubSymbol: "^BSESN", isIndex: true },
   ];
 
-  // ✅ Fetch real-time data from our server-side API
-  async fetchAllMarketData(): Promise<{ stocks: FinnhubStockData[]; sentiment: MarketSentiment } | null> {
+  // ✅ Fetch comprehensive market data including currencies and crypto
+  async fetchAllMarketData(): Promise<{
+    stocks: FinnhubStockData[];
+    sentiment: MarketSentiment;
+    currencies?: CurrencyRate[];
+    crypto?: CryptoData[];
+  } | null> {
     try {
       console.log("📊 Fetching real-time market data from server...");
 
@@ -44,9 +49,23 @@ class FinnhubMarketDataService {
 
       console.log(`✅ Successfully fetched ${data.stocks.length} real-time stocks`);
 
+      // Enhance stock data with display names
+      const enhancedStocks = data.stocks.map((stock: any) => {
+        const stockInfo = this.stocks.find(s => s.symbol === stock.symbol);
+        return {
+          ...stock,
+          displayName: stockInfo?.displayName || stock.name,
+          // Ensure percentage is properly formatted
+          changePercent: stock.changePercent || 0,
+          change: stock.change || 0
+        };
+      });
+
       return {
-        stocks: data.stocks,
+        stocks: enhancedStocks,
         sentiment: data.sentiment,
+        currencies: data.currencies || [],
+        crypto: data.crypto || [],
       };
     } catch (error) {
       console.warn(`🔄 Server API failed:`, error.message);
@@ -99,9 +118,12 @@ class FinnhubMarketDataService {
     const change = (base.price * changePercent) / 100;
     const currentPrice = base.price + change;
 
+    const stockInfo = this.stocks.find(s => s.symbol === symbol);
+
     return {
       symbol,
       name: base.name,
+      displayName: stockInfo?.displayName || base.name,
       price: Math.round(currentPrice * 100) / 100,
       change: Math.round(change * 100) / 100,
       changePercent: Math.round(changePercent * 100) / 100,
@@ -184,25 +206,130 @@ class FinnhubMarketDataService {
     };
   }
 
+  // Fetch currency exchange rates (fallback data)
+  private getFallbackCurrencyData(): CurrencyRate[] {
+    const usdInr = 84.25 + (Math.random() - 0.5) * 0.5;
+    const eurInr = 91.75 + (Math.random() - 0.5) * 0.5;
+    const gbpInr = 103.45 + (Math.random() - 0.5) * 0.5;
+    const jpyInr = 0.56 + (Math.random() - 0.5) * 0.01;
+
+    return [
+      {
+        symbol: "USDINR=X",
+        name: "USD/INR",
+        rate: Math.round(usdInr * 100) / 100,
+        change: (Math.random() - 0.5) * 0.5,
+        changePercent: (Math.random() - 0.5) * 0.6,
+        timestamp: new Date()
+      },
+      {
+        symbol: "EURINR=X",
+        name: "EUR/INR",
+        rate: Math.round(eurInr * 100) / 100,
+        change: (Math.random() - 0.5) * 0.6,
+        changePercent: (Math.random() - 0.5) * 0.7,
+        timestamp: new Date()
+      },
+      {
+        symbol: "GBPINR=X",
+        name: "GBP/INR",
+        rate: Math.round(gbpInr * 100) / 100,
+        change: (Math.random() - 0.5) * 0.7,
+        changePercent: (Math.random() - 0.5) * 0.8,
+        timestamp: new Date()
+      },
+      {
+        symbol: "JPYINR=X",
+        name: "JPY/INR",
+        rate: Math.round(jpyInr * 10000) / 10000,
+        change: (Math.random() - 0.5) * 0.01,
+        changePercent: (Math.random() - 0.5) * 0.5,
+        timestamp: new Date()
+      }
+    ];
+  }
+
+  // Fetch cryptocurrency data (fallback data)
+  private getFallbackCryptoData(): CryptoData[] {
+    const btcPrice = 3567890 + (Math.random() - 0.5) * 50000;
+    const ethPrice = 220145 + (Math.random() - 0.5) * 5000;
+    const adaPrice = 35.75 + (Math.random() - 0.5) * 2;
+    const dotPrice = 425.30 + (Math.random() - 0.5) * 20;
+
+    return [
+      {
+        symbol: "BTC-INR",
+        name: "Bitcoin",
+        price: Math.round(btcPrice),
+        change: (Math.random() - 0.5) * 100000,
+        changePercent: (Math.random() - 0.5) * 8,
+        volume24h: 125000000000,
+        marketCap: 70000000000000,
+        timestamp: new Date()
+      },
+      {
+        symbol: "ETH-INR",
+        name: "Ethereum",
+        price: Math.round(ethPrice),
+        change: (Math.random() - 0.5) * 8000,
+        changePercent: (Math.random() - 0.5) * 6,
+        volume24h: 45000000000,
+        marketCap: 26000000000000,
+        timestamp: new Date()
+      },
+      {
+        symbol: "ADA-INR",
+        name: "Cardano",
+        price: Math.round(adaPrice * 100) / 100,
+        change: (Math.random() - 0.5) * 3,
+        changePercent: (Math.random() - 0.5) * 5,
+        volume24h: 2500000000,
+        marketCap: 1200000000000,
+        timestamp: new Date()
+      },
+      {
+        symbol: "DOT-INR",
+        name: "Polkadot",
+        price: Math.round(dotPrice * 100) / 100,
+        change: (Math.random() - 0.5) * 25,
+        changePercent: (Math.random() - 0.5) * 4,
+        volume24h: 1800000000,
+        marketCap: 950000000000,
+        timestamp: new Date()
+      }
+    ];
+  }
+
   // Public method to update all data and notify subscribers
   async updateAllData(): Promise<void> {
     try {
       if (this.fallbackMode) {
         const stocks = await this.getAllStocks();
         const sentiment = this.calculateMarketSentiment(stocks);
-        this.subscribers.forEach(callback => callback({ stocks, sentiment }));
+        const currencies = this.getFallbackCurrencyData();
+        const crypto = this.getFallbackCryptoData();
+        this.subscribers.forEach(callback => callback({ stocks, sentiment, currencies, crypto }));
         return;
       }
 
       const data = await this.fetchAllMarketData();
       if (data) {
+        // Add fallback currency and crypto data if not provided by server
+        if (!data.currencies) {
+          data.currencies = this.getFallbackCurrencyData();
+        }
+        if (!data.crypto) {
+          data.crypto = this.getFallbackCryptoData();
+        }
         this.subscribers.forEach(callback => callback(data));
       } else {
         // Fallback if server API fails
         this.fallbackMode = true;
         const stocks = await this.getAllStocks();
         const sentiment = this.calculateMarketSentiment(stocks);
-        this.subscribers.forEach(callback => callback({ stocks, sentiment }));
+        const currencies = this.getFallbackCurrencyData();
+        const crypto = this.getFallbackCryptoData();
+        this.subscribers.forEach(callback => callback({ stocks, sentiment, currencies, crypto }));
       }
     } catch (error) {
       console.error("Failed to update market data:", error);
@@ -229,7 +356,12 @@ class FinnhubMarketDataService {
   }
 
   // Subscription management
-  subscribeToUpdates(callback: (data: { stocks: FinnhubStockData[]; sentiment: MarketSentiment }) => void): () => void {
+  subscribeToUpdates(callback: (data: {
+    stocks: FinnhubStockData[];
+    sentiment: MarketSentiment;
+    currencies?: CurrencyRate[];
+    crypto?: CryptoData[];
+  }) => void): () => void {
     this.subscribers.push(callback);
 
     // Start update interval if not already running
@@ -262,6 +394,7 @@ class FinnhubMarketDataService {
 export interface FinnhubStockData {
   symbol: string;
   name: string;
+  displayName?: string;
   price: number;
   change: number;
   changePercent: number;
@@ -269,6 +402,28 @@ export interface FinnhubStockData {
   marketState: string;
   dayHigh: number;
   dayLow: number;
+}
+
+// Currency exchange rate interface
+export interface CurrencyRate {
+  symbol: string;
+  name: string;
+  rate: number;
+  change: number;
+  changePercent: number;
+  timestamp: Date;
+}
+
+// Cryptocurrency data interface
+export interface CryptoData {
+  symbol: string;
+  name: string;
+  price: number;
+  change: number;
+  changePercent: number;
+  volume24h: number;
+  marketCap: number;
+  timestamp: Date;
 }
 
 export interface MarketSentiment {
