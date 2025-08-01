@@ -310,7 +310,7 @@ export default function TabbedMarketDashboard({
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
                             className="p-4 rounded-lg bg-finance-navy-light/30 border border-finance-gold/10 hover:border-finance-gold/30 transition-all duration-300 cursor-pointer hover:bg-finance-navy-light/50"
-                            onClick={() => handleStockClick(stock.symbol)}
+                            onClick={() => handleStockClick(stock)}
                           >
                             <div className="flex items-center justify-between">
                               <div>
