@@ -336,6 +336,12 @@ export default function EnhancedNavigation({
                 ) : (
                   <Link
                     to={item.href}
+                    onClick={(e) => {
+                      if (item.href.startsWith("#")) {
+                        e.preventDefault();
+                        scrollToElement(item.href);
+                      }
+                    }}
                     className={`flex items-center space-x-2 text-foreground hover:${item.color} transition-all duration-300 group relative px-4 py-2 rounded-lg overflow-hidden`}
                   >
                     {/* Hover glow background */}
