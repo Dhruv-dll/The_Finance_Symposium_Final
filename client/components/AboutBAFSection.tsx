@@ -74,13 +74,13 @@ export default function AboutBAFSection() {
                   BAF Programme Foundation
                 </h4>
                 <p className="text-lg">
-                  "The BAF programme was effectively initiated at St. Xavier's
+                  The BAF programme was effectively initiated at St. Xavier's
                   College from start of academic year 2022-23, as a self
                   –financed 3-year undergraduate program affiliated to the
                   University of Mumbai. The aim is to provide solid platform of
                   updated content in the domain field to students who wish to
                   transform themselves through professional in the field of
-                  accounting and finance."
+                  accounting and finance.
                 </p>
               </div>
             </div>
