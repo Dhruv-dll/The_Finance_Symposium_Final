@@ -89,9 +89,6 @@ export const useSmoothScroll = (options: SmoothScrollOptions = {}) => {
       const easeProgress = easing(progress);
       const currentPosition = startPosition + (distance * easeProgress);
 
-      // Update scroll progress
-      setScrollProgress(progress * 100);
-
       window.scrollTo(0, currentPosition);
 
       if (progress < 1) {
