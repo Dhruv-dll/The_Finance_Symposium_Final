@@ -6,9 +6,26 @@ interface SmoothScrollOptions {
   easing?: (t: number) => number;
 }
 
-// Easing functions
+// Enhanced easing functions
 const easeInOutCubic = (t: number): number => {
   return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+};
+
+const easeInOutQuart = (t: number): number => {
+  return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * (--t) * t * t * t;
+};
+
+// Professional cubic-bezier equivalent (0.25, 0.8, 0.25, 1)
+const professionalEase = (t: number): number => {
+  const c1 = 0.25;
+  const c2 = 0.8;
+  const c3 = 0.25;
+  const c4 = 1;
+
+  return t === 0 ? 0 : t === 1 ? 1 :
+    t < 0.5
+      ? 2 * t * t * ((c1 + 1) * 2 * t - c1)
+      : 1 + 2 * (t - 1) * (t - 1) * ((c1 + 1) * 2 * (t - 1) + c1);
 };
 
 export const useSmoothScroll = (options: SmoothScrollOptions = {}) => {
