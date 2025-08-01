@@ -73,12 +73,11 @@ class FinnhubMarketDataService {
     },
   ];
 
-  // ✅ Fetch comprehensive market data including currencies and crypto
+  // ✅ Fetch comprehensive market data including currencies
   async fetchAllMarketData(): Promise<{
     stocks: FinnhubStockData[];
     sentiment: MarketSentiment;
     currencies?: CurrencyRate[];
-    crypto?: CryptoData[];
   } | null> {
     try {
       console.log("📊 Fetching real-time market data from server...");
