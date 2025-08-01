@@ -454,9 +454,17 @@ export const getMarketData: RequestHandler = async (req, res) => {
       fetchCurrencyData(currency.symbol),
     );
 
-    const cryptoPromises = CRYPTO_SYMBOLS.map((crypto) =>
-      fetchCryptoData(crypto.symbol, crypto.name, crypto.inrMultiplier),
-    );
+    // Fetch crypto data sequentially with delays to avoid rate limiting
+    const cryptoData: (CryptoData | null)[] = [];
+    for (let i = 0; i < CRYPTO_SYMBOLS.length; i++) {
+      const crypto = CRYPTO_SYMBOLS[i];
+      if (i > 0) {
+        // Add delay between requests
+        await new Promise(resolve => setTimeout(resolve, 2000));
+      }
+      const data = await fetchCryptoData(crypto.symbol, crypto.name, crypto.inrMultiplier);
+      cryptoData.push(data);
+    }
 
     const [stockResults, currencyResults, cryptoResults] = await Promise.all([
       Promise.all(stockPromises),
