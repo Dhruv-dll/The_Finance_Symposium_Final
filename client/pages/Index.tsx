@@ -190,28 +190,28 @@ export default function Index() {
 
   const finsightIssues = [
     {
-      title: "Future of FinTech",
-      issue: "Issue 15",
-      date: "January 2024",
+      title: "Finsight Magazine",
+      issue: "Second Edition",
+      date: "2024",
       cover: "/api/placeholder/300/400",
-      topics: ["AI in Banking", "Digital Payments", "Investment Strategies"],
+      topics: ["Behavioral Finance", "Personal Finance", "Market Trends Analysis"],
     },
     {
-      title: "ESG Investing Trends",
-      issue: "Issue 14",
-      date: "December 2023",
+      title: "Economic News & Laws",
+      issue: "Special Feature",
+      date: "2024",
       cover: "/api/placeholder/300/400",
-      topics: ["Sustainable Finance", "Green Bonds", "Impact Investing"],
+      topics: ["Economic Deconstruction", "Financial Regulations", "Legal Updates"],
     },
     {
-      title: "Market Analysis 2024",
-      issue: "Issue 13",
-      date: "November 2023",
+      title: "Finance & Management",
+      issue: "Knowledge Series",
+      date: "2024",
       cover: "/api/placeholder/300/400",
       topics: [
-        "Market Predictions",
-        "Economic Outlook",
-        "Investment Opportunities",
+        "Progressive Finance",
+        "Dynamic Markets",
+        "Management Insights",
       ],
     },
   ];
@@ -391,9 +391,10 @@ export default function Index() {
                 <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-finance-gold via-finance-electric to-finance-gold bg-clip-text text-transparent animate-glow">
                   Finsight - Financial Insights
                 </h2>
-                <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                  Your gateway to cutting-edge financial knowledge and market
-                  analysis
+                <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
+                  The official Magazine of the Department of Accounting and Finance (BAF) at St. Xavier's College (Autonomous), Mumbai.
+                  As the world of finance becomes more progressive and dynamic, we aspire to become the premier compilation providing knowledge
+                  that delves into the multitudes of finance and management - a valuable asset in our readers' lives.
                 </p>
               </motion.div>
 
