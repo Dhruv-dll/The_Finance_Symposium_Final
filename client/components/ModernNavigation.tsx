@@ -388,11 +388,18 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                         </NavigationMenuTrigger>
 
                         <NavigationMenuContent>
-                          <div
-                            className="w-64 p-4 bg-finance-navy/90 backdrop-blur-xl border border-finance-gold/20 rounded-xl"
+                          <motion.div
+                            className="w-64 p-4 rounded-xl border-2"
                             style={{
-                              boxShadow: "0 8px 32px rgba(255, 215, 0, 0.2), 0 0 20px rgba(255, 215, 0, 0.1)",
+                              background: "rgba(0, 0, 0, 0.9)",
+                              backdropFilter: "blur(25px)",
+                              borderColor: "rgba(255, 215, 0, 0.6)",
+                              boxShadow: "0 10px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 215, 0, 0.3)",
                             }}
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.3, ease: "easeOut" }}
                           >
                             <div className="space-y-2">
                               {item.dropdown.map(
@@ -433,7 +440,7 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                                 },
                               )}
                             </div>
-                          </div>
+                          </motion.div>
                         </NavigationMenuContent>
                       </>
                     ) : (
