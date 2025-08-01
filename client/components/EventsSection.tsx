@@ -206,12 +206,10 @@ export default function EventsSection() {
               transition={{ duration: 0.3 }}
             >
               <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center mb-4">
-                <event.icon 
-                  className="w-8 h-8 text-white drop-shadow-lg" 
+                <event.icon
+                  className="w-8 h-8 text-white drop-shadow-lg"
                   style={{
-                    filter: activeCard === event.id 
-                      ? "drop-shadow(0 0 10px rgba(255,255,255,0.8))" 
-                      : "drop-shadow(0 2px 4px rgba(0,0,0,0.3))"
+                    filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.3))"
                   }}
                 />
               </div>
