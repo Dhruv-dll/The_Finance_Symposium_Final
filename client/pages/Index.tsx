@@ -341,7 +341,7 @@ export default function Index() {
           </section>
 
           {/* Finsight Section */}
-          <section className="py-20 px-6 bg-mesh-gradient">
+          <section id="finsight" className="py-20 px-6 bg-mesh-gradient">
             <div className="container mx-auto">
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
@@ -407,11 +407,8 @@ export default function Index() {
             </div>
           </section>
 
-          {/* Enhanced Team Section */}
-          <EnhancedTeamSection />
-
-          {/* Contact Section */}
-          <section className="py-20 px-6 bg-gradient-to-br from-finance-navy to-finance-navy-light">
+          {/* Sponsors Section */}
+          <section id="sponsors" className="py-20 px-6 bg-gradient-to-br from-finance-navy-light to-finance-navy">
             <div className="container mx-auto">
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
@@ -420,163 +417,40 @@ export default function Index() {
                 className="text-center mb-16"
               >
                 <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-finance-gold to-finance-electric bg-clip-text text-transparent">
-                  Connect & Illuminate
+                  Our Partners
                 </h2>
                 <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                  Join our community of finance enthusiasts and industry
-                  professionals
+                  Proud to partner with leading financial institutions
                 </p>
               </motion.div>
 
-              <div className="grid lg:grid-cols-2 gap-12">
-                {/* Contact Info */}
-                <motion.div
-                  initial={{ opacity: 0, x: -50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8 }}
-                >
-                  <h3 className="text-3xl font-bold mb-8 text-finance-gold">
-                    Get in Touch
-                  </h3>
-
-                  <div className="space-y-6">
-                    <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 bg-gradient-to-br from-finance-gold to-finance-electric rounded-lg flex items-center justify-center">
-                        <MapPin className="w-6 h-6 text-finance-navy" />
-                      </div>
-                      <div>
-                        <div className="font-medium text-finance-gold">
-                          Address
-                        </div>
-                        <div className="text-muted-foreground">
-                          St. Xavier's College, Mumbai, Maharashtra 400001
-                        </div>
-                      </div>
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {sponsors.present.map((sponsor, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    className="glassmorphism p-6 rounded-xl border border-finance-gold/20 hover:border-finance-gold/40 transition-all duration-300 text-center"
+                  >
+                    <div className="h-16 bg-white/10 rounded-lg mb-4 flex items-center justify-center">
+                      <span className="text-finance-gold font-bold">{sponsor.name}</span>
                     </div>
-
-                    <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 bg-gradient-to-br from-finance-electric to-finance-green rounded-lg flex items-center justify-center">
-                        <Mail className="w-6 h-6 text-finance-navy" />
-                      </div>
-                      <div>
-                        <div className="font-medium text-finance-electric">
-                          Email
-                        </div>
-                        <div className="text-muted-foreground">
-                          tfs@xaviers.edu
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 bg-gradient-to-br from-finance-green to-finance-gold rounded-lg flex items-center justify-center">
-                        <Phone className="w-6 h-6 text-finance-navy" />
-                      </div>
-                      <div>
-                        <div className="font-medium text-finance-green">
-                          Phone
-                        </div>
-                        <div className="text-muted-foreground">
-                          +91 22 2262 7661
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-8 glassmorphism p-6 rounded-xl border border-finance-gold/20">
-                    <h4 className="text-xl font-bold mb-4 text-finance-gold">
-                      Follow Us
-                    </h4>
-                    <div className="flex space-x-4">
-                      {["Instagram", "LinkedIn", "Twitter", "YouTube"].map(
-                        (platform, index) => (
-                          <button
-                            key={platform}
-                            className="w-10 h-10 bg-finance-navy-light rounded-lg flex items-center justify-center hover:bg-finance-gold hover:text-finance-navy transition-all duration-300 market-glow"
-                          >
-                            <Globe className="w-5 h-5" />
-                          </button>
-                        ),
-                      )}
-                    </div>
-                  </div>
-                </motion.div>
-
-                {/* Contact Form */}
-                <motion.div
-                  initial={{ opacity: 0, x: 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8 }}
-                >
-                  <div className="glassmorphism p-8 rounded-2xl border border-finance-electric/20">
-                    <h3 className="text-2xl font-bold mb-6 text-finance-electric">
-                      Send us a Message
-                    </h3>
-
-                    <form className="space-y-6">
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div>
-                          <label className="block text-sm font-medium text-finance-gold mb-2">
-                            First Name
-                          </label>
-                          <input
-                            type="text"
-                            className="w-full px-4 py-3 bg-finance-navy-light border border-finance-gold/20 rounded-lg focus:outline-none focus:border-finance-gold focus:ring-2 focus:ring-finance-gold/20 transition-all duration-300"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-finance-gold mb-2">
-                            Last Name
-                          </label>
-                          <input
-                            type="text"
-                            className="w-full px-4 py-3 bg-finance-navy-light border border-finance-gold/20 rounded-lg focus:outline-none focus:border-finance-gold focus:ring-2 focus:ring-finance-gold/20 transition-all duration-300"
-                          />
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium text-finance-gold mb-2">
-                          Email
-                        </label>
-                        <input
-                          type="email"
-                          className="w-full px-4 py-3 bg-finance-navy-light border border-finance-gold/20 rounded-lg focus:outline-none focus:border-finance-gold focus:ring-2 focus:ring-finance-gold/20 transition-all duration-300"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium text-finance-gold mb-2">
-                          Subject
-                        </label>
-                        <input
-                          type="text"
-                          className="w-full px-4 py-3 bg-finance-navy-light border border-finance-gold/20 rounded-lg focus:outline-none focus:border-finance-gold focus:ring-2 focus:ring-finance-gold/20 transition-all duration-300"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium text-finance-gold mb-2">
-                          Message
-                        </label>
-                        <textarea
-                          rows={4}
-                          className="w-full px-4 py-3 bg-finance-navy-light border border-finance-gold/20 rounded-lg focus:outline-none focus:border-finance-gold focus:ring-2 focus:ring-finance-gold/20 transition-all duration-300 resize-none"
-                        ></textarea>
-                      </div>
-
-                      <button
-                        type="submit"
-                        className="w-full py-4 bg-gradient-to-r from-finance-gold to-finance-electric text-finance-navy font-bold rounded-lg market-glow hover:scale-105 transition-all duration-300"
-                      >
-                        Send Message
-                      </button>
-                    </form>
-                  </div>
-                </motion.div>
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                      sponsor.tier === 'Platinum' ? 'bg-purple-500/20 text-purple-300' :
+                      sponsor.tier === 'Gold' ? 'bg-finance-gold/20 text-finance-gold' :
+                      'bg-gray-500/20 text-gray-300'
+                    }`}>
+                      {sponsor.tier}
+                    </span>
+                  </motion.div>
+                ))}
               </div>
             </div>
           </section>
+
+          {/* Contact Section */}
+          <ContactSection />
 
           {/* Footer */}
           <footer className="py-12 px-6 bg-finance-navy border-t border-finance-gold/20">
