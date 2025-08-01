@@ -16,6 +16,8 @@ import {
   finnhubMarketDataService,
   FinnhubStockData,
   MarketSentiment,
+  CurrencyRate,
+  CryptoData,
   safeFormatTimestamp,
 } from "../services/finnhubMarketData";
 
@@ -30,6 +32,8 @@ export default function FloatingMarketIcon({
   const [marketData, setMarketData] = useState<{
     stocks: FinnhubStockData[];
     sentiment: MarketSentiment;
+    currencies: CurrencyRate[];
+    crypto: CryptoData[];
   }>({
     stocks: [],
     sentiment: {
@@ -38,6 +42,8 @@ export default function FloatingMarketIcon({
       positiveStocks: 0,
       totalStocks: 0,
     },
+    currencies: [],
+    crypto: [],
   });
   const [isLoading, setIsLoading] = useState(false);
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
@@ -47,11 +53,16 @@ export default function FloatingMarketIcon({
   useEffect(() => {
     setConnectionStatus("loading");
     const unsubscribe = finnhubMarketDataService.subscribeToUpdates((data) => {
-      setMarketData(data);
+      setMarketData({
+        stocks: data.stocks,
+        sentiment: data.sentiment,
+        currencies: data.currencies || [],
+        crypto: data.crypto || [],
+      });
       setLastUpdate(new Date());
       setConnectionStatus("connected");
       setIsLoading(false);
-      
+
       // Flash effect when new data arrives
       setDataJustUpdated(true);
       setTimeout(() => setDataJustUpdated(false), 1000);
@@ -260,7 +271,7 @@ export default function FloatingMarketIcon({
       {/* Enhanced Dialog with slide-up animation */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent
-          className="max-w-6xl max-h-[90vh] bg-finance-navy/95 backdrop-blur-xl border border-finance-gold/20 text-foreground"
+          className="max-w-7xl max-h-[95vh] bg-finance-navy/95 backdrop-blur-xl border border-finance-gold/20 text-foreground"
           style={{
             background: "linear-gradient(135deg, rgba(0, 0, 18, 0.95) 0%, rgba(26, 26, 46, 0.95) 100%)",
           }}
@@ -318,7 +329,7 @@ export default function FloatingMarketIcon({
               Live market dashboard showing real-time stock prices, market sentiment, and financial data powered by Yahoo Finance API
             </div>
 
-            <div className="mt-4 space-y-4">
+            <div className="mt-4 space-y-6">
               {/* Market Summary */}
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <Card className="bg-finance-navy-light/50 border-finance-gold/20">
@@ -337,22 +348,28 @@ export default function FloatingMarketIcon({
 
                 <Card className="bg-finance-navy-light/50 border-finance-gold/20">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-sm text-muted-foreground">Gainers/Total</CardTitle>
+                    <CardTitle className="text-sm text-muted-foreground">Total Gainers</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-lg font-bold text-finance-gold">
-                      {marketData.sentiment.positiveStocks}/{marketData.sentiment.totalStocks}
+                    <div className="text-lg font-bold text-finance-green">
+                      {marketData.sentiment.positiveStocks}
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      of {marketData.sentiment.totalStocks} stocks
                     </div>
                   </CardContent>
                 </Card>
 
                 <Card className="bg-finance-navy-light/50 border-finance-gold/20">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-sm text-muted-foreground">Advance/Decline</CardTitle>
+                    <CardTitle className="text-sm text-muted-foreground">Total Losers</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-lg font-bold text-finance-electric">
-                      {(marketData.sentiment.advanceDeclineRatio * 100).toFixed(1)}%
+                    <div className="text-lg font-bold text-finance-red">
+                      {marketData.sentiment.totalStocks - marketData.sentiment.positiveStocks}
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      of {marketData.sentiment.totalStocks} stocks
                     </div>
                   </CardContent>
                 </Card>
@@ -369,46 +386,141 @@ export default function FloatingMarketIcon({
                 </Card>
               </div>
 
+              {/* Currency Exchange Rates */}
+              {marketData.currencies && marketData.currencies.length > 0 && (
+                <>
+                  <Separator className="bg-finance-gold/20" />
+                  <div>
+                    <h3 className="text-lg font-semibold text-finance-gold mb-4 flex items-center gap-2">
+                      💱 Currency Exchange Rates
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+                      {marketData.currencies.map((currency) => (
+                        <motion.div
+                          key={currency.symbol}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="p-3 rounded-lg bg-finance-navy-light/30 border border-finance-gold/10 hover:border-finance-gold/30 transition-all duration-300"
+                        >
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="font-semibold text-finance-gold">{currency.name}</div>
+                              <div className="text-sm text-muted-foreground">{currency.symbol}</div>
+                            </div>
+                            <div className="text-right">
+                              <div className="font-bold text-foreground">
+                                ₹{currency.rate.toFixed(4)}
+                              </div>
+                              <div className={`text-xs flex items-center space-x-1 ${
+                                currency.change > 0 ? "text-finance-green" :
+                                currency.change < 0 ? "text-finance-red" : "text-finance-electric"
+                              }`}>
+                                <span>{currency.change > 0 ? "+" : ""}{currency.change.toFixed(4)}</span>
+                                <span>({currency.changePercent > 0 ? "+" : ""}{currency.changePercent.toFixed(2)}%)</span>
+                              </div>
+                            </div>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {/* Cryptocurrency Prices */}
+              {marketData.crypto && marketData.crypto.length > 0 && (
+                <>
+                  <Separator className="bg-finance-gold/20" />
+                  <div>
+                    <h3 className="text-lg font-semibold text-finance-gold mb-4 flex items-center gap-2">
+                      ₿ Cryptocurrency Prices (INR)
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {marketData.crypto.map((crypto) => (
+                        <motion.div
+                          key={crypto.symbol}
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          className="p-4 rounded-lg bg-finance-navy-light/30 border border-finance-gold/10 hover:border-finance-gold/30 transition-all duration-300"
+                        >
+                          <div className="flex items-center justify-between mb-2">
+                            <div>
+                              <div className="font-bold text-finance-gold">{crypto.name}</div>
+                              <div className="text-sm text-muted-foreground">{crypto.symbol}</div>
+                            </div>
+                            <div className="text-right">
+                              <div className="text-lg font-bold text-foreground">
+                                ₹{crypto.price.toLocaleString('en-IN')}
+                              </div>
+                              <div className={`text-sm flex items-center space-x-1 ${
+                                crypto.change > 0 ? "text-finance-green" :
+                                crypto.change < 0 ? "text-finance-red" : "text-finance-electric"
+                              }`}>
+                                <span>{crypto.change > 0 ? "+" : ""}{crypto.change.toLocaleString('en-IN')}</span>
+                                <span>({crypto.changePercent > 0 ? "+" : ""}{crypto.changePercent.toFixed(2)}%)</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="text-xs text-muted-foreground flex justify-between">
+                            <span>Vol: ₹{(crypto.volume24h / 1000000000).toFixed(1)}B</span>
+                            <span>MCap: ₹{(crypto.marketCap / 1000000000000).toFixed(1)}T</span>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              )}
+
               <Separator className="bg-finance-gold/20" />
 
-              {/* Stock List */}
-              <ScrollArea className="h-[400px]">
-                <div className="space-y-2">
-                  {marketData.stocks.map((stock) => (
-                    <motion.div
-                      key={stock.symbol}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      className="p-4 rounded-lg bg-finance-navy-light/30 border border-finance-gold/10 hover:border-finance-gold/30 transition-all duration-300"
-                    >
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <div className="font-bold text-finance-gold">{stock.name}</div>
-                          <div className="text-sm text-muted-foreground">{stock.symbol}</div>
-                        </div>
-                        
-                        <div className="text-right">
-                          <div className="text-lg font-bold text-foreground">
-                            {formatPrice(stock.symbol, stock.price)}
+              {/* Indian Stocks */}
+              <div>
+                <h3 className="text-lg font-semibold text-finance-gold mb-4 flex items-center gap-2">
+                  📈 Indian Market Stocks
+                </h3>
+                <ScrollArea className="h-[350px]">
+                  <div className="space-y-2">
+                    {marketData.stocks.map((stock) => (
+                      <motion.div
+                        key={stock.symbol}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        className="p-4 rounded-lg bg-finance-navy-light/30 border border-finance-gold/10 hover:border-finance-gold/30 transition-all duration-300"
+                      >
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <div className="font-bold text-finance-gold">{stock.displayName || stock.name}</div>
+                            <div className="text-sm text-muted-foreground">{stock.symbol}</div>
                           </div>
-                          <div className={`text-sm flex items-center space-x-1 ${
-                            stock.change > 0 ? "text-finance-green" : 
-                            stock.change < 0 ? "text-finance-red" : "text-finance-electric"
+
+                          <div className="text-right">
+                            <div className="text-lg font-bold text-foreground">
+                              {formatPrice(stock.symbol, stock.price)}
+                            </div>
+                            <div className={`text-sm flex items-center space-x-1 ${
+                              stock.change > 0 ? "text-finance-green" :
+                              stock.change < 0 ? "text-finance-red" : "text-finance-electric"
+                            }`}>
+                              <span>{stock.change > 0 ? "+" : ""}{stock.change.toFixed(2)}</span>
+                              <span>({stock.changePercent > 0 ? "+" : ""}{(stock.changePercent || 0).toFixed(2)}%)</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="mt-2 text-xs text-muted-foreground flex justify-between">
+                          <span>H: {formatPrice(stock.symbol, stock.dayHigh)} L: {formatPrice(stock.symbol, stock.dayLow)}</span>
+                          <span className={`px-2 py-1 rounded ${
+                            stock.marketState === "REGULAR" ? "bg-finance-green/20 text-finance-green" : "bg-finance-red/20 text-finance-red"
                           }`}>
-                            <span>{stock.change > 0 ? "+" : ""}{stock.change.toFixed(2)}</span>
-                            <span>({stock.changePercent > 0 ? "+" : ""}{stock.changePercent.toFixed(2)}%)</span>
-                          </div>
+                            {stock.marketState}
+                          </span>
                         </div>
-                      </div>
-                      
-                      <div className="mt-2 text-xs text-muted-foreground flex justify-between">
-                        <span>Updated: {safeFormatTimestamp(stock.timestamp)}</span>
-                        <span className="text-finance-electric">{stock.marketState}</span>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </ScrollArea>
+                      </motion.div>
+                    ))}
+                  </div>
+                </ScrollArea>
+              </div>
             </div>
           </motion.div>
         </DialogContent>
