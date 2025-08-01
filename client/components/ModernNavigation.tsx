@@ -674,17 +674,18 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                               <Button
                                 key={dropdownIndex}
                                 variant="ghost"
-                                asChild
                                 className="w-full justify-start text-muted-foreground hover:text-finance-gold hover:bg-finance-gold/5"
-                                onClick={() => setMobileMenuOpen(false)}
+                                onClick={() => {
+                                  if (dropdownItem.section) {
+                                    scrollToElement(`#${dropdownItem.section}`);
+                                  }
+                                  setMobileMenuOpen(false);
+                                }}
                               >
-                                <Link
-                                  to={dropdownItem.href}
-                                  className="flex items-center space-x-3 py-2 px-3"
-                                >
+                                <div className="flex items-center space-x-3 py-2 px-3">
                                   <span>{dropdownItem.icon}</span>
                                   <span>{dropdownItem.name}</span>
-                                </Link>
+                                </div>
                               </Button>
                             );
                           })}
