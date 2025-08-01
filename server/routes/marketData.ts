@@ -306,7 +306,7 @@ async function fetchCryptoData(symbol: string, name: string, inrMultiplier: numb
       const randomMovement = (Math.random() - 0.5) * 0.1; // ±5% movement
       const currentPriceUSD = basePriceUSD * (1 + randomMovement);
       const changeUSD = currentPriceUSD - basePriceUSD;
-      const changePercent = (randomMovement * 100);
+      const changePercent = (changeUSD / basePriceUSD) * 100;
 
       // Convert to INR
       const currentPriceINR = currentPriceUSD * inrMultiplier;
