@@ -27,6 +27,7 @@ export default function EnhancedNavigation({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [eventsDropdownOpen, setEventsDropdownOpen] = useState(false);
   const [sponsorsDropdownOpen, setSponsorsDropdownOpen] = useState(false);
+  const { scrollToElement } = useSmoothScroll();
 
   const navItems = [
     {
