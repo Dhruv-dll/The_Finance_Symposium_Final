@@ -80,19 +80,19 @@ const CRYPTO_SYMBOLS = [
     symbol: "BTCUSDT",
     name: "Bitcoin",
     inrMultiplier: 84.25,
-    fallbackPriceUSD: 98250,
+    fallbackPriceUSD: 67500, // More realistic current Bitcoin price
   },
   {
     symbol: "ETHUSDT",
     name: "Ethereum",
     inrMultiplier: 84.25,
-    fallbackPriceUSD: 3580,
+    fallbackPriceUSD: 2650, // More realistic current Ethereum price
   },
   {
     symbol: "ADAUSDT",
     name: "Cardano",
     inrMultiplier: 84.25,
-    fallbackPriceUSD: 1.08,
+    fallbackPriceUSD: 0.38, // More realistic current Cardano price
   },
   {
     symbol: "DOTUSDT",
