@@ -83,6 +83,17 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
     return () => clearInterval(timer);
   }, []);
 
+  // Market data fetching effect
+  useEffect(() => {
+    const unsubscribe = finnhubMarketDataService.subscribeToUpdates((data) => {
+      setMarketData(data.stocks);
+      setMarketStatus(finnhubMarketDataService.isMarketOpen() ? "OPEN" : "CLOSED");
+      setLastUpdate(new Date().toLocaleTimeString('en-IN'));
+    });
+
+    return unsubscribe;
+  }, []);
+
   const handleClick = () => {
     if (showClickPrompt && !isComplete) {
       setIsComplete(true);
