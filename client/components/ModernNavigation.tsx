@@ -694,20 +694,21 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                     ) : (
                       <Button
                         variant="ghost"
-                        asChild
                         className="w-full justify-start text-foreground hover:text-finance-gold hover:bg-finance-gold/10 group"
-                        onClick={() => setMobileMenuOpen(false)}
+                        onClick={() => {
+                          if (item.section) {
+                            scrollToElement(`#${item.section}`);
+                          }
+                          setMobileMenuOpen(false);
+                        }}
                       >
-                        <Link
-                          to={item.href}
-                          className="flex items-center space-x-3 py-3 px-4"
-                        >
+                        <div className="flex items-center space-x-3 py-3 px-4">
                           <item.icon className="w-5 h-5" />
                           <span className="font-medium">{item.name}</span>
                           <span className="text-lg ml-auto group-hover:scale-110 transition-transform duration-200">
                             {item.hoverIcon}
                           </span>
-                        </Link>
+                        </div>
                       </Button>
                     )}
                   </motion.div>
