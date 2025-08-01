@@ -153,6 +153,9 @@ export const useSmoothScroll = (options: SmoothScrollOptions = {}) => {
 
   // Handle browser back/forward navigation
   useEffect(() => {
+    // Safety guard for HMR
+    if (typeof window === 'undefined') return;
+
     const handlePopState = () => {
       const hash = window.location.hash;
       if (hash) {
@@ -164,7 +167,11 @@ export const useSmoothScroll = (options: SmoothScrollOptions = {}) => {
 
     // Handle initial hash on page load
     if (window.location.hash) {
-      setTimeout(() => scrollToElement(window.location.hash), 100);
+      const timeout = setTimeout(() => scrollToElement(window.location.hash), 100);
+      return () => {
+        clearTimeout(timeout);
+        window.removeEventListener("popstate", handlePopState);
+      };
     }
 
     return () => window.removeEventListener("popstate", handlePopState);
