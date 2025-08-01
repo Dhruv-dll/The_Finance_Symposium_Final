@@ -43,7 +43,7 @@ export default function MarketSidebar() {
     const unsubscribe = accurateMarketDataService.subscribeToUpdates((data) => {
       setStockData(data.stocks);
       setMarketSentiment(data.sentiment);
-      setCryptoData(data.crypto);
+
       setForexData(data.forex);
       setLastUpdate(new Date());
       setConnectionStatus("connected");
