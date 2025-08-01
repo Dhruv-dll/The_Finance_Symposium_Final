@@ -347,10 +347,9 @@ async function fetchCryptoData(
     // Convert to INR
     const currentPriceINR = currentPriceUSD * inrMultiplier;
 
-    // Since we don't have previous close from scraping, simulate a small change
-    const changePercentage = (Math.random() - 0.5) * 6; // Random change between -3% to +3%
-    const changeINR = currentPriceINR * (changePercentage / 100);
-    const changePercent = changePercentage;
+    // Use real 24h change data from CoinGecko
+    const changePercent = changePercent24h;
+    const changeINR = currentPriceINR * (changePercent24h / 100);
 
     // Mock volume and market cap data (in INR)
     const volume24h = Math.random() * 5000000000; // Random volume
