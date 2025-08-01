@@ -309,13 +309,12 @@ export const getMarketData: RequestHandler = async (req, res) => {
     };
 
     console.log(
-      `✅ Successfully fetched ${stocks.length} stocks, ${currencies.length} currencies, ${crypto.length} crypto with ${sentiment} sentiment`,
+      `✅ Successfully fetched ${stocks.length} stocks, ${currencies.length} currencies with ${sentiment} sentiment`,
     );
 
     res.json({
       stocks,
       currencies,
-      crypto,
       sentiment: marketSentiment,
       timestamp: new Date(),
       marketState: isMarketOpen() ? "OPEN" : "CLOSED",
