@@ -404,7 +404,7 @@ async function fetchCryptoData(
       const marketCap = currentPriceINR * 20000000;
 
       return {
-        symbol: symbol.replace("-USD", "-INR"),
+        symbol: symbol.replace("USDT", ""),
         name,
         price: Math.round(currentPriceINR),
         change: Math.round(changeINR),
