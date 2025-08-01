@@ -467,14 +467,19 @@ class FinnhubMarketDataService {
   ): () => void {
     this.subscribers.push(callback);
 
+    // If we have cached data, immediately provide it to the new subscriber
+    if (this.lastSuccessfulData) {
+      setTimeout(() => callback(this.lastSuccessfulData), 0);
+    }
+
     // Start update interval if not already running
     if (!this.updateInterval) {
       this.updateInterval = setInterval(() => {
         this.updateAllData();
       }, 10000); // Update every 10 seconds
 
-      // Initial fetch
-      this.updateAllData();
+      // Initial fetch with small delay to allow all components to subscribe first
+      setTimeout(() => this.updateAllData(), 100);
     }
 
     // Return unsubscribe function
