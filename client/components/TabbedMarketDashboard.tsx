@@ -53,8 +53,6 @@ export default function TabbedMarketDashboard({ isOpen, onOpenChange }: TabbedMa
   const [activeTab, setActiveTab] = useState("stocks");
 
   useEffect(() => {
-    if (!isOpen) return;
-    
     setConnectionStatus("loading");
     const unsubscribe = finnhubMarketDataService.subscribeToUpdates((data) => {
       try {
