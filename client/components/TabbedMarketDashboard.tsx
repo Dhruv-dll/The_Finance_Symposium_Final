@@ -454,20 +454,22 @@ export default function TabbedMarketDashboard({
                               <div className="text-lg font-bold text-foreground">
                                 ₹{crypto.price.toLocaleString("en-IN")}
                               </div>
-                              <div
-                                className={`text-sm ${
-                                  crypto.change > 0
-                                    ? "text-finance-green"
-                                    : crypto.change < 0
-                                      ? "text-finance-red"
-                                      : "text-finance-electric"
-                                }`}
-                              >
-                                <span>
-                                  {crypto.change > 0 ? "+" : ""}
-                                  {crypto.change.toLocaleString("en-IN")}
-                                </span>
-                              </div>
+                              {crypto.change !== 0 && (
+                                <div
+                                  className={`text-sm ${
+                                    crypto.change > 0
+                                      ? "text-finance-green"
+                                      : crypto.change < 0
+                                        ? "text-finance-red"
+                                        : "text-finance-electric"
+                                  }`}
+                                >
+                                  <span>
+                                    {crypto.change > 0 ? "+" : ""}
+                                    {crypto.change.toLocaleString("en-IN")}
+                                  </span>
+                                </div>
+                              )}
                             </div>
                           </div>
                           <div className="text-xs text-muted-foreground flex justify-between">
