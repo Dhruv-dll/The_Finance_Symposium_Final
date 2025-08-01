@@ -167,6 +167,7 @@ export const useSmoothScroll = (options: SmoothScrollOptions = {}) => {
     scrollToElement,
     isScrolling,
     activeSection,
+    scrollProgress,
   };
 };
 
