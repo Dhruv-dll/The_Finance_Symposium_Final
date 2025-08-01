@@ -30,7 +30,7 @@ const professionalEase = (t: number): number => {
 
 export const useSmoothScroll = (options: SmoothScrollOptions = {}) => {
   const {
-    duration = 800,
+    duration = 0, // Make instant
     offset = 80,
     easing = professionalEase
   } = options;
