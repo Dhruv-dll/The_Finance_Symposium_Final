@@ -184,7 +184,7 @@ export default function SponsorsSection() {
   const [activeTab, setActiveTab] = useState<"current" | "past">("current");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedIndustry, setSelectedIndustry] = useState<string>("all");
-  const [hoveredSponsor, setHoveredSponsor] = useState<string | null>(null);
+
 
   const currentSponsors = sponsors.filter(s => s.isActive);
   const pastSponsors = sponsors.filter(s => !s.isActive);
@@ -206,8 +206,7 @@ export default function SponsorsSection() {
         animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
         transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
         className="relative group cursor-pointer"
-        onMouseEnter={() => setHoveredSponsor(sponsor.id)}
-        onMouseLeave={() => setHoveredSponsor(null)}
+
       >
         {/* 3D Card Container */}
         <motion.div
@@ -216,10 +215,9 @@ export default function SponsorsSection() {
             background: "linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(26, 26, 46, 0.9) 100%)",
             backdropFilter: "blur(20px)",
           }}
-          whileHover={{ 
-            scale: 1.05,
-            rotateY: hoveredSponsor === sponsor.id ? 3 : 0,
-            rotateX: hoveredSponsor === sponsor.id ? -2 : 0,
+          whileHover={{
+            scale: 1.02,
+            y: -5
           }}
           transition={{ duration: 0.3, ease: "easeOut" }}
         >
@@ -292,9 +290,7 @@ export default function SponsorsSection() {
 
             {/* Hover Information Panel */}
             <motion.div
-              className={`absolute inset-0 bg-finance-navy/95 backdrop-blur-sm p-6 flex flex-col justify-center transition-opacity duration-300 ${
-                hoveredSponsor === sponsor.id ? 'opacity-100' : 'opacity-0 pointer-events-none'
-              }`}
+              className="absolute inset-0 bg-finance-navy/95 backdrop-blur-sm p-6 flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto"
             >
               <h4 className="text-lg font-bold text-finance-gold mb-3">{sponsor.name}</h4>
               <p className="text-sm text-foreground/80 mb-4 leading-relaxed">
