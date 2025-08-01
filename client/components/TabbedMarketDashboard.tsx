@@ -7,7 +7,7 @@ import {
   CheckCircle,
   AlertTriangle,
   DollarSign,
-  Bitcoin,
+
   Building2,
 } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
@@ -22,7 +22,7 @@ import {
   FinnhubStockData,
   MarketSentiment,
   CurrencyRate,
-  CryptoData,
+
   safeFormatTimestamp,
 } from "../services/finnhubMarketData";
 import { MarketDataLoader } from "./MarketDataErrorBoundary";
@@ -40,7 +40,6 @@ export default function TabbedMarketDashboard({
     stocks: FinnhubStockData[];
     sentiment: MarketSentiment;
     currencies: CurrencyRate[];
-    crypto: CryptoData[];
   }>({
     stocks: [],
     sentiment: {
@@ -50,7 +49,6 @@ export default function TabbedMarketDashboard({
       totalStocks: 0,
     },
     currencies: [],
-    crypto: [],
   });
   const [isLoading, setIsLoading] = useState(false);
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
@@ -74,7 +72,6 @@ export default function TabbedMarketDashboard({
             totalStocks: 0,
           },
           currencies: data.currencies || [],
-          crypto: data.crypto || [],
         });
         setLastUpdate(new Date());
         setConnectionStatus("connected");
@@ -159,12 +156,7 @@ export default function TabbedMarketDashboard({
     window.open(url, '_blank');
   };
 
-  const handleCryptoClick = (crypto: CryptoData) => {
-    // Create Google search URL for crypto current price
-    const searchQuery = `${crypto.name} current price INR`;
-    const url = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
-    window.open(url, '_blank');
-  };
+
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
@@ -262,7 +254,7 @@ export default function TabbedMarketDashboard({
                 onValueChange={setActiveTab}
                 className="w-full"
               >
-                <TabsList className="grid w-full grid-cols-4 bg-finance-navy-light/50">
+                <TabsList className="grid w-full grid-cols-3 bg-finance-navy-light/50">
                   <TabsTrigger
                     value="stocks"
                     className="data-[state=active]:bg-finance-gold data-[state=active]:text-finance-navy"
@@ -277,13 +269,7 @@ export default function TabbedMarketDashboard({
                     <DollarSign className="w-4 h-4 mr-2" />
                     Currencies
                   </TabsTrigger>
-                  <TabsTrigger
-                    value="crypto"
-                    className="data-[state=active]:bg-finance-gold data-[state=active]:text-finance-navy"
-                  >
-                    <Bitcoin className="w-4 h-4 mr-2" />
-                    Crypto
-                  </TabsTrigger>
+
                   <TabsTrigger
                     value="summary"
                     className="data-[state=active]:bg-finance-gold data-[state=active]:text-finance-navy"
@@ -423,70 +409,7 @@ export default function TabbedMarketDashboard({
                   </motion.div>
                 </TabsContent>
 
-                <TabsContent value="crypto" className="mt-6">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <h3 className="text-lg font-semibold text-finance-gold mb-4">
-                      ₿ Cryptocurrency Prices (INR)
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {marketData.crypto.map((crypto) => (
-                        <motion.div
-                          key={crypto.symbol}
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          className="p-4 rounded-lg bg-finance-navy-light/30 border border-finance-gold/10 hover:border-finance-gold/30 transition-all duration-300 cursor-pointer hover:bg-finance-navy-light/50"
-                          onClick={() => handleCryptoClick(crypto)}
-                        >
-                          <div className="flex items-center justify-between mb-2">
-                            <div>
-                              <div className="font-bold text-finance-gold">
-                                {crypto.name}
-                              </div>
-                              <div className="text-sm text-muted-foreground">
-                                {crypto.symbol}
-                              </div>
-                            </div>
-                            <div className="text-right">
-                              <div className="text-lg font-bold text-foreground">
-                                ₹{crypto.price.toLocaleString("en-IN")}
-                              </div>
-                              {crypto.change !== 0 && (
-                                <div
-                                  className={`text-sm ${
-                                    crypto.change > 0
-                                      ? "text-finance-green"
-                                      : crypto.change < 0
-                                        ? "text-finance-red"
-                                        : "text-finance-electric"
-                                  }`}
-                                >
-                                  <span>
-                                    {crypto.change > 0 ? "+" : ""}
-                                    {crypto.change.toLocaleString("en-IN")}
-                                  </span>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                          <div className="text-xs text-muted-foreground flex justify-between">
-                            <span>
-                              Vol: ₹{(crypto.volume24h / 1000000000).toFixed(1)}
-                              B
-                            </span>
-                            <span>
-                              MCap: ₹
-                              {(crypto.marketCap / 1000000000000).toFixed(1)}T
-                            </span>
-                          </div>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </motion.div>
-                </TabsContent>
+
 
                 <TabsContent value="summary" className="mt-6">
                   <motion.div
@@ -565,7 +488,7 @@ export default function TabbedMarketDashboard({
                     <div className="text-center text-muted-foreground">
                       <p>
                         Switch between tabs to view detailed information about
-                        stocks, currencies, and cryptocurrencies.
+                        stocks and currencies.
                       </p>
                     </div>
                   </motion.div>
