@@ -353,6 +353,11 @@ export default function Index() {
             <AboutSection />
           </section>
 
+          {/* About BAF Section */}
+          <section id="about-baf">
+            <AboutBAFSection />
+          </section>
+
           {/* Meet the Team Section */}
           <section id="team">
             <EnhancedTeamSection />
