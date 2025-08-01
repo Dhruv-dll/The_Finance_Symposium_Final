@@ -142,11 +142,11 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
     },
     {
       name: "Finsight",
-      href: "#finsight",
+      href: "#insights",
       icon: TrendingUp,
       color: "text-finance-electric",
       hoverIcon: "📈",
-      section: "finsight",
+      section: "insights",
     },
     {
       name: "SPONSORS",
