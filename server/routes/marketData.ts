@@ -37,16 +37,7 @@ interface CurrencyData {
   timestamp: Date;
 }
 
-interface CryptoData {
-  symbol: string;
-  name: string;
-  price: number;
-  change: number;
-  changePercent: number;
-  volume24h: number;
-  marketCap: number;
-  timestamp: Date;
-}
+
 
 // Stock symbols mapping for accurate data
 const STOCK_SYMBOLS = [
@@ -74,33 +65,7 @@ const CURRENCY_SYMBOLS = [
   { symbol: "JPYINR=X", name: "JPY/INR", fallbackRate: 0.56 },
 ];
 
-// Cryptocurrency symbols - Updated for better accuracy
-const CRYPTO_SYMBOLS = [
-  {
-    symbol: "BTCUSDT",
-    name: "Bitcoin",
-    inrMultiplier: 84.25,
-    fallbackPriceUSD: 67500, // More realistic current Bitcoin price
-  },
-  {
-    symbol: "ETHUSDT",
-    name: "Ethereum",
-    inrMultiplier: 84.25,
-    fallbackPriceUSD: 2650, // More realistic current Ethereum price
-  },
-  {
-    symbol: "ADAUSDT",
-    name: "Cardano",
-    inrMultiplier: 84.25,
-    fallbackPriceUSD: 0.38, // More realistic current Cardano price
-  },
-  {
-    symbol: "DOTUSDT",
-    name: "Polkadot",
-    inrMultiplier: 84.25,
-    fallbackPriceUSD: 7.25, // More realistic current Polkadot price
-  },
-];
+
 
 // Check if Indian market is open
 function isMarketOpen(): boolean {
@@ -274,132 +239,16 @@ async function fetchCurrencyData(symbol: string): Promise<CurrencyData | null> {
   }
 }
 
-// Helper function to validate crypto prices based on expected ranges
-function isValidCryptoPrice(cryptoName: string, price: number): boolean {
-  const priceRanges = {
-    "Bitcoin": { min: 40000, max: 120000 },
-    "Ethereum": { min: 1800, max: 5000 },
-    "Cardano": { min: 0.25, max: 1.5 },
-    "Polkadot": { min: 4, max: 15 },
-  };
 
-  const range = priceRanges[cryptoName];
-  if (!range) return price > 0; // If crypto not in list, just check if positive
 
-  return price >= range.min && price <= range.max;
-}
 
-// Fetch all cryptocurrency data in one API call to avoid rate limits
-async function fetchAllCryptoData(): Promise<CryptoData[]> {
-  try {
-    console.log(`₿ Fetching all crypto data from CoinGecko...`);
-
-    // Fetch all crypto data in single API call
-    const response = await fetch(
-      `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,cardano,polkadot&vs_currencies=usd&include_24hr_change=true`,
-      {
-        headers: {
-          "Accept": "application/json",
-          "User-Agent": "Market-Data-App/1.0",
-        },
-        timeout: 15000,
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-    }
-
-    const data = await response.json();
-    console.log(`✅ Successfully fetched crypto data from CoinGecko`);
-
-    const cryptoMapping = [
-      { id: "bitcoin", symbol: "BTC", name: "Bitcoin" },
-      { id: "ethereum", symbol: "ETH", name: "Ethereum" },
-      { id: "cardano", symbol: "ADA", name: "Cardano" },
-      { id: "polkadot", symbol: "DOT", name: "Polkadot" },
-    ];
-
-    const inrMultiplier = 84.25; // Current USD to INR rate
-    const cryptoResults: CryptoData[] = [];
-
-    for (const crypto of cryptoMapping) {
-      const coinData = data[crypto.id];
-
-      if (coinData && coinData.usd && coinData.usd > 0) {
-        const currentPriceUSD = coinData.usd;
-        const changePercent24h = coinData.usd_24h_change || 0;
-
-        // Convert to INR
-        const currentPriceINR = currentPriceUSD * inrMultiplier;
-        const changeINR = currentPriceINR * (changePercent24h / 100);
-
-        // Mock volume and market cap data (in INR)
-        const volume24h = Math.random() * 5000000000;
-        const marketCap = currentPriceINR * 20000000;
-
-        cryptoResults.push({
-          symbol: crypto.symbol,
-          name: crypto.name,
-          price: Math.round(currentPriceINR),
-          change: Math.round(changeINR),
-          changePercent: Math.round(changePercent24h * 100) / 100,
-          volume24h: Math.round(volume24h),
-          marketCap: Math.round(marketCap),
-          timestamp: new Date(),
-        });
-
-        console.log(`✅ ${crypto.name}: $${currentPriceUSD} (${changePercent24h.toFixed(2)}% 24h)`);
-      } else {
-        console.warn(`⚠️ No data for ${crypto.name}, skipping...`);
-      }
-    }
-
-    return cryptoResults;
-  } catch (error) {
-    console.warn(`❌ Failed to fetch crypto data from CoinGecko:`, error.message);
-
-    // Return fallback data for all cryptos
-    const fallbackCryptos: CryptoData[] = [];
-    const inrMultiplier = 84.25;
-
-    for (const crypto of CRYPTO_SYMBOLS) {
-      const basePriceUSD = crypto.fallbackPriceUSD;
-      const randomMovement = (Math.random() - 0.5) * 0.1; // ±5% movement
-      const currentPriceUSD = basePriceUSD * (1 + randomMovement);
-      const changeUSD = currentPriceUSD - basePriceUSD;
-      const changePercent = (changeUSD / basePriceUSD) * 100;
-
-      // Convert to INR
-      const currentPriceINR = currentPriceUSD * inrMultiplier;
-      const changeINR = changeUSD * inrMultiplier;
-
-      // Mock volume and market cap data (in INR)
-      const volume24h = Math.random() * 5000000000;
-      const marketCap = currentPriceINR * 20000000;
-
-      fallbackCryptos.push({
-        symbol: crypto.symbol.replace("USDT", ""),
-        name: crypto.name,
-        price: Math.round(currentPriceINR),
-        change: Math.round(changeINR),
-        changePercent: Math.round(changePercent * 100) / 100,
-        volume24h: Math.round(volume24h),
-        marketCap: Math.round(marketCap),
-        timestamp: new Date(),
-      });
-    }
-
-    return fallbackCryptos;
-  }
-}
 
 // API endpoint to get all market data
 export const getMarketData: RequestHandler = async (req, res) => {
   try {
     console.log("📊 Fetching comprehensive market data from server...");
 
-    // Fetch stocks, currencies, and crypto in parallel
+    // Fetch stocks and currencies in parallel
     const stockPromises = STOCK_SYMBOLS.map((stock) =>
       fetchStockData(stock.symbol),
     );
@@ -408,13 +257,11 @@ export const getMarketData: RequestHandler = async (req, res) => {
       fetchCurrencyData(currency.symbol),
     );
 
-    // Fetch all crypto data in one batch call
-    const cryptoDataPromise = fetchAllCryptoData();
 
-    const [stockResults, currencyResults, cryptoResults] = await Promise.all([
+
+    const [stockResults, currencyResults] = await Promise.all([
       Promise.all(stockPromises),
       Promise.all(currencyPromises),
-      cryptoDataPromise,
     ]);
 
     const stocks = stockResults.filter(
@@ -423,10 +270,10 @@ export const getMarketData: RequestHandler = async (req, res) => {
     const currencies = currencyResults.filter(
       (currency): currency is CurrencyData => currency !== null,
     );
-    const crypto = cryptoResults; // Already filtered in fetchAllCryptoData
+
 
     console.log(
-      `📊 Results: ${stocks.length} stocks, ${currencies.length} currencies, ${crypto.length} crypto`,
+      `📊 Results: ${stocks.length} stocks, ${currencies.length} currencies`,
     );
     if (currencies.length > 0) {
       console.log(`💱 Currency sample:`, currencies[0]);
