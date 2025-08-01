@@ -257,10 +257,8 @@ export default function TabbedMarketDashboard({ isOpen, onOpenChange }: TabbedMa
 
                 <TabsContent value="stocks" className="mt-6">
                     <motion.div
-                      variants={tabVariants}
-                      initial="hidden"
-                      animate="visible"
-                      exit="exit"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.3 }}
                     >
                       <h3 className="text-lg font-semibold text-finance-gold mb-4">📈 Indian Market Stocks</h3>
@@ -310,10 +308,8 @@ export default function TabbedMarketDashboard({ isOpen, onOpenChange }: TabbedMa
 
                   <TabsContent value="currencies" className="mt-6">
                     <motion.div
-                      variants={tabVariants}
-                      initial="hidden"
-                      animate="visible"
-                      exit="exit"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.3 }}
                     >
                       <h3 className="text-lg font-semibold text-finance-gold mb-4">💱 Currency Exchange Rates</h3>
@@ -351,10 +347,8 @@ export default function TabbedMarketDashboard({ isOpen, onOpenChange }: TabbedMa
 
                   <TabsContent value="crypto" className="mt-6">
                     <motion.div
-                      variants={tabVariants}
-                      initial="hidden"
-                      animate="visible"
-                      exit="exit"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.3 }}
                     >
                       <h3 className="text-lg font-semibold text-finance-gold mb-4">₿ Cryptocurrency Prices (INR)</h3>
@@ -396,10 +390,8 @@ export default function TabbedMarketDashboard({ isOpen, onOpenChange }: TabbedMa
 
                   <TabsContent value="summary" className="mt-6">
                     <motion.div
-                      variants={tabVariants}
-                      initial="hidden"
-                      animate="visible"
-                      exit="exit"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.3 }}
                     >
                       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
