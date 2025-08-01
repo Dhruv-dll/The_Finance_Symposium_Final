@@ -30,8 +30,8 @@ interface ModernNavigationProps {
 
 export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { scrollToElement, activeSection } = useSmoothScroll();
-  const scrollProgress = useScrollProgress();
+  const { scrollToElement, activeSection, isScrolling, scrollProgress: smoothScrollProgress } = useSmoothScroll();
+  const pageScrollProgress = useScrollProgress();
 
   const navItems = [
     {
