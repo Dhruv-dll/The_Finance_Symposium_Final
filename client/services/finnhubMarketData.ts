@@ -466,17 +466,7 @@ export interface CurrencyRate {
   timestamp: Date;
 }
 
-// Cryptocurrency data interface
-export interface CryptoData {
-  symbol: string;
-  name: string;
-  price: number;
-  change: number;
-  changePercent: number;
-  volume24h: number;
-  marketCap: number;
-  timestamp: Date;
-}
+
 
 export interface MarketSentiment {
   sentiment: "bullish" | "bearish" | "neutral";
