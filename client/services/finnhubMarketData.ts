@@ -319,16 +319,16 @@ class FinnhubMarketDataService {
     ];
   }
 
-  // Fetch cryptocurrency data (fallback data)
+  // Fetch cryptocurrency data (fallback data) - Updated with more accurate prices
   private getFallbackCryptoData(): CryptoData[] {
-    const btcPrice = 3567890 + (Math.random() - 0.5) * 50000;
-    const ethPrice = 220145 + (Math.random() - 0.5) * 5000;
-    const adaPrice = 35.75 + (Math.random() - 0.5) * 2;
-    const dotPrice = 425.3 + (Math.random() - 0.5) * 20;
+    const btcPrice = 8275000 + (Math.random() - 0.5) * 200000; // ~$98k * 84.25 INR
+    const ethPrice = 301550 + (Math.random() - 0.5) * 15000; // ~$3.58k * 84.25 INR
+    const adaPrice = 91 + (Math.random() - 0.5) * 5; // ~$1.08 * 84.25 INR
+    const dotPrice = 598 + (Math.random() - 0.5) * 30; // ~$7.1 * 84.25 INR
 
     return [
       {
-        symbol: "BTC-INR",
+        symbol: "BTCUSDT",
         name: "Bitcoin",
         price: Math.round(btcPrice),
         change: (Math.random() - 0.5) * 100000,
@@ -338,7 +338,7 @@ class FinnhubMarketDataService {
         timestamp: new Date(),
       },
       {
-        symbol: "ETH-INR",
+        symbol: "ETHUSDT",
         name: "Ethereum",
         price: Math.round(ethPrice),
         change: (Math.random() - 0.5) * 8000,
@@ -348,7 +348,7 @@ class FinnhubMarketDataService {
         timestamp: new Date(),
       },
       {
-        symbol: "ADA-INR",
+        symbol: "ADAUSDT",
         name: "Cardano",
         price: Math.round(adaPrice * 100) / 100,
         change: (Math.random() - 0.5) * 3,
@@ -358,7 +358,7 @@ class FinnhubMarketDataService {
         timestamp: new Date(),
       },
       {
-        symbol: "DOT-INR",
+        symbol: "DOTUSDT",
         name: "Polkadot",
         price: Math.round(dotPrice * 100) / 100,
         change: (Math.random() - 0.5) * 25,
