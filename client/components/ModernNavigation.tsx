@@ -405,74 +405,47 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                         </NavigationMenuContent>
                       </>
                     ) : (
-                      <NavigationMenuLink asChild>
-                        <Button
-                          variant="ghost"
-                          asChild
-                          className={cn(
-                            "group flex items-center space-x-2 bg-transparent text-finance-gold",
-                            "hover:bg-transparent hover:text-white",
-                            "relative overflow-hidden px-4 py-2 rounded-lg transition-all duration-300",
-                            "hover:scale-105 hover:tracking-wider",
-                          )}
-                          style={{
-                            textShadow: "0 0 4px rgba(255, 215, 0, 0.5)",
-                            transition: "all 0.3s ease-in-out",
-                          }}
+                      <Button
+                        variant="ghost"
+                        onClick={() => item.section && scrollToElement(`#${item.section}`)}
+                        className={cn(
+                          "group flex items-center space-x-2 bg-transparent",
+                          activeSection === item.section ? "text-white" : "text-finance-gold",
+                          "hover:bg-transparent hover:text-white",
+                          "relative overflow-hidden px-4 py-2 rounded-lg transition-all duration-300",
+                          "hover:scale-105 hover:tracking-wider",
+                          activeSection === item.section && "scale-105"
+                        )}
+                        style={{
+                          textShadow: activeSection === item.section
+                            ? "0 0 5px rgba(255,255,255,0.8), 0 0 15px rgba(255,215,0,0.6), 0 0 25px rgba(255,215,0,0.4)"
+                            : "0 0 4px rgba(255, 215, 0, 0.5)",
+                          transition: "all 0.3s ease-in-out",
+                        }}
+                      >
+                        <item.icon className="w-4 h-4 relative z-10 transition-all duration-300" />
+
+                        <span className="font-medium relative z-10 transition-all duration-300">
+                          {item.name}
+                        </span>
+
+                        <motion.span
+                          className="text-lg relative z-10"
+                          initial={{ opacity: 0, scale: 0 }}
+                          whileHover={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.2 }}
                         >
-                          <Link to={item.href}>
-                            <item.icon
-                              className="w-4 h-4 relative z-10 transition-all duration-300 group-hover:text-white"
-                              style={{
-                                filter: "drop-shadow(0 0 5px rgba(255,255,255,0.8)) drop-shadow(0 0 15px rgba(255,215,0,0.6)) drop-shadow(0 0 25px rgba(255,215,0,0.4))",
-                                opacity: 0,
-                              }}
-                              onMouseEnter={(e) => {
-                                e.currentTarget.style.opacity = "1";
-                              }}
-                              onMouseLeave={(e) => {
-                                e.currentTarget.style.opacity = "0";
-                              }}
-                            />
-                            <item.icon className="w-4 h-4 relative z-10 group-hover:opacity-0 transition-opacity duration-300" />
+                          {item.hoverIcon}
+                        </motion.span>
 
-                            <span
-                              className="font-medium relative z-10 transition-all duration-300 group-hover:text-white"
-                              style={{
-                                textShadow: "0 0 4px rgba(255, 215, 0, 0.5)",
-                              }}
-                              onMouseEnter={(e) => {
-                                e.currentTarget.style.textShadow = "0 0 5px rgba(255,255,255,0.8), 0 0 15px rgba(255,215,0,0.6), 0 0 25px rgba(255,215,0,0.4)";
-                                e.currentTarget.style.letterSpacing = "0.5px";
-                              }}
-                              onMouseLeave={(e) => {
-                                e.currentTarget.style.textShadow = "0 0 4px rgba(255, 215, 0, 0.5)";
-                                e.currentTarget.style.letterSpacing = "normal";
-                              }}
-                            >
-                              {item.name}
-                            </span>
-
-                            {/* Hover icon */}
-                            <motion.span
-                              className="text-lg relative z-10"
-                              initial={{ opacity: 0, scale: 0 }}
-                              whileHover={{ opacity: 1, scale: 1 }}
-                              transition={{ duration: 0.2 }}
-                            >
-                              {item.hoverIcon}
-                            </motion.span>
-
-                            {/* Golden underline effect */}
-                            <motion.div
-                              className="absolute bottom-0 left-1/2 h-0.5 bg-gradient-to-r from-transparent via-finance-gold to-transparent"
-                              initial={{ width: 0, x: "-50%" }}
-                              whileHover={{ width: "100%" }}
-                              transition={{ duration: 0.3, ease: "easeOut" }}
-                            />
-                          </Link>
-                        </Button>
-                      </NavigationMenuLink>
+                        {/* Golden underline effect */}
+                        <motion.div
+                          className="absolute bottom-0 left-1/2 h-0.5 bg-gradient-to-r from-transparent via-finance-gold to-transparent"
+                          initial={{ width: 0, x: "-50%" }}
+                          whileHover={{ width: "100%" }}
+                          transition={{ duration: 0.3, ease: "easeOut" }}
+                        />
+                      </Button>
                     )}
                   </NavigationMenuItem>
                 ))}
