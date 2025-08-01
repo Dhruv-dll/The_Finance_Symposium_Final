@@ -96,7 +96,6 @@ export const useSmoothScroll = (options: SmoothScrollOptions = {}) => {
       } else {
         // Animation complete
         setIsScrolling(false);
-        setScrollProgress(0);
         document.body.style.overflow = '';
         scrollRequestRef.current = null;
 
