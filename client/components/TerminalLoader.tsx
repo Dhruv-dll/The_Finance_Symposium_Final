@@ -186,7 +186,7 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
                     LIVE MARKET FEED:
                   </div>
                   <div className="grid grid-cols-2 gap-2 text-xs">
-                    {marketData.map((data, index) => (
+                    {staticMarketData.map((data, index) => (
                       <motion.div
                         key={index}
                         initial={{ opacity: 0 }}
