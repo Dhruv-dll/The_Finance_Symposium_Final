@@ -289,37 +289,20 @@ function isValidCryptoPrice(cryptoName: string, price: number): boolean {
   return price >= range.min && price <= range.max;
 }
 
-// Fetch cryptocurrency data using CoinGecko free API
-async function fetchCryptoData(
-  symbol: string,
-  name: string,
-  inrMultiplier: number,
-): Promise<CryptoData | null> {
+// Fetch all cryptocurrency data in one API call to avoid rate limits
+async function fetchAllCryptoData(): Promise<CryptoData[]> {
   try {
-    console.log(`₿ Fetching crypto data for ${name} from CoinGecko...`);
+    console.log(`₿ Fetching all crypto data from CoinGecko...`);
 
-    // Map crypto names to CoinGecko IDs
-    const coinGeckoIds = {
-      "Bitcoin": "bitcoin",
-      "Ethereum": "ethereum",
-      "Cardano": "cardano",
-      "Polkadot": "polkadot"
-    };
-
-    const coinId = coinGeckoIds[name];
-    if (!coinId) {
-      throw new Error(`Unsupported crypto: ${name}`);
-    }
-
-    // Use CoinGecko free API (no key required)
+    // Fetch all crypto data in single API call
     const response = await fetch(
-      `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd&include_24hr_change=true`,
+      `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,cardano,polkadot&vs_currencies=usd&include_24hr_change=true`,
       {
         headers: {
           "Accept": "application/json",
           "User-Agent": "Market-Data-App/1.0",
         },
-        timeout: 10000,
+        timeout: 15000,
       }
     );
 
@@ -328,43 +311,51 @@ async function fetchCryptoData(
     }
 
     const data = await response.json();
-    const coinData = data[coinId];
+    console.log(`✅ Successfully fetched crypto data from CoinGecko`);
 
-    if (!coinData || !coinData.usd) {
-      throw new Error(`No price data for ${name}`);
+    const cryptoMapping = [
+      { id: "bitcoin", symbol: "BTC", name: "Bitcoin" },
+      { id: "ethereum", symbol: "ETH", name: "Ethereum" },
+      { id: "cardano", symbol: "ADA", name: "Cardano" },
+      { id: "polkadot", symbol: "DOT", name: "Polkadot" },
+    ];
+
+    const inrMultiplier = 84.25; // Current USD to INR rate
+    const cryptoResults: CryptoData[] = [];
+
+    for (const crypto of cryptoMapping) {
+      const coinData = data[crypto.id];
+
+      if (coinData && coinData.usd && coinData.usd > 0) {
+        const currentPriceUSD = coinData.usd;
+        const changePercent24h = coinData.usd_24h_change || 0;
+
+        // Convert to INR
+        const currentPriceINR = currentPriceUSD * inrMultiplier;
+        const changeINR = currentPriceINR * (changePercent24h / 100);
+
+        // Mock volume and market cap data (in INR)
+        const volume24h = Math.random() * 5000000000;
+        const marketCap = currentPriceINR * 20000000;
+
+        cryptoResults.push({
+          symbol: crypto.symbol,
+          name: crypto.name,
+          price: Math.round(currentPriceINR),
+          change: Math.round(changeINR),
+          changePercent: Math.round(changePercent24h * 100) / 100,
+          volume24h: Math.round(volume24h),
+          marketCap: Math.round(marketCap),
+          timestamp: new Date(),
+        });
+
+        console.log(`✅ ${crypto.name}: $${currentPriceUSD} (${changePercent24h.toFixed(2)}% 24h)`);
+      } else {
+        console.warn(`⚠️ No data for ${crypto.name}, skipping...`);
+      }
     }
 
-    const currentPriceUSD = coinData.usd;
-    const changePercent24h = coinData.usd_24h_change || 0;
-
-    // Validate price
-    if (currentPriceUSD <= 0 || !isValidCryptoPrice(name, currentPriceUSD)) {
-      throw new Error(`Invalid price for ${name}: $${currentPriceUSD}`);
-    }
-
-    console.log(`✅ Found ${name} price: $${currentPriceUSD} (${changePercent24h.toFixed(2)}% 24h)`);
-
-    // Convert to INR
-    const currentPriceINR = currentPriceUSD * inrMultiplier;
-
-    // Use real 24h change data from CoinGecko
-    const changePercent = changePercent24h;
-    const changeINR = currentPriceINR * (changePercent24h / 100);
-
-    // Mock volume and market cap data (in INR)
-    const volume24h = Math.random() * 5000000000; // Random volume
-    const marketCap = currentPriceINR * 20000000; // Estimated market cap
-
-    return {
-      symbol: symbol.replace("USDT", ""),
-      name,
-      price: Math.round(currentPriceINR),
-      change: Math.round(changeINR),
-      changePercent: Math.round(changePercent * 100) / 100,
-      volume24h: Math.round(volume24h),
-      marketCap: Math.round(marketCap),
-      timestamp: new Date(),
-    };
+    return cryptoResults;
   } catch (error) {
     console.warn(
       `❌ Failed to fetch crypto ${symbol}, using fallback data:`,
