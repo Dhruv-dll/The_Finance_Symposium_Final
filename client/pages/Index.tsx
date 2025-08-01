@@ -3,7 +3,7 @@ import ModernNavigation from "../components/ModernNavigation";
 import EnhancedHeroSection from "../components/EnhancedHeroSection";
 import TerminalLoader from "../components/TerminalLoader";
 import EnhancedTeamSection from "../components/EnhancedTeamSection";
-import MarketDataErrorBoundary from "../components/MarketDataErrorBoundary";
+import MarketDataErrorBoundary, { NetworkStatusIndicator } from "../components/MarketDataErrorBoundary";
 import EventsSection from "../components/EventsSection";
 import AboutSection from "../components/AboutSection";
 import ContactSection from "../components/ContactSection";
@@ -30,6 +30,7 @@ import {
 export default function Index() {
   const [scrolled, setScrolled] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
   const { scrollYProgress } = useScroll();
 
   // Color temperature transformation based on scroll
@@ -44,8 +45,18 @@ export default function Index() {
       setScrolled(window.scrollY > 100);
     };
 
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+    };
   }, []);
 
   const aboutSections = [
@@ -324,6 +335,7 @@ export default function Index() {
         <>
           <ModernNavigation scrolled={scrolled} />
           <ScrollProgressIndicator />
+          <NetworkStatusIndicator isOnline={isOnline} />
 
           {/* Hero Section */}
           <MarketDataErrorBoundary>
