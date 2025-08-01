@@ -62,16 +62,6 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
           description: "Our dedicated team members",
           section: "team",
         },
-      ],
-    },
-    {
-      name: "About BAF",
-      href: "#about-baf",
-      icon: GraduationCap,
-      color: "text-finance-electric",
-      hoverIcon: "🎓",
-      section: "about-baf",
-      dropdown: [
         {
           name: "Programme Overview",
           href: "#about-baf",
