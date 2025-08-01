@@ -485,7 +485,13 @@ export default function EnhancedNavigation({
                       <Link
                         to={item.href}
                         className="flex items-center space-x-3 py-3 px-4 text-foreground hover:text-finance-gold hover:bg-finance-gold/10 rounded-lg transition-all duration-300 group"
-                        onClick={() => setMobileMenuOpen(false)}
+                        onClick={(e) => {
+                          if (item.href.startsWith("#")) {
+                            e.preventDefault();
+                            scrollToElement(item.href);
+                          }
+                          setMobileMenuOpen(false);
+                        }}
                       >
                         <item.icon className="w-5 h-5" />
                         <span className="font-medium">{item.name}</span>
