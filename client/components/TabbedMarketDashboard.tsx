@@ -399,20 +399,22 @@ export default function TabbedMarketDashboard({
                               <div className="font-bold text-foreground">
                                 ₹{currency.rate.toFixed(4)}
                               </div>
-                              <div
-                                className={`text-xs ${
-                                  currency.change > 0
-                                    ? "text-finance-green"
-                                    : currency.change < 0
-                                      ? "text-finance-red"
-                                      : "text-finance-electric"
-                                }`}
-                              >
-                                <span>
-                                  {currency.change > 0 ? "+" : ""}
-                                  {currency.change.toFixed(4)}
-                                </span>
-                              </div>
+                              {currency.change !== 0 && (
+                                <div
+                                  className={`text-xs ${
+                                    currency.change > 0
+                                      ? "text-finance-green"
+                                      : currency.change < 0
+                                        ? "text-finance-red"
+                                        : "text-finance-electric"
+                                  }`}
+                                >
+                                  <span>
+                                    {currency.change > 0 ? "+" : ""}
+                                    {currency.change.toFixed(4)}
+                                  </span>
+                                </div>
+                              )}
                             </div>
                           </div>
                         </motion.div>
