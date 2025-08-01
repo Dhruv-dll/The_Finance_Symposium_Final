@@ -354,9 +354,7 @@ class FinnhubMarketDataService {
         if (!data.currencies || data.currencies.length === 0) {
           data.currencies = this.getFallbackCurrencyData();
         }
-        if (!data.crypto || data.crypto.length === 0) {
-          data.crypto = this.getFallbackCryptoData();
-        }
+
         this.lastSuccessfulData = data;
         this.subscribers.forEach((callback) => callback(data));
       } else {
