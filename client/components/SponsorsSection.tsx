@@ -438,20 +438,14 @@ export default function SponsorsSection() {
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, x: activeTab === "current" ? -50 : 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: activeTab === "current" ? 50 : -50 }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
-            >
-              {filteredSponsors.map((sponsor, index) => (
-                <SponsorCard key={sponsor.id} sponsor={sponsor} index={index} />
-              ))}
-            </motion.div>
-          </AnimatePresence>
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+            layout
+          >
+            {filteredSponsors.map((sponsor, index) => (
+              <SponsorCard key={sponsor.id} sponsor={sponsor} index={index} />
+            ))}
+          </motion.div>
 
           {filteredSponsors.length === 0 && (
             <motion.div
