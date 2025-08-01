@@ -29,7 +29,7 @@ export default function MarketSidebar() {
     positiveStocks: 0,
     totalStocks: 0,
   });
-  const [cryptoData, setCryptoData] = useState<CryptoData[]>([]);
+
   const [forexData, setForexData] = useState<ForexData[]>([]);
   const [topPerformers, setTopPerformers] = useState<AccurateStockData[]>([]);
   const [isMinimized, setIsMinimized] = useState(false);
