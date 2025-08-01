@@ -126,7 +126,7 @@ export const useSmoothScroll = (options: SmoothScrollOptions = {}) => {
     const handleScroll = () => {
       if (isScrolling) return; // Don't update during programmatic scroll
 
-      const sections = ['hero', 'about', 'team', 'events', 'finsight', 'sponsors', 'contact'];
+      const sections = ['hero', 'about', 'team', 'events', 'insights', 'sponsors', 'contact'];
       const scrollPosition = window.scrollY + offset + 100;
 
       for (let i = sections.length - 1; i >= 0; i--) {
