@@ -169,7 +169,7 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
               </div>
 
               {/* Market Data Preview */}
-              {currentStep >= 5 && (
+              {currentStep >= 5 && marketData.length > 0 && (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -179,15 +179,18 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
                     LIVE MARKET FEED:
                   </div>
                   <div className="grid grid-cols-2 gap-2 text-xs">
-                    {staticMarketData.map((data, index) => (
+                    {marketData.slice(0, 6).map((stock, index) => (
                       <motion.div
-                        key={index}
+                        key={stock.symbol}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: index * 0.1 }}
                         className="text-finance-gold"
                       >
-                        {data}
+                        {stock.displayName}: ₹{stock.price?.toFixed(2) || 'N/A'}
+                        <span className={`ml-1 ${stock.changePercent && stock.changePercent > 0 ? 'text-green-400' : 'text-red-400'}`}>
+                          ({stock.changePercent ? (stock.changePercent > 0 ? '+' : '') + stock.changePercent.toFixed(2) + '%' : 'N/A'})
+                        </span>
                       </motion.div>
                     ))}
                   </div>
