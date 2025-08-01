@@ -156,7 +156,8 @@ export default function Index() {
         title: "Saturday Session: Financial Technology",
         date: "February 24, 2024",
         type: "Educational",
-        description: "Exploring fintech innovations and digital financial services",
+        description:
+          "Exploring fintech innovations and digital financial services",
         category: "session",
         status: "Open",
       },

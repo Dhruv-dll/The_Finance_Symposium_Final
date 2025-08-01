@@ -69,9 +69,18 @@ export default function AboutSection() {
             </h3>
             <div className="space-y-6 text-foreground/80 leading-relaxed">
               <div>
-                <h4 className="text-xl font-semibold text-finance-electric mb-3">Our Story</h4>
+                <h4 className="text-xl font-semibold text-finance-electric mb-3">
+                  Our Story
+                </h4>
                 <p className="text-lg">
-                  "The Finance Symposium is not merely an event; it is an invaluable experience where all the different dimensions of finance are explored effortlessly converging with knowledge based amusement, knowledge which fosters innovation, networking which cultivates opportunities. Get ready to be engrossed in stimulating discussions, gaining insights from the industry stalwarts and top business leaders, and enjoy an invigorating atmosphere designed to both inspire and educate."
+                  "The Finance Symposium is not merely an event; it is an
+                  invaluable experience where all the different dimensions of
+                  finance are explored effortlessly converging with knowledge
+                  based amusement, knowledge which fosters innovation,
+                  networking which cultivates opportunities. Get ready to be
+                  engrossed in stimulating discussions, gaining insights from
+                  the industry stalwarts and top business leaders, and enjoy an
+                  invigorating atmosphere designed to both inspire and educate."
                 </p>
               </div>
             </div>

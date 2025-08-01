@@ -6,7 +6,8 @@ const bafFeatures = [
   {
     icon: BookOpen,
     title: "Programme Overview",
-    description: "Comprehensive 3-year undergraduate program in accounting and finance",
+    description:
+      "Comprehensive 3-year undergraduate program in accounting and finance",
     gradient: "from-finance-gold to-orange-400",
   },
   {
@@ -69,9 +70,17 @@ export default function AboutBAFSection() {
             </h3>
             <div className="space-y-6 text-foreground/80 leading-relaxed">
               <div>
-                <h4 className="text-xl font-semibold text-finance-gold mb-3">BAF Programme Foundation</h4>
+                <h4 className="text-xl font-semibold text-finance-gold mb-3">
+                  BAF Programme Foundation
+                </h4>
                 <p className="text-lg">
-                  "The BAF programme was effectively initiated at St. Xavier's College from start of academic year 2022-23, as a self –financed 3-year undergraduate program affiliated to the University of Mumbai. The aim is to provide solid platform of updated content in the domain field to students who wish to transform themselves through professional in the field of accounting and finance."
+                  "The BAF programme was effectively initiated at St. Xavier's
+                  College from start of academic year 2022-23, as a self
+                  –financed 3-year undergraduate program affiliated to the
+                  University of Mumbai. The aim is to provide solid platform of
+                  updated content in the domain field to students who wish to
+                  transform themselves through professional in the field of
+                  accounting and finance."
                 </p>
               </div>
             </div>
@@ -121,18 +130,30 @@ export default function AboutBAFSection() {
           transition={{ duration: 0.8, delay: 0.8 }}
         >
           <div className="bg-finance-navy/30 backdrop-blur-sm p-6 rounded-xl border border-finance-electric/20">
-            <h4 className="text-xl font-semibold text-finance-electric mb-3">Programme Duration</h4>
-            <p className="text-foreground/80">3-year undergraduate program with comprehensive curriculum</p>
+            <h4 className="text-xl font-semibold text-finance-electric mb-3">
+              Programme Duration
+            </h4>
+            <p className="text-foreground/80">
+              3-year undergraduate program with comprehensive curriculum
+            </p>
           </div>
-          
+
           <div className="bg-finance-navy/30 backdrop-blur-sm p-6 rounded-xl border border-finance-gold/20">
-            <h4 className="text-xl font-semibold text-finance-gold mb-3">University Affiliation</h4>
-            <p className="text-foreground/80">Affiliated to the University of Mumbai with recognized degree</p>
+            <h4 className="text-xl font-semibold text-finance-gold mb-3">
+              University Affiliation
+            </h4>
+            <p className="text-foreground/80">
+              Affiliated to the University of Mumbai with recognized degree
+            </p>
           </div>
-          
+
           <div className="bg-finance-navy/30 backdrop-blur-sm p-6 rounded-xl border border-finance-green/20">
-            <h4 className="text-xl font-semibold text-finance-green mb-3">Professional Focus</h4>
-            <p className="text-foreground/80">Designed for career transformation in accounting and finance</p>
+            <h4 className="text-xl font-semibold text-finance-green mb-3">
+              Professional Focus
+            </h4>
+            <p className="text-foreground/80">
+              Designed for career transformation in accounting and finance
+            </p>
           </div>
         </motion.div>
       </div>
