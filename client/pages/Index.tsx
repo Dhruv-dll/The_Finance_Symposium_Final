@@ -409,46 +409,7 @@ export default function Index() {
           </section>
 
           {/* Sponsors Section */}
-          <section id="sponsors" className="py-20 px-6 bg-gradient-to-br from-finance-navy-light to-finance-navy">
-            <div className="container mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="text-center mb-16"
-              >
-                <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-finance-gold to-finance-electric bg-clip-text text-transparent">
-                  Our Partners
-                </h2>
-                <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                  Proud to partner with leading financial institutions
-                </p>
-              </motion.div>
-
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                {sponsors.present.map((sponsor, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    className="glassmorphism p-6 rounded-xl border border-finance-gold/20 hover:border-finance-gold/40 transition-all duration-300 text-center"
-                  >
-                    <div className="h-16 bg-white/10 rounded-lg mb-4 flex items-center justify-center">
-                      <span className="text-finance-gold font-bold">{sponsor.name}</span>
-                    </div>
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                      sponsor.tier === 'Platinum' ? 'bg-purple-500/20 text-purple-300' :
-                      sponsor.tier === 'Gold' ? 'bg-finance-gold/20 text-finance-gold' :
-                      'bg-gray-500/20 text-gray-300'
-                    }`}>
-                      {sponsor.tier}
-                    </span>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </section>
+          <SponsorsSection />
 
           {/* Contact Section */}
           <ContactSection />
