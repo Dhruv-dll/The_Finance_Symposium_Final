@@ -407,7 +407,6 @@ class FinnhubMarketDataService {
       stocks: FinnhubStockData[];
       sentiment: MarketSentiment;
       currencies?: CurrencyRate[];
-      crypto?: CryptoData[];
     }) => void,
   ): () => void {
     this.subscribers.push(callback);
