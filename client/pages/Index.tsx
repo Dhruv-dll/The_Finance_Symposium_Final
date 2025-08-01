@@ -336,6 +336,7 @@ export default function Index() {
           <ModernNavigation scrolled={scrolled} />
           <ScrollProgressIndicator />
           <NetworkStatusIndicator isOnline={isOnline} />
+          <FloatingMarketIcon />
 
           {/* Hero Section */}
           <MarketDataErrorBoundary>
