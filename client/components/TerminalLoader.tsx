@@ -1,5 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import {
+  finnhubMarketDataService,
+  FinnhubStockData,
+} from "../services/finnhubMarketData";
 
 interface TerminalLoaderProps {
   onComplete: () => void;
@@ -9,29 +13,34 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [showClickPrompt, setShowClickPrompt] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
+  const [marketData, setMarketData] = useState<FinnhubStockData[]>([]);
+  const [marketStatus, setMarketStatus] = useState<string>("LOADING");
+  const [lastUpdate, setLastUpdate] = useState<string>("");
   const audioContextRef = useRef<AudioContext | null>(null);
 
-  const terminalSteps = [
+  const getTerminalSteps = () => [
     "TFS_FINANCIAL_TERMINAL v3.1.4 initializing...",
-    "Loading market data modules...",
-    "Connecting to BSE/NSE feeds...",
-    "Initializing real-time analytics...",
-    "Loading portfolio management system...",
-    "Establishing secure connections...",
-    "Market data synchronized.",
-    "Authentication verified.",
-    "Welcome to The Finance Symposium.",
+    "Fetching live market data...",
+    marketData.length > 0
+      ? `SENSEX: ₹${marketData.find((s) => s.symbol === "^BSESN")?.price?.toLocaleString("en-IN") || "81,234"} | NIFTY: ₹${marketData.find((s) => s.symbol === "^NSEI")?.price?.toLocaleString("en-IN") || "24,789"}`
+      : "Connecting to BSE/NSE feeds...",
+    marketData.length > 2
+      ? `RELIANCE: ₹${marketData.find((s) => s.symbol === "RELIANCE.NS")?.price?.toFixed(2) || "2,847.65"} ●●● LOADED`
+      : "Initializing real-time analytics...",
+    marketData.length > 3
+      ? `TCS: ₹${marketData.find((s) => s.symbol === "TCS.NS")?.price?.toFixed(2) || "4,156.30"} ●●● LOADED`
+      : "Loading portfolio management system...",
+    "System is Testing Any Known Vulnerability....... Please Be Patient.....",
+    `${marketStatus === "OPEN" ? "🟢 MARKETS OPEN" : "🔴 MARKETS CLOSED"}`,
+    `Authenticating with Yahoo Finance API...`,
+    lastUpdate
+      ? `Last updated: ${lastUpdate} IST`
+      : "Market data synchronized.",
+    "Market feed synchronized ✓",
     "SYSTEM READY.",
   ];
 
-  const marketData = [
-    "SENSEX: 73,721.42 (+234.56)",
-    "NIFTY: 22,361.75 (+78.90)",
-    "RELIANCE: 2,456.75 (+12.45)",
-    "TCS: 3,891.20 (-23.10)",
-    "HDFC: 1,687.35 (+8.90)",
-    "INFY: 1,542.85 (+15.60)",
-  ];
+  const terminalSteps = getTerminalSteps();
 
   // Mechanical keyboard sound simulation
   const playKeystrokeSound = () => {
@@ -74,6 +83,19 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
     }, 300);
 
     return () => clearInterval(timer);
+  }, []);
+
+  // Market data fetching effect
+  useEffect(() => {
+    const unsubscribe = finnhubMarketDataService.subscribeToUpdates((data) => {
+      setMarketData(data.stocks);
+      setMarketStatus(
+        finnhubMarketDataService.isMarketOpen() ? "OPEN" : "CLOSED",
+      );
+      setLastUpdate(new Date().toLocaleTimeString("en-IN"));
+    });
+
+    return unsubscribe;
   }, []);
 
   const handleClick = () => {
@@ -123,13 +145,13 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
             <div className="bg-black border-l border-r border-finance-gold/30 p-6 min-h-[400px] font-mono text-sm">
               {/* System Info */}
               <div className="text-finance-electric mb-4">
-                <div>████████ ███████ ██████</div>
-                <div> ██ ██ ██</div>
-                <div> ██ █████ ██████</div>
-                <div> ██ ██ ██</div>
-                <div> ██ ███████ ██████</div>
+                <div> .████████....███████.....███████</div>
+                <div> ....██.......██.........██</div>
+                <div> ....██.......██████......███████</div>
+                <div> ....██.......██................██</div>
+                <div> ....██.......██..........███████</div>
                 <div className="mt-2 text-finance-gold">
-                  THE FINANCE SYMPOSIUM - ST. XAVIER'S COLLEGE
+                  THE FINANCE SYMPOSIUM
                 </div>
               </div>
 
@@ -156,32 +178,6 @@ export default function TerminalLoader({ onComplete }: TerminalLoaderProps) {
                   </motion.div>
                 ))}
               </div>
-
-              {/* Market Data Preview */}
-              {currentStep >= 5 && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="border border-finance-electric/30 rounded p-4 mb-4"
-                >
-                  <div className="text-finance-electric mb-2">
-                    LIVE MARKET FEED:
-                  </div>
-                  <div className="grid grid-cols-2 gap-2 text-xs">
-                    {marketData.map((data, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: index * 0.1 }}
-                        className="text-finance-gold"
-                      >
-                        {data}
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
 
               {/* Progress Bar */}
               {currentStep < terminalSteps.length - 1 && (

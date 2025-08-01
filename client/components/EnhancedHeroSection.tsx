@@ -9,7 +9,7 @@ import {
   MarketSentiment,
   safeFormatTimestamp,
 } from "../services/finnhubMarketData";
-import MarketDashboardDialog from "./MarketDashboardDialog";
+import FloatingMarketIcon from "./FloatingMarketIcon";
 
 // Enhanced Particle System with Financial Symbols
 function FinancialParticles() {
@@ -202,7 +202,7 @@ function EnhancedMarketTicker() {
   }, []);
 
   useEffect(() => {
-    // Subscribe to Finnhub real-time market updates
+    // Subscribe to Yahoo Finance real-time market updates
     setConnectionStatus("reconnecting");
     const unsubscribe = finnhubMarketDataService.subscribeToUpdates((data) => {
       setStockData(data.stocks);
@@ -313,7 +313,7 @@ function EnhancedMarketTicker() {
 
             <div className="flex items-center space-x-2 text-xs">
               <div className="w-2 h-2 bg-finance-electric rounded-full animate-pulse"></div>
-              <span className="text-finance-electric">Finnhub Live</span>
+              <span className="text-finance-electric">📈 Yahoo Finance Live</span>
             </div>
 
             {isLoading && (
@@ -738,8 +738,8 @@ export default function EnhancedHeroSection() {
               />
             </motion.button>
 
-            {/* Market Dashboard Button */}
-            <MarketDashboardDialog className="" />
+            {/* Floating Market Dashboard Icon - now positioned as fixed element */}
+            <FloatingMarketIcon />
 
             <motion.button
               className="px-10 py-4 border-2 border-finance-gold text-finance-gold rounded-xl hover:bg-finance-gold hover:text-finance-navy transition-all duration-500 relative overflow-hidden group"

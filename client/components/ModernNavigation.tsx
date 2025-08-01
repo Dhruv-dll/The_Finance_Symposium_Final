@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSmoothScroll, useScrollProgress } from "../hooks/useSmoothScroll";
 import {
   Menu,
   X,
@@ -11,6 +12,7 @@ import {
   Calendar,
   Building2,
   Mail,
+  GraduationCap,
 } from "lucide-react";
 import {
   NavigationMenu,
@@ -29,97 +31,123 @@ interface ModernNavigationProps {
 
 export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const {
+    scrollToElement,
+    activeSection,
+    isScrolling,
+    scrollProgress: smoothScrollProgress,
+  } = useSmoothScroll();
+  const pageScrollProgress = useScrollProgress();
 
   const navItems = [
     {
       name: "About",
-      href: "#",
+      href: "#about",
       icon: BarChart3,
       color: "text-finance-gold",
       hoverIcon: "📊",
+      section: "about",
       dropdown: [
         {
           name: "About TFS",
-          href: "/about",
+          href: "#about",
           icon: "🏛️",
           description: "Learn about The Finance Symposium",
+          section: "about",
+        },
+        {
+          name: "About BAF",
+          href: "#about-baf",
+          icon: "🎓",
+          description: "Learn about the BAF programme",
+          section: "about-baf",
         },
         {
           name: "Meet the Team",
-          href: "/team",
+          href: "#team",
           icon: "👥",
           description: "Our dedicated team members",
+          section: "team",
         },
       ],
     },
     {
       name: "EVENTS",
-      href: "#",
+      href: "#events",
       icon: Calendar,
       color: "text-finance-green",
       hoverIcon: "📅",
+      section: "events",
       dropdown: [
         {
-          name: "Saturday Sessions",
-          href: "/events/saturday-sessions",
-          icon: "📚",
-          description: "Weekly learning sessions",
+          name: "Events Portfolio",
+          href: "#events",
+          icon: "📅",
+          description: "All our events in one place",
+          section: "events",
         },
         {
-          name: "Networking",
-          href: "/events/networking",
+          name: "Saturday Sessions",
+          href: "#events",
+          icon: "📚",
+          description: "Weekly learning sessions",
+          section: "events",
+        },
+        {
+          name: "Networking Events",
+          href: "#events",
           icon: "🤝",
           description: "Connect with professionals",
+          section: "events",
         },
         {
           name: "Flagship Conclave",
-          href: "/events/conclave",
+          href: "#events",
           icon: "🏆",
           description: "Our main annual event",
-        },
-        { type: "separator" },
-        {
-          name: "Upcoming Events",
-          href: "/events/upcoming",
-          icon: "📅",
-          description: "See what's coming next",
+          section: "events",
         },
       ],
     },
     {
       name: "Finsight",
-      href: "/finsight",
+      href: "#insights",
       icon: TrendingUp,
       color: "text-finance-electric",
       hoverIcon: "📈",
+      section: "insights",
     },
     {
       name: "SPONSORS",
-      href: "#",
+      href: "#sponsors",
       icon: Building2,
       color: "text-finance-gold",
       hoverIcon: "💼",
+      section: "sponsors",
       dropdown: [
         {
-          name: "Past Sponsors",
-          href: "/sponsors/past",
+          name: "Our Sponsors",
+          href: "#sponsors",
           icon: "🏛️",
-          description: "Our previous partners",
+          description: "Our amazing partners",
+          section: "sponsors",
         },
         {
-          name: "Present Sponsors",
-          href: "/sponsors/present",
+          name: "Partnership Info",
+          href: "#sponsors",
           icon: "🤝",
-          description: "Current partnerships",
+          description: "Learn about partnerships",
+          section: "sponsors",
         },
       ],
     },
     {
       name: "Contact Us",
-      href: "/contact",
+      href: "#contact",
       icon: Mail,
       color: "text-finance-electric",
       hoverIcon: "📧",
+      section: "contact",
     },
   ];
 
@@ -132,35 +160,82 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
-  const getGlowColor = (item: any) => {
-    if (item.color === "text-finance-gold")
-      return "shadow-[0_0_20px_rgba(255,215,0,0.5)]";
-    if (item.color === "text-finance-electric")
-      return "shadow-[0_0_20px_rgba(0,255,255,0.5)]";
-    if (item.color === "text-finance-green")
-      return "shadow-[0_0_20px_rgba(0,255,0,0.5)]";
-    return "shadow-[0_0_20px_rgba(255,215,0,0.5)]";
-  };
-
   return (
     <motion.nav
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 group ${
         scrolled
-          ? "backdrop-blur-xl bg-finance-navy/20 border-b border-finance-gold/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
+          ? "backdrop-blur-[15px] border-b border-finance-gold/30 shadow-[0_4px_20px_rgba(0,0,0,0.3)]"
           : "bg-transparent"
       }`}
+      style={{
+        background: scrolled ? "rgba(0, 0, 0, 0.7)" : "transparent",
+        backdropFilter: scrolled ? "blur(15px)" : "none",
+        transition: "all 0.7s ease-in-out",
+      }}
+      onMouseEnter={() => {
+        if (scrolled) {
+          const nav = document.querySelector("nav");
+          if (nav) {
+            nav.style.background = "rgba(0, 0, 0, 0.85)";
+            nav.style.backdropFilter = "blur(20px) saturate(150%)";
+            nav.style.transform = "scale(1.02)";
+            nav.style.boxShadow =
+              "0 8px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 215, 0, 0.2)";
+          }
+        }
+      }}
+      onMouseLeave={() => {
+        if (scrolled) {
+          const nav = document.querySelector("nav");
+          if (nav) {
+            nav.style.background = "rgba(0, 0, 0, 0.7)";
+            nav.style.backdropFilter = "blur(15px)";
+            nav.style.transform = "scale(1)";
+            nav.style.boxShadow = "0 4px 20px rgba(0, 0, 0, 0.3)";
+          }
+        }
+      }}
     >
-      {/* Glassmorphic background effect */}
+      {/* Enhanced Glassmorphic background effect */}
       {scrolled && (
         <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-finance-navy/30 via-finance-navy-light/20 to-finance-navy/30 backdrop-blur-xl"
+          className="absolute inset-0 bg-gradient-to-r from-finance-navy/30 via-finance-navy-light/20 to-finance-navy/30"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
+          style={{
+            backdropFilter: "blur(25px)",
+          }}
         />
+      )}
+
+      {/* Enhanced Scroll Progress Indicator */}
+      <motion.div
+        className={`absolute bottom-0 left-0 h-1 origin-left transition-all duration-300 ${
+          isScrolling
+            ? "bg-gradient-to-r from-finance-electric via-finance-gold to-finance-electric animate-pulse"
+            : "bg-gradient-to-r from-finance-gold to-finance-electric"
+        }`}
+        style={{
+          scaleX:
+            (isScrolling ? smoothScrollProgress : pageScrollProgress) / 100,
+        }}
+        transition={{ duration: isScrolling ? 0.05 : 0.1 }}
+      />
+
+      {/* Smooth Scroll Indicator */}
+      {isScrolling && (
+        <motion.div
+          className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1 bg-finance-navy/90 backdrop-blur-sm rounded-full border border-finance-gold/30 text-xs text-finance-gold"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+        >
+          Navigating... {Math.round(smoothScrollProgress)}%
+        </motion.div>
       )}
 
       <div className="container mx-auto px-6 py-4 relative">
@@ -175,7 +250,19 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
             <motion.div
               className="relative group cursor-pointer"
               whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.3 }}
+              onClick={() => scrollToElement("#hero")}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  scrollToElement("#hero");
+                }
+              }}
+              tabIndex={0}
+              role="button"
+              aria-label="Scroll to top of page"
+              title="Back to Top"
             >
               <div
                 className="flex items-center justify-center rounded-xl relative overflow-hidden"
@@ -209,7 +296,19 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
             <motion.div
               className="relative group cursor-pointer"
               whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.3 }}
+              onClick={() => scrollToElement("#hero")}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  scrollToElement("#hero");
+                }
+              }}
+              tabIndex={0}
+              role="button"
+              aria-label="Scroll to top of page"
+              title="Back to Top"
             >
               <div
                 className="flex items-center justify-center rounded-xl"
@@ -271,23 +370,70 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                       <>
                         <NavigationMenuTrigger
                           className={cn(
-                            "group flex items-center space-x-2 bg-transparent text-foreground",
-                            "hover:bg-transparent hover:text-transparent",
+                            "group flex items-center space-x-2 bg-transparent",
+                            activeSection === item.section
+                              ? "text-white"
+                              : "text-finance-gold",
+                            "hover:bg-transparent hover:text-white",
                             "data-[active]:bg-transparent data-[state=open]:bg-transparent",
-                            "focus:bg-transparent focus:text-transparent",
+                            "focus:bg-transparent focus:text-white",
                             "relative overflow-hidden px-4 py-2 rounded-lg transition-all duration-300",
+                            "hover:scale-105 hover:tracking-wider",
+                            activeSection === item.section && "scale-105",
                           )}
+                          style={{
+                            textShadow:
+                              activeSection === item.section
+                                ? "0 0 5px rgba(255,255,255,0.8), 0 0 15px rgba(255,215,0,0.6), 0 0 25px rgba(255,215,0,0.4)"
+                                : "0 0 4px rgba(255, 215, 0, 0.5)",
+                            transition: "all 0.3s ease-in-out",
+                          }}
+                          onClick={() =>
+                            item.section && scrollToElement(`#${item.section}`)
+                          }
                         >
-                          {/* Background glow effect */}
-                          <motion.div
-                            className={`absolute inset-0 ${getGlowColor(item)} opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg`}
-                            initial={false}
+                          <item.icon
+                            className="w-4 h-4 relative z-10 transition-all duration-300 group-hover:text-white"
+                            style={{
+                              filter:
+                                "drop-shadow(0 0 5px rgba(255,255,255,0.8)) drop-shadow(0 0 15px rgba(255,215,0,0.6)) drop-shadow(0 0 25px rgba(255,215,0,0.4))",
+                              opacity: 0,
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.opacity = "1";
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.opacity = "0";
+                            }}
                           />
+                          <item.icon className="w-4 h-4 relative z-10 group-hover:opacity-0 transition-opacity duration-300" />
 
-                          <item.icon className="w-4 h-4 relative z-10 group-hover:text-finance-navy" />
-                          <span className="font-medium relative z-10 group-hover:text-finance-navy">
+                          <span
+                            className="font-medium relative z-10 transition-all duration-300 group-hover:text-white"
+                            style={{
+                              textShadow: "0 0 4px rgba(255, 215, 0, 0.5)",
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.textShadow =
+                                "0 0 5px rgba(255,255,255,0.8), 0 0 15px rgba(255,215,0,0.6), 0 0 25px rgba(255,215,0,0.4)";
+                              e.currentTarget.style.letterSpacing = "0.5px";
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.textShadow =
+                                "0 0 4px rgba(255, 215, 0, 0.5)";
+                              e.currentTarget.style.letterSpacing = "normal";
+                            }}
+                          >
                             {item.name}
                           </span>
+
+                          {/* Golden underline effect */}
+                          <motion.div
+                            className="absolute bottom-0 left-1/2 h-0.5 bg-gradient-to-r from-transparent via-finance-gold to-transparent"
+                            initial={{ width: 0, x: "-50%" }}
+                            whileHover={{ width: "100%" }}
+                            transition={{ duration: 0.3, ease: "easeOut" }}
+                          />
 
                           {/* Hover icon */}
                           <motion.span
@@ -301,7 +447,20 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                         </NavigationMenuTrigger>
 
                         <NavigationMenuContent>
-                          <div className="w-64 p-4 bg-finance-navy/90 backdrop-blur-xl border border-finance-gold/20 rounded-xl">
+                          <motion.div
+                            className="w-64 p-4 rounded-xl border-2"
+                            style={{
+                              background: "rgba(0, 0, 0, 0.9)",
+                              backdropFilter: "blur(25px)",
+                              borderColor: "rgba(255, 215, 0, 0.6)",
+                              boxShadow:
+                                "0 10px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 215, 0, 0.3)",
+                            }}
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.3, ease: "easeOut" }}
+                          >
                             <div className="space-y-2">
                               {item.dropdown.map(
                                 (dropdownItem, dropdownIndex) => {
@@ -318,9 +477,14 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                                       key={dropdownIndex}
                                       asChild
                                     >
-                                      <Link
-                                        to={dropdownItem.href}
-                                        className="group flex items-start space-x-3 p-3 rounded-lg hover:bg-finance-gold/10 transition-all duration-300"
+                                      <button
+                                        onClick={() =>
+                                          dropdownItem.section &&
+                                          scrollToElement(
+                                            `#${dropdownItem.section}`,
+                                          )
+                                        }
+                                        className="group flex items-start space-x-3 p-3 rounded-lg hover:bg-finance-gold/10 transition-all duration-300 w-full text-left"
                                       >
                                         <span className="text-lg mt-0.5 group-hover:scale-110 transition-transform duration-200">
                                           {dropdownItem.icon}
@@ -335,50 +499,62 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                                             </div>
                                           )}
                                         </div>
-                                      </Link>
+                                      </button>
                                     </NavigationMenuLink>
                                   );
                                 },
                               )}
                             </div>
-                          </div>
+                          </motion.div>
                         </NavigationMenuContent>
                       </>
                     ) : (
-                      <NavigationMenuLink asChild>
-                        <Button
-                          variant="ghost"
-                          asChild
-                          className={cn(
-                            "group flex items-center space-x-2 bg-transparent text-foreground",
-                            "hover:bg-transparent hover:text-transparent",
-                            "relative overflow-hidden px-4 py-2 rounded-lg transition-all duration-300",
-                          )}
+                      <Button
+                        variant="ghost"
+                        onClick={() =>
+                          item.section && scrollToElement(`#${item.section}`)
+                        }
+                        className={cn(
+                          "group flex items-center space-x-2 bg-transparent",
+                          activeSection === item.section
+                            ? "text-white"
+                            : "text-finance-gold",
+                          "hover:bg-transparent hover:text-white",
+                          "relative overflow-hidden px-4 py-2 rounded-lg transition-all duration-300",
+                          "hover:scale-105 hover:tracking-wider",
+                          activeSection === item.section && "scale-105",
+                        )}
+                        style={{
+                          textShadow:
+                            activeSection === item.section
+                              ? "0 0 5px rgba(255,255,255,0.8), 0 0 15px rgba(255,215,0,0.6), 0 0 25px rgba(255,215,0,0.4)"
+                              : "0 0 4px rgba(255, 215, 0, 0.5)",
+                          transition: "all 0.3s ease-in-out",
+                        }}
+                      >
+                        <item.icon className="w-4 h-4 relative z-10 transition-all duration-300" />
+
+                        <span className="font-medium relative z-10 transition-all duration-300">
+                          {item.name}
+                        </span>
+
+                        <motion.span
+                          className="text-lg relative z-10"
+                          initial={{ opacity: 0, scale: 0 }}
+                          whileHover={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.2 }}
                         >
-                          <Link to={item.href}>
-                            {/* Background glow effect */}
-                            <motion.div
-                              className={`absolute inset-0 ${getGlowColor(item)} opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg`}
-                              initial={false}
-                            />
+                          {item.hoverIcon}
+                        </motion.span>
 
-                            <item.icon className="w-4 h-4 relative z-10 group-hover:text-finance-navy" />
-                            <span className="font-medium relative z-10 group-hover:text-finance-navy">
-                              {item.name}
-                            </span>
-
-                            {/* Hover icon */}
-                            <motion.span
-                              className="text-lg relative z-10"
-                              initial={{ opacity: 0, scale: 0 }}
-                              whileHover={{ opacity: 1, scale: 1 }}
-                              transition={{ duration: 0.2 }}
-                            >
-                              {item.hoverIcon}
-                            </motion.span>
-                          </Link>
-                        </Button>
-                      </NavigationMenuLink>
+                        {/* Golden underline effect */}
+                        <motion.div
+                          className="absolute bottom-0 left-1/2 h-0.5 bg-gradient-to-r from-transparent via-finance-gold to-transparent"
+                          initial={{ width: 0, x: "-50%" }}
+                          whileHover={{ width: "100%" }}
+                          transition={{ duration: 0.3, ease: "easeOut" }}
+                        />
+                      </Button>
                     )}
                   </NavigationMenuItem>
                 ))}
@@ -445,12 +621,15 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                   >
                     {item.dropdown ? (
                       <div className="space-y-2">
-                        <div className="flex items-center justify-between py-3 px-4 text-foreground">
+                        <div className="flex items-center justify-between py-3 px-4 text-foreground border-b border-finance-gold/20">
                           <div className="flex items-center space-x-3">
-                            <item.icon className="w-5 h-5" />
-                            <span className="font-medium">{item.name}</span>
+                            <item.icon className="w-5 h-5 text-finance-gold" />
+                            <span className="font-medium text-finance-gold">
+                              {item.name}
+                            </span>
                             <span className="text-lg">{item.hoverIcon}</span>
                           </div>
+                          <ChevronDown className="w-4 h-4 text-finance-gold" />
                         </div>
 
                         <div className="ml-6 space-y-1">
@@ -467,17 +646,18 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                               <Button
                                 key={dropdownIndex}
                                 variant="ghost"
-                                asChild
                                 className="w-full justify-start text-muted-foreground hover:text-finance-gold hover:bg-finance-gold/5"
-                                onClick={() => setMobileMenuOpen(false)}
+                                onClick={() => {
+                                  if (dropdownItem.section) {
+                                    scrollToElement(`#${dropdownItem.section}`);
+                                  }
+                                  setMobileMenuOpen(false);
+                                }}
                               >
-                                <Link
-                                  to={dropdownItem.href}
-                                  className="flex items-center space-x-3 py-2 px-3"
-                                >
+                                <div className="flex items-center space-x-3 py-2 px-3">
                                   <span>{dropdownItem.icon}</span>
                                   <span>{dropdownItem.name}</span>
-                                </Link>
+                                </div>
                               </Button>
                             );
                           })}
@@ -486,20 +666,21 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                     ) : (
                       <Button
                         variant="ghost"
-                        asChild
                         className="w-full justify-start text-foreground hover:text-finance-gold hover:bg-finance-gold/10 group"
-                        onClick={() => setMobileMenuOpen(false)}
+                        onClick={() => {
+                          if (item.section) {
+                            scrollToElement(`#${item.section}`);
+                          }
+                          setMobileMenuOpen(false);
+                        }}
                       >
-                        <Link
-                          to={item.href}
-                          className="flex items-center space-x-3 py-3 px-4"
-                        >
+                        <div className="flex items-center space-x-3 py-3 px-4">
                           <item.icon className="w-5 h-5" />
                           <span className="font-medium">{item.name}</span>
                           <span className="text-lg ml-auto group-hover:scale-110 transition-transform duration-200">
                             {item.hoverIcon}
                           </span>
-                        </Link>
+                        </div>
                       </Button>
                     )}
                   </motion.div>
