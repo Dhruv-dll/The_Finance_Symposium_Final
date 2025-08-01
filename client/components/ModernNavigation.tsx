@@ -223,7 +223,19 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
             <motion.div
               className="relative group cursor-pointer"
               whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.3 }}
+              onClick={() => scrollToElement('#hero')}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  scrollToElement('#hero');
+                }
+              }}
+              tabIndex={0}
+              role="button"
+              aria-label="Scroll to top of page"
+              title="Back to Top"
             >
               <div
                 className="flex items-center justify-center rounded-xl relative overflow-hidden"
