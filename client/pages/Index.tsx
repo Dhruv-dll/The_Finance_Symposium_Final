@@ -7,6 +7,7 @@ import MarketDataErrorBoundary from "../components/MarketDataErrorBoundary";
 import EventsSection from "../components/EventsSection";
 import AboutSection from "../components/AboutSection";
 import ContactSection from "../components/ContactSection";
+import SponsorsSection from "../components/SponsorsSection";
 import MarketDashboardDialog from "../components/MarketDashboardDialog";
 import { motion, useScroll, useTransform } from "framer-motion";
 import {
