@@ -321,29 +321,27 @@ async function fetchCryptoData(
 
     const html = await response.text();
 
-    // Extract price from Google's knowledge panel
-    // Google typically shows crypto prices in a format like "$XX,XXX.XX" or "XX,XXX.XX USD"
-    const pricePatterns = [
-      // Pattern for "$X,XXX.XX" format
-      /\$([0-9,]+\.?[0-9]*)/g,
-      // Pattern for "X,XXX.XX USD" format
-      /([0-9,]+\.?[0-9]*)\s*USD/gi,
-      // Pattern for Bitcoin specific (BTC price USD)
-      new RegExp(`${name}[^0-9]*([0-9,]+\\.?[0-9]*)`, 'gi'),
-      // Pattern for price in data attributes
-      /data-price[^>]*>([0-9,]+\.?[0-9]*)/gi,
-    ];
-
+    // Extract price from Google's knowledge panel with multiple strategies
     let currentPriceUSD = 0;
 
-    // Try each pattern to extract the price
+    // Strategy 1: Look for common price patterns in Google results
+    const pricePatterns = [
+      // Pattern for dollar amounts with commas: $67,234.56
+      /\$([0-9]{1,3}(?:,[0-9]{3})*(?:\.[0-9]{1,2})?)/g,
+      // Pattern for price with USD: 67234.56 USD
+      /([0-9]{1,3}(?:,[0-9]{3})*(?:\.[0-9]{1,2})?)\s*USD/gi,
+      // Pattern for price context: Price: $67,234.56
+      /Price[^$]*\$([0-9,]+\.?[0-9]*)/gi,
+      // Pattern for current price context: Current: $67,234.56
+      /Current[^$]*\$([0-9,]+\.?[0-9]*)/gi,
+    ];
+
     for (const pattern of pricePatterns) {
       const matches = [...html.matchAll(pattern)];
       for (const match of matches) {
         const priceStr = match[1]?.replace(/,/g, '');
         const price = parseFloat(priceStr);
 
-        // Validate price range for each crypto
         if (price > 0 && isValidCryptoPrice(name, price)) {
           currentPriceUSD = price;
           console.log(`✅ Found ${name} price: $${currentPriceUSD}`);
@@ -353,9 +351,32 @@ async function fetchCryptoData(
       if (currentPriceUSD > 0) break;
     }
 
-    // If no price found, try alternative scraping method
+    // Strategy 2: If no price found, try fallback with more lenient validation
     if (currentPriceUSD <= 0) {
-      throw new Error(`Could not extract valid price for ${name}`);
+      console.log(`🔄 Trying fallback price extraction for ${name}...`);
+
+      // More aggressive price extraction - look for any dollar amount
+      const fallbackPattern = /\$([0-9,]+(?:\.[0-9]{1,2})?)/g;
+      const allMatches = [...html.matchAll(fallbackPattern)];
+
+      for (const match of allMatches) {
+        const priceStr = match[1]?.replace(/,/g, '');
+        const price = parseFloat(priceStr);
+
+        // Lenient validation - just check reasonable ranges
+        if (price > 0.01 && price < 200000) {
+          if (isValidCryptoPrice(name, price)) {
+            currentPriceUSD = price;
+            console.log(`✅ Found ${name} fallback price: $${currentPriceUSD}`);
+            break;
+          }
+        }
+      }
+    }
+
+    // If still no price found, throw error for fallback
+    if (currentPriceUSD <= 0) {
+      throw new Error(`Could not extract valid price for ${name} from Google`);
     }
 
     // Convert to INR
