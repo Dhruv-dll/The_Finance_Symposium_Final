@@ -94,6 +94,7 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
           icon: "📚",
           description: "Weekly learning sessions",
           section: "events",
+          eventId: "saturday-sessions",
         },
         {
           name: "Networking Events",
@@ -101,6 +102,7 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
           icon: "🤝",
           description: "Connect with professionals",
           section: "events",
+          eventId: "networking-events",
         },
         {
           name: "Flagship Conclave",
@@ -108,6 +110,7 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
           icon: "🏆",
           description: "Our main annual event",
           section: "events",
+          eventId: "flagship-event",
         },
       ],
     },
