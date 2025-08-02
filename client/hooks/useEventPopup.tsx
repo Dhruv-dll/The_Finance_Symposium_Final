@@ -1,5 +1,4 @@
 import { useState, createContext, useContext, ReactNode } from "react";
-import { useEventsData } from "./useEventsData";
 
 interface EventDetails {
   id: string;
@@ -15,6 +14,7 @@ interface EventPopupContextType {
   selectedEvent: EventDetails | null;
   setSelectedEvent: (event: EventDetails | null) => void;
   openEventPopup: (eventId: string) => void;
+  setEventDetailsData: (details: EventDetails[]) => void;
 }
 
 const EventPopupContext = createContext<EventPopupContextType | undefined>(
@@ -23,10 +23,10 @@ const EventPopupContext = createContext<EventPopupContextType | undefined>(
 
 export function EventPopupProvider({ children }: { children: ReactNode }) {
   const [selectedEvent, setSelectedEvent] = useState<EventDetails | null>(null);
-  const { eventDetails } = useEventsData();
+  const [eventDetailsData, setEventDetailsData] = useState<EventDetails[]>([]);
 
   const openEventPopup = (eventId: string) => {
-    const eventDetail = eventDetails.find((e) => e.id === eventId);
+    const eventDetail = eventDetailsData.find((e) => e.id === eventId);
     if (eventDetail) {
       setSelectedEvent(eventDetail);
     }
@@ -34,7 +34,7 @@ export function EventPopupProvider({ children }: { children: ReactNode }) {
 
   return (
     <EventPopupContext.Provider
-      value={{ selectedEvent, setSelectedEvent, openEventPopup }}
+      value={{ selectedEvent, setSelectedEvent, openEventPopup, setEventDetailsData }}
     >
       {children}
     </EventPopupContext.Provider>
