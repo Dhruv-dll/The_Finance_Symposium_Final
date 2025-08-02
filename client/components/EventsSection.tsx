@@ -15,6 +15,7 @@ import {
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { useEventPopup } from "../hooks/useEventPopup";
+import { useEventsData } from "../hooks/useEventsData";
 
 interface EventCard {
   id: string;
