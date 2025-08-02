@@ -92,7 +92,9 @@ export default function EventsSection() {
 
   // Update popup context with event details when they change
   useEffect(() => {
-    setEventDetailsData(eventDetails);
+    if (setEventDetailsData && eventDetails) {
+      setEventDetailsData(eventDetails);
+    }
   }, [eventDetails, setEventDetailsData]);
 
   const EventCard3D = ({
