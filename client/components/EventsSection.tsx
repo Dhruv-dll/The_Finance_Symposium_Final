@@ -22,6 +22,7 @@ import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { useEventPopup } from "../hooks/useEventPopup";
 import { useEventsData } from "../hooks/useEventsData";
+import { ModernEventCard } from "./ModernEventCard";
 
 interface EventCard {
   id: string;
@@ -99,134 +100,11 @@ export default function EventsSection() {
 
 
 
-  const EventCard3D = ({
-    event,
-    index,
-  }: {
-    event: EventCard;
-    index: number;
-  }) => {
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 100, rotateX: -15 }}
-        animate={isInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
-        transition={{ duration: 0.8, delay: index * 0.2, ease: "easeOut" }}
-        className="relative group perspective-1000"
-      >
-        {/* 3D Card Container */}
-        <motion.div
-          className="relative h-80 preserve-3d cursor-pointer rounded-xl overflow-hidden"
-          whileHover={{
-            scale: 1.02,
-            y: -5,
-          }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-          style={{
-            background: `linear-gradient(135deg, ${event.backgroundGradient})`,
-            boxShadow:
-              "0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
-          }}
-          onClick={() => openEventPopup && openEventPopup(event.id)}
-        >
-          {/* Premium Badge */}
-          {event.isPremium && (
-            <motion.div
-              className="absolute -top-3 -right-3 z-20"
-              animate={{ rotate: [0, 5, -5, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              <Badge className="bg-gradient-to-r from-finance-gold to-yellow-400 text-finance-navy font-bold px-3 py-1">
-                <Sparkles className="w-3 h-3 mr-1" />
-                FLAGSHIP
-              </Badge>
-            </motion.div>
-          )}
-
-          {/* Card Content */}
-          <div className="absolute inset-0 p-6 flex flex-col justify-between rounded-xl overflow-hidden">
-            {/* Background Particles */}
-            <div className="absolute inset-0 opacity-20">
-              {[...Array(20)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute w-1 h-1 bg-white rounded-full"
-                  style={{
-                    left: `${Math.random() * 100}%`,
-                    top: `${Math.random() * 100}%`,
-                  }}
-                  animate={{
-                    opacity: [0.2, 0.8, 0.2],
-                    scale: [0.5, 1, 0.5],
-                  }}
-                  transition={{
-                    duration: 3 + Math.random() * 2,
-                    repeat: Infinity,
-                    delay: Math.random() * 2,
-                  }}
-                />
-              ))}
-            </div>
-
-            {/* Icon with 3D Effect */}
-            <motion.div
-              className="relative z-10"
-              whileHover={{
-                scale: 1.1,
-                rotate: 5,
-              }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center mb-4">
-                <event.icon
-                  className="w-8 h-8 text-white drop-shadow-lg"
-                  style={{
-                    filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.3))",
-                  }}
-                />
-              </div>
-            </motion.div>
-
-            {/* Content */}
-            <div className="relative z-10 text-white">
-              <motion.h3
-                className="text-2xl font-bold mb-3"
-                style={{
-                  textShadow: "0 2px 4px rgba(0,0,0,0.5)",
-                }}
-              >
-                {event.title}
-              </motion.h3>
-              <p className="text-white/90 text-sm leading-relaxed mb-6">
-                {event.description}
-              </p>
-
-              {/* Click to view details */}
-              <div className="flex items-center space-x-2 text-xs opacity-75">
-                <span>Click to view details</span>
-                <ChevronRight className="w-3 h-3" />
-              </div>
-            </div>
-          </div>
-
-          {/* Floating Animation */}
-          <motion.div
-            className="absolute -inset-1 rounded-xl opacity-30 -z-10"
-            animate={{
-              y: [0, -5, 0],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            style={{
-              background: `linear-gradient(135deg, ${event.backgroundGradient})`,
-              filter: "blur(20px)",
-            }}
-          />
-        </motion.div>
-      </motion.div>
-    );
+  // Handle event card click
+  const handleEventCardClick = (eventId: string) => {
+    if (openEventPopup) {
+      openEventPopup(eventId);
+    }
   };
 
   const TimelineEvent = ({
@@ -406,7 +284,13 @@ export default function EventsSection() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {pastEvents.map((event, index) => (
-              <EventCard3D key={event.id} event={event} index={index} />
+              <ModernEventCard
+                key={event.id}
+                event={event}
+                index={index}
+                onClick={handleEventCardClick}
+                isInView={isInView}
+              />
             ))}
           </div>
         </motion.div>
