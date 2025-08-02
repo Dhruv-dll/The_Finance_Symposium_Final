@@ -168,12 +168,14 @@ export default function SponsorsSection() {
           transition={{ duration: 0.8 }}
         >
           <h2 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-finance-gold to-finance-electric bg-clip-text text-transparent">
-            Past Sponsors
+            OUR STRATEGIC PARTNERS
           </h2>
           <div className="w-32 h-1 bg-gradient-to-r from-transparent via-finance-gold to-transparent mx-auto mb-6" />
           <p className="text-xl text-foreground/80 max-w-3xl mx-auto">
-            Celebrating our previous sponsors who have supported The Finance
-            Symposium over the years.
+            {activeTab === "current"
+              ? "Building strong partnerships with industry leaders to enhance financial education and career opportunities."
+              : "Celebrating our previous sponsors who have supported The Finance Symposium over the years."
+            }
           </p>
         </motion.div>
 
