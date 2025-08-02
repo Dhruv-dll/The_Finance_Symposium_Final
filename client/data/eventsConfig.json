@@ -1,0 +1,23 @@
+{
+  "pastEvents": {
+    "saturday-sessions": {
+      "events": [
+        {
+          "title": "Saturday Seminar 1: Data Meets Finance",
+          "description": "Exploring the intersection of data analytics and financial decision-making"
+        },
+        {
+          "title": "Saturday Seminar 2: Banking 101: Demystifying India's Backbone",
+          "description": "Understanding the fundamentals of India's banking system"
+        }
+      ]
+    },
+    "networking-events": {
+      "comingSoon": true
+    },
+    "flagship-event": {
+      "comingSoon": true
+    }
+  },
+  "upcomingEvents": []
+}
