@@ -41,16 +41,6 @@ interface UpcomingEvent {
   };
 }
 
-interface EventDetails {
-  id: string;
-  title: string;
-  events?: {
-    title: string;
-    description?: string;
-  }[];
-  comingSoon?: boolean;
-}
-
 const pastEvents: EventCard[] = [
   {
     id: "saturday-sessions",
@@ -80,33 +70,6 @@ const pastEvents: EventCard[] = [
     hoverColor: "rgba(255, 215, 0, 1)",
     isPremium: true,
   },
-];
-
-const eventDetails: EventDetails[] = [
-  {
-    id: "saturday-sessions",
-    title: "Saturday Sessions",
-    events: [
-      {
-        title: "Saturday Seminar 1: Data Meets Finance",
-        description: "Exploring the intersection of data analytics and financial decision-making"
-      },
-      {
-        title: "Saturday Seminar 2: Banking 101: Demystifying India's Backbone",
-        description: "Understanding the fundamentals of India's banking system"
-      }
-    ]
-  },
-  {
-    id: "networking-events",
-    title: "Networking Events",
-    comingSoon: true
-  },
-  {
-    id: "flagship-event",
-    title: "Flagship Conclave",
-    comingSoon: true
-  }
 ];
 
 const upcomingEvents: UpcomingEvent[] = [
