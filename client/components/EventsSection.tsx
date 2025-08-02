@@ -99,6 +99,11 @@ export default function EventsSection() {
     }
   }, [eventDetails, setEventDetailsData]);
 
+  // Debug upcoming events
+  useEffect(() => {
+    console.log('EventsSection - upcomingEvents:', upcomingEvents);
+  }, [upcomingEvents]);
+
 
 
   // Handle event card click
