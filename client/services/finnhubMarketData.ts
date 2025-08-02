@@ -513,17 +513,45 @@ class FinnhubMarketDataService {
 
     // If we have cached data, immediately provide it to the new subscriber
     if (this.lastSuccessfulData) {
-      setTimeout(() => callback(this.lastSuccessfulData), 0);
+      try {
+        setTimeout(() => {
+          try {
+            callback(this.lastSuccessfulData);
+          } catch (error) {
+            console.warn("Error in immediate callback:", error);
+          }
+        }, 0);
+      } catch (error) {
+        console.warn("Error setting up immediate callback:", error);
+      }
     }
 
     // Start update interval if not already running
     if (!this.updateInterval) {
       this.updateInterval = setInterval(() => {
-        this.updateAllData();
+        try {
+          this.updateAllData();
+        } catch (error) {
+          console.error("Error in scheduled update:", error);
+        }
       }, 10000); // Update every 10 seconds
 
       // Initial fetch with small delay to allow all components to subscribe first
-      setTimeout(() => this.updateAllData(), 100);
+      setTimeout(() => {
+        try {
+          this.updateAllData();
+        } catch (error) {
+          console.error("Error in initial update:", error);
+          // Provide fallback data immediately if initial update fails
+          const fallbackData = this.getFallbackMarketData();
+          this.lastSuccessfulData = fallbackData;
+          try {
+            this.subscribers.forEach(cb => cb(fallbackData));
+          } catch (cbError) {
+            console.warn("Error providing initial fallback data:", cbError);
+          }
+        }
+      }, 100);
     }
 
     // Return unsubscribe function
