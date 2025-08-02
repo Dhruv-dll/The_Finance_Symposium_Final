@@ -487,7 +487,7 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                                     >
                                       <button
                                         onClick={() => {
-                                          if (dropdownItem.eventId) {
+                                          if (dropdownItem.eventId && openEventPopup) {
                                             openEventPopup(
                                               dropdownItem.eventId,
                                             );
