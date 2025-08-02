@@ -124,6 +124,7 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
       color: "text-finance-gold",
       hoverIcon: "💼",
       section: "sponsors",
+      noHover: true,
       dropdown: [
         {
           name: "Our Sponsors",
@@ -388,6 +389,16 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                                 : "0 0 4px rgba(255, 215, 0, 0.5)",
                             transition: "all 0.3s ease-in-out",
                           }}
+                          onMouseEnter={item.noHover ? undefined : (e) => {
+                            e.currentTarget.style.textShadow =
+                              "0 0 5px rgba(255,255,255,0.8), 0 0 15px rgba(255,215,0,0.6), 0 0 25px rgba(255,215,0,0.4)";
+                            e.currentTarget.style.letterSpacing = "0.5px";
+                          }}
+                          onMouseLeave={item.noHover ? undefined : (e) => {
+                            e.currentTarget.style.textShadow =
+                              "0 0 4px rgba(255, 215, 0, 0.5)";
+                            e.currentTarget.style.letterSpacing = "normal";
+                          }}
                           onClick={() =>
                             item.section && scrollToElement(`#${item.section}`)
                           }
@@ -413,16 +424,7 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                             style={{
                               textShadow: "0 0 4px rgba(255, 215, 0, 0.5)",
                             }}
-                            onMouseEnter={(e) => {
-                              e.currentTarget.style.textShadow =
-                                "0 0 5px rgba(255,255,255,0.8), 0 0 15px rgba(255,215,0,0.6), 0 0 25px rgba(255,215,0,0.4)";
-                              e.currentTarget.style.letterSpacing = "0.5px";
-                            }}
-                            onMouseLeave={(e) => {
-                              e.currentTarget.style.textShadow =
-                                "0 0 4px rgba(255, 215, 0, 0.5)";
-                              e.currentTarget.style.letterSpacing = "normal";
-                            }}
+
                           >
                             {item.name}
                           </span>
