@@ -182,8 +182,7 @@ export function useEventsData() {
     newConfig.pastEvents["networking-events"].events!.push(event);
     newConfig.pastEvents["networking-events"].comingSoon = false;
 
-    setEventsConfig(newConfig);
-    localStorage.setItem("tfs-events-config", JSON.stringify(newConfig));
+    saveConfig(newConfig);
   };
 
   const addFlagshipEvent = (event: EventItem) => {
@@ -194,16 +193,14 @@ export function useEventsData() {
     newConfig.pastEvents["flagship-event"].events!.push(event);
     newConfig.pastEvents["flagship-event"].comingSoon = false;
 
-    setEventsConfig(newConfig);
-    localStorage.setItem("tfs-events-config", JSON.stringify(newConfig));
+    saveConfig(newConfig);
   };
 
   const addUpcomingEvent = (event: UpcomingEvent) => {
     const newConfig = { ...eventsConfig };
     newConfig.upcomingEvents.push(event);
 
-    setEventsConfig(newConfig);
-    localStorage.setItem("tfs-events-config", JSON.stringify(newConfig));
+    saveConfig(newConfig);
   };
 
   const removeUpcomingEvent = (eventId: string) => {
@@ -212,8 +209,7 @@ export function useEventsData() {
       (e) => e.id !== eventId,
     );
 
-    setEventsConfig(newConfig);
-    localStorage.setItem("tfs-events-config", JSON.stringify(newConfig));
+    saveConfig(newConfig);
   };
 
   // Remove functions for past events
