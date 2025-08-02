@@ -244,6 +244,30 @@ export default function AdminEventsPanel({
                     Add Networking Event
                   </Button>
                 </div>
+
+                {/* Current Networking Events */}
+                {eventDetails.find(e => e.id === 'networking-events')?.events && eventDetails.find(e => e.id === 'networking-events')!.events!.length > 0 && (
+                  <div className="mt-6">
+                    <h4 className="text-lg font-semibold text-green-300 mb-3">Current Networking Events:</h4>
+                    <div className="space-y-2">
+                      {eventDetails.find(e => e.id === 'networking-events')!.events!.map((event, index) => (
+                        <div key={index} className="flex items-center justify-between bg-finance-navy/30 p-3 rounded-lg">
+                          <div>
+                            <div className="font-medium text-green-400">{event.title}</div>
+                            {event.description && <div className="text-sm text-green-300/70">{event.description}</div>}
+                          </div>
+                          <Button
+                            onClick={() => removeNetworkingEvent(index)}
+                            variant="destructive"
+                            size="sm"
+                          >
+                            Remove
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </motion.div>
 
               {/* Flagship Events */}
