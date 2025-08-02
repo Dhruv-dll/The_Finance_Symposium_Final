@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
+import { SectionMorphingElements } from "./Morphing3DElements";
 
 interface TeamMember {
   id: string;
@@ -461,6 +462,8 @@ export default function ModernLuminariesSection() {
         background: "linear-gradient(135deg, #000012 0%, #0a0a23 25%, #1a1a2e 50%, #16213e 75%, #0f3460 100%)",
       }}
     >
+      {/* Morphing 3D Financial Elements */}
+      <SectionMorphingElements />
       {/* Animated 3D Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Floating Financial Icons */}
