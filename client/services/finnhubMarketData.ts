@@ -82,14 +82,33 @@ class FinnhubMarketDataService {
     try {
       console.log("📊 Fetching real-time market data from server...");
 
-      const response = await fetch("/api/market-data", {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Cache-Control": "no-cache",
-        },
-        signal: AbortSignal.timeout(15000),
+      // Check if we're already in fallback mode
+      if (this.fallbackMode) {
+        console.log("🔄 Using fallback mode, skipping server API");
+        return this.getFallbackMarketData();
+      }
+
+      // Add timeout wrapper to prevent hanging
+      const fetchWithTimeout = new Promise<Response>((resolve, reject) => {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => {
+          controller.abort();
+          reject(new Error('Request timeout'));
+        }, 10000); // 10 second timeout
+
+        fetch("/api/market-data", {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Cache-Control": "no-cache",
+          },
+          signal: controller.signal,
+        }).then(resolve).catch(reject).finally(() => {
+          clearTimeout(timeoutId);
+        });
       });
+
+      const response = await fetchWithTimeout;
 
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -104,6 +123,9 @@ class FinnhubMarketDataService {
       console.log(
         `✅ Successfully fetched ${data.stocks.length} real-time stocks`,
       );
+
+      // Reset failure count on success
+      this.apiFailureCount = 0;
 
       // Enhance stock data with display names
       const enhancedStocks = data.stocks.map((stock: any) => {
@@ -123,14 +145,15 @@ class FinnhubMarketDataService {
         currencies: data.currencies || [],
       };
     } catch (error) {
-      console.warn(`🔄 Server API failed:`, error.message);
+      console.warn(`🔄 Server API failed:`, error?.message || 'Unknown error');
 
       // Track API failures
       this.apiFailureCount++;
 
-      if (this.apiFailureCount >= 3) {
+      if (this.apiFailureCount >= 2) {
         this.fallbackMode = true;
         console.log("⚠️ Switching to fallback mode due to API issues");
+        return this.getFallbackMarketData();
       }
 
       return null;
