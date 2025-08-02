@@ -278,9 +278,22 @@ export default function EventsSection() {
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <h3 className="text-3xl font-bold text-finance-gold mb-12 text-center">
-            Past Events Excellence
-          </h3>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-center mb-12"
+          >
+            <h3 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-500 to-amber-400 mb-4">
+              Past Events Excellence
+            </h3>
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={isInView ? { scaleX: 1 } : {}}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="w-24 h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent mx-auto"
+            />
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {pastEvents.map((event, index) => (
