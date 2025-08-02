@@ -232,18 +232,38 @@ export default function SponsorsSection() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto"
-            layout
-          >
-            {filteredSponsors.map((sponsor, index) => (
-              <SponsorCard key={sponsor.id} sponsor={sponsor} index={index} />
-            ))}
-          </motion.div>
+          {activeTab === "current" && currentSponsors.length === 0 && searchTerm === "" ? (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6 }}
+              className="text-center py-20"
+            >
+              <div className="max-w-md mx-auto bg-finance-navy/30 backdrop-blur-sm rounded-xl p-8 border border-finance-gold/20">
+                <div className="text-6xl mb-4">🚧</div>
+                <h3 className="text-2xl font-bold text-finance-gold mb-4">
+                  Coming Soon
+                </h3>
+                <p className="text-foreground/70">
+                  We're currently working on building partnerships with new sponsors.
+                  Stay tuned for exciting announcements!
+                </p>
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto"
+              layout
+            >
+              {filteredSponsors.map((sponsor, index) => (
+                <SponsorCard key={sponsor.id} sponsor={sponsor} index={index} />
+              ))}
+            </motion.div>
+          )}
 
-          {filteredSponsors.length === 0 && (
+          {filteredSponsors.length === 0 && searchTerm !== "" && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
