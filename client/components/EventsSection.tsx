@@ -302,8 +302,10 @@ export default function EventsSection() {
           <Button
             className="bg-gradient-to-r from-finance-gold to-finance-electric text-finance-navy hover:scale-105 transition-transform duration-200"
             size="sm"
+            onClick={() => event.registrationLink && window.open(event.registrationLink, '_blank')}
+            disabled={!event.registrationLink}
           >
-            Register Now
+            {event.registrationLink ? 'Register Now' : 'Registration Coming Soon'}
             <ExternalLink className="w-4 h-4 ml-2" />
           </Button>
         </motion.div>
