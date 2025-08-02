@@ -34,6 +34,7 @@ import {
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
+import { SectionMorphingElements } from "./Morphing3DElements";
 
 interface Magazine {
   id: string;
@@ -376,6 +377,8 @@ export default function ModernFinsightSection() {
         background: "linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%)",
       }}
     >
+      {/* Morphing 3D Financial Elements */}
+      <SectionMorphingElements />
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Floating Financial Charts */}
