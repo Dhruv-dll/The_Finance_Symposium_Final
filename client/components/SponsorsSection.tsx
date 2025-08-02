@@ -179,12 +179,43 @@ export default function SponsorsSection() {
           </p>
         </motion.div>
 
+        {/* Tab Navigation */}
+        <motion.div
+          className="flex justify-center mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <div className="flex bg-finance-navy/50 backdrop-blur-sm rounded-xl p-2 border border-finance-gold/20">
+            <button
+              onClick={() => setActiveTab("current")}
+              className={`px-6 py-3 rounded-lg transition-all duration-300 font-medium ${
+                activeTab === "current"
+                  ? "bg-gradient-to-r from-finance-gold to-finance-electric text-finance-navy shadow-lg"
+                  : "text-finance-gold hover:bg-finance-gold/10"
+              }`}
+            >
+              Current Sponsors
+            </button>
+            <button
+              onClick={() => setActiveTab("past")}
+              className={`px-6 py-3 rounded-lg transition-all duration-300 font-medium ${
+                activeTab === "past"
+                  ? "bg-gradient-to-r from-finance-gold to-finance-electric text-finance-navy shadow-lg"
+                  : "text-finance-gold hover:bg-finance-gold/10"
+              }`}
+            >
+              Past Sponsors
+            </button>
+          </div>
+        </motion.div>
+
         {/* Search */}
         <motion.div
           className="flex justify-center mb-12"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
         >
           <div className="w-full max-w-md">
             <Input
