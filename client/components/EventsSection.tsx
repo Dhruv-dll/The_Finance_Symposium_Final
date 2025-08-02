@@ -124,7 +124,7 @@ export default function EventsSection() {
             boxShadow:
               "0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
           }}
-          onClick={() => openEventPopup(event.id)}
+          onClick={() => openEventPopup && openEventPopup(event.id)}
         >
           {/* Premium Badge */}
           {event.isPremium && (
