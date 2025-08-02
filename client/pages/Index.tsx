@@ -342,7 +342,8 @@ export default function Index() {
   ];
 
   return (
-    <div className="min-h-screen">
+    <EventPopupProvider>
+      <div className="min-h-screen">
       {/* Terminal Loader */}
       {showLoader && <TerminalLoader onComplete={() => setShowLoader(false)} />}
 
@@ -494,6 +495,7 @@ export default function Index() {
           </footer>
         </>
       )}
-    </div>
+      </div>
+    </EventPopupProvider>
   );
 }
