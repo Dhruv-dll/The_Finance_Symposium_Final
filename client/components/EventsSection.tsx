@@ -111,14 +111,7 @@ const upcomingEvents: UpcomingEvent[] = [
 export default function EventsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
-  const [selectedEvent, setSelectedEvent] = useState<EventDetails | null>(null);
-
-  const handleEventClick = (eventId: string) => {
-    const eventDetail = eventDetails.find(e => e.id === eventId);
-    if (eventDetail) {
-      setSelectedEvent(eventDetail);
-    }
-  };
+  const { selectedEvent, setSelectedEvent, openEventPopup } = useEventPopup();
 
   const EventCard3D = ({
     event,
