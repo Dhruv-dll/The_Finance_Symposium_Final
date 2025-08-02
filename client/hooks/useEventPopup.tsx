@@ -49,6 +49,16 @@ export function EventPopupProvider({ children }: { children: ReactNode }) {
 export function useEventPopup() {
   const context = useContext(EventPopupContext);
   if (context === undefined) {
+    // During development/hot reload, provide a fallback instead of throwing
+    if (process.env.NODE_ENV === 'development') {
+      console.warn("useEventPopup called outside of EventPopupProvider, providing fallback");
+      return {
+        selectedEvent: null,
+        setSelectedEvent: () => {},
+        openEventPopup: () => {},
+        setEventDetailsData: () => {},
+      };
+    }
     throw new Error("useEventPopup must be used within an EventPopupProvider");
   }
   return context;
