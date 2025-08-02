@@ -39,6 +39,44 @@ export const ModernTimelineEvent: React.FC<ModernTimelineEventProps> = ({
   isInView,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [daysLeft, setDaysLeft] = useState(event.countdown.days);
+
+  // Function to calculate actual days left from the date string
+  const calculateRealDaysLeft = (): number => {
+    try {
+      // Try to parse the date string
+      const eventDate = new Date(event.date);
+      const currentDate = new Date();
+
+      // Reset time to midnight for accurate day calculation
+      currentDate.setHours(0, 0, 0, 0);
+      eventDate.setHours(0, 0, 0, 0);
+
+      const timeDifference = eventDate.getTime() - currentDate.getTime();
+      const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+
+      return Math.max(0, daysDifference);
+    } catch (error) {
+      // If date parsing fails, fall back to the stored countdown
+      return event.countdown.days;
+    }
+  };
+
+  // Update days left on mount and periodically
+  useEffect(() => {
+    const updateDays = () => {
+      const realDaysLeft = calculateRealDaysLeft();
+      setDaysLeft(realDaysLeft);
+    };
+
+    // Update immediately
+    updateDays();
+
+    // Update every hour to keep it fresh
+    const interval = setInterval(updateDays, 1000 * 60 * 60);
+
+    return () => clearInterval(interval);
+  }, [event.date, event.countdown.days]);
 
   return (
     <motion.div
