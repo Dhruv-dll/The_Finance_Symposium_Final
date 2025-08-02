@@ -10,21 +10,25 @@
 ### Managing Different Types of Events
 
 #### 1. Saturday Sessions
+
 - Add new Saturday seminars/sessions
 - Include title and description
 - Examples: "Saturday Seminar 3: Crypto Fundamentals", "Data Analytics Workshop"
 
-#### 2. Networking Events  
+#### 2. Networking Events
+
 - Add networking events and mixers
 - Include title and description
 - Examples: "Alumni Mixer 2025", "Industry Connect Session"
 
 #### 3. Flagship Conclave
+
 - Add flagship/major events
-- Include title and description  
+- Include title and description
 - Examples: "Annual Finance Conclave 2025", "Financial Innovation Summit"
 
 #### 4. Upcoming Events Timeline
+
 - Add future events with full details
 - Required fields: Title, Date, Location
 - Optional: Time, Description, Days until event (for countdown)
@@ -40,6 +44,7 @@
 ### Event Display Locations
 
 Your events will appear in:
+
 - **Navigation Dropdown**: Saturday Sessions, Networking Events, Flagship Conclave
 - **Events Section Cards**: Clickable cards that show event details in popups
 - **Upcoming Events Timeline**: Future events with countdown timers
@@ -49,28 +54,33 @@ Your events will appear in:
 For your admin team, you have several approaches:
 
 #### Option 1: Simple Admin Panel (Current)
+
 - **Pros**: Easy to use, no technical knowledge required
 - **Cons**: Data stored locally in browser, manual entry
 - **Best for**: Small team, infrequent updates
 
 #### Option 2: JSON File Management
+
 - **How**: Edit the `client/data/eventsConfig.json` file
 - **Pros**: Version controlled, can be edited by developers
 - **Cons**: Requires basic file editing knowledge
 
 #### Option 3: Spreadsheet Integration (Future Enhancement)
+
 - Connect Google Sheets or Excel for bulk management
 - Auto-sync events from spreadsheet to website
 
 #### Option 4: Full CMS Integration (Advanced)
+
 - Connect to Strapi, Contentful, or custom backend
 - Multiple admin users, approval workflows, media management
 
 ### Current Event Categories
 
 1. **Past Events** (Show in popups when clicked):
+
    - Saturday Sessions
-   - Networking Events  
+   - Networking Events
    - Flagship Conclave
 
 2. **Upcoming Events** (Show in timeline):
@@ -93,6 +103,7 @@ For your admin team, you have several approaches:
 ### Support
 
 If you need additional features or encounter issues:
+
 1. The admin panel provides immediate feedback
 2. All changes are reversible by editing the configuration
 3. Contact your development team for advanced features

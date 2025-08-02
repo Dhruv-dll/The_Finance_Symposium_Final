@@ -69,7 +69,7 @@ export default function SponsorsSection() {
   const filteredSponsors = (
     activeTab === "current" ? currentSponsors : pastSponsors
   ).filter((sponsor) =>
-    sponsor.name.toLowerCase().includes(searchTerm.toLowerCase())
+    sponsor.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   const SponsorCard = ({
@@ -174,8 +174,7 @@ export default function SponsorsSection() {
           <p className="text-xl text-foreground/80 max-w-3xl mx-auto">
             {activeTab === "current"
               ? "Building strong partnerships with industry leaders to enhance financial education and career opportunities."
-              : "Celebrating our previous sponsors who have supported The Finance Symposium over the years."
-            }
+              : "Celebrating our previous sponsors who have supported The Finance Symposium over the years."}
           </p>
         </motion.div>
 
@@ -234,7 +233,9 @@ export default function SponsorsSection() {
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          {activeTab === "current" && currentSponsors.length === 0 && searchTerm === "" ? (
+          {activeTab === "current" &&
+          currentSponsors.length === 0 &&
+          searchTerm === "" ? (
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -247,8 +248,8 @@ export default function SponsorsSection() {
                   Coming Soon
                 </h3>
                 <p className="text-foreground/70">
-                  We're currently working on building partnerships with new sponsors.
-                  Stay tuned for exciting announcements!
+                  We're currently working on building partnerships with new
+                  sponsors. Stay tuned for exciting announcements!
                 </p>
               </div>
             </motion.div>

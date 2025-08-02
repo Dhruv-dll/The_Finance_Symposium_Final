@@ -378,16 +378,25 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                                 : "0 0 4px rgba(255, 215, 0, 0.5)",
                             transition: "all 0.3s ease-in-out",
                           }}
-                          onMouseEnter={item.noHover ? undefined : (e) => {
-                            e.currentTarget.style.textShadow =
-                              "0 0 5px rgba(255,255,255,0.8), 0 0 15px rgba(255,215,0,0.6), 0 0 25px rgba(255,215,0,0.4)";
-                            e.currentTarget.style.letterSpacing = "0.5px";
-                          }}
-                          onMouseLeave={item.noHover ? undefined : (e) => {
-                            e.currentTarget.style.textShadow =
-                              "0 0 4px rgba(255, 215, 0, 0.5)";
-                            e.currentTarget.style.letterSpacing = "normal";
-                          }}
+                          onMouseEnter={
+                            item.noHover
+                              ? undefined
+                              : (e) => {
+                                  e.currentTarget.style.textShadow =
+                                    "0 0 5px rgba(255,255,255,0.8), 0 0 15px rgba(255,215,0,0.6), 0 0 25px rgba(255,215,0,0.4)";
+                                  e.currentTarget.style.letterSpacing = "0.5px";
+                                }
+                          }
+                          onMouseLeave={
+                            item.noHover
+                              ? undefined
+                              : (e) => {
+                                  e.currentTarget.style.textShadow =
+                                    "0 0 4px rgba(255, 215, 0, 0.5)";
+                                  e.currentTarget.style.letterSpacing =
+                                    "normal";
+                                }
+                          }
                           onClick={() =>
                             item.section && scrollToElement(`#${item.section}`)
                           }
@@ -413,7 +422,6 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                             style={{
                               textShadow: "0 0 4px rgba(255, 215, 0, 0.5)",
                             }}
-
                           >
                             {item.name}
                           </span>
@@ -471,9 +479,13 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                                       <button
                                         onClick={() => {
                                           if (dropdownItem.eventId) {
-                                            openEventPopup(dropdownItem.eventId);
+                                            openEventPopup(
+                                              dropdownItem.eventId,
+                                            );
                                           } else if (dropdownItem.section) {
-                                            scrollToElement(`#${dropdownItem.section}`);
+                                            scrollToElement(
+                                              `#${dropdownItem.section}`,
+                                            );
                                           }
                                         }}
                                         className="group flex items-start space-x-3 p-3 rounded-lg hover:bg-finance-gold/10 transition-all duration-300 w-full text-left"

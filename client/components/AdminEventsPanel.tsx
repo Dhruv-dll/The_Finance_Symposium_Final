@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, X, Save, Settings, Calendar, Users, Trophy } from 'lucide-react';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { useEventsData } from '../hooks/useEventsData';
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Plus, X, Save, Settings, Calendar, Users, Trophy } from "lucide-react";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { useEventsData } from "../hooks/useEventsData";
 
 interface AdminEventsPanelProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-export default function AdminEventsPanel({ isOpen, onClose }: AdminEventsPanelProps) {
+export default function AdminEventsPanel({
+  isOpen,
+  onClose,
+}: AdminEventsPanelProps) {
   const {
     addSaturdaySession,
     addNetworkingEvent,
@@ -18,44 +21,53 @@ export default function AdminEventsPanel({ isOpen, onClose }: AdminEventsPanelPr
     addUpcomingEvent,
     removeUpcomingEvent,
     upcomingEvents,
-    eventDetails
+    eventDetails,
   } = useEventsData();
 
-  const [newSaturdaySession, setNewSaturdaySession] = useState({ title: '', description: '' });
-  const [newNetworkingEvent, setNewNetworkingEvent] = useState({ title: '', description: '' });
-  const [newFlagshipEvent, setNewFlagshipEvent] = useState({ title: '', description: '' });
+  const [newSaturdaySession, setNewSaturdaySession] = useState({
+    title: "",
+    description: "",
+  });
+  const [newNetworkingEvent, setNewNetworkingEvent] = useState({
+    title: "",
+    description: "",
+  });
+  const [newFlagshipEvent, setNewFlagshipEvent] = useState({
+    title: "",
+    description: "",
+  });
   const [newUpcomingEvent, setNewUpcomingEvent] = useState({
-    id: '',
-    title: '',
-    date: '',
-    time: '',
-    location: '',
-    description: '',
-    registrationLink: '',
-    countdown: { days: 0, hours: 0, minutes: 0 }
+    id: "",
+    title: "",
+    date: "",
+    time: "",
+    location: "",
+    description: "",
+    registrationLink: "",
+    countdown: { days: 0, hours: 0, minutes: 0 },
   });
 
   const handleAddSaturdaySession = () => {
     if (newSaturdaySession.title.trim()) {
       addSaturdaySession(newSaturdaySession);
-      setNewSaturdaySession({ title: '', description: '' });
-      alert('Saturday Session added successfully!');
+      setNewSaturdaySession({ title: "", description: "" });
+      alert("Saturday Session added successfully!");
     }
   };
 
   const handleAddNetworkingEvent = () => {
     if (newNetworkingEvent.title.trim()) {
       addNetworkingEvent(newNetworkingEvent);
-      setNewNetworkingEvent({ title: '', description: '' });
-      alert('Networking Event added successfully!');
+      setNewNetworkingEvent({ title: "", description: "" });
+      alert("Networking Event added successfully!");
     }
   };
 
   const handleAddFlagshipEvent = () => {
     if (newFlagshipEvent.title.trim()) {
       addFlagshipEvent(newFlagshipEvent);
-      setNewFlagshipEvent({ title: '', description: '' });
-      alert('Flagship Event added successfully!');
+      setNewFlagshipEvent({ title: "", description: "" });
+      alert("Flagship Event added successfully!");
     }
   };
 
@@ -63,20 +75,20 @@ export default function AdminEventsPanel({ isOpen, onClose }: AdminEventsPanelPr
     if (newUpcomingEvent.title.trim() && newUpcomingEvent.date.trim()) {
       const eventWithId = {
         ...newUpcomingEvent,
-        id: newUpcomingEvent.id || `event-${Date.now()}`
+        id: newUpcomingEvent.id || `event-${Date.now()}`,
       };
       addUpcomingEvent(eventWithId);
       setNewUpcomingEvent({
-        id: '',
-        title: '',
-        date: '',
-        time: '',
-        location: '',
-        description: '',
-        registrationLink: '',
-        countdown: { days: 0, hours: 0, minutes: 0 }
+        id: "",
+        title: "",
+        date: "",
+        time: "",
+        location: "",
+        description: "",
+        registrationLink: "",
+        countdown: { days: 0, hours: 0, minutes: 0 },
       });
-      alert('Upcoming Event added successfully!');
+      alert("Upcoming Event added successfully!");
     }
   };
 
@@ -102,7 +114,9 @@ export default function AdminEventsPanel({ isOpen, onClose }: AdminEventsPanelPr
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center space-x-3">
                 <Settings className="w-8 h-8 text-finance-gold" />
-                <h2 className="text-3xl font-bold text-finance-gold">Admin Events Panel</h2>
+                <h2 className="text-3xl font-bold text-finance-gold">
+                  Admin Events Panel
+                </h2>
               </div>
               <button
                 onClick={onClose}
@@ -122,19 +136,31 @@ export default function AdminEventsPanel({ isOpen, onClose }: AdminEventsPanelPr
               >
                 <div className="flex items-center space-x-3 mb-4">
                   <Calendar className="w-6 h-6 text-blue-400" />
-                  <h3 className="text-xl font-bold text-blue-400">Saturday Sessions</h3>
+                  <h3 className="text-xl font-bold text-blue-400">
+                    Saturday Sessions
+                  </h3>
                 </div>
                 <div className="space-y-3">
                   <Input
                     placeholder="Session Title (e.g., Saturday Seminar 3: Crypto Fundamentals)"
                     value={newSaturdaySession.title}
-                    onChange={(e) => setNewSaturdaySession(prev => ({ ...prev, title: e.target.value }))}
+                    onChange={(e) =>
+                      setNewSaturdaySession((prev) => ({
+                        ...prev,
+                        title: e.target.value,
+                      }))
+                    }
                     className="bg-finance-navy/50 border-blue-500/20"
                   />
                   <Input
                     placeholder="Session Description"
                     value={newSaturdaySession.description}
-                    onChange={(e) => setNewSaturdaySession(prev => ({ ...prev, description: e.target.value }))}
+                    onChange={(e) =>
+                      setNewSaturdaySession((prev) => ({
+                        ...prev,
+                        description: e.target.value,
+                      }))
+                    }
                     className="bg-finance-navy/50 border-blue-500/20"
                   />
                   <Button
@@ -156,19 +182,31 @@ export default function AdminEventsPanel({ isOpen, onClose }: AdminEventsPanelPr
               >
                 <div className="flex items-center space-x-3 mb-4">
                   <Users className="w-6 h-6 text-green-400" />
-                  <h3 className="text-xl font-bold text-green-400">Networking Events</h3>
+                  <h3 className="text-xl font-bold text-green-400">
+                    Networking Events
+                  </h3>
                 </div>
                 <div className="space-y-3">
                   <Input
                     placeholder="Event Title (e.g., Alumni Mixer 2025)"
                     value={newNetworkingEvent.title}
-                    onChange={(e) => setNewNetworkingEvent(prev => ({ ...prev, title: e.target.value }))}
+                    onChange={(e) =>
+                      setNewNetworkingEvent((prev) => ({
+                        ...prev,
+                        title: e.target.value,
+                      }))
+                    }
                     className="bg-finance-navy/50 border-green-500/20"
                   />
                   <Input
                     placeholder="Event Description"
                     value={newNetworkingEvent.description}
-                    onChange={(e) => setNewNetworkingEvent(prev => ({ ...prev, description: e.target.value }))}
+                    onChange={(e) =>
+                      setNewNetworkingEvent((prev) => ({
+                        ...prev,
+                        description: e.target.value,
+                      }))
+                    }
                     className="bg-finance-navy/50 border-green-500/20"
                   />
                   <Button
@@ -190,19 +228,31 @@ export default function AdminEventsPanel({ isOpen, onClose }: AdminEventsPanelPr
               >
                 <div className="flex items-center space-x-3 mb-4">
                   <Trophy className="w-6 h-6 text-purple-400" />
-                  <h3 className="text-xl font-bold text-purple-400">Flagship Conclave</h3>
+                  <h3 className="text-xl font-bold text-purple-400">
+                    Flagship Conclave
+                  </h3>
                 </div>
                 <div className="space-y-3">
                   <Input
                     placeholder="Event Title (e.g., Annual Finance Conclave 2025)"
                     value={newFlagshipEvent.title}
-                    onChange={(e) => setNewFlagshipEvent(prev => ({ ...prev, title: e.target.value }))}
+                    onChange={(e) =>
+                      setNewFlagshipEvent((prev) => ({
+                        ...prev,
+                        title: e.target.value,
+                      }))
+                    }
                     className="bg-finance-navy/50 border-purple-500/20"
                   />
                   <Input
                     placeholder="Event Description"
                     value={newFlagshipEvent.description}
-                    onChange={(e) => setNewFlagshipEvent(prev => ({ ...prev, description: e.target.value }))}
+                    onChange={(e) =>
+                      setNewFlagshipEvent((prev) => ({
+                        ...prev,
+                        description: e.target.value,
+                      }))
+                    }
                     className="bg-finance-navy/50 border-purple-500/20"
                   />
                   <Button
@@ -224,49 +274,81 @@ export default function AdminEventsPanel({ isOpen, onClose }: AdminEventsPanelPr
               >
                 <div className="flex items-center space-x-3 mb-4">
                   <Calendar className="w-6 h-6 text-finance-gold" />
-                  <h3 className="text-xl font-bold text-finance-gold">Upcoming Events Timeline</h3>
+                  <h3 className="text-xl font-bold text-finance-gold">
+                    Upcoming Events Timeline
+                  </h3>
                 </div>
                 <div className="space-y-3">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <Input
                       placeholder="Event Title"
                       value={newUpcomingEvent.title}
-                      onChange={(e) => setNewUpcomingEvent(prev => ({ ...prev, title: e.target.value }))}
+                      onChange={(e) =>
+                        setNewUpcomingEvent((prev) => ({
+                          ...prev,
+                          title: e.target.value,
+                        }))
+                      }
                       className="bg-finance-navy/50 border-finance-gold/20"
                     />
                     <Input
                       placeholder="Date (e.g., March 15, 2025)"
                       value={newUpcomingEvent.date}
-                      onChange={(e) => setNewUpcomingEvent(prev => ({ ...prev, date: e.target.value }))}
+                      onChange={(e) =>
+                        setNewUpcomingEvent((prev) => ({
+                          ...prev,
+                          date: e.target.value,
+                        }))
+                      }
                       className="bg-finance-navy/50 border-finance-gold/20"
                     />
                     <Input
                       placeholder="Time (e.g., 10:00 AM - 6:00 PM)"
                       value={newUpcomingEvent.time}
-                      onChange={(e) => setNewUpcomingEvent(prev => ({ ...prev, time: e.target.value }))}
+                      onChange={(e) =>
+                        setNewUpcomingEvent((prev) => ({
+                          ...prev,
+                          time: e.target.value,
+                        }))
+                      }
                       className="bg-finance-navy/50 border-finance-gold/20"
                     />
                     <Input
                       placeholder="Location"
                       value={newUpcomingEvent.location}
-                      onChange={(e) => setNewUpcomingEvent(prev => ({ ...prev, location: e.target.value }))}
+                      onChange={(e) =>
+                        setNewUpcomingEvent((prev) => ({
+                          ...prev,
+                          location: e.target.value,
+                        }))
+                      }
                       className="bg-finance-navy/50 border-finance-gold/20"
                     />
                   </div>
                   <Input
                     placeholder="Event Description"
                     value={newUpcomingEvent.description}
-                    onChange={(e) => setNewUpcomingEvent(prev => ({ ...prev, description: e.target.value }))}
+                    onChange={(e) =>
+                      setNewUpcomingEvent((prev) => ({
+                        ...prev,
+                        description: e.target.value,
+                      }))
+                    }
                     className="bg-finance-navy/50 border-finance-gold/20"
                   />
                   <Input
                     placeholder="Days until event (for countdown)"
                     type="number"
                     value={newUpcomingEvent.countdown.days}
-                    onChange={(e) => setNewUpcomingEvent(prev => ({ 
-                      ...prev, 
-                      countdown: { ...prev.countdown, days: parseInt(e.target.value) || 0 }
-                    }))}
+                    onChange={(e) =>
+                      setNewUpcomingEvent((prev) => ({
+                        ...prev,
+                        countdown: {
+                          ...prev.countdown,
+                          days: parseInt(e.target.value) || 0,
+                        },
+                      }))
+                    }
                     className="bg-finance-navy/50 border-finance-gold/20"
                   />
                   <Button
@@ -281,13 +363,22 @@ export default function AdminEventsPanel({ isOpen, onClose }: AdminEventsPanelPr
                 {/* Current Upcoming Events */}
                 {upcomingEvents.length > 0 && (
                   <div className="mt-6">
-                    <h4 className="text-lg font-semibold text-finance-electric mb-3">Current Upcoming Events:</h4>
+                    <h4 className="text-lg font-semibold text-finance-electric mb-3">
+                      Current Upcoming Events:
+                    </h4>
                     <div className="space-y-2">
                       {upcomingEvents.map((event) => (
-                        <div key={event.id} className="flex items-center justify-between bg-finance-navy/30 p-3 rounded-lg">
+                        <div
+                          key={event.id}
+                          className="flex items-center justify-between bg-finance-navy/30 p-3 rounded-lg"
+                        >
                           <div>
-                            <div className="font-medium text-finance-gold">{event.title}</div>
-                            <div className="text-sm text-finance-electric">{event.date} • {event.location}</div>
+                            <div className="font-medium text-finance-gold">
+                              {event.title}
+                            </div>
+                            <div className="text-sm text-finance-electric">
+                              {event.date} • {event.location}
+                            </div>
                           </div>
                           <Button
                             onClick={() => removeUpcomingEvent(event.id)}
@@ -306,7 +397,8 @@ export default function AdminEventsPanel({ isOpen, onClose }: AdminEventsPanelPr
 
             <div className="mt-8 text-center">
               <p className="text-sm text-finance-electric/70">
-                💡 All changes are saved automatically in local storage. Changes will persist until cleared.
+                💡 All changes are saved automatically in local storage. Changes
+                will persist until cleared.
               </p>
             </div>
           </motion.div>

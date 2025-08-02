@@ -1,5 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { motion, useScroll, useTransform, useInView, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useInView,
+  AnimatePresence,
+} from "framer-motion";
 import {
   Calendar,
   Users,
@@ -72,8 +78,6 @@ const pastEvents: EventCard[] = [
     isPremium: true,
   },
 ];
-
-
 
 export default function EventsSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -468,8 +472,8 @@ export default function EventsSection() {
                       Coming Soon
                     </h4>
                     <p className="text-foreground/70 text-lg">
-                      We're currently planning exciting events for this category. 
-                      Stay tuned for amazing announcements!
+                      We're currently planning exciting events for this
+                      category. Stay tuned for amazing announcements!
                     </p>
                   </motion.div>
                 ) : (

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 interface EventItem {
   title: string;
@@ -43,22 +43,25 @@ const defaultConfig: EventsConfig = {
       events: [
         {
           title: "Saturday Seminar 1: Data Meets Finance",
-          description: "Exploring the intersection of data analytics and financial decision-making"
+          description:
+            "Exploring the intersection of data analytics and financial decision-making",
         },
         {
-          title: "Saturday Seminar 2: Banking 101: Demystifying India's Backbone",
-          description: "Understanding the fundamentals of India's banking system"
-        }
-      ]
+          title:
+            "Saturday Seminar 2: Banking 101: Demystifying India's Backbone",
+          description:
+            "Understanding the fundamentals of India's banking system",
+        },
+      ],
     },
     "networking-events": {
-      comingSoon: true
+      comingSoon: true,
     },
     "flagship-event": {
-      comingSoon: true
-    }
+      comingSoon: true,
+    },
   },
-  upcomingEvents: []
+  upcomingEvents: [],
 };
 
 export function useEventsData() {
@@ -67,25 +70,25 @@ export function useEventsData() {
 
   useEffect(() => {
     // Try to load from local storage first (for admin changes)
-    const savedConfig = localStorage.getItem('tfs-events-config');
+    const savedConfig = localStorage.getItem("tfs-events-config");
     if (savedConfig) {
       try {
         setEventsConfig(JSON.parse(savedConfig));
       } catch (error) {
-        console.warn('Failed to parse saved events config, using default');
+        console.warn("Failed to parse saved events config, using default");
         setEventsConfig(defaultConfig);
       }
     } else {
       // Try to load from JSON file
-      fetch('/client/data/eventsConfig.json')
-        .then(response => response.json())
-        .then(data => {
+      fetch("/client/data/eventsConfig.json")
+        .then((response) => response.json())
+        .then((data) => {
           setEventsConfig(data);
           // Save to local storage for future admin edits
-          localStorage.setItem('tfs-events-config', JSON.stringify(data));
+          localStorage.setItem("tfs-events-config", JSON.stringify(data));
         })
-        .catch(error => {
-          console.warn('Failed to load events config, using default');
+        .catch((error) => {
+          console.warn("Failed to load events config, using default");
           setEventsConfig(defaultConfig);
         });
     }
@@ -98,15 +101,15 @@ export function useEventsData() {
       id,
       title: getTitleFromId(id),
       events: config.events,
-      comingSoon: config.comingSoon
+      comingSoon: config.comingSoon,
     }));
   };
 
   const getTitleFromId = (id: string): string => {
     const titleMap: { [key: string]: string } = {
-      'saturday-sessions': 'Saturday Sessions',
-      'networking-events': 'Networking Events',
-      'flagship-event': 'Flagship Conclave'
+      "saturday-sessions": "Saturday Sessions",
+      "networking-events": "Networking Events",
+      "flagship-event": "Flagship Conclave",
     };
     return titleMap[id] || id;
   };
@@ -114,59 +117,61 @@ export function useEventsData() {
   // Admin functions to update events
   const addSaturdaySession = (event: EventItem) => {
     const newConfig = { ...eventsConfig };
-    if (!newConfig.pastEvents['saturday-sessions'].events) {
-      newConfig.pastEvents['saturday-sessions'].events = [];
+    if (!newConfig.pastEvents["saturday-sessions"].events) {
+      newConfig.pastEvents["saturday-sessions"].events = [];
     }
-    newConfig.pastEvents['saturday-sessions'].events!.push(event);
-    newConfig.pastEvents['saturday-sessions'].comingSoon = false;
-    
+    newConfig.pastEvents["saturday-sessions"].events!.push(event);
+    newConfig.pastEvents["saturday-sessions"].comingSoon = false;
+
     setEventsConfig(newConfig);
-    localStorage.setItem('tfs-events-config', JSON.stringify(newConfig));
+    localStorage.setItem("tfs-events-config", JSON.stringify(newConfig));
   };
 
   const addNetworkingEvent = (event: EventItem) => {
     const newConfig = { ...eventsConfig };
-    if (!newConfig.pastEvents['networking-events'].events) {
-      newConfig.pastEvents['networking-events'].events = [];
+    if (!newConfig.pastEvents["networking-events"].events) {
+      newConfig.pastEvents["networking-events"].events = [];
     }
-    newConfig.pastEvents['networking-events'].events!.push(event);
-    newConfig.pastEvents['networking-events'].comingSoon = false;
-    
+    newConfig.pastEvents["networking-events"].events!.push(event);
+    newConfig.pastEvents["networking-events"].comingSoon = false;
+
     setEventsConfig(newConfig);
-    localStorage.setItem('tfs-events-config', JSON.stringify(newConfig));
+    localStorage.setItem("tfs-events-config", JSON.stringify(newConfig));
   };
 
   const addFlagshipEvent = (event: EventItem) => {
     const newConfig = { ...eventsConfig };
-    if (!newConfig.pastEvents['flagship-event'].events) {
-      newConfig.pastEvents['flagship-event'].events = [];
+    if (!newConfig.pastEvents["flagship-event"].events) {
+      newConfig.pastEvents["flagship-event"].events = [];
     }
-    newConfig.pastEvents['flagship-event'].events!.push(event);
-    newConfig.pastEvents['flagship-event'].comingSoon = false;
-    
+    newConfig.pastEvents["flagship-event"].events!.push(event);
+    newConfig.pastEvents["flagship-event"].comingSoon = false;
+
     setEventsConfig(newConfig);
-    localStorage.setItem('tfs-events-config', JSON.stringify(newConfig));
+    localStorage.setItem("tfs-events-config", JSON.stringify(newConfig));
   };
 
   const addUpcomingEvent = (event: UpcomingEvent) => {
     const newConfig = { ...eventsConfig };
     newConfig.upcomingEvents.push(event);
-    
+
     setEventsConfig(newConfig);
-    localStorage.setItem('tfs-events-config', JSON.stringify(newConfig));
+    localStorage.setItem("tfs-events-config", JSON.stringify(newConfig));
   };
 
   const removeUpcomingEvent = (eventId: string) => {
     const newConfig = { ...eventsConfig };
-    newConfig.upcomingEvents = newConfig.upcomingEvents.filter(e => e.id !== eventId);
-    
+    newConfig.upcomingEvents = newConfig.upcomingEvents.filter(
+      (e) => e.id !== eventId,
+    );
+
     setEventsConfig(newConfig);
-    localStorage.setItem('tfs-events-config', JSON.stringify(newConfig));
+    localStorage.setItem("tfs-events-config", JSON.stringify(newConfig));
   };
 
   const updateEventConfig = (newConfig: EventsConfig) => {
     setEventsConfig(newConfig);
-    localStorage.setItem('tfs-events-config', JSON.stringify(newConfig));
+    localStorage.setItem("tfs-events-config", JSON.stringify(newConfig));
   };
 
   return {
@@ -179,6 +184,6 @@ export function useEventsData() {
     addUpcomingEvent,
     removeUpcomingEvent,
     updateEventConfig,
-    rawConfig: eventsConfig
+    rawConfig: eventsConfig,
   };
 }

@@ -69,14 +69,14 @@ export default function Index() {
   // Admin panel keyboard shortcut (Ctrl+Shift+A)
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.ctrlKey && event.shiftKey && event.key === 'A') {
+      if (event.ctrlKey && event.shiftKey && event.key === "A") {
         event.preventDefault();
         setShowAdminPanel(true);
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   const aboutSections = [
@@ -211,25 +211,29 @@ export default function Index() {
       issue: "Second Edition",
       date: "2024",
       cover: "/api/placeholder/300/400",
-      topics: ["Behavioral Finance", "Personal Finance", "Market Trends Analysis"],
+      topics: [
+        "Behavioral Finance",
+        "Personal Finance",
+        "Market Trends Analysis",
+      ],
     },
     {
       title: "Economic News & Laws",
       issue: "Special Feature",
       date: "2024",
       cover: "/api/placeholder/300/400",
-      topics: ["Economic Deconstruction", "Financial Regulations", "Legal Updates"],
+      topics: [
+        "Economic Deconstruction",
+        "Financial Regulations",
+        "Legal Updates",
+      ],
     },
     {
       title: "Finance & Management",
       issue: "Knowledge Series",
       date: "2024",
       cover: "/api/placeholder/300/400",
-      topics: [
-        "Progressive Finance",
-        "Dynamic Markets",
-        "Management Insights",
-      ],
+      topics: ["Progressive Finance", "Dynamic Markets", "Management Insights"],
     },
   ];
 
@@ -359,163 +363,179 @@ export default function Index() {
   return (
     <EventPopupProvider>
       <div className="min-h-screen">
-      {/* Terminal Loader */}
-      {showLoader && <TerminalLoader onComplete={() => setShowLoader(false)} />}
+        {/* Terminal Loader */}
+        {showLoader && (
+          <TerminalLoader onComplete={() => setShowLoader(false)} />
+        )}
 
-      {/* Main Content */}
-      {!showLoader && (
-        <>
-          <ModernNavigation scrolled={scrolled} />
-          <ScrollProgressIndicator />
-          <NetworkStatusIndicator isOnline={isOnline} />
-          <FloatingMarketIcon />
+        {/* Main Content */}
+        {!showLoader && (
+          <>
+            <ModernNavigation scrolled={scrolled} />
+            <ScrollProgressIndicator />
+            <NetworkStatusIndicator isOnline={isOnline} />
+            <FloatingMarketIcon />
 
-          {/* Hero Section */}
-          <MarketDataErrorBoundary>
-            <section id="hero">
-              <EnhancedHeroSection />
+            {/* Hero Section */}
+            <MarketDataErrorBoundary>
+              <section id="hero">
+                <EnhancedHeroSection />
+              </section>
+            </MarketDataErrorBoundary>
+
+            {/* About TFS Section */}
+            <section id="about">
+              <AboutSection />
             </section>
-          </MarketDataErrorBoundary>
 
-          {/* About TFS Section */}
-          <section id="about">
-            <AboutSection />
-          </section>
+            {/* About BAF Section */}
+            <section id="about-baf">
+              <AboutBAFSection />
+            </section>
 
-          {/* About BAF Section */}
-          <section id="about-baf">
-            <AboutBAFSection />
-          </section>
+            {/* Meet the Team Section */}
+            <section id="team">
+              <EnhancedTeamSection />
+            </section>
 
-          {/* Meet the Team Section */}
-          <section id="team">
-            <EnhancedTeamSection />
-          </section>
+            {/* Events Section */}
+            <section id="events">
+              <EventsSection />
+            </section>
 
-          {/* Events Section */}
-          <section id="events">
-            <EventsSection />
-          </section>
-
-          {/* Insights Section */}
-          <section id="insights" className="py-20 px-6 bg-mesh-gradient">
-            <div className="container mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="text-center mb-16"
-              >
-                <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-finance-gold via-finance-electric to-finance-gold bg-clip-text text-transparent animate-glow">
-                  Finsight - Financial Insights
-                </h2>
-                <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
-                  Finsight, the official Magazine of the Department of Accounting and Finance (BAF) at St. Xavier's College (Autonomous), Mumbai, is thrilled to announce the second edition of the publication. As the world of finance continues to become more progressive and dynamic, we aspire to become the premier compilation to provide knowledge that delves into the multitudes of finance and management. Ranging from behavioural and personal finance to analyzing market trends and deconstructing economic news and laws, 'FINSIGHT' serves to become a valuable asset in its readers' lives.
-                </p>
-              </motion.div>
-
-              <div className="flex justify-center">
+            {/* Insights Section */}
+            <section id="insights" className="py-20 px-6 bg-mesh-gradient">
+              <div className="container mx-auto">
                 <motion.div
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8 }}
-                  className="group cursor-pointer max-w-sm"
+                  className="text-center mb-16"
                 >
-                  <div className="relative glassmorphism rounded-2xl overflow-hidden market-glow group-hover:scale-105 group-hover:rotate-1 transition-all duration-500">
-                    <div className="aspect-[3/4] bg-gradient-to-br from-finance-gold/20 to-finance-electric/20 p-8 flex flex-col justify-between">
-                      <div>
-                        <div className="text-finance-electric text-sm font-medium mb-2">
-                          Second Edition
-                        </div>
-                        <h3 className="text-2xl font-bold text-finance-gold mb-4">
-                          Finsight Magazine
-                        </h3>
-                        <div className="text-muted-foreground text-sm">
-                          2024
-                        </div>
-                      </div>
+                  <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-finance-gold via-finance-electric to-finance-gold bg-clip-text text-transparent animate-glow">
+                    Finsight - Financial Insights
+                  </h2>
+                  <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
+                    Finsight, the official Magazine of the Department of
+                    Accounting and Finance (BAF) at St. Xavier's College
+                    (Autonomous), Mumbai, is thrilled to announce the second
+                    edition of the publication. As the world of finance
+                    continues to become more progressive and dynamic, we aspire
+                    to become the premier compilation to provide knowledge that
+                    delves into the multitudes of finance and management.
+                    Ranging from behavioural and personal finance to analyzing
+                    market trends and deconstructing economic news and laws,
+                    'FINSIGHT' serves to become a valuable asset in its readers'
+                    lives.
+                  </p>
+                </motion.div>
 
-                      <div>
-                        <div className="space-y-2 mb-6">
-                          {["Behavioral Finance", "Personal Finance", "Market Trends Analysis"].map((topic, idx) => (
-                            <div
-                              key={idx}
-                              className="text-sm text-foreground/80 flex items-center space-x-2"
-                            >
-                              <div className="w-1 h-1 bg-finance-gold rounded-full"></div>
-                              <span>{topic}</span>
-                            </div>
-                          ))}
+                <div className="flex justify-center">
+                  <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                    className="group cursor-pointer max-w-sm"
+                  >
+                    <div className="relative glassmorphism rounded-2xl overflow-hidden market-glow group-hover:scale-105 group-hover:rotate-1 transition-all duration-500">
+                      <div className="aspect-[3/4] bg-gradient-to-br from-finance-gold/20 to-finance-electric/20 p-8 flex flex-col justify-between">
+                        <div>
+                          <div className="text-finance-electric text-sm font-medium mb-2">
+                            Second Edition
+                          </div>
+                          <h3 className="text-2xl font-bold text-finance-gold mb-4">
+                            Finsight Magazine
+                          </h3>
+                          <div className="text-muted-foreground text-sm">
+                            2024
+                          </div>
                         </div>
 
-                        <a
-                          href="https://heyzine.com/flip-book/3f3a9a2239.html#page/1"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center justify-center space-x-2 text-finance-gold hover:text-finance-electric transition-colors group-hover:glow bg-finance-navy/50 rounded-lg py-2 px-4 border border-finance-gold/30 hover:border-finance-electric/50"
-                        >
-                          <ExternalLink className="w-4 h-4" />
-                          <span>Link To Magazine</span>
-                        </a>
+                        <div>
+                          <div className="space-y-2 mb-6">
+                            {[
+                              "Behavioral Finance",
+                              "Personal Finance",
+                              "Market Trends Analysis",
+                            ].map((topic, idx) => (
+                              <div
+                                key={idx}
+                                className="text-sm text-foreground/80 flex items-center space-x-2"
+                              >
+                                <div className="w-1 h-1 bg-finance-gold rounded-full"></div>
+                                <span>{topic}</span>
+                              </div>
+                            ))}
+                          </div>
+
+                          <a
+                            href="https://heyzine.com/flip-book/3f3a9a2239.html#page/1"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-center space-x-2 text-finance-gold hover:text-finance-electric transition-colors group-hover:glow bg-finance-navy/50 rounded-lg py-2 px-4 border border-finance-gold/30 hover:border-finance-electric/50"
+                          >
+                            <ExternalLink className="w-4 h-4" />
+                            <span>Link To Magazine</span>
+                          </a>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </motion.div>
-              </div>
-            </div>
-          </section>
-
-          {/* Sponsors Section */}
-          <section id="sponsors">
-            <SponsorsSection />
-          </section>
-
-          {/* Contact Us Section */}
-          <section id="contact">
-            <ContactSection />
-          </section>
-
-          {/* Footer */}
-          <footer className="py-12 px-6 bg-finance-navy border-t border-finance-gold/20">
-            <div className="container mx-auto">
-              <div className="text-center">
-                <div className="flex items-center justify-center space-x-4 mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-br from-finance-gold to-finance-electric rounded-lg flex items-center justify-center market-glow">
-                    <span className="text-finance-navy font-bold text-xl">
-                      TFS
-                    </span>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-finance-gold">
-                      The Finance Symposium
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      St. Xavier's College Mumbai
-                    </p>
-                  </div>
-                </div>
-
-                <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-                  Illuminating the future of finance through education,
-                  innovation, and industry collaboration. Join us in shaping the
-                  next generation of financial leaders.
-                </p>
-
-                <div className="text-finance-gold/60 text-sm">
-                  © 2024 The Finance Symposium. All rights reserved. | Designed
-                  with ❤️ by TFS Team
+                  </motion.div>
                 </div>
               </div>
-            </div>
-          </footer>
-        </>
-      )}
+            </section>
 
-      {/* Admin Events Panel */}
-      <AdminEventsPanel
-        isOpen={showAdminPanel}
-        onClose={() => setShowAdminPanel(false)}
-      />
+            {/* Sponsors Section */}
+            <section id="sponsors">
+              <SponsorsSection />
+            </section>
+
+            {/* Contact Us Section */}
+            <section id="contact">
+              <ContactSection />
+            </section>
+
+            {/* Footer */}
+            <footer className="py-12 px-6 bg-finance-navy border-t border-finance-gold/20">
+              <div className="container mx-auto">
+                <div className="text-center">
+                  <div className="flex items-center justify-center space-x-4 mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-br from-finance-gold to-finance-electric rounded-lg flex items-center justify-center market-glow">
+                      <span className="text-finance-navy font-bold text-xl">
+                        TFS
+                      </span>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-finance-gold">
+                        The Finance Symposium
+                      </h3>
+                      <p className="text-sm text-muted-foreground">
+                        St. Xavier's College Mumbai
+                      </p>
+                    </div>
+                  </div>
+
+                  <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+                    Illuminating the future of finance through education,
+                    innovation, and industry collaboration. Join us in shaping
+                    the next generation of financial leaders.
+                  </p>
+
+                  <div className="text-finance-gold/60 text-sm">
+                    © 2024 The Finance Symposium. All rights reserved. |
+                    Designed with ❤️ by TFS Team
+                  </div>
+                </div>
+              </div>
+            </footer>
+          </>
+        )}
+
+        {/* Admin Events Panel */}
+        <AdminEventsPanel
+          isOpen={showAdminPanel}
+          onClose={() => setShowAdminPanel(false)}
+        />
       </div>
     </EventPopupProvider>
   );
