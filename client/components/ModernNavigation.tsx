@@ -469,12 +469,13 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                                       asChild
                                     >
                                       <button
-                                        onClick={() =>
-                                          dropdownItem.section &&
-                                          scrollToElement(
-                                            `#${dropdownItem.section}`,
-                                          )
-                                        }
+                                        onClick={() => {
+                                          if (dropdownItem.eventId) {
+                                            openEventPopup(dropdownItem.eventId);
+                                          } else if (dropdownItem.section) {
+                                            scrollToElement(`#${dropdownItem.section}`);
+                                          }
+                                        }}
                                         className="group flex items-start space-x-3 p-3 rounded-lg hover:bg-finance-gold/10 transition-all duration-300 w-full text-left"
                                       >
                                         <span className="text-lg mt-0.5 group-hover:scale-110 transition-transform duration-200">
