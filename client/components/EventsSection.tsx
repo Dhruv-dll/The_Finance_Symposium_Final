@@ -395,9 +395,29 @@ export default function EventsSection() {
           </h3>
 
           <div className="max-w-4xl mx-auto">
-            {upcomingEvents.map((event, index) => (
-              <TimelineEvent key={event.id} event={event} index={index} />
-            ))}
+            {upcomingEvents.length === 0 ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6 }}
+                className="text-center py-20"
+              >
+                <div className="max-w-md mx-auto bg-finance-navy/30 backdrop-blur-sm rounded-xl p-8 border border-finance-electric/20">
+                  <div className="text-6xl mb-4">📅</div>
+                  <h4 className="text-2xl font-bold text-finance-electric mb-4">
+                    Coming Soon
+                  </h4>
+                  <p className="text-foreground/70">
+                    We're planning exciting upcoming events for our community.
+                    Stay tuned for amazing announcements!
+                  </p>
+                </div>
+              </motion.div>
+            ) : (
+              upcomingEvents.map((event, index) => (
+                <TimelineEvent key={event.id} event={event} index={index} />
+              ))
+            )}
           </div>
         </motion.div>
       </div>
