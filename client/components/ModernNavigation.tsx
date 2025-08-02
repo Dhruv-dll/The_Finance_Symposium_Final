@@ -45,7 +45,9 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
 
   // Update popup context with event details when they change
   useEffect(() => {
-    setEventDetailsData(eventDetails);
+    if (setEventDetailsData && eventDetails) {
+      setEventDetailsData(eventDetails);
+    }
   }, [eventDetails, setEventDetailsData]);
 
   const navItems = [
