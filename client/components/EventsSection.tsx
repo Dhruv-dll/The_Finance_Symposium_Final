@@ -23,6 +23,7 @@ import { Badge } from "./ui/badge";
 import { useEventPopup } from "../hooks/useEventPopup";
 import { useEventsData } from "../hooks/useEventsData";
 import { ModernEventCard } from "./ModernEventCard";
+import { ModernTimelineEvent } from "./ModernTimelineEvent";
 
 interface EventCard {
   id: string;
@@ -308,17 +309,49 @@ export default function EventsSection() {
           </div>
         </motion.div>
 
-        {/* Upcoming Events Section */}
+        {/* Upcoming Events Timeline Section */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.8, delay: 0.6 }}
+          className="relative"
         >
-          <h3 className="text-3xl font-bold text-finance-electric mb-12 text-center">
-            Upcoming Events Timeline
-          </h3>
+          {/* Enhanced Section Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.7 }}
+            className="text-center mb-16"
+          >
+            <motion.h3
+              className="text-5xl font-bold mb-4"
+              style={{
+                background: "linear-gradient(135deg, #06b6d4 0%, #f59e0b 50%, #06b6d4 100%)",
+                backgroundClip: "text",
+                WebkitBackgroundClip: "text",
+                color: "transparent",
+              }}
+            >
+              Upcoming Events Timeline
+            </motion.h3>
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={isInView ? { scaleX: 1 } : {}}
+              transition={{ duration: 0.8, delay: 0.9 }}
+              className="w-32 h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent mx-auto mb-4"
+            />
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.6, delay: 1 }}
+              className="text-lg text-white/70 max-w-2xl mx-auto"
+            >
+              Stay updated with our exciting upcoming events and secure your spot!
+            </motion.p>
+          </motion.div>
 
-          <div className="max-w-4xl mx-auto">
+          {/* Timeline Container */}
+          <div className="max-w-5xl mx-auto relative">
             {upcomingEvents.length === 0 ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -326,21 +359,56 @@ export default function EventsSection() {
                 transition={{ duration: 0.6 }}
                 className="text-center py-20"
               >
-                <div className="max-w-md mx-auto bg-finance-navy/30 backdrop-blur-sm rounded-xl p-8 border border-finance-electric/20">
-                  <div className="text-6xl mb-4">📅</div>
-                  <h4 className="text-2xl font-bold text-finance-electric mb-4">
-                    Coming Soon
-                  </h4>
-                  <p className="text-foreground/70">
-                    We're planning exciting upcoming events for our community.
-                    Stay tuned for amazing announcements!
-                  </p>
+                <div className="relative max-w-lg mx-auto">
+                  {/* Animated Background */}
+                  <motion.div
+                    className="absolute inset-0 rounded-3xl opacity-20"
+                    animate={{
+                      background: [
+                        "linear-gradient(45deg, #06b6d4, #f59e0b)",
+                        "linear-gradient(45deg, #f59e0b, #06b6d4)",
+                        "linear-gradient(45deg, #06b6d4, #f59e0b)",
+                      ],
+                    }}
+                    transition={{ duration: 4, repeat: Infinity }}
+                  />
+
+                  <div className="relative bg-slate-900/60 backdrop-blur-xl rounded-3xl p-12 border border-white/10">
+                    <motion.div
+                      animate={{
+                        rotate: [0, 10, -10, 0],
+                        scale: [1, 1.1, 1]
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                      className="text-8xl mb-6"
+                    >
+                      🚀
+                    </motion.div>
+                    <h4 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-amber-400 mb-6">
+                      Amazing Events Coming Soon
+                    </h4>
+                    <p className="text-white/70 text-lg leading-relaxed">
+                      We're crafting incredible experiences for our community.
+                      Get ready for some spectacular announcements!
+                    </p>
+                  </div>
                 </div>
               </motion.div>
             ) : (
-              upcomingEvents.map((event, index) => (
-                <TimelineEvent key={event.id} event={event} index={index} />
-              ))
+              <div className="space-y-8">
+                {upcomingEvents.map((event, index) => (
+                  <ModernTimelineEvent
+                    key={event.id}
+                    event={event}
+                    index={index}
+                    isInView={isInView}
+                  />
+                ))}
+              </div>
             )}
           </div>
         </motion.div>
