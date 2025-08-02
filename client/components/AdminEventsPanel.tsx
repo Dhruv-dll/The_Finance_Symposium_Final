@@ -461,17 +461,28 @@ export default function AdminEventsPanel({
                       }
                       className="bg-finance-navy/50 border-finance-gold/20"
                     />
-                    <Input
-                      placeholder="Date (e.g., March 15, 2025)"
-                      value={newUpcomingEvent.date}
-                      onChange={(e) =>
-                        setNewUpcomingEvent((prev) => ({
-                          ...prev,
-                          date: e.target.value,
-                        }))
-                      }
-                      className="bg-finance-navy/50 border-finance-gold/20"
-                    />
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-finance-gold">
+                        Event Date
+                      </label>
+                      <Input
+                        type="date"
+                        value={newUpcomingEvent.dateInput}
+                        onChange={(e) => handleDateChange(e.target.value)}
+                        className="bg-finance-navy/50 border-finance-gold/20"
+                        min={new Date().toISOString().split('T')[0]} // Prevent past dates
+                      />
+                      {newUpcomingEvent.date && (
+                        <div className="text-xs text-finance-electric">
+                          Display: {newUpcomingEvent.date}
+                        </div>
+                      )}
+                      {newUpcomingEvent.countdown.days > 0 && (
+                        <div className="text-xs text-green-400">
+                          📅 {newUpcomingEvent.countdown.days} days from today
+                        </div>
+                      )}
+                    </div>
                     <Input
                       placeholder="Time (e.g., 10:00 AM - 6:00 PM)"
                       value={newUpcomingEvent.time}
@@ -517,21 +528,30 @@ export default function AdminEventsPanel({
                     }
                     className="bg-finance-navy/50 border-finance-gold/20"
                   />
-                  <Input
-                    placeholder="Days until event (for countdown)"
-                    type="number"
-                    value={newUpcomingEvent.countdown.days}
-                    onChange={(e) =>
-                      setNewUpcomingEvent((prev) => ({
-                        ...prev,
-                        countdown: {
-                          ...prev.countdown,
-                          days: parseInt(e.target.value) || 0,
-                        },
-                      }))
-                    }
-                    className="bg-finance-navy/50 border-finance-gold/20"
-                  />
+
+                  {/* Automatic Days Calculation Display */}
+                  {newUpcomingEvent.dateInput && (
+                    <div className="bg-finance-navy/30 rounded-lg p-4 border border-finance-gold/30">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <div className="text-sm font-medium text-finance-gold">
+                            Countdown Automatically Calculated
+                          </div>
+                          <div className="text-xs text-finance-electric mt-1">
+                            Based on selected date vs today
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-2xl font-bold text-green-400">
+                            {newUpcomingEvent.countdown.days}
+                          </div>
+                          <div className="text-xs text-green-300">
+                            Days Left
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                   <Button
                     onClick={handleAddUpcomingEvent}
                     className="bg-gradient-to-r from-finance-gold to-finance-electric text-finance-navy hover:scale-105 transition-transform"
