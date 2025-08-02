@@ -39,6 +39,7 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
     scrollProgress: smoothScrollProgress,
   } = useSmoothScroll();
   const pageScrollProgress = useScrollProgress();
+  const { openEventPopup } = useEventPopup();
 
   const navItems = [
     {
