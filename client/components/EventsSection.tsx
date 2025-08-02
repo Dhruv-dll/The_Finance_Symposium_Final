@@ -340,76 +340,157 @@ export default function EventsSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/60 backdrop-blur-xl z-50 flex items-center justify-center p-4"
             onClick={() => setSelectedEvent(null)}
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.8, y: 50 }}
+              initial={{ opacity: 0, scale: 0.85, y: 30 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.8, y: 50 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className="max-w-2xl w-full backdrop-blur-xl bg-gradient-to-br from-finance-navy/90 to-finance-navy-light/90 rounded-2xl p-8 border border-finance-gold/30 relative shadow-2xl"
+              exit={{ opacity: 0, scale: 0.85, y: 30 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="max-w-3xl w-full max-h-[90vh] overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Close Button */}
-              <button
-                onClick={() => setSelectedEvent(null)}
-                className="absolute top-4 right-4 p-2 rounded-full hover:bg-finance-red/20 transition-colors"
-              >
-                <X className="w-6 h-6 text-finance-red" />
-              </button>
-
-              {/* Content */}
-              <div className="text-center">
-                <h3 className="text-3xl font-bold text-finance-gold mb-6">
-                  {selectedEvent.title}
-                </h3>
-
-                {selectedEvent.comingSoon ? (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.6 }}
-                    className="py-12"
+              <div className="relative bg-gradient-to-br from-slate-900/95 to-slate-800/95 backdrop-blur-2xl rounded-3xl border border-white/10 shadow-2xl overflow-hidden">
+                {/* Header with gradient overlay */}
+                <div className="relative p-8 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-amber-600/20">
+                  {/* Close Button */}
+                  <motion.button
+                    whileHover={{ scale: 1.1, rotate: 90 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => setSelectedEvent(null)}
+                    className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors border border-white/20"
                   >
-                    <div className="text-6xl mb-4">🚧</div>
-                    <h4 className="text-2xl font-bold text-finance-electric mb-4">
-                      Coming Soon
-                    </h4>
-                    <p className="text-foreground/70 text-lg">
-                      We're currently planning exciting events for this
-                      category. Stay tuned for amazing announcements!
-                    </p>
-                  </motion.div>
-                ) : (
-                  <div className="space-y-6">
-                    {selectedEvent.events?.map((event, index) => (
+                    <X className="w-5 h-5 text-white" />
+                  </motion.button>
+
+                  {/* Title */}
+                  <motion.h3
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                    className="text-4xl font-bold text-white mb-2"
+                    style={{
+                      background: "linear-gradient(135deg, #FFD700 0%, #00FFFF 50%, #FFD700 100%)",
+                      backgroundClip: "text",
+                      WebkitBackgroundClip: "text",
+                      color: "transparent",
+                    }}
+                  >
+                    {selectedEvent.title}
+                  </motion.h3>
+
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    className="text-white/70 text-lg"
+                  >
+                    Explore our collection of events in this category
+                  </motion.p>
+                </div>
+
+                {/* Content */}
+                <div className="p-8 max-h-[60vh] overflow-y-auto custom-scrollbar">
+                  {selectedEvent.comingSoon ? (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.6 }}
+                      className="text-center py-16"
+                    >
                       <motion.div
-                        key={index}
+                        animate={{
+                          rotate: [0, 10, -10, 0],
+                          scale: [1, 1.1, 1]
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                        className="text-8xl mb-6"
+                      >
+                        🚧
+                      </motion.div>
+                      <h4 className="text-3xl font-bold text-amber-400 mb-6">
+                        Coming Soon
+                      </h4>
+                      <p className="text-white/70 text-lg max-w-md mx-auto leading-relaxed">
+                        We're currently planning exciting events for this category.
+                        Stay tuned for amazing announcements!
+                      </p>
+                    </motion.div>
+                  ) : (
+                    <div className="space-y-4">
+                      <motion.h4
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
-                        className="bg-finance-navy/40 backdrop-blur-sm rounded-xl p-6 border border-finance-gold/20 text-left"
+                        transition={{ duration: 0.5, delay: 0.3 }}
+                        className="text-xl font-semibold text-cyan-400 mb-6"
                       >
-                        <h4 className="text-xl font-bold text-finance-electric mb-3">
-                          {event.title}
-                        </h4>
-                        {event.description && (
-                          <p className="text-foreground/80">
-                            {event.description}
-                          </p>
-                        )}
-                      </motion.div>
-                    ))}
-                  </div>
-                )}
+                        Events in this category:
+                      </motion.h4>
 
-                <Button
-                  onClick={() => setSelectedEvent(null)}
-                  className="mt-8 bg-gradient-to-r from-finance-gold to-finance-electric text-finance-navy hover:scale-105 transition-transform duration-200"
-                >
-                  Close
-                </Button>
+                      {selectedEvent.events?.map((event, index) => (
+                        <motion.div
+                          key={index}
+                          initial={{ opacity: 0, x: -30, scale: 0.95 }}
+                          animate={{ opacity: 1, x: 0, scale: 1 }}
+                          transition={{
+                            duration: 0.5,
+                            delay: 0.4 + index * 0.1,
+                            ease: [0.22, 1, 0.36, 1]
+                          }}
+                          className="group relative overflow-hidden"
+                        >
+                          <div className="relative bg-gradient-to-r from-slate-800/60 to-slate-700/60 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:border-white/20 transition-all duration-300">
+                            {/* Event number badge */}
+                            <div className="absolute top-4 right-4 w-8 h-8 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full flex items-center justify-center text-sm font-bold text-black">
+                              {index + 1}
+                            </div>
+
+                            {/* Hover glow effect */}
+                            <motion.div
+                              className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                              style={{
+                                background: "linear-gradient(45deg, rgba(255,215,0,0.05) 0%, rgba(0,255,255,0.05) 100%)",
+                              }}
+                            />
+
+                            <div className="relative z-10">
+                              <h5 className="text-xl font-bold text-white mb-3 group-hover:text-amber-300 transition-colors duration-300">
+                                {event.title}
+                              </h5>
+                              {event.description && (
+                                <p className="text-white/80 leading-relaxed">
+                                  {event.description}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Footer */}
+                <div className="p-8 pt-0">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.6 }}
+                    className="flex justify-center"
+                  >
+                    <Button
+                      onClick={() => setSelectedEvent(null)}
+                      className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black font-semibold px-8 py-3 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-amber-500/25"
+                    >
+                      Close
+                    </Button>
+                  </motion.div>
+                </div>
               </div>
             </motion.div>
           </motion.div>
