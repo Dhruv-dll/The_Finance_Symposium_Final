@@ -43,12 +43,60 @@ export default function AdminEventsPanel({
     id: "",
     title: "",
     date: "",
+    dateInput: "", // ISO date string for the date picker
     time: "",
     location: "",
     description: "",
     registrationLink: "",
     countdown: { days: 0, hours: 0, minutes: 0 },
   });
+
+  // Function to calculate days between current date and event date
+  const calculateDaysLeft = (eventDateISO: string): number => {
+    if (!eventDateISO) return 0;
+
+    const currentDate = new Date();
+    const eventDate = new Date(eventDateISO);
+
+    // Reset time to midnight for accurate day calculation
+    currentDate.setHours(0, 0, 0, 0);
+    eventDate.setHours(0, 0, 0, 0);
+
+    const timeDifference = eventDate.getTime() - currentDate.getTime();
+    const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+
+    return Math.max(0, daysDifference); // Don't return negative days
+  };
+
+  // Function to format date for display
+  const formatDateForDisplay = (dateISO: string): string => {
+    if (!dateISO) return "";
+
+    const date = new Date(dateISO);
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    };
+
+    return date.toLocaleDateString('en-US', options);
+  };
+
+  // Handle date input change
+  const handleDateChange = (dateISO: string) => {
+    const formattedDate = formatDateForDisplay(dateISO);
+    const daysLeft = calculateDaysLeft(dateISO);
+
+    setNewUpcomingEvent((prev) => ({
+      ...prev,
+      dateInput: dateISO,
+      date: formattedDate,
+      countdown: {
+        ...prev.countdown,
+        days: daysLeft,
+      },
+    }));
+  };
 
   const handleAddSaturdaySession = () => {
     if (newSaturdaySession.title.trim()) {
