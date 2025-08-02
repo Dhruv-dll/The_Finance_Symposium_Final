@@ -170,6 +170,30 @@ class FinnhubMarketDataService {
     return this.getFallbackStockData(symbol);
   }
 
+  // ✅ Complete fallback market data
+  private getFallbackMarketData(): {
+    stocks: FinnhubStockData[];
+    sentiment: MarketSentiment;
+    currencies: CurrencyRate[];
+  } {
+    // Generate fallback stock data
+    const fallbackStocks = this.stocks.map(stock => this.getFallbackStockData(stock.symbol)).filter(Boolean) as FinnhubStockData[];
+
+    // Calculate sentiment from fallback data
+    const sentiment = this.calculateMarketSentiment(fallbackStocks);
+
+    // Generate fallback currency data
+    const currencies = this.getFallbackCurrencyData();
+
+    console.log("📊 Using fallback market data with", fallbackStocks.length, "stocks");
+
+    return {
+      stocks: fallbackStocks,
+      sentiment,
+      currencies
+    };
+  }
+
   // ✅ Enhanced fallback data with more realistic Indian market prices (Updated for 2025)
   private getFallbackStockData(symbol: string): FinnhubStockData | null {
     const baseData: Record<string, { price: number; name: string }> = {
