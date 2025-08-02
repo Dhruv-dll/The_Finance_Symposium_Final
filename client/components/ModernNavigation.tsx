@@ -640,7 +640,9 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                                 variant="ghost"
                                 className="w-full justify-start text-muted-foreground hover:text-finance-gold hover:bg-finance-gold/5"
                                 onClick={() => {
-                                  if (dropdownItem.section) {
+                                  if (dropdownItem.eventId) {
+                                    openEventPopup(dropdownItem.eventId);
+                                  } else if (dropdownItem.section) {
                                     scrollToElement(`#${dropdownItem.section}`);
                                   }
                                   setMobileMenuOpen(false);
