@@ -241,22 +241,42 @@ export const ModernTimelineEvent: React.FC<ModernTimelineEventProps> = ({
               >
                 <Badge
                   className={`${
-                    daysLeft <= 7
+                    isEventPast
+                      ? "bg-gradient-to-r from-gray-600 to-gray-700"
+                      : isEventToday
+                      ? "bg-gradient-to-r from-green-500 to-emerald-500 animate-bounce"
+                      : isEventSoon
                       ? "bg-gradient-to-r from-red-500 to-pink-500 animate-pulse"
-                      : daysLeft <= 30
+                      : isEventThisMonth
                       ? "bg-gradient-to-r from-orange-500 to-red-500"
                       : "bg-gradient-to-r from-amber-500 to-orange-500"
                   } text-black font-bold px-4 py-2 mb-2`}
                 >
                   <Sparkles className="w-3 h-3 mr-1" />
-                  {daysLeft} Days
+                  {isEventPast
+                    ? `${Math.abs(daysLeft)} Days Ago`
+                    : isEventToday
+                    ? "TODAY!"
+                    : `${daysLeft} Days Left`
+                  }
                 </Badge>
                 <div className={`text-xs ${
-                  daysLeft <= 7
+                  isEventPast
+                    ? "text-gray-400"
+                    : isEventToday
+                    ? "text-green-300 font-bold animate-pulse"
+                    : isEventSoon
                     ? "text-red-300 font-semibold"
                     : "text-white/60"
                 }`}>
-                  {daysLeft <= 7 ? "⚡ Soon!" : "Until Event"}
+                  {isEventPast
+                    ? "Event Completed"
+                    : isEventToday
+                    ? "🟢 HAPPENING NOW!"
+                    : isEventSoon
+                    ? "⚡ Very Soon!"
+                    : "Until Event"
+                  }
                 </div>
               </motion.div>
             </div>
