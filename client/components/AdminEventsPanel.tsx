@@ -471,24 +471,32 @@ export default function AdminEventsPanel({
                       className="bg-finance-navy/50 border-finance-gold/20"
                     />
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-finance-gold">
-                        Event Date
+                      <label className="text-sm font-medium text-finance-gold flex items-center gap-2">
+                        📅 Event Date
+                        <span className="text-xs text-finance-electric/70 font-normal">
+                          (Days will be calculated automatically)
+                        </span>
                       </label>
                       <Input
                         type="date"
                         value={newUpcomingEvent.dateInput}
                         onChange={(e) => handleDateChange(e.target.value)}
-                        className="bg-finance-navy/50 border-finance-gold/20"
+                        className="bg-finance-navy/50 border-finance-gold/20 focus:border-finance-gold/60"
                         min={new Date().toISOString().split('T')[0]} // Prevent past dates
+                        title="Select the event date - countdown will be calculated automatically"
                       />
                       {newUpcomingEvent.date && (
-                        <div className="text-xs text-finance-electric">
-                          Display: {newUpcomingEvent.date}
-                        </div>
-                      )}
-                      {newUpcomingEvent.countdown.days > 0 && (
-                        <div className="text-xs text-green-400">
-                          📅 {newUpcomingEvent.countdown.days} days from today
+                        <div className="bg-finance-navy/20 rounded p-2 space-y-1">
+                          <div className="text-xs text-finance-electric">
+                            ✨ Display Format: <span className="font-medium">{newUpcomingEvent.date}</span>
+                          </div>
+                          {newUpcomingEvent.countdown.days >= 0 && (
+                            <div className="text-xs text-green-400">
+                              📅 <span className="font-medium">{newUpcomingEvent.countdown.days}</span> days from today
+                              {newUpcomingEvent.countdown.days === 0 && <span className="text-green-300 font-bold"> (TODAY!)</span>}
+                              {newUpcomingEvent.countdown.days <= 7 && newUpcomingEvent.countdown.days > 0 && <span className="text-orange-300"> (Soon!)</span>}
+                            </div>
+                          )}
                         </div>
                       )}
                     </div>
