@@ -169,6 +169,46 @@ export function useEventsData() {
     localStorage.setItem("tfs-events-config", JSON.stringify(newConfig));
   };
 
+  // Remove functions for past events
+  const removeSaturdaySession = (eventIndex: number) => {
+    const newConfig = { ...eventsConfig };
+    if (newConfig.pastEvents["saturday-sessions"].events) {
+      newConfig.pastEvents["saturday-sessions"].events.splice(eventIndex, 1);
+      if (newConfig.pastEvents["saturday-sessions"].events.length === 0) {
+        newConfig.pastEvents["saturday-sessions"].comingSoon = true;
+        delete newConfig.pastEvents["saturday-sessions"].events;
+      }
+    }
+    setEventsConfig(newConfig);
+    localStorage.setItem("tfs-events-config", JSON.stringify(newConfig));
+  };
+
+  const removeNetworkingEvent = (eventIndex: number) => {
+    const newConfig = { ...eventsConfig };
+    if (newConfig.pastEvents["networking-events"].events) {
+      newConfig.pastEvents["networking-events"].events.splice(eventIndex, 1);
+      if (newConfig.pastEvents["networking-events"].events.length === 0) {
+        newConfig.pastEvents["networking-events"].comingSoon = true;
+        delete newConfig.pastEvents["networking-events"].events;
+      }
+    }
+    setEventsConfig(newConfig);
+    localStorage.setItem("tfs-events-config", JSON.stringify(newConfig));
+  };
+
+  const removeFlagshipEvent = (eventIndex: number) => {
+    const newConfig = { ...eventsConfig };
+    if (newConfig.pastEvents["flagship-event"].events) {
+      newConfig.pastEvents["flagship-event"].events.splice(eventIndex, 1);
+      if (newConfig.pastEvents["flagship-event"].events.length === 0) {
+        newConfig.pastEvents["flagship-event"].comingSoon = true;
+        delete newConfig.pastEvents["flagship-event"].events;
+      }
+    }
+    setEventsConfig(newConfig);
+    localStorage.setItem("tfs-events-config", JSON.stringify(newConfig));
+  };
+
   const updateEventConfig = (newConfig: EventsConfig) => {
     setEventsConfig(newConfig);
     localStorage.setItem("tfs-events-config", JSON.stringify(newConfig));
