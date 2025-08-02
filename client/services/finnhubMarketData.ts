@@ -412,24 +412,68 @@ class FinnhubMarketDataService {
         }
 
         this.lastSuccessfulData = data;
-        this.subscribers.forEach((callback) => callback(data));
+
+        try {
+          this.subscribers.forEach((callback) => {
+            try {
+              callback(data);
+            } catch (callbackError) {
+              console.warn("Error in subscriber callback:", callbackError);
+            }
+          });
+        } catch (error) {
+          console.warn("Error notifying subscribers:", error);
+        }
       } else {
-        // Fallback if server API fails
-        this.fallbackMode = true;
-        const stocks = await this.getAllStocks();
-        const sentiment = this.calculateMarketSentiment(stocks);
-        const currencies = this.getFallbackCurrencyData();
-        const data = { stocks, sentiment, currencies };
-        this.lastSuccessfulData = data;
-        this.subscribers.forEach((callback) => callback(data));
+        // Ultimate fallback if everything fails
+        console.log("📊 Using ultimate fallback data");
+        const fallbackData = this.getFallbackMarketData();
+        this.lastSuccessfulData = fallbackData;
+
+        try {
+          this.subscribers.forEach((callback) => {
+            try {
+              callback(fallbackData);
+            } catch (callbackError) {
+              console.warn("Error in fallback subscriber callback:", callbackError);
+            }
+          });
+        } catch (error) {
+          console.warn("Error notifying subscribers with fallback:", error);
+        }
       }
     } catch (error) {
-      console.error("Failed to update market data:", error);
+      console.error("Failed to update market data:", error?.message || 'Unknown error');
 
       // If we have cached data from previous successful call, use it
       if (this.lastSuccessfulData) {
         console.log("📊 Using cached data due to fetch error");
-        this.subscribers.forEach((callback) => callback(this.lastSuccessfulData));
+        try {
+          this.subscribers.forEach((callback) => {
+            try {
+              callback(this.lastSuccessfulData);
+            } catch (callbackError) {
+              console.warn("Error in cached data callback:", callbackError);
+            }
+          });
+        } catch (error) {
+          console.warn("Error notifying subscribers with cached data:", error);
+        }
+      } else {
+        // If no cached data, provide basic fallback
+        console.log("📊 No cached data available, providing basic fallback");
+        const basicFallback = this.getFallbackMarketData();
+        try {
+          this.subscribers.forEach((callback) => {
+            try {
+              callback(basicFallback);
+            } catch (callbackError) {
+              console.warn("Error in basic fallback callback:", callbackError);
+            }
+          });
+        } catch (error) {
+          console.warn("Error with basic fallback:", error);
+        }
       }
     } finally {
       this.isUpdating = false;
