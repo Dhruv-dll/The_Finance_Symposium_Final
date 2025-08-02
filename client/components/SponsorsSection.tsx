@@ -191,6 +191,98 @@ const sponsors: Sponsor[] = [
     },
     website: "https://yesbank.in",
   },
+  {
+    id: "citizen-cooperative-bank",
+    name: "Citizen Cooperative Bank",
+    logo: "/api/placeholder/150/80",
+    tier: "Gold",
+    industry: "Banking",
+    partnershipYear: 2020,
+    partnershipDuration: "2020 - 2023",
+    description:
+      "Cooperative banking institution dedicated to financial inclusion and community development.",
+    achievements: [
+      "Community banking initiatives",
+      "Financial literacy programs",
+      "Student welfare schemes",
+    ],
+    isActive: false,
+    statistics: {
+      studentsPlaced: 22,
+      eventsSponsored: 8,
+      scholarshipsProvided: 6,
+    },
+    website: "https://citizenbankdelhi.com",
+  },
+  {
+    id: "saint-gobain",
+    name: "Saint Gobain (through Mahantesh Associates)",
+    logo: "/api/placeholder/150/80",
+    tier: "Platinum",
+    industry: "Manufacturing",
+    partnershipYear: 2021,
+    partnershipDuration: "2021 - 2024",
+    description:
+      "Global leader in sustainable construction materials, partnering through Mahantesh Associates to enhance industry exposure.",
+    achievements: [
+      "Industrial project collaborations",
+      "Sustainability workshops",
+      "Innovation seminars",
+    ],
+    isActive: false,
+    statistics: {
+      studentsPlaced: 15,
+      eventsSponsored: 5,
+      scholarshipsProvided: 4,
+    },
+    website: "https://saint-gobain.com",
+  },
+  {
+    id: "zest-global-education",
+    name: "Zest Global Education",
+    logo: "/api/placeholder/150/80",
+    tier: "Silver",
+    industry: "Education",
+    partnershipYear: 2022,
+    partnershipDuration: "2022 - 2024",
+    description:
+      "International education consultancy providing global opportunities and career guidance to students.",
+    achievements: [
+      "Study abroad guidance",
+      "Career counseling sessions",
+      "International exposure programs",
+    ],
+    isActive: false,
+    statistics: {
+      studentsPlaced: 18,
+      eventsSponsored: 6,
+      scholarshipsProvided: 3,
+    },
+    website: "https://zestglobaleducation.com",
+  },
+  {
+    id: "iqas",
+    name: "IQAS",
+    logo: "/api/placeholder/150/80",
+    tier: "Bronze",
+    industry: "Quality Assurance",
+    partnershipYear: 2023,
+    partnershipDuration: "2023 - 2024",
+    description:
+      "Quality assurance and certification services provider supporting academic excellence standards.",
+    achievements: [
+      "Quality management training",
+      "Certification programs",
+      "Industry standards workshops",
+    ],
+    isActive: false,
+    statistics: {
+      studentsPlaced: 8,
+      eventsSponsored: 3,
+      scholarshipsProvided: 2,
+    },
+    website: "https://iqas.co.in",
+  },
 ];
 
 const tierColors = {
