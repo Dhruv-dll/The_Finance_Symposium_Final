@@ -34,7 +34,12 @@ export function EventPopupProvider({ children }: { children: ReactNode }) {
 
   return (
     <EventPopupContext.Provider
-      value={{ selectedEvent, setSelectedEvent, openEventPopup, setEventDetailsData }}
+      value={{
+        selectedEvent,
+        setSelectedEvent,
+        openEventPopup,
+        setEventDetailsData,
+      }}
     >
       {children}
     </EventPopupContext.Provider>

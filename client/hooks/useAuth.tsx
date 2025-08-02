@@ -15,7 +15,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Simple but secure credential hashing using btoa (base64) with salt
-const SALT = 'TFS2024SecureKey';
+const SALT = "TFS2024SecureKey";
 const HASHED_USERNAME = btoa(`TFSadmin${SALT}`);
 const HASHED_PASSWORD = btoa(`TFSG&#^yOW$kMA08=ryCb+R${SALT}`);
 
@@ -48,7 +48,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const inputUsernameHash = btoa(`${username}${SALT}`);
       const inputPasswordHash = btoa(`${password}${SALT}`);
 
-      if (inputUsernameHash === HASHED_USERNAME && inputPasswordHash === HASHED_PASSWORD) {
+      if (
+        inputUsernameHash === HASHED_USERNAME &&
+        inputPasswordHash === HASHED_PASSWORD
+      ) {
         setIsAuthenticated(true);
 
         // Store authentication with 24-hour expiry

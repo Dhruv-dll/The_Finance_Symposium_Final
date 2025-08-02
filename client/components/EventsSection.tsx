@@ -82,7 +82,12 @@ const pastEvents: EventCard[] = [
 export default function EventsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
-  const { selectedEvent, setSelectedEvent, openEventPopup, setEventDetailsData } = useEventPopup();
+  const {
+    selectedEvent,
+    setSelectedEvent,
+    openEventPopup,
+    setEventDetailsData,
+  } = useEventPopup();
   const { upcomingEvents, loading, eventDetails } = useEventsData();
 
   // Update popup context with event details when they change
@@ -302,10 +307,15 @@ export default function EventsSection() {
           <Button
             className="bg-gradient-to-r from-finance-gold to-finance-electric text-finance-navy hover:scale-105 transition-transform duration-200"
             size="sm"
-            onClick={() => event.registrationLink && window.open(event.registrationLink, '_blank')}
+            onClick={() =>
+              event.registrationLink &&
+              window.open(event.registrationLink, "_blank")
+            }
             disabled={!event.registrationLink}
           >
-            {event.registrationLink ? 'Register Now' : 'Registration Coming Soon'}
+            {event.registrationLink
+              ? "Register Now"
+              : "Registration Coming Soon"}
             <ExternalLink className="w-4 h-4 ml-2" />
           </Button>
         </motion.div>

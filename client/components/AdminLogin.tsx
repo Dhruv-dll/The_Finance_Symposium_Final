@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Lock, User, Eye, EyeOff, Shield, X } from 'lucide-react';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { useAuth } from '../hooks/useAuth';
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Lock, User, Eye, EyeOff, Shield, X } from "lucide-react";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { useAuth } from "../hooks/useAuth";
 
 interface AdminLoginProps {
   isOpen: boolean;
@@ -11,42 +11,46 @@ interface AdminLoginProps {
   onSuccess: () => void;
 }
 
-export default function AdminLogin({ isOpen, onClose, onSuccess }: AdminLoginProps) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+export default function AdminLogin({
+  isOpen,
+  onClose,
+  onSuccess,
+}: AdminLoginProps) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setError('');
+    setError("");
 
     // Add small delay for security (prevent brute force)
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     const success = login(username, password);
-    
+
     if (success) {
-      setUsername('');
-      setPassword('');
+      setUsername("");
+      setPassword("");
       onSuccess();
       onClose();
     } else {
-      setError('Invalid username or password');
+      setError("Invalid username or password");
       // Clear password for security
-      setPassword('');
+      setPassword("");
     }
-    
+
     setIsLoading(false);
   };
 
   const handleClose = () => {
-    setUsername('');
-    setPassword('');
-    setError('');
+    setUsername("");
+    setPassword("");
+    setError("");
     setShowPassword(false);
     onClose();
   };
@@ -87,8 +91,12 @@ export default function AdminLogin({ isOpen, onClose, onSuccess }: AdminLoginPro
               >
                 <Shield className="w-8 h-8 text-finance-navy" />
               </motion.div>
-              <h2 className="text-2xl font-bold text-finance-gold mb-2">Admin Access</h2>
-              <p className="text-finance-electric/70 text-sm">Enter your credentials to access the admin panel</p>
+              <h2 className="text-2xl font-bold text-finance-gold mb-2">
+                Admin Access
+              </h2>
+              <p className="text-finance-electric/70 text-sm">
+                Enter your credentials to access the admin panel
+              </p>
             </div>
 
             {/* Form */}
@@ -141,7 +149,11 @@ export default function AdminLogin({ isOpen, onClose, onSuccess }: AdminLoginPro
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 text-finance-gold/50 hover:text-finance-gold transition-colors"
                   >
-                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    {showPassword ? (
+                      <EyeOff className="w-5 h-5" />
+                    ) : (
+                      <Eye className="w-5 h-5" />
+                    )}
                   </button>
                 </div>
               </motion.div>
@@ -175,13 +187,17 @@ export default function AdminLogin({ isOpen, onClose, onSuccess }: AdminLoginPro
                     <div className="flex items-center space-x-2">
                       <motion.div
                         animate={{ rotate: 360 }}
-                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                        transition={{
+                          duration: 1,
+                          repeat: Infinity,
+                          ease: "linear",
+                        }}
                         className="w-4 h-4 border-2 border-finance-navy border-t-transparent rounded-full"
                       />
                       <span>Authenticating...</span>
                     </div>
                   ) : (
-                    'Access Admin Panel'
+                    "Access Admin Panel"
                   )}
                 </Button>
               </motion.div>
