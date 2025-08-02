@@ -1,4 +1,5 @@
 import { useState, createContext, useContext, ReactNode } from 'react';
+import { useEventsData } from './useEventsData';
 
 interface EventDetails {
   id: string;
@@ -18,35 +19,9 @@ interface EventPopupContextType {
 
 const EventPopupContext = createContext<EventPopupContextType | undefined>(undefined);
 
-const eventDetails: EventDetails[] = [
-  {
-    id: "saturday-sessions",
-    title: "Saturday Sessions",
-    events: [
-      {
-        title: "Saturday Seminar 1: Data Meets Finance",
-        description: "Exploring the intersection of data analytics and financial decision-making"
-      },
-      {
-        title: "Saturday Seminar 2: Banking 101: Demystifying India's Backbone",
-        description: "Understanding the fundamentals of India's banking system"
-      }
-    ]
-  },
-  {
-    id: "networking-events",
-    title: "Networking Events",
-    comingSoon: true
-  },
-  {
-    id: "flagship-event",
-    title: "Flagship Conclave",
-    comingSoon: true
-  }
-];
-
 export function EventPopupProvider({ children }: { children: ReactNode }) {
   const [selectedEvent, setSelectedEvent] = useState<EventDetails | null>(null);
+  const { eventDetails } = useEventsData();
 
   const openEventPopup = (eventId: string) => {
     const eventDetail = eventDetails.find(e => e.id === eventId);
