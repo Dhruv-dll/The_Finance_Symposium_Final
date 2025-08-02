@@ -68,17 +68,28 @@ export function useEventsData() {
   const [eventsConfig, setEventsConfig] = useState<EventsConfig>(defaultConfig);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    // Try to load from local storage first (for admin changes)
+  // Function to load events config from localStorage or fallback
+  const loadEventsConfig = () => {
     const savedConfig = localStorage.getItem("tfs-events-config");
     if (savedConfig) {
       try {
-        setEventsConfig(JSON.parse(savedConfig));
+        const parsedConfig = JSON.parse(savedConfig);
+        setEventsConfig(parsedConfig);
+        return true;
       } catch (error) {
         console.warn("Failed to parse saved events config, using default");
         setEventsConfig(defaultConfig);
+        return false;
       }
-    } else {
+    }
+    return false;
+  };
+
+  useEffect(() => {
+    // Try to load from local storage first (for admin changes)
+    const loadedFromStorage = loadEventsConfig();
+
+    if (!loadedFromStorage) {
       // Try to load from JSON file
       fetch("/client/data/eventsConfig.json")
         .then((response) => response.json())
@@ -93,6 +104,35 @@ export function useEventsData() {
         });
     }
     setLoading(false);
+  }, []);
+
+  // Listen for localStorage changes from admin panel
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === "tfs-events-config" && e.newValue) {
+        try {
+          const newConfig = JSON.parse(e.newValue);
+          setEventsConfig(newConfig);
+        } catch (error) {
+          console.warn("Failed to parse updated events config");
+        }
+      }
+    };
+
+    // Listen for storage events from other tabs/windows
+    window.addEventListener("storage", handleStorageChange);
+
+    // Also listen for custom events within the same tab
+    const handleCustomStorageChange = () => {
+      loadEventsConfig();
+    };
+
+    window.addEventListener("tfs-events-updated", handleCustomStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener("tfs-events-updated", handleCustomStorageChange);
+    };
   }, []);
 
   // Convert config to EventDetails format
