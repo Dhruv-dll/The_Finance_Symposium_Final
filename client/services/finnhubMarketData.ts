@@ -377,7 +377,11 @@ class FinnhubMarketDataService {
       console.log("📊 Update already in progress, skipping...");
       // If we have cached data, notify subscribers immediately
       if (this.lastSuccessfulData) {
-        this.subscribers.forEach((callback) => callback(this.lastSuccessfulData));
+        try {
+          this.subscribers.forEach((callback) => callback(this.lastSuccessfulData));
+        } catch (error) {
+          console.warn("Error notifying subscribers with cached data:", error);
+        }
       }
       return;
     }
@@ -385,17 +389,22 @@ class FinnhubMarketDataService {
     this.isUpdating = true;
 
     try {
+      let data: any = null;
+
       if (this.fallbackMode) {
-        const stocks = await this.getAllStocks();
-        const sentiment = this.calculateMarketSentiment(stocks);
-        const currencies = this.getFallbackCurrencyData();
-        const data = { stocks, sentiment, currencies };
-        this.lastSuccessfulData = data;
-        this.subscribers.forEach((callback) => callback(data));
-        return;
+        console.log("📊 Using fallback mode for data update");
+        data = this.getFallbackMarketData();
+      } else {
+        data = await this.fetchAllMarketData();
+
+        // If server fails, switch to fallback
+        if (!data) {
+          console.log("📊 Server failed, switching to fallback mode");
+          this.fallbackMode = true;
+          data = this.getFallbackMarketData();
+        }
       }
 
-      const data = await this.fetchAllMarketData();
       if (data) {
         // Add fallback currency and crypto data if not provided by server or empty
         if (!data.currencies || data.currencies.length === 0) {
