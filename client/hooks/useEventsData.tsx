@@ -223,6 +223,9 @@ export function useEventsData() {
     addFlagshipEvent,
     addUpcomingEvent,
     removeUpcomingEvent,
+    removeSaturdaySession,
+    removeNetworkingEvent,
+    removeFlagshipEvent,
     updateEventConfig,
     rawConfig: eventsConfig,
   };
