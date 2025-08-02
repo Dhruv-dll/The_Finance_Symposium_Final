@@ -97,10 +97,7 @@ export default function EventsSection() {
     }
   }, [eventDetails, setEventDetailsData]);
 
-  // Debug log to check if events are being loaded
-  useEffect(() => {
-    console.log('EventsSection - eventDetails updated:', eventDetails);
-  }, [eventDetails]);
+
 
   const EventCard3D = ({
     event,
