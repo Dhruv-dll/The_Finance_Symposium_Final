@@ -7,6 +7,8 @@ import {
   Mail,
   Linkedin,
   Twitter,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 
 interface TeamMember {
@@ -14,6 +16,7 @@ interface TeamMember {
   role: string;
   image: string;
   bio: string;
+  detailedBio?: string; // For expanded "Learn More" section
   email?: string;
   linkedin?: string;
   twitter?: string;
@@ -32,6 +35,7 @@ export default function EnhancedTeamSection() {
   const [selectedGroup, setSelectedGroup] = useState(0);
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
   const [currentMemberIndex, setCurrentMemberIndex] = useState(0);
+  const [expandedMember, setExpandedMember] = useState<string | null>(null);
 
   const teamGroups: TeamGroup[] = [
     {
@@ -114,142 +118,57 @@ export default function EnhancedTeamSection() {
       ],
     },
     {
-      name: "Trio Leadership",
+      name: "Trio",
       theme: "leadership",
       color: "from-purple-500 to-pink-500",
       description: "Dynamic student leadership driving TFS vision forward",
       members: [
         {
-          name: "Arjun Patel",
-          role: "President",
+          name: "Aaradhy Mehra",
+          role: "Chairperson – The Finance Symposium (TFS)",
           image: "/api/placeholder/200/200",
-          bio: "Final year BAF student with exceptional leadership skills. Arjun has spearheaded multiple successful initiatives including the digital transformation of TFS events and expansion of industry partnerships.",
-          email: "arjun.patel@student.xaviers.edu",
+          bio: "Chairperson – The Finance Symposium (TFS), St. Xavier's College (Autonomous), Mumbai\nSBI Securities Summer Intern | CUET 98%iler | Editor-in-Chief – Currency of Change | Digital Creator – 1.5M+ Views | 5,000+ LinkedIn Followers.",
+          detailedBio: "Aaradhy Mehra is a driven student-leader and aspiring entrepreneur from the BAF batch of 2026–27 at St. Xavier's College, Mumbai. As Chairperson of The Finance Symposium, he curates strategic initiatives that connect finance, innovation, and enterprise through student-led forums and industry collaborations. He serves as Editor-in-Chief of Currency of Change, leading its editorial vision while mentoring contributors. A former Summer Intern at SBI Securities and a CUET 98%iler, Aaradhy pairs strong analytical thinking with a forward-looking approach to market trends and institutional strategy. His deep interests in technology, automobiles, and design reflect in his digital presence, where he has garnered over 1.5 million views on YouTube and built a professional network of 5,000+ followers on LinkedIn. As Sub-Head of Design for The Business Conference 2023–24, he led visual storytelling that elevated the conference's brand experience. Balancing entrepreneurial curiosity with creative insight and a passion for sport, Aaradhy exemplifies next-gen leadership rooted in impact, innovation, and influence.",
+          email: "aaradhy.mehra@student.xaviers.edu",
           linkedin: "#",
           achievements: [
-            "President of Finance Club",
-            "Goldman Sachs Summer Intern",
-            "Dean's List for 3 consecutive years",
+            "Chairperson – The Finance Symposium (TFS)",
+            "SBI Securities Summer Intern",
+            "CUET 98%iler",
+            "Editor-in-Chief – Currency of Change",
+            "Digital Creator – 1.5M+ Views",
           ],
         },
         {
-          name: "Sneha Reddy",
-          role: "Vice President",
+          name: "Akarsh Ojha",
+          role: "Vice Chairperson – Networking",
           image: "/api/placeholder/200/200",
-          bio: "Known for her strategic thinking and organizational excellence, Sneha has been instrumental in planning and executing large-scale events. She's passionate about sustainable finance and ESG investing.",
-          email: "sneha.reddy@student.xaviers.edu",
+          bio: "Vice Chairperson – Networking, The Finance Society (TFS) 2025 | Godha Family Scholar (2023) | University of Oxford Visiting Student (Trinity Term 2025) | Betty and Keating Scholarship Recipient | Author – 'Nothing but Only You' | All India Rank 1 – National Reasoning Challenge",
+          detailedBio: "Akarsh Ojha is currently pursuing a Bachelor's in Accounting and Finance at St. Xavier's College, Mumbai, and serves as the Vice Chairperson – Networking at The Finance Society (TFS) 2025. In this role, he leads strategic outreach, fostering connections with alumni, industry experts, and institutions across India and abroad. A Godha Family Scholar (2023) and Visiting Student at the University of Oxford (Trinity Term 2025) under the Betty and Keating Scholarship, Akarsh blends academic excellence with cross-disciplinary curiosity. He is the author of Nothing but Only You, a nationally acclaimed poetry collection, and a winner of multiple national literary and aptitude competitions, including an All India Rank 1 in a reasoning challenge. Raised in a remote village in Bihar, his journey from limited resources to global platforms reflects resilience, vision, and a deep belief in education as a force for transformation. He aspires to pursue an MBA at Oxford, combining finance, policy, and ethical leadership for inclusive development.",
+          email: "akarsh.ojha@student.xaviers.edu",
           linkedin: "#",
           achievements: [
-            "National Finance Olympiad Winner",
-            "JPMorgan Chase Scholarship Recipient",
-            "ESG Research Publication",
+            "Vice Chairperson – Networking, TFS 2025",
+            "Godha Family Scholar (2023)",
+            "University of Oxford Visiting Student",
+            "Author – 'Nothing but Only You'",
+            "All India Rank 1 – National Reasoning Challenge",
           ],
         },
         {
-          name: "Rahul Singh",
-          role: "Secretary",
+          name: "Jatin Phulwani",
+          role: "Vice Chairperson – Management",
           image: "/api/placeholder/200/200",
-          bio: "Rahul combines technical expertise with communication skills. He manages all TFS communications and has developed innovative digital platforms for member engagement and event management.",
-          email: "rahul.singh@student.xaviers.edu",
+          bio: "Vice Chairperson – Management, The Finance Symposium (TFS), St. Xavier's College (Autonomous), Mumbai\nOrganiser (OG) – Admin, Malhar 2025 | Mr. DPS | Certified by IIM-B, Wharton & BCG | Intern – Chtrbox | National Bronze Medalist – Cycle Polo | NCC 'A' Certificate Holder | State Rank #1 – Spell Bee",
+          detailedBio: "Jatin Phulwani is the only second-year student in the core trio of The Finance Symposium (TFS), where he serves as Vice Chairperson – Management. He is a two-time elected Course Representative of the BAF batch and a member of the Student Council at St. Xavier's College, Mumbai. Jatin has consistently led from the front, playing a pivotal role in streamlining internal operations, enabling team synergy, and ensuring flawless execution of the committee's flagship initiatives. As Organiser (OG) – Admin for Malhar 2025, one of India's largest student-run college festivals, he contributes with strategic foresight and unmatched precision — ensuring smooth coordination across diverse verticals of the fest's backbone. Crowned Mr. DPS at his school convocation — the highest honour awarded to a student — Jatin's leadership journey began early. He has earned certifications from IIM Bangalore, Wharton, and BCG, with expertise spanning strategy, consulting, and finance. Professionally, he has interned at Chtrbox, where he gained hands-on experience in marketing and creative strategy. A national bronze medalist in Cycle Polo, NCC 'A' certificate holder, and State Rank #1 in Spell Bee, Jatin combines discipline with creativity. He was one of the very few first-year students to earn a core committee position and stood out as one of the most active members of his batch, contributing to nearly every major fest or committee at Xavier's — including Malhar, SSL, TFS, Zephyrus, Commercium, IMG, and FinCell. With collaborative leadership and a deep commitment to impact, Jatin is a changemaker with an eye on the future.",
+          email: "jatin.phulwani@student.xaviers.edu",
           linkedin: "#",
           achievements: [
-            "Full-stack developer",
-            "Created TFS mobile app",
-            "McKinsey Insight Series participant",
-          ],
-        },
-      ],
-    },
-    {
-      name: "Networking Team",
-      theme: "networking",
-      color: "from-green-500 to-teal-500",
-      description: "Building bridges between academia and industry",
-      members: [
-        {
-          name: "Kavya Joshi",
-          role: "Networking Head",
-          image: "/api/placeholder/200/200",
-          bio: "Kavya has built an extensive network of industry professionals and alumni. She coordinates guest lectures, industry visits, and internship opportunities for students.",
-          email: "kavya.joshi@student.xaviers.edu",
-          linkedin: "#",
-          achievements: [
-            "Connected 500+ students with industry",
-            "Organized 50+ networking events",
-            "KPMG Scholarship Recipient",
-          ],
-        },
-        {
-          name: "Rohan Gupta",
-          role: "Industry Relations",
-          image: "/api/placeholder/200/200",
-          bio: "Rohan manages relationships with corporate partners and organizes industry-academic collaboration programs. His efforts have secured multiple sponsorships and partnership deals.",
-          email: "rohan.gupta@student.xaviers.edu",
-          linkedin: "#",
-          achievements: [
-            "Secured 20+ corporate partnerships",
-            "Investment banking internship at UBS",
-            "National debate champion",
-          ],
-        },
-        {
-          name: "Anisha Shah",
-          role: "Alumni Coordinator",
-          image: "/api/placeholder/200/200",
-          bio: "Anisha maintains strong connections with TFS alumni who are now successful professionals in the finance industry. She organizes alumni events and mentorship programs.",
-          email: "anisha.shah@student.xaviers.edu",
-          linkedin: "#",
-          achievements: [
-            "Manages 1000+ alumni network",
-            "Established mentorship program",
-            "Deloitte internship recipient",
-          ],
-        },
-      ],
-    },
-    {
-      name: "Management",
-      theme: "executive",
-      color: "from-finance-gold to-yellow-500",
-      description: "Operational excellence and strategic planning",
-      members: [
-        {
-          name: "Vikram Agarwal",
-          role: "Event Manager",
-          image: "/api/placeholder/200/200",
-          bio: "Vikram orchestrates all TFS events with meticulous attention to detail. His project management skills ensure seamless execution of complex multi-day conferences and workshops.",
-          email: "vikram.agarwal@student.xaviers.edu",
-          linkedin: "#",
-          achievements: [
-            "Managed 25+ successful events",
-            "Project Management Certification",
-            "Ernst & Young internship",
-          ],
-        },
-        {
-          name: "Isha Bansal",
-          role: "Marketing Head",
-          image: "/api/placeholder/200/200",
-          bio: "Isha leads TFS's digital marketing and brand management efforts. Her creative campaigns have significantly increased TFS's visibility and engagement across social media platforms.",
-          email: "isha.bansal@student.xaviers.edu",
-          linkedin: "#",
-          achievements: [
-            "Grew social media following by 300%",
-            "Digital marketing expert",
-            "PwC Digital Academy graduate",
-          ],
-        },
-        {
-          name: "Karan Malhotra",
-          role: "Operations Manager",
-          image: "/api/placeholder/200/200",
-          bio: "Karan ensures smooth day-to-day operations of TFS activities. His systematic approach and attention to detail keep all initiatives running efficiently and on schedule.",
-          email: "karan.malhotra@student.xaviers.edu",
-          linkedin: "#",
-          achievements: [
-            "Operations excellence award",
-            "Six Sigma Yellow Belt",
-            "Accenture Strategy internship",
+            "Vice Chairperson – Management, TFS",
+            "Organiser (OG) – Admin, Malhar 2025",
+            "Mr. DPS Award Recipient",
+            "Certified by IIM-B, Wharton & BCG",
+            "National Bronze Medalist – Cycle Polo",
           ],
         },
       ],
@@ -274,22 +193,6 @@ export default function EnhancedTeamSection() {
           border: "border-purple-400/30",
           glow: "shadow-[0_0_30px_rgba(147,51,234,0.3)]",
         };
-      case "networking":
-        return {
-          primary: "text-green-400",
-          secondary: "text-teal-300",
-          bg: "from-green-600/20 to-teal-600/20",
-          border: "border-green-400/30",
-          glow: "shadow-[0_0_30px_rgba(34,197,94,0.3)]",
-        };
-      case "executive":
-        return {
-          primary: "text-finance-gold",
-          secondary: "text-yellow-300",
-          bg: "from-finance-gold/20 to-yellow-600/20",
-          border: "border-finance-gold/30",
-          glow: "shadow-[0_0_30px_rgba(255,215,0,0.3)]",
-        };
       default:
         return {
           primary: "text-finance-gold",
@@ -312,6 +215,10 @@ export default function EnhancedTeamSection() {
       (prev) =>
         (prev - 1 + currentGroup.members.length) % currentGroup.members.length,
     );
+  };
+
+  const toggleExpandedBio = (memberName: string) => {
+    setExpandedMember(expandedMember === memberName ? null : memberName);
   };
 
   const currentGroup = teamGroups[selectedGroup];
@@ -349,6 +256,7 @@ export default function EnhancedTeamSection() {
               onClick={() => {
                 setSelectedGroup(index);
                 setCurrentMemberIndex(0);
+                setExpandedMember(null);
               }}
               className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 relative overflow-hidden ${
                 selectedGroup === index
@@ -383,142 +291,252 @@ export default function EnhancedTeamSection() {
           </p>
         </motion.div>
 
-        {/* 3D Carousel */}
-        <div className="relative h-96 mb-12">
-          <div className="flex items-center justify-center h-full perspective-1000">
-            <div className="relative w-full max-w-6xl">
-              {/* Navigation Buttons */}
-              <button
-                onClick={prevMember}
-                className={`absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full backdrop-blur-md bg-finance-navy/50 ${themeColors.border} border hover:scale-110 transition-all duration-300 ${themeColors.glow}`}
-              >
-                <ChevronLeft className={`w-6 h-6 ${themeColors.primary}`} />
-              </button>
-
-              <button
-                onClick={nextMember}
-                className={`absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full backdrop-blur-md bg-finance-navy/50 ${themeColors.border} border hover:scale-110 transition-all duration-300 ${themeColors.glow}`}
-              >
-                <ChevronRight className={`w-6 h-6 ${themeColors.primary}`} />
-              </button>
-
-              {/* Member Cards Carousel */}
-              <div className="flex items-center justify-center space-x-8">
-                {currentGroup.members.map((member, index) => {
-                  const isActive = index === currentMemberIndex;
-                  const isPrev =
-                    index ===
-                    (currentMemberIndex - 1 + currentGroup.members.length) %
-                      currentGroup.members.length;
-                  const isNext =
-                    index ===
-                    (currentMemberIndex + 1) % currentGroup.members.length;
-
-                  let transform = "translateX(0px) rotateY(0deg) scale(0.7)";
-                  let zIndex = 1;
-                  let opacity = 0.5;
-
-                  if (isActive) {
-                    transform = "translateX(0px) rotateY(0deg) scale(1)";
-                    zIndex = 10;
-                    opacity = 1;
-                  } else if (isPrev) {
-                    transform = "translateX(-100px) rotateY(25deg) scale(0.85)";
-                    zIndex = 5;
-                    opacity = 0.7;
-                  } else if (isNext) {
-                    transform = "translateX(100px) rotateY(-25deg) scale(0.85)";
-                    zIndex = 5;
-                    opacity = 0.7;
-                  }
-
-                  return (
-                    <motion.div
-                      key={index}
-                      className={`absolute w-80 cursor-pointer ${isActive ? "pointer-events-auto" : "pointer-events-none"}`}
-                      style={{
-                        transform,
-                        zIndex,
-                        opacity,
-                      }}
-                      animate={{
-                        transform,
-                        opacity,
-                        zIndex,
-                      }}
-                      transition={{ duration: 0.6, ease: "easeInOut" }}
-                      whileHover={isActive ? { scale: 1.05 } : {}}
-                      onClick={() => isActive && setSelectedMember(member)}
-                    >
-                      <div
-                        className={`backdrop-blur-xl bg-gradient-to-br ${themeColors.bg} rounded-2xl p-6 border ${themeColors.border} ${isActive ? themeColors.glow : ""} transition-all duration-500`}
-                      >
-                        <div className="text-center">
-                          <div className="relative mb-4 mx-auto w-32 h-32">
-                            <div
-                              className={`absolute inset-0 bg-gradient-to-br ${currentGroup.color} rounded-full opacity-20 blur-lg`}
-                            ></div>
-                            <img
-                              src={member.image}
-                              alt={member.name}
-                              className="relative w-full h-full object-cover rounded-full border-2 border-finance-gold/30"
-                            />
-                            {isActive && (
-                              <motion.div
-                                className={`absolute inset-0 rounded-full border-2 ${themeColors.primary} opacity-50`}
-                                animate={{ rotate: 360 }}
-                                transition={{
-                                  duration: 20,
-                                  repeat: Infinity,
-                                  ease: "linear",
-                                }}
-                              />
-                            )}
-                          </div>
-
-                          <h3
-                            className={`text-xl font-bold ${themeColors.primary} mb-2`}
-                          >
-                            {member.name}
-                          </h3>
-                          <p className={`${themeColors.secondary} mb-4`}>
-                            {member.role}
-                          </p>
-
-                          {isActive && (
-                            <motion.button
-                              initial={{ opacity: 0, y: 10 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              className={`px-4 py-2 bg-gradient-to-r ${currentGroup.color} text-white rounded-lg hover:scale-105 transition-all duration-300`}
-                              onClick={() => setSelectedMember(member)}
-                            >
-                              Learn More
-                            </motion.button>
-                          )}
-                        </div>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-
-          {/* Member Indicator Dots */}
-          <div className="flex justify-center space-x-3 mt-8">
-            {currentGroup.members.map((_, index) => (
-              <button
+        {/* Conditional rendering based on group type */}
+        {currentGroup.name === "Trio" ? (
+          // Special layout for Trio with larger cards
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            {currentGroup.members.map((member, index) => (
+              <motion.div
                 key={index}
-                onClick={() => setCurrentMemberIndex(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  index === currentMemberIndex
-                    ? `${themeColors.primary.replace("text-", "bg-")} ${themeColors.glow}`
-                    : "bg-finance-navy border border-finance-gold/30"
-                }`}
-              />
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                className={`backdrop-blur-xl bg-gradient-to-br ${themeColors.bg} rounded-2xl p-8 border ${themeColors.border} ${themeColors.glow} hover:scale-105 transition-all duration-500`}
+              >
+                <div className="text-center">
+                  <div className="relative mb-6 mx-auto w-40 h-40">
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-br ${currentGroup.color} rounded-full opacity-20 blur-lg`}
+                    ></div>
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="relative w-full h-full object-cover rounded-full border-2 border-finance-gold/30"
+                    />
+                  </div>
+
+                  <h3
+                    className={`text-2xl font-bold ${themeColors.primary} mb-3`}
+                  >
+                    {member.name}
+                  </h3>
+                  <p className={`${themeColors.secondary} mb-6 text-lg`}>
+                    {member.role}
+                  </p>
+
+                  {/* Brief Bio */}
+                  <div className="mb-6">
+                    <p className="text-foreground/90 leading-relaxed text-sm whitespace-pre-line">
+                      {member.bio}
+                    </p>
+                  </div>
+
+                  {/* Learn More Section */}
+                  {member.detailedBio && (
+                    <div className="mb-6">
+                      <button
+                        onClick={() => toggleExpandedBio(member.name)}
+                        className={`flex items-center gap-2 mx-auto px-4 py-2 bg-gradient-to-r ${currentGroup.color} text-white rounded-lg hover:scale-105 transition-all duration-300`}
+                      >
+                        Learn More
+                        {expandedMember === member.name ? (
+                          <ChevronUp className="w-4 h-4" />
+                        ) : (
+                          <ChevronDown className="w-4 h-4" />
+                        )}
+                      </button>
+
+                      <AnimatePresence>
+                        {expandedMember === member.name && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="mt-4 overflow-hidden"
+                          >
+                            <div className="p-4 bg-finance-navy/30 rounded-lg border border-finance-gold/20">
+                              <p className="text-foreground/80 leading-relaxed text-sm">
+                                {member.detailedBio}
+                              </p>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  )}
+
+                  {/* Social Links */}
+                  <div className="flex justify-center space-x-4">
+                    {member.email && (
+                      <a
+                        href={`mailto:${member.email}`}
+                        className={`p-3 rounded-full backdrop-blur-md bg-finance-navy/50 ${themeColors.border} border hover:scale-110 transition-all duration-300`}
+                      >
+                        <Mail className={`w-5 h-5 ${themeColors.primary}`} />
+                      </a>
+                    )}
+                    {member.linkedin && (
+                      <a
+                        href={member.linkedin}
+                        className={`p-3 rounded-full backdrop-blur-md bg-finance-navy/50 ${themeColors.border} border hover:scale-110 transition-all duration-300`}
+                      >
+                        <Linkedin
+                          className={`w-5 h-5 ${themeColors.primary}`}
+                        />
+                      </a>
+                    )}
+                    {member.twitter && (
+                      <a
+                        href={member.twitter}
+                        className={`p-3 rounded-full backdrop-blur-md bg-finance-navy/50 ${themeColors.border} border hover:scale-110 transition-all duration-300`}
+                      >
+                        <Twitter className={`w-5 h-5 ${themeColors.primary}`} />
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
             ))}
           </div>
-        </div>
+        ) : (
+          // 3D Carousel for other groups
+          <div className="relative h-96 mb-12">
+            <div className="flex items-center justify-center h-full perspective-1000">
+              <div className="relative w-full max-w-6xl">
+                {/* Navigation Buttons */}
+                <button
+                  onClick={prevMember}
+                  className={`absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full backdrop-blur-md bg-finance-navy/50 ${themeColors.border} border hover:scale-110 transition-all duration-300 ${themeColors.glow}`}
+                >
+                  <ChevronLeft className={`w-6 h-6 ${themeColors.primary}`} />
+                </button>
+
+                <button
+                  onClick={nextMember}
+                  className={`absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full backdrop-blur-md bg-finance-navy/50 ${themeColors.border} border hover:scale-110 transition-all duration-300 ${themeColors.glow}`}
+                >
+                  <ChevronRight className={`w-6 h-6 ${themeColors.primary}`} />
+                </button>
+
+                {/* Member Cards Carousel */}
+                <div className="flex items-center justify-center space-x-8">
+                  {currentGroup.members.map((member, index) => {
+                    const isActive = index === currentMemberIndex;
+                    const isPrev =
+                      index ===
+                      (currentMemberIndex - 1 + currentGroup.members.length) %
+                        currentGroup.members.length;
+                    const isNext =
+                      index ===
+                      (currentMemberIndex + 1) % currentGroup.members.length;
+
+                    let transform = "translateX(0px) rotateY(0deg) scale(0.7)";
+                    let zIndex = 1;
+                    let opacity = 0.5;
+
+                    if (isActive) {
+                      transform = "translateX(0px) rotateY(0deg) scale(1)";
+                      zIndex = 10;
+                      opacity = 1;
+                    } else if (isPrev) {
+                      transform = "translateX(-100px) rotateY(25deg) scale(0.85)";
+                      zIndex = 5;
+                      opacity = 0.7;
+                    } else if (isNext) {
+                      transform = "translateX(100px) rotateY(-25deg) scale(0.85)";
+                      zIndex = 5;
+                      opacity = 0.7;
+                    }
+
+                    return (
+                      <motion.div
+                        key={index}
+                        className={`absolute w-80 cursor-pointer ${isActive ? "pointer-events-auto" : "pointer-events-none"}`}
+                        style={{
+                          transform,
+                          zIndex,
+                          opacity,
+                        }}
+                        animate={{
+                          transform,
+                          opacity,
+                          zIndex,
+                        }}
+                        transition={{ duration: 0.6, ease: "easeInOut" }}
+                        whileHover={isActive ? { scale: 1.05 } : {}}
+                        onClick={() => isActive && setSelectedMember(member)}
+                      >
+                        <div
+                          className={`backdrop-blur-xl bg-gradient-to-br ${themeColors.bg} rounded-2xl p-6 border ${themeColors.border} ${isActive ? themeColors.glow : ""} transition-all duration-500`}
+                        >
+                          <div className="text-center">
+                            <div className="relative mb-4 mx-auto w-32 h-32">
+                              <div
+                                className={`absolute inset-0 bg-gradient-to-br ${currentGroup.color} rounded-full opacity-20 blur-lg`}
+                              ></div>
+                              <img
+                                src={member.image}
+                                alt={member.name}
+                                className="relative w-full h-full object-cover rounded-full border-2 border-finance-gold/30"
+                              />
+                              {isActive && (
+                                <motion.div
+                                  className={`absolute inset-0 rounded-full border-2 ${themeColors.primary} opacity-50`}
+                                  animate={{ rotate: 360 }}
+                                  transition={{
+                                    duration: 20,
+                                    repeat: Infinity,
+                                    ease: "linear",
+                                  }}
+                                />
+                              )}
+                            </div>
+
+                            <h3
+                              className={`text-xl font-bold ${themeColors.primary} mb-2`}
+                            >
+                              {member.name}
+                            </h3>
+                            <p className={`${themeColors.secondary} mb-4`}>
+                              {member.role}
+                            </p>
+
+                            {isActive && (
+                              <motion.button
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className={`px-4 py-2 bg-gradient-to-r ${currentGroup.color} text-white rounded-lg hover:scale-105 transition-all duration-300`}
+                                onClick={() => setSelectedMember(member)}
+                              >
+                                Learn More
+                              </motion.button>
+                            )}
+                          </div>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            {/* Member Indicator Dots */}
+            <div className="flex justify-center space-x-3 mt-8">
+              {currentGroup.members.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentMemberIndex(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    index === currentMemberIndex
+                      ? `${themeColors.primary.replace("text-", "bg-")} ${themeColors.glow}`
+                      : "bg-finance-navy border border-finance-gold/30"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Member Detail Modal */}
@@ -597,8 +615,8 @@ export default function EnhancedTeamSection() {
                     transition={{ delay: 0.3 }}
                     className="prose prose-invert max-w-none mb-6"
                   >
-                    <p className="text-foreground/90 leading-relaxed">
-                      {selectedMember.bio}
+                    <p className="text-foreground/90 leading-relaxed whitespace-pre-line">
+                      {selectedMember.detailedBio || selectedMember.bio}
                     </p>
                   </motion.div>
 
