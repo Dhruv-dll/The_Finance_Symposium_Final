@@ -236,7 +236,7 @@ export const ModernTimelineEvent: React.FC<ModernTimelineEventProps> = ({
               >
                 <Badge className="bg-gradient-to-r from-amber-500 to-orange-500 text-black font-bold px-4 py-2 mb-2">
                   <Sparkles className="w-3 h-3 mr-1" />
-                  {event.countdown.days} Days
+                  {daysLeft} Days
                 </Badge>
                 <div className="text-xs text-white/60">Until Event</div>
               </motion.div>
