@@ -123,23 +123,32 @@ export default function AdminEventsPanel({
   };
 
   const handleAddUpcomingEvent = () => {
-    if (newUpcomingEvent.title.trim() && newUpcomingEvent.date.trim()) {
+    if (newUpcomingEvent.title.trim() && newUpcomingEvent.dateInput.trim()) {
+      // Create the event object without the dateInput field (internal use only)
+      const { dateInput, ...eventData } = newUpcomingEvent;
       const eventWithId = {
-        ...newUpcomingEvent,
+        ...eventData,
         id: newUpcomingEvent.id || `event-${Date.now()}`,
       };
+
       addUpcomingEvent(eventWithId);
+
+      // Reset the form
       setNewUpcomingEvent({
         id: "",
         title: "",
         date: "",
+        dateInput: "",
         time: "",
         location: "",
         description: "",
         registrationLink: "",
         countdown: { days: 0, hours: 0, minutes: 0 },
       });
+
       alert(`Upcoming Event "${eventWithId.title}" added successfully! Check the timeline section.`);
+    } else {
+      alert("Please fill in at least the event title and date before adding.");
     }
   };
 
