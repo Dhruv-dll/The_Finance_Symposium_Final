@@ -510,6 +510,12 @@ export default function Index() {
           </footer>
         </>
       )}
+
+      {/* Admin Events Panel */}
+      <AdminEventsPanel
+        isOpen={showAdminPanel}
+        onClose={() => setShowAdminPanel(false)}
+      />
       </div>
     </EventPopupProvider>
   );
