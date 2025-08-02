@@ -60,9 +60,15 @@ const sponsors: Sponsor[] = [
 export default function SponsorsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
+  const [activeTab, setActiveTab] = useState<"current" | "past">("past");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredSponsors = sponsors.filter((sponsor) =>
+  const currentSponsors: Sponsor[] = []; // Empty for now
+  const pastSponsors = sponsors.filter((s) => !s.isActive);
+
+  const filteredSponsors = (
+    activeTab === "current" ? currentSponsors : pastSponsors
+  ).filter((sponsor) =>
     sponsor.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
