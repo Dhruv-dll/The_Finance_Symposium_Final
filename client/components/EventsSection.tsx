@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { motion, useScroll, useTransform, useInView, AnimatePresence } from "framer-motion";
 import {
   Calendar,
   Users,
@@ -10,6 +10,7 @@ import {
   ChevronRight,
   Sparkles,
   TrendingUp,
+  X,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
@@ -20,11 +21,6 @@ interface EventCard {
   description: string;
   icon: React.ComponentType<any>;
   backgroundGradient: string;
-  stats: {
-    participants?: number;
-    connections?: number;
-    impact?: string;
-  };
   hoverColor: string;
   isPremium?: boolean;
 }
@@ -44,6 +40,16 @@ interface UpcomingEvent {
   };
 }
 
+interface EventDetails {
+  id: string;
+  title: string;
+  events?: {
+    title: string;
+    description?: string;
+  }[];
+  comingSoon?: boolean;
+}
+
 const pastEvents: EventCard[] = [
   {
     id: "saturday-sessions",
@@ -52,10 +58,6 @@ const pastEvents: EventCard[] = [
       "Weekly learning sessions that bridge theoretical knowledge with practical insights from industry experts.",
     icon: Calendar,
     backgroundGradient: "from-blue-900 via-blue-700 to-finance-gold",
-    stats: {
-      participants: 250,
-      impact: "15 Topics Covered",
-    },
     hoverColor: "rgba(255, 215, 0, 0.8)",
   },
   {
@@ -65,10 +67,6 @@ const pastEvents: EventCard[] = [
       "Connect with industry professionals, alumni, and peers in structured networking sessions.",
     icon: Users,
     backgroundGradient: "from-emerald-900 via-emerald-700 to-finance-electric",
-    stats: {
-      connections: 500,
-      impact: "50+ Industry Leaders",
-    },
     hoverColor: "rgba(0, 255, 255, 0.8)",
   },
   {
@@ -78,13 +76,36 @@ const pastEvents: EventCard[] = [
       "Our premier annual event featuring top industry leaders, workshops, and competitions.",
     icon: Trophy,
     backgroundGradient: "from-purple-900 via-purple-700 to-finance-gold",
-    stats: {
-      participants: 1000,
-      impact: "Industry Recognition",
-    },
     hoverColor: "rgba(255, 215, 0, 1)",
     isPremium: true,
   },
+];
+
+const eventDetails: EventDetails[] = [
+  {
+    id: "saturday-sessions",
+    title: "Saturday Sessions",
+    events: [
+      {
+        title: "Saturday Seminar 1: Data Meets Finance",
+        description: "Exploring the intersection of data analytics and financial decision-making"
+      },
+      {
+        title: "Saturday Seminar 2: Banking 101: Demystifying India's Backbone",
+        description: "Understanding the fundamentals of India's banking system"
+      }
+    ]
+  },
+  {
+    id: "networking-events",
+    title: "Networking Events",
+    comingSoon: true
+  },
+  {
+    id: "flagship-event",
+    title: "Flagship Conclave",
+    comingSoon: true
+  }
 ];
 
 const upcomingEvents: UpcomingEvent[] = [
@@ -126,6 +147,14 @@ const upcomingEvents: UpcomingEvent[] = [
 export default function EventsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
+  const [selectedEvent, setSelectedEvent] = useState<EventDetails | null>(null);
+
+  const handleEventClick = (eventId: string) => {
+    const eventDetail = eventDetails.find(e => e.id === eventId);
+    if (eventDetail) {
+      setSelectedEvent(eventDetail);
+    }
+  };
 
   const EventCard3D = ({
     event,
@@ -154,6 +183,7 @@ export default function EventsSection() {
             boxShadow:
               "0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
           }}
+          onClick={() => handleEventClick(event.id)}
         >
           {/* Premium Badge */}
           {event.isPremium && (
@@ -223,34 +253,16 @@ export default function EventsSection() {
               >
                 {event.title}
               </motion.h3>
-              <p className="text-white/90 text-sm leading-relaxed mb-4">
+              <p className="text-white/90 text-sm leading-relaxed mb-6">
                 {event.description}
               </p>
 
-              {/* Stats */}
-              <div className="flex items-center space-x-4 text-xs">
-                {event.stats.participants && (
-                  <div className="flex items-center space-x-1">
-                    <Users className="w-3 h-3" />
-                    <span>{event.stats.participants}+ Participants</span>
-                  </div>
-                )}
-                {event.stats.connections && (
-                  <div className="flex items-center space-x-1">
-                    <TrendingUp className="w-3 h-3" />
-                    <span>{event.stats.connections}+ Connections</span>
-                  </div>
-                )}
-                {event.stats.impact && (
-                  <div className="flex items-center space-x-1">
-                    <Trophy className="w-3 h-3" />
-                    <span>{event.stats.impact}</span>
-                  </div>
-                )}
+              {/* Click to view details */}
+              <div className="flex items-center space-x-2 text-xs opacity-75">
+                <span>Click to view details</span>
+                <ChevronRight className="w-3 h-3" />
               </div>
             </div>
-
-            {/* Hover Glow Effect */}
           </div>
 
           {/* Floating Animation */}
@@ -466,6 +478,89 @@ export default function EventsSection() {
           </div>
         </motion.div>
       </div>
+
+      {/* Event Details Popup */}
+      <AnimatePresence>
+        {selectedEvent && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4"
+            onClick={() => setSelectedEvent(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, y: 50 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: 50 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="max-w-2xl w-full backdrop-blur-xl bg-gradient-to-br from-finance-navy/90 to-finance-navy-light/90 rounded-2xl p-8 border border-finance-gold/30 relative shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setSelectedEvent(null)}
+                className="absolute top-4 right-4 p-2 rounded-full hover:bg-finance-red/20 transition-colors"
+              >
+                <X className="w-6 h-6 text-finance-red" />
+              </button>
+
+              {/* Content */}
+              <div className="text-center">
+                <h3 className="text-3xl font-bold text-finance-gold mb-6">
+                  {selectedEvent.title}
+                </h3>
+
+                {selectedEvent.comingSoon ? (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.6 }}
+                    className="py-12"
+                  >
+                    <div className="text-6xl mb-4">🚧</div>
+                    <h4 className="text-2xl font-bold text-finance-electric mb-4">
+                      Coming Soon
+                    </h4>
+                    <p className="text-foreground/70 text-lg">
+                      We're currently planning exciting events for this category. 
+                      Stay tuned for amazing announcements!
+                    </p>
+                  </motion.div>
+                ) : (
+                  <div className="space-y-6">
+                    {selectedEvent.events?.map((event, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                        className="bg-finance-navy/40 backdrop-blur-sm rounded-xl p-6 border border-finance-gold/20 text-left"
+                      >
+                        <h4 className="text-xl font-bold text-finance-electric mb-3">
+                          {event.title}
+                        </h4>
+                        {event.description && (
+                          <p className="text-foreground/80">
+                            {event.description}
+                          </p>
+                        )}
+                      </motion.div>
+                    ))}
+                  </div>
+                )}
+
+                <Button
+                  onClick={() => setSelectedEvent(null)}
+                  className="mt-8 bg-gradient-to-r from-finance-gold to-finance-electric text-finance-navy hover:scale-105 transition-transform duration-200"
+                >
+                  Close
+                </Button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
