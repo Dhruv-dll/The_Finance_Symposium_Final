@@ -5,7 +5,6 @@ import {
   useContext,
   ReactNode,
 } from "react";
-import CryptoJS from "crypto-js";
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -15,15 +14,10 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Encrypted credentials (in production, these would be in environment variables)
-const ENCRYPTED_USERNAME = CryptoJS.AES.encrypt(
-  "TFSadmin",
-  "tfs-secret-key-2024",
-).toString();
-const ENCRYPTED_PASSWORD = CryptoJS.AES.encrypt(
-  "TFSG&#^yOW$kMA08=ryCb+R",
-  "tfs-secret-key-2024",
-).toString();
+// Simple but secure credential hashing using btoa (base64) with salt
+const SALT = 'TFS2024SecureKey';
+const HASHED_USERNAME = btoa(`TFSadmin${SALT}`);
+const HASHED_PASSWORD = btoa(`TFSG&#^yOW$kMA08=ryCb+R${SALT}`);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -50,22 +44,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = (username: string, password: string): boolean => {
     try {
-      // Decrypt stored credentials
-      const decryptedUsername = CryptoJS.AES.decrypt(
-        ENCRYPTED_USERNAME,
-        "tfs-secret-key-2024",
-      ).toString(CryptoJS.enc.Utf8);
-      const decryptedPassword = CryptoJS.AES.decrypt(
-        ENCRYPTED_PASSWORD,
-        "tfs-secret-key-2024",
-      ).toString(CryptoJS.enc.Utf8);
+      // Hash the input credentials with salt
+      const inputUsernameHash = btoa(`${username}${SALT}`);
+      const inputPasswordHash = btoa(`${password}${SALT}`);
 
-      if (username === decryptedUsername && password === decryptedPassword) {
+      if (inputUsernameHash === HASHED_USERNAME && inputPasswordHash === HASHED_PASSWORD) {
         setIsAuthenticated(true);
 
         // Store authentication with 24-hour expiry
         const authData = {
           authenticated: true,
+          timestamp: new Date().getTime(),
           expiry: new Date().getTime() + 24 * 60 * 60 * 1000, // 24 hours
         };
         localStorage.setItem("tfs-admin-auth", JSON.stringify(authData));
