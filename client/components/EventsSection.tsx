@@ -82,8 +82,13 @@ const pastEvents: EventCard[] = [
 export default function EventsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
-  const { selectedEvent, setSelectedEvent, openEventPopup } = useEventPopup();
-  const { upcomingEvents, loading } = useEventsData();
+  const { selectedEvent, setSelectedEvent, openEventPopup, setEventDetailsData } = useEventPopup();
+  const { upcomingEvents, loading, eventDetails } = useEventsData();
+
+  // Update popup context with event details when they change
+  useEffect(() => {
+    setEventDetailsData(eventDetails);
+  }, [eventDetails, setEventDetailsData]);
 
   const EventCard3D = ({
     event,
