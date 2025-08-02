@@ -412,6 +412,17 @@ export default function AdminEventsPanel({
                     className="bg-finance-navy/50 border-finance-gold/20"
                   />
                   <Input
+                    placeholder="Registration Link (Google Form URL)"
+                    value={newUpcomingEvent.registrationLink}
+                    onChange={(e) =>
+                      setNewUpcomingEvent((prev) => ({
+                        ...prev,
+                        registrationLink: e.target.value,
+                      }))
+                    }
+                    className="bg-finance-navy/50 border-finance-gold/20"
+                  />
+                  <Input
                     placeholder="Days until event (for countdown)"
                     type="number"
                     value={newUpcomingEvent.countdown.days}
