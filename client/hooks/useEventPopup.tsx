@@ -1,4 +1,4 @@
-import { useState, createContext, useContext, ReactNode } from "react";
+import { useState, useEffect, createContext, useContext, ReactNode } from "react";
 
 interface EventDetails {
   id: string;
