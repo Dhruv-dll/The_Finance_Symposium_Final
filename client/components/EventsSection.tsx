@@ -79,6 +79,7 @@ export default function EventsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
   const { selectedEvent, setSelectedEvent, openEventPopup } = useEventPopup();
+  const { upcomingEvents, loading } = useEventsData();
 
   const EventCard3D = ({
     event,
