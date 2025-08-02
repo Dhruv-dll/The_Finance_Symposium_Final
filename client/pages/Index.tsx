@@ -37,6 +37,7 @@ export default function Index() {
   const [scrolled, setScrolled] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [showAdminPanel, setShowAdminPanel] = useState(false);
   const { scrollYProgress } = useScroll();
 
   // Color temperature transformation based on scroll
