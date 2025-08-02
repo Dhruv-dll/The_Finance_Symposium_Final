@@ -222,8 +222,7 @@ export function useEventsData() {
         delete newConfig.pastEvents["saturday-sessions"].events;
       }
     }
-    setEventsConfig(newConfig);
-    localStorage.setItem("tfs-events-config", JSON.stringify(newConfig));
+    saveConfig(newConfig);
   };
 
   const removeNetworkingEvent = (eventIndex: number) => {
@@ -235,8 +234,7 @@ export function useEventsData() {
         delete newConfig.pastEvents["networking-events"].events;
       }
     }
-    setEventsConfig(newConfig);
-    localStorage.setItem("tfs-events-config", JSON.stringify(newConfig));
+    saveConfig(newConfig);
   };
 
   const removeFlagshipEvent = (eventIndex: number) => {
@@ -248,13 +246,11 @@ export function useEventsData() {
         delete newConfig.pastEvents["flagship-event"].events;
       }
     }
-    setEventsConfig(newConfig);
-    localStorage.setItem("tfs-events-config", JSON.stringify(newConfig));
+    saveConfig(newConfig);
   };
 
   const updateEventConfig = (newConfig: EventsConfig) => {
-    setEventsConfig(newConfig);
-    localStorage.setItem("tfs-events-config", JSON.stringify(newConfig));
+    saveConfig(newConfig);
   };
 
   return {
