@@ -72,41 +72,7 @@ const pastEvents: EventCard[] = [
   },
 ];
 
-const upcomingEvents: UpcomingEvent[] = [
-  {
-    id: "fintech-summit",
-    title: "FinTech Innovation Summit 2025",
-    date: "March 15, 2025",
-    time: "10:00 AM - 6:00 PM",
-    location: "St. Xavier's Auditorium",
-    description:
-      "Explore the future of financial technology with industry pioneers.",
-    registrationLink: "#register",
-    countdown: { days: 45, hours: 12, minutes: 30 },
-  },
-  {
-    id: "investment-workshop",
-    title: "Investment Strategy Workshop",
-    date: "April 8, 2025",
-    time: "2:00 PM - 5:00 PM",
-    location: "Finance Lab",
-    description:
-      "Hands-on workshop on modern investment strategies and portfolio management.",
-    registrationLink: "#register",
-    countdown: { days: 69, hours: 8, minutes: 15 },
-  },
-  {
-    id: "alumni-meet",
-    title: "Alumni Networking Meet",
-    date: "May 20, 2025",
-    time: "7:00 PM - 10:00 PM",
-    location: "Xavier's Atrium",
-    description:
-      "Connect with TFS alumni working in top financial institutions.",
-    registrationLink: "#register",
-    countdown: { days: 111, hours: 18, minutes: 45 },
-  },
-];
+const upcomingEvents: UpcomingEvent[] = [];
 
 export default function EventsSection() {
   const sectionRef = useRef<HTMLElement>(null);
