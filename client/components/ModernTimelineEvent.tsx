@@ -55,12 +55,17 @@ export const ModernTimelineEvent: React.FC<ModernTimelineEventProps> = ({
       const timeDifference = eventDate.getTime() - currentDate.getTime();
       const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
 
-      return Math.max(0, daysDifference);
+      return daysDifference; // Allow negative for past events
     } catch (error) {
       // If date parsing fails, fall back to the stored countdown
       return event.countdown.days;
     }
   };
+
+  const isEventPast = daysLeft < 0;
+  const isEventToday = daysLeft === 0;
+  const isEventSoon = daysLeft > 0 && daysLeft <= 7;
+  const isEventThisMonth = daysLeft > 7 && daysLeft <= 30;
 
   // Update days left on mount and periodically
   useEffect(() => {
