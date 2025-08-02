@@ -174,6 +174,30 @@ export default function AdminEventsPanel({
                     Add Saturday Session
                   </Button>
                 </div>
+
+                {/* Current Saturday Sessions */}
+                {eventDetails.find(e => e.id === 'saturday-sessions')?.events && eventDetails.find(e => e.id === 'saturday-sessions')!.events!.length > 0 && (
+                  <div className="mt-6">
+                    <h4 className="text-lg font-semibold text-blue-300 mb-3">Current Saturday Sessions:</h4>
+                    <div className="space-y-2">
+                      {eventDetails.find(e => e.id === 'saturday-sessions')!.events!.map((event, index) => (
+                        <div key={index} className="flex items-center justify-between bg-finance-navy/30 p-3 rounded-lg">
+                          <div>
+                            <div className="font-medium text-blue-400">{event.title}</div>
+                            {event.description && <div className="text-sm text-blue-300/70">{event.description}</div>}
+                          </div>
+                          <Button
+                            onClick={() => removeSaturdaySession(index)}
+                            variant="destructive"
+                            size="sm"
+                          >
+                            Remove
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </motion.div>
 
               {/* Networking Events */}
