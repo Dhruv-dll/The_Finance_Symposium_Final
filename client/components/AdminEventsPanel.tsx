@@ -20,6 +20,9 @@ export default function AdminEventsPanel({
     addFlagshipEvent,
     addUpcomingEvent,
     removeUpcomingEvent,
+    removeSaturdaySession,
+    removeNetworkingEvent,
+    removeFlagshipEvent,
     upcomingEvents,
     eventDetails,
   } = useEventsData();
