@@ -125,22 +125,6 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
       hoverIcon: "💼",
       section: "sponsors",
       noHover: true,
-      dropdown: [
-        {
-          name: "Our Sponsors",
-          href: "#sponsors",
-          icon: "🏛️",
-          description: "Our amazing partners",
-          section: "sponsors",
-        },
-        {
-          name: "Partnership Info",
-          href: "#sponsors",
-          icon: "🤝",
-          description: "Learn about partnerships",
-          section: "sponsors",
-        },
-      ],
     },
     {
       name: "Contact Us",
