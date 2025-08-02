@@ -91,7 +91,7 @@ export default function AdminEventsPanel({
         registrationLink: "",
         countdown: { days: 0, hours: 0, minutes: 0 },
       });
-      alert("Upcoming Event added successfully!");
+      alert(`Upcoming Event "${eventWithId.title}" added successfully! Check the timeline section.`);
     }
   };
 
