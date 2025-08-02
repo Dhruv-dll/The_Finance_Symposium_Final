@@ -73,7 +73,7 @@ const pastEvents: EventCard[] = [
   },
 ];
 
-const upcomingEvents: UpcomingEvent[] = [];
+
 
 export default function EventsSection() {
   const sectionRef = useRef<HTMLElement>(null);
