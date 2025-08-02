@@ -1,4 +1,10 @@
-import { useState, useEffect, createContext, useContext, ReactNode } from "react";
+import {
+  useState,
+  useEffect,
+  createContext,
+  useContext,
+  ReactNode,
+} from "react";
 
 interface EventDetails {
   id: string;
@@ -57,8 +63,10 @@ export function useEventPopup() {
   const context = useContext(EventPopupContext);
   if (context === undefined) {
     // During development/hot reload, provide a fallback instead of throwing
-    if (process.env.NODE_ENV === 'development') {
-      console.warn("useEventPopup called outside of EventPopupProvider, providing fallback");
+    if (process.env.NODE_ENV === "development") {
+      console.warn(
+        "useEventPopup called outside of EventPopupProvider, providing fallback",
+      );
       return {
         selectedEvent: null,
         setSelectedEvent: () => {},

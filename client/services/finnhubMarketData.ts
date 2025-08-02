@@ -93,7 +93,7 @@ class FinnhubMarketDataService {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => {
           controller.abort();
-          reject(new Error('Request timeout'));
+          reject(new Error("Request timeout"));
         }, 10000); // 10 second timeout
 
         fetch("/api/market-data", {
@@ -103,9 +103,12 @@ class FinnhubMarketDataService {
             "Cache-Control": "no-cache",
           },
           signal: controller.signal,
-        }).then(resolve).catch(reject).finally(() => {
-          clearTimeout(timeoutId);
-        });
+        })
+          .then(resolve)
+          .catch(reject)
+          .finally(() => {
+            clearTimeout(timeoutId);
+          });
       });
 
       const response = await fetchWithTimeout;
@@ -145,7 +148,7 @@ class FinnhubMarketDataService {
         currencies: data.currencies || [],
       };
     } catch (error) {
-      console.warn(`🔄 Server API failed:`, error?.message || 'Unknown error');
+      console.warn(`🔄 Server API failed:`, error?.message || "Unknown error");
 
       // Track API failures
       this.apiFailureCount++;
@@ -177,7 +180,9 @@ class FinnhubMarketDataService {
     currencies: CurrencyRate[];
   } {
     // Generate fallback stock data
-    const fallbackStocks = this.stocks.map(stock => this.getFallbackStockData(stock.symbol)).filter(Boolean) as FinnhubStockData[];
+    const fallbackStocks = this.stocks
+      .map((stock) => this.getFallbackStockData(stock.symbol))
+      .filter(Boolean) as FinnhubStockData[];
 
     // Calculate sentiment from fallback data
     const sentiment = this.calculateMarketSentiment(fallbackStocks);
@@ -185,12 +190,16 @@ class FinnhubMarketDataService {
     // Generate fallback currency data
     const currencies = this.getFallbackCurrencyData();
 
-    console.log("📊 Using fallback market data with", fallbackStocks.length, "stocks");
+    console.log(
+      "📊 Using fallback market data with",
+      fallbackStocks.length,
+      "stocks",
+    );
 
     return {
       stocks: fallbackStocks,
       sentiment,
-      currencies
+      currencies,
     };
   }
 
@@ -368,8 +377,6 @@ class FinnhubMarketDataService {
     ];
   }
 
-
-
   // Public method to update all data and notify subscribers
   async updateAllData(): Promise<void> {
     // Prevent concurrent updates
@@ -378,7 +385,9 @@ class FinnhubMarketDataService {
       // If we have cached data, notify subscribers immediately
       if (this.lastSuccessfulData) {
         try {
-          this.subscribers.forEach((callback) => callback(this.lastSuccessfulData));
+          this.subscribers.forEach((callback) =>
+            callback(this.lastSuccessfulData),
+          );
         } catch (error) {
           console.warn("Error notifying subscribers with cached data:", error);
         }
@@ -435,7 +444,10 @@ class FinnhubMarketDataService {
             try {
               callback(fallbackData);
             } catch (callbackError) {
-              console.warn("Error in fallback subscriber callback:", callbackError);
+              console.warn(
+                "Error in fallback subscriber callback:",
+                callbackError,
+              );
             }
           });
         } catch (error) {
@@ -443,7 +455,10 @@ class FinnhubMarketDataService {
         }
       }
     } catch (error) {
-      console.error("Failed to update market data:", error?.message || 'Unknown error');
+      console.error(
+        "Failed to update market data:",
+        error?.message || "Unknown error",
+      );
 
       // If we have cached data from previous successful call, use it
       if (this.lastSuccessfulData) {
@@ -546,7 +561,7 @@ class FinnhubMarketDataService {
           const fallbackData = this.getFallbackMarketData();
           this.lastSuccessfulData = fallbackData;
           try {
-            this.subscribers.forEach(cb => cb(fallbackData));
+            this.subscribers.forEach((cb) => cb(fallbackData));
           } catch (cbError) {
             console.warn("Error providing initial fallback data:", cbError);
           }
@@ -593,8 +608,6 @@ export interface CurrencyRate {
   changePercent: number;
   timestamp: Date;
 }
-
-
 
 export interface MarketSentiment {
   sentiment: "bullish" | "bearish" | "neutral";
