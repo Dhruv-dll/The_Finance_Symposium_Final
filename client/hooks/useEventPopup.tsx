@@ -24,23 +24,30 @@ const EventPopupContext = createContext<EventPopupContextType | undefined>(
 export function EventPopupProvider({ children }: { children: ReactNode }) {
   const [selectedEvent, setSelectedEvent] = useState<EventDetails | null>(null);
   const [eventDetailsData, setEventDetailsData] = useState<EventDetails[]>([]);
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  // Initialize the provider
+  useEffect(() => {
+    setIsInitialized(true);
+  }, []);
 
   const openEventPopup = (eventId: string) => {
+    if (!isInitialized) return;
     const eventDetail = eventDetailsData.find((e) => e.id === eventId);
     if (eventDetail) {
       setSelectedEvent(eventDetail);
     }
   };
 
+  const contextValue = {
+    selectedEvent,
+    setSelectedEvent,
+    openEventPopup,
+    setEventDetailsData,
+  };
+
   return (
-    <EventPopupContext.Provider
-      value={{
-        selectedEvent,
-        setSelectedEvent,
-        openEventPopup,
-        setEventDetailsData,
-      }}
-    >
+    <EventPopupContext.Provider value={contextValue}>
       {children}
     </EventPopupContext.Provider>
   );
