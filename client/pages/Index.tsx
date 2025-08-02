@@ -364,8 +364,9 @@ export default function Index() {
   ];
 
   return (
-    <EventPopupProvider>
-      <div className="min-h-screen">
+    <AuthProvider>
+      <EventPopupProvider>
+        <div className="min-h-screen">
         {/* Terminal Loader */}
         {showLoader && (
           <TerminalLoader onComplete={() => setShowLoader(false)} />
@@ -534,12 +535,20 @@ export default function Index() {
           </>
         )}
 
+        {/* Admin Login Panel */}
+        <AdminLogin
+          isOpen={showLoginPanel}
+          onClose={() => setShowLoginPanel(false)}
+          onSuccess={() => setShowAdminPanel(true)}
+        />
+
         {/* Admin Events Panel */}
         <AdminEventsPanel
           isOpen={showAdminPanel}
           onClose={() => setShowAdminPanel(false)}
         />
-      </div>
-    </EventPopupProvider>
+        </div>
+      </EventPopupProvider>
+    </AuthProvider>
   );
 }
