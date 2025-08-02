@@ -154,6 +154,14 @@ export function useEventsData() {
     return titleMap[id] || id;
   };
 
+  // Helper function to save config and notify other components
+  const saveConfig = (newConfig: EventsConfig) => {
+    setEventsConfig(newConfig);
+    localStorage.setItem("tfs-events-config", JSON.stringify(newConfig));
+    // Dispatch custom event to notify other components
+    window.dispatchEvent(new CustomEvent("tfs-events-updated"));
+  };
+
   // Admin functions to update events
   const addSaturdaySession = (event: EventItem) => {
     const newConfig = { ...eventsConfig };
@@ -163,8 +171,7 @@ export function useEventsData() {
     newConfig.pastEvents["saturday-sessions"].events!.push(event);
     newConfig.pastEvents["saturday-sessions"].comingSoon = false;
 
-    setEventsConfig(newConfig);
-    localStorage.setItem("tfs-events-config", JSON.stringify(newConfig));
+    saveConfig(newConfig);
   };
 
   const addNetworkingEvent = (event: EventItem) => {
