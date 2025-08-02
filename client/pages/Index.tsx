@@ -74,7 +74,7 @@ export default function Index() {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.ctrlKey && event.shiftKey && event.key === "A") {
         event.preventDefault();
-        setShowAdminPanel(true);
+        setShowLoginPanel(true);
       }
     };
 
