@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
+import { useEventPopup } from "../hooks/useEventPopup";
 
 interface EventCard {
   id: string;
