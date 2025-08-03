@@ -70,7 +70,7 @@ export default function ScrollProgressIndicator({
           <div className="relative">
             {/* Main Level Indicator */}
             <motion.div
-              className={`relative bg-finance-navy/90 backdrop-blur-xl border border-finance-gold/30 rounded-2xl p-4 shadow-2xl ${levelInfo.glow} min-w-[140px]`}
+              className={`relative bg-finance-navy/90 backdrop-blur-xl border border-finance-gold/30 rounded-2xl p-3 sm:p-4 shadow-2xl ${levelInfo.glow} min-w-[120px] sm:min-w-[140px]`}
               style={{
                 background:
                   "linear-gradient(135deg, rgba(0, 0, 18, 0.95) 0%, rgba(26, 26, 46, 0.95) 100%)",
