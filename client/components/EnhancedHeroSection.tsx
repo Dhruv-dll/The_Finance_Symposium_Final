@@ -740,9 +740,9 @@ export default function EnhancedHeroSection() {
 
           <motion.div
             className="relative mb-12"
-            initial={{ opacity: 0, y: 30 }}
+            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 1 }}
+            transition={isMobile ? { duration: 0 } : { duration: 1, delay: 1 }}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-finance-gold/20 to-finance-electric/20 blur-3xl rounded-full"></div>
             <p className="relative text-xl md:text-2xl text-foreground/90 font-medium mb-2">
