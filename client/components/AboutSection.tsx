@@ -97,16 +97,16 @@ export default function AboutSection() {
           {/* Stats Grid */}
           <motion.div
             className="grid grid-cols-2 gap-6"
-            initial={{ opacity: 0, x: 50 }}
+            initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={isMobile ? { duration: 0 } : { duration: 0.8, delay: 0.4 }}
           >
             {stats.map((stat, index) => (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, scale: 0.5 }}
+                initial={isMobile ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
+                transition={isMobile ? { duration: 0 } : { duration: 0.6, delay: 0.6 + index * 0.1 }}
                 className="relative group"
               >
                 <div
