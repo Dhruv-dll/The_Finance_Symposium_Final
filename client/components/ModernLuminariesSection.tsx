@@ -235,14 +235,7 @@ export default function ModernLuminariesSection() {
     const isHovered = hoveredCard === member.id;
 
     return (
-      <motion.div
-        initial={{ opacity: 0, x: -50, scale: 0.9 }}
-        animate={isInView ? { opacity: 1, x: 0, scale: 1 } : {}}
-        transition={{
-          duration: 0.6,
-          delay: index * 0.2,
-          ease: [0.22, 1, 0.36, 1]
-        }}
+      <div
         className="relative group"
         onMouseEnter={() => setHoveredCard(member.id)}
         onMouseLeave={() => setHoveredCard(null)}
@@ -460,7 +453,7 @@ export default function ModernLuminariesSection() {
             transition={{ duration: 0.3 }}
           />
         </motion.div>
-      </motion.div>
+      </div>
     );
   };
 
