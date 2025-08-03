@@ -761,7 +761,40 @@
       transform: none !important;
     }
 
-    /* Force desktop view on mobile - disable most responsive behavior */
+    /* Tablet-specific optimizations */
+  @media (min-width: 768px) and (max-width: 1024px) {
+    /* Ensure proper spacing for tablet layouts */
+    .container {
+      padding: 0 32px !important;
+    }
+
+    /* Tablet navigation optimizations */
+    nav {
+      min-height: 72px !important;
+    }
+
+    /* Better touch targets for tablets */
+    button, a, [role="button"] {
+      min-height: 42px !important;
+      min-width: 42px !important;
+    }
+
+    /* Market dashboard positioning for tablets */
+    .fixed.bottom-3, .fixed.bottom-4, .fixed.bottom-5 {
+      bottom: 20px !important;
+    }
+
+    .fixed.right-3, .fixed.right-4, .fixed.right-5 {
+      right: 20px !important;
+    }
+
+    /* Scroll progress indicator for tablets */
+    .fixed.top-1\/2 {
+      right: 16px !important;
+    }
+  }
+
+  /* Force desktop view on mobile - disable most responsive behavior */
   @media (max-width: 768px) {
     /* Disable mobile-specific styles - force desktop layout */
     .container {
