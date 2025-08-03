@@ -237,7 +237,7 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
         </motion.div>
       )}
 
-      <div className="container mx-auto px-6 py-4 relative">
+      <div className="container mx-auto px-4 py-2 sm:px-6 sm:py-3 md:py-4 relative">
         <div className="flex items-start justify-between">
           {/* Enhanced Logo Section - Aligned top left */}
           <motion.div
