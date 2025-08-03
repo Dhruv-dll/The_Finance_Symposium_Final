@@ -204,12 +204,40 @@ export function useEventsData() {
     return titleMap[id] || id;
   };
 
-  // Helper function to save config and notify other components
-  const saveConfig = (newConfig: EventsConfig) => {
-    setEventsConfig(newConfig);
-    localStorage.setItem("tfs-events-config", JSON.stringify(newConfig));
-    // Dispatch custom event to notify other components
-    window.dispatchEvent(new CustomEvent("tfs-events-updated"));
+  // Helper function to save config and sync with server
+  const saveConfig = async (newConfig: EventsConfig) => {
+    try {
+      // Add timestamp
+      newConfig.lastModified = Date.now();
+
+      // Update local state immediately
+      setEventsConfig(newConfig);
+      localStorage.setItem("tfs-events-config", JSON.stringify(newConfig));
+
+      // Sync with server
+      const response = await fetch("/api/events", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ data: newConfig }),
+      });
+
+      if (response.ok) {
+        console.log("Events data synced with server successfully");
+      } else {
+        console.warn("Failed to sync events data with server");
+      }
+
+      // Dispatch custom event to notify other components
+      window.dispatchEvent(new CustomEvent("tfs-events-updated"));
+    } catch (error) {
+      console.error("Error saving events config:", error);
+      // Still update local state even if server sync fails
+      setEventsConfig(newConfig);
+      localStorage.setItem("tfs-events-config", JSON.stringify(newConfig));
+      window.dispatchEvent(new CustomEvent("tfs-events-updated"));
+    }
   };
 
   // Admin functions to update events
