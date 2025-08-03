@@ -236,11 +236,11 @@ export default function ModernLuminariesSection() {
 
     return (
       <motion.div
-        initial={{ opacity: 0, y: 100, rotateX: -20 }}
-        animate={isInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
+        initial={{ opacity: 0, x: -50, scale: 0.9 }}
+        animate={isInView ? { opacity: 1, x: 0, scale: 1 } : {}}
         transition={{
-          duration: 0.8,
-          delay: index * 0.15,
+          duration: 0.6,
+          delay: index * 0.2,
           ease: [0.22, 1, 0.36, 1]
         }}
         className="relative group"
