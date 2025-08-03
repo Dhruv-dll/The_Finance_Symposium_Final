@@ -179,7 +179,7 @@ export default function MarketSidebar() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.1 }}
-              className="p-4 space-y-6 h-full overflow-y-auto custom-scrollbar"
+              className="p-2 sm:p-4 space-y-4 sm:space-y-6 h-full overflow-y-auto custom-scrollbar"
             >
               {/* Market Sentiment Indicator */}
               <div className="space-y-3">
