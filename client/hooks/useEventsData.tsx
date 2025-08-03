@@ -241,7 +241,7 @@ export function useEventsData() {
   };
 
   // Admin functions to update events
-  const addSaturdaySession = (event: EventItem) => {
+  const addSaturdaySession = async (event: EventItem) => {
     const newConfig = { ...eventsConfig };
     if (!newConfig.pastEvents["saturday-sessions"].events) {
       newConfig.pastEvents["saturday-sessions"].events = [];
@@ -249,7 +249,7 @@ export function useEventsData() {
     newConfig.pastEvents["saturday-sessions"].events!.push(event);
     newConfig.pastEvents["saturday-sessions"].comingSoon = false;
 
-    saveConfig(newConfig);
+    await saveConfig(newConfig);
   };
 
   const addNetworkingEvent = (event: EventItem) => {
