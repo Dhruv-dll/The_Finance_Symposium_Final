@@ -241,7 +241,7 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
         <div className="flex items-start justify-between">
           {/* Enhanced Logo Section - Aligned top left */}
           <motion.div
-            className="flex items-start space-x-2 sm:space-x-3"
+            className="flex items-start space-x-1 sm:space-x-2 md:space-x-3"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.3 }}
           >
