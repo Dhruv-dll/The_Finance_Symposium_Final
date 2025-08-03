@@ -346,15 +346,11 @@ export default function ModernLuminariesSection() {
                   {member.name}
                 </h3>
                 
-                <motion.p
+                <p
                   className="text-xs sm:text-sm text-white/90 font-medium text-center"
-                  animate={{
-                    opacity: isHovered ? 1 : 0.8,
-                  }}
-                  transition={{ duration: 0.2 }}
                 >
                   {member.title}
-                </motion.p>
+                </p>
 
                 {/* Expertise Tags */}
                 <div className="flex flex-wrap gap-1 justify-center">
