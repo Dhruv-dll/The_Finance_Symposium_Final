@@ -781,14 +781,17 @@ export default function EnhancedHeroSection() {
             {/* Floating Market Dashboard Icon - now positioned as fixed element */}
             <FloatingMarketIcon />
 
-            <motion.button
-              className="px-10 py-4 border-2 border-finance-gold text-finance-gold rounded-xl hover:bg-finance-gold hover:text-finance-navy transition-all duration-500 relative overflow-hidden group"
+            <motion.a
+              href="https://xaviers.edu/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-10 py-4 border-2 border-finance-gold text-finance-gold rounded-xl hover:bg-finance-gold hover:text-finance-navy transition-all duration-500 relative overflow-hidden group inline-block"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <span className="relative z-10">Join Community</span>
+              <span className="relative z-10">Visit College Website</span>
               <motion.div className="absolute inset-0 bg-gradient-to-r from-transparent via-finance-gold/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-            </motion.button>
+            </motion.a>
           </motion.div>
 
           {/* Enhanced floating financial symbols */}
