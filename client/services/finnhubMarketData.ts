@@ -415,6 +415,16 @@ class FinnhubMarketDataService {
         } catch (error) {
           console.warn("Error notifying subscribers with cached data:", error);
         }
+      } else if (!this.isInitialized) {
+        // If no cached data and not initialized, provide immediate fallback
+        const fallbackData = this.getFallbackMarketData();
+        this.lastSuccessfulData = fallbackData;
+        this.isInitialized = true;
+        try {
+          this.subscribers.forEach((callback) => callback(fallbackData));
+        } catch (error) {
+          console.warn("Error notifying subscribers with immediate fallback:", error);
+        }
       }
       return;
     }
@@ -428,7 +438,13 @@ class FinnhubMarketDataService {
         console.log("📊 Using fallback mode for data update");
         data = this.getFallbackMarketData();
       } else {
-        data = await this.fetchAllMarketData();
+        try {
+          data = await this.fetchAllMarketData();
+        } catch (fetchError) {
+          console.warn("📊 Fetch failed, switching to fallback:", fetchError.message);
+          this.fallbackMode = true;
+          data = this.getFallbackMarketData();
+        }
 
         // If server fails, switch to fallback
         if (!data) {
