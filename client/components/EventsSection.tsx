@@ -253,9 +253,9 @@ export default function EventsSection() {
         {/* Section Header */}
         <motion.div
           className="text-center mb-16"
-          initial={{ opacity: 0, y: -50 }}
+          initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: -50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+          transition={isMobile ? { duration: 0 } : { duration: 0.8 }}
         >
           <motion.h2
             className="text-5xl md:text-7xl font-bold mb-6"
