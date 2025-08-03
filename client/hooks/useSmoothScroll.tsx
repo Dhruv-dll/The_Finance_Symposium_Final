@@ -226,7 +226,19 @@ export const useScrollProgress = () => {
       }
     };
 
-    window.addEventListener("scroll", updateScrollProgress, { passive: true });
+    // Add throttling for better performance
+    let ticking = false;
+    const throttledUpdateScrollProgress = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateScrollProgress();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", throttledUpdateScrollProgress, { passive: true });
     updateScrollProgress();
 
     return () => {
