@@ -703,9 +703,9 @@ export default function EnhancedHeroSection() {
         <div className="text-center px-6 max-w-5xl mx-auto">
           <motion.h1
             className="text-6xl md:text-8xl font-bold mb-8 leading-tight"
-            initial={{ opacity: 0, y: 50 }}
+            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.5 }}
+            transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.5 }}
           >
             <motion.span
               className="block bg-gradient-to-r from-finance-electric via-finance-gold to-finance-electric bg-clip-text text-transparent"
