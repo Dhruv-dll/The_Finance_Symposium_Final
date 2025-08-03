@@ -377,9 +377,14 @@ export default function HeroSection() {
             <button className="px-8 py-4 bg-gradient-to-r from-finance-gold to-finance-electric text-finance-navy font-bold rounded-lg market-glow glow-effect transform hover:scale-105 transition-all duration-300">
               Explore Events
             </button>
-            <button className="px-8 py-4 border-2 border-finance-gold text-finance-gold rounded-lg hover:bg-finance-gold hover:text-finance-navy transition-all duration-300 glow-effect">
-              Join Community
-            </button>
+            <a
+              href="https://xaviers.edu/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-8 py-4 border-2 border-finance-gold text-finance-gold rounded-lg hover:bg-finance-gold hover:text-finance-navy transition-all duration-300 glow-effect inline-block"
+            >
+              Visit College Website
+            </a>
           </div>
 
           {/* Floating Financial Symbols */}
