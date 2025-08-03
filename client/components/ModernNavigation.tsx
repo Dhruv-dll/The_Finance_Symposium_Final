@@ -64,7 +64,7 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
     }
   }, [eventDetails, setEventDetailsData]);
 
-  const navItems = [
+  const navItems: NavigationItem[] = [
     {
       name: "About",
       href: "#about",
