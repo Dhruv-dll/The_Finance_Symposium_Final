@@ -622,15 +622,27 @@ export default function EnhancedHeroSection() {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth) * 2 - 1,
-        y: -(e.clientY / window.innerHeight) * 2 + 1,
-      });
+      if (!isMobile) {
+        setMousePosition({
+          x: (e.clientX / window.innerWidth) * 2 - 1,
+          y: -(e.clientY / window.innerHeight) * 2 + 1,
+        });
+      }
     };
 
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, [isMobile]);
 
   return (
     <motion.section
