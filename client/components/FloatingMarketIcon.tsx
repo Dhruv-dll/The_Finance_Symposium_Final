@@ -68,7 +68,7 @@ export default function FloatingMarketIcon({
     if ("vibrate" in navigator) {
       navigator.vibrate(50); // Short vibration
     }
-    setIsOpen(true);
+    toggleOpen();
   };
 
   return (
