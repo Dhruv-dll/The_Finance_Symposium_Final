@@ -28,7 +28,6 @@ const App = () => {
       <SoundProvider>
         <Toaster />
         <Sonner />
-        <SoundControls />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
