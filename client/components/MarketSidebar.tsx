@@ -240,14 +240,14 @@ export default function MarketSidebar() {
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className="p-3 rounded-lg bg-finance-navy/30 border border-finance-gold/20 hover:border-finance-gold/40 transition-all duration-300"
+                      className="p-2 sm:p-3 rounded-lg bg-finance-navy/30 border border-finance-gold/20 hover:border-finance-gold/40 transition-all duration-300"
                     >
                       <div className="flex items-center justify-between">
-                        <span className="font-medium text-finance-gold text-sm">
+                        <span className="font-medium text-finance-gold text-xs sm:text-sm">
                           {stock.symbol}
                         </span>
                         <div className="text-right">
-                          <div className="text-xs text-foreground">
+                          <div className="text-xs sm:text-sm font-semibold text-foreground">
                             {formatPrice(
                               stock.price,
                               stock.symbol.includes("SENSEX") ||
@@ -257,7 +257,7 @@ export default function MarketSidebar() {
                             )}
                           </div>
                           <div
-                            className={`text-xs ${getChangeColor(stock.changePercent)}`}
+                            className={`text-xs sm:text-sm font-bold ${getChangeColor(stock.changePercent)}`}
                           >
                             {formatChange(stock.changePercent)}
                           </div>
