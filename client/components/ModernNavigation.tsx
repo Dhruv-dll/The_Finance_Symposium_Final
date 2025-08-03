@@ -431,7 +431,7 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
           <div className="hidden lg:flex items-center space-x-2">
             <NavigationMenu>
               <NavigationMenuList className="space-x-2">
-                {navItems.map((item, index) => (
+                {navItems.filter(item => !item.mobileOnly).map((item, index) => (
                   <NavigationMenuItem key={index}>
                     {item.dropdown ? (
                       <>
