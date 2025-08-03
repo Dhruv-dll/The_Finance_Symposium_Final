@@ -761,13 +761,63 @@
       transform: none !important;
     }
 
-    /* Force static positioning for mobile elements */
+    /* Comprehensive mobile animation disabling */
     @media (max-width: 768px) {
+      /* Disable most framer-motion animations */
       .mobile-static {
         opacity: 1 !important;
         transform: none !important;
         transition: none !important;
         animation: none !important;
+      }
+
+      /* Disable entrance animations globally on mobile */
+      * {
+        animation-duration: 0.1s !important;
+        animation-delay: 0s !important;
+      }
+
+      /* Specifically target motion components */
+      [style*="opacity: 0"] {
+        opacity: 1 !important;
+      }
+
+      [style*="transform"] {
+        transform: none !important;
+      }
+
+      /* Disable complex transforms and 3D effects */
+      .preserve-3d {
+        transform-style: flat !important;
+      }
+
+      .perspective-1000 {
+        perspective: none !important;
+      }
+
+      /* Smooth scroll behavior */
+      html {
+        scroll-behavior: smooth !important;
+      }
+
+      /* Optimize rendering for mobile */
+      * {
+        will-change: auto !important;
+        backface-visibility: visible !important;
+      }
+
+      /* Disable hover effects on mobile */
+      *:hover {
+        transform: none !important;
+        scale: 1 !important;
+      }
+
+      /* Ensure text is immediately visible */
+      .text-transparent {
+        color: #FFD700 !important;
+        background: none !important;
+        -webkit-background-clip: unset !important;
+        background-clip: unset !important;
       }
     }
   }
