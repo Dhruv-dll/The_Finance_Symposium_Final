@@ -87,25 +87,73 @@ export function useEventsData() {
     return false;
   };
 
-  useEffect(() => {
-    // Try to load from local storage first (for admin changes)
-    const loadedFromStorage = loadEventsConfig();
-
-    if (!loadedFromStorage) {
-      // Try to load from JSON file
-      fetch("/client/data/eventsConfig.json")
-        .then((response) => response.json())
-        .then((data) => {
-          setEventsConfig(data);
-          // Save to local storage for future admin edits
-          localStorage.setItem("tfs-events-config", JSON.stringify(data));
-        })
-        .catch((error) => {
-          console.warn("Failed to load events config, using default");
-          setEventsConfig(defaultConfig);
-        });
+  // Load events data with server sync
+  const loadEventsFromServer = async () => {
+    try {
+      const response = await fetch("/api/events");
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success && result.data) {
+          setEventsConfig(result.data);
+          // Update local storage with server data
+          localStorage.setItem("tfs-events-config", JSON.stringify(result.data));
+          return true;
+        }
+      }
+      throw new Error("Server request failed");
+    } catch (error) {
+      console.warn("Failed to load events from server, using local/default data");
+      return false;
     }
-    setLoading(false);
+  };
+
+  // Check if local data needs sync with server
+  const checkServerSync = async () => {
+    try {
+      const localConfig = localStorage.getItem("tfs-events-config");
+      const localLastModified = localConfig
+        ? JSON.parse(localConfig).lastModified || 0
+        : 0;
+
+      const response = await fetch(`/api/events/sync?lastModified=${localLastModified}`);
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success && result.needsUpdate) {
+          console.log("Server has newer events data, syncing...");
+          await loadEventsFromServer();
+        }
+      }
+    } catch (error) {
+      console.warn("Failed to check server sync:", error);
+    }
+  };
+
+  useEffect(() => {
+    const initializeEvents = async () => {
+      // First try to load from local storage
+      const loadedFromStorage = loadEventsConfig();
+
+      if (!loadedFromStorage) {
+        // No local data, load from server
+        const loadedFromServer = await loadEventsFromServer();
+        if (!loadedFromServer) {
+          // Fallback to default if server fails
+          setEventsConfig(defaultConfig);
+        }
+      } else {
+        // Have local data, check if server has updates
+        await checkServerSync();
+      }
+
+      setLoading(false);
+    };
+
+    initializeEvents();
+
+    // Set up periodic sync check every 30 seconds
+    const syncInterval = setInterval(checkServerSync, 30000);
+
+    return () => clearInterval(syncInterval);
   }, []);
 
   // Listen for localStorage changes from admin panel
