@@ -596,6 +596,7 @@ function CursorTrail() {
 
 export default function EnhancedHeroSection() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
   const { scrollYProgress } = useScroll();
 
   // Color temperature transformation
