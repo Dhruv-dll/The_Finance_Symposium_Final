@@ -357,11 +357,11 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
             <div className="hidden md:block ml-4">
               <motion.h1
                 className="text-xl font-bold bg-gradient-to-r from-finance-gold to-finance-electric bg-clip-text text-transparent"
-                animate={{
+                animate={!reducedMotion ? {
                   backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-                }}
+                } : {}}
                 transition={{
-                  duration: 5,
+                  duration: isMobile ? 10 : 5,
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
