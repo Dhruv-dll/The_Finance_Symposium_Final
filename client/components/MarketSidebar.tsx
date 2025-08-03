@@ -183,7 +183,7 @@ export default function MarketSidebar() {
             >
               {/* Market Sentiment Indicator */}
               <div className="space-y-3">
-                <h4 className="text-sm font-semibold text-finance-electric">
+                <h4 className="text-xs sm:text-sm font-semibold text-finance-electric">
                   Market Sentiment
                 </h4>
                 <motion.div
