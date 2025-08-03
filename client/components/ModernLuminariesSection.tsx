@@ -26,7 +26,7 @@ import {
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
-import { SectionMorphingElements } from "./Morphing3DElements";
+import { DesktopLightElements, MobileLightElements } from "./LightMorphingElements";
 
 interface TeamMember {
   id: string;
@@ -191,6 +191,17 @@ export default function ModernLuminariesSection() {
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
   const [activeGroup, setActiveGroup] = useState<'faculty' | 'leadership'>('faculty');
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -238,7 +249,7 @@ export default function ModernLuminariesSection() {
       >
         {/* 3D Card Container */}
         <motion.div
-          className="relative h-96 perspective-1000"
+          className="relative h-80 sm:h-96 perspective-1000"
           style={{
             rotateX: isHovered ? 5 : 0,
             rotateY: isHovered ? 2 : 0,
@@ -248,7 +259,7 @@ export default function ModernLuminariesSection() {
         >
           {/* Main Card */}
           <motion.div
-            className="relative h-full rounded-3xl overflow-hidden cursor-pointer preserve-3d"
+            className="relative h-full rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer preserve-3d"
             onClick={() => setSelectedMember(member)}
             style={{
               background: member.isLeadership
@@ -305,7 +316,7 @@ export default function ModernLuminariesSection() {
             </div>
 
             {/* Card Content */}
-            <div className="relative h-full p-6 flex flex-col justify-between z-10">
+            <div className="relative h-full p-4 sm:p-6 flex flex-col justify-between z-10">
               {/* Header with Role Badge */}
               <div className="space-y-4">
                 {member.isLeadership && (
@@ -323,7 +334,7 @@ export default function ModernLuminariesSection() {
 
                 {/* Avatar Placeholder with Glow */}
                 <motion.div
-                  className="relative w-20 h-20 mx-auto"
+                  className="relative w-16 h-16 sm:w-20 sm:h-20 mx-auto"
                   animate={{
                     scale: isHovered ? 1.1 : 1,
                     rotate: isHovered ? 5 : 0,
@@ -333,7 +344,7 @@ export default function ModernLuminariesSection() {
                   <div 
                     className="w-full h-full rounded-2xl bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm border border-white/20 flex items-center justify-center relative overflow-hidden"
                   >
-                    <Users className="w-10 h-10 text-white/80" />
+                    <Users className="w-8 h-8 sm:w-10 sm:h-10 text-white/80" />
                     
                     {/* Glow Effect */}
                     <motion.div
@@ -352,7 +363,7 @@ export default function ModernLuminariesSection() {
               {/* Member Info */}
               <div className="text-center text-white space-y-3">
                 <motion.h3
-                  className="text-xl font-bold"
+                  className="text-lg sm:text-xl font-bold text-center"
                   style={{ textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}
                   animate={{
                     scale: isHovered ? 1.05 : 1,
@@ -363,7 +374,7 @@ export default function ModernLuminariesSection() {
                 </motion.h3>
                 
                 <motion.p
-                  className="text-sm text-white/90 font-medium"
+                  className="text-xs sm:text-sm text-white/90 font-medium text-center"
                   animate={{
                     opacity: isHovered ? 1 : 0.8,
                   }}
@@ -462,8 +473,8 @@ export default function ModernLuminariesSection() {
         background: "linear-gradient(135deg, #000012 0%, #0a0a23 25%, #1a1a2e 50%, #16213e 75%, #0f3460 100%)",
       }}
     >
-      {/* Morphing 3D Financial Elements */}
-      <SectionMorphingElements />
+      {/* Optimized Morphing Elements */}
+      {isMobile ? <MobileLightElements /> : <DesktopLightElements />}
       {/* Animated 3D Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Floating Financial Icons */}
@@ -550,7 +561,7 @@ export default function ModernLuminariesSection() {
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         >
           <motion.h2
-            className="text-6xl md:text-8xl font-bold mb-6 relative"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 relative px-4"
             style={{
               background: "linear-gradient(135deg, #60a5fa 0%, #a855f7 25%, #fbbf24 50%, #06b6d4 75%, #60a5fa 100%)",
               backgroundSize: "300% 100%",
@@ -605,12 +616,12 @@ export default function ModernLuminariesSection() {
           </motion.div>
 
           <motion.p
-            className="text-xl text-white/80 max-w-3xl mx-auto leading-relaxed"
+            className="text-lg sm:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed px-4"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.5 }}
           >
-            Discover the brilliant minds shaping the future of finance education. 
+            Discover the brilliant minds shaping the future of finance education.
             Our distinguished faculty and visionary student leaders are here to guide your journey.
           </motion.p>
         </motion.div>
@@ -672,7 +683,7 @@ export default function ModernLuminariesSection() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -100 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 sm:gap-8 px-4 sm:px-0"
           >
             {currentMembers.map((member, index) => (
               <MemberCard key={member.id} member={member} index={index} />
