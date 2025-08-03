@@ -473,6 +473,29 @@ export default function ModernLuminariesSection() {
         background: "linear-gradient(135deg, #000012 0%, #0a0a23 25%, #1a1a2e 50%, #16213e 75%, #0f3460 100%)",
       }}
     >
+      {/* Background Particles */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(50)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-finance-gold/30 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -20, 0],
+              opacity: [0.3, 0.8, 0.3],
+            }}
+            transition={{
+              duration: 4 + Math.random() * 3,
+              repeat: Infinity,
+              delay: Math.random() * 2,
+            }}
+          />
+        ))}
+      </div>
+
       {/* Optimized Morphing Elements */}
       {isMobile ? <MobileLightElements /> : <DesktopLightElements />}
       {/* Animated 3D Background Elements */}
