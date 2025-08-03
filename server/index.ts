@@ -22,5 +22,10 @@ export function createServer() {
   app.get("/api/demo", handleDemo);
   app.get("/api/market-data", getMarketData);
 
+  // Events API endpoints
+  app.get("/api/events", getEventsData);
+  app.post("/api/events", updateEventsData);
+  app.get("/api/events/sync", checkEventsSync);
+
   return app;
 }
