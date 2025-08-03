@@ -121,7 +121,9 @@ export default function MarketSidebar() {
         animate={{ x: 0, opacity: 1 }}
         exit={{ x: 400, opacity: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className={`fixed right-4 top-24 bottom-4 ${isMinimized ? "w-16" : "w-80"} z-40 transition-all duration-500`}
+        className={`fixed right-2 sm:right-4 top-20 sm:top-24 bottom-2 sm:bottom-4 ${
+          isMinimized ? "w-12 sm:w-16" : "w-72 sm:w-80"
+        } z-40 transition-all duration-500`}
       >
         <motion.div
           className={`h-full backdrop-blur-xl bg-gradient-to-b ${sentimentColors.bg} ${sentimentColors.border} ${sentimentColors.glow} border rounded-2xl overflow-hidden transition-all duration-500`}
