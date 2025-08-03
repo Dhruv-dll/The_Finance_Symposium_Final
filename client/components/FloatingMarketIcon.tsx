@@ -234,7 +234,7 @@ export default function FloatingMarketIcon({
       </motion.div>
 
       {/* Tabbed Market Dashboard */}
-      <TabbedMarketDashboard isOpen={isOpen} onOpenChange={setIsOpen} />
+      <TabbedMarketDashboard isOpen={isOpen} onOpenChange={(open) => toggleOpen()} />
     </>
   );
 }
