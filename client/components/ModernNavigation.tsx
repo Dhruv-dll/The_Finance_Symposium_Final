@@ -785,11 +785,8 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                         className="w-full justify-start text-foreground hover:text-finance-gold hover:bg-finance-gold/10 group"
                         onClick={() => {
                           if (item.section === 'market') {
-                            // Toggle market sidebar visibility
-                            const marketSidebar = document.querySelector('.fixed.right-4.top-24');
-                            if (marketSidebar) {
-                              marketSidebar.classList.toggle('hidden');
-                            }
+                            // Toggle market dashboard using context
+                            toggleMarketDashboard();
                           } else if (item.section) {
                             scrollToElement(`#${item.section}`);
                           }
