@@ -643,8 +643,16 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.4, ease: "easeInOut" }}
+              transition={{
+                duration: isMobile ? 0.2 : 0.4,
+                ease: "easeInOut",
+                type: isMobile ? "tween" : "spring"
+              }}
               className="lg:hidden mt-2 sm:mt-3 backdrop-blur-xl bg-finance-navy/80 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-finance-gold/20 overflow-hidden"
+              style={{
+                willChange: 'height, opacity',
+                backfaceVisibility: 'hidden',
+              }}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-finance-gold/10 to-finance-electric/10 -z-10"></div>
 
