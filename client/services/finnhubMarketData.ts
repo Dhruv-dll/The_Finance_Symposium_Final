@@ -160,14 +160,25 @@ class FinnhubMarketDataService {
         currencies: data.currencies || [],
       };
     } catch (error) {
-      console.warn(`🔄 Server API failed:`, error?.message || "Unknown error");
+      const errorMessage = error?.message || "Unknown error";
+      console.warn(`🔄 Server API failed:`, errorMessage);
 
       // Track API failures
       this.apiFailureCount++;
 
-      if (this.apiFailureCount >= 2) {
+      // More aggressive fallback for network errors
+      if (errorMessage.includes('Network error') ||
+          errorMessage.includes('Failed to fetch') ||
+          errorMessage.includes('timeout') ||
+          this.apiFailureCount >= 2) {
         this.fallbackMode = true;
-        console.log("⚠️ Switching to fallback mode due to API issues");
+        console.log("⚠️ Switching to fallback mode due to API issues:", errorMessage);
+        return this.getFallbackMarketData();
+      }
+
+      // For first failure, try again with fallback
+      if (this.apiFailureCount === 1) {
+        console.log("📊 First API failure, providing fallback data");
         return this.getFallbackMarketData();
       }
 
