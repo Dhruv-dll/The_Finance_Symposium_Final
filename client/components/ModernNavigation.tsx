@@ -308,15 +308,13 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
               title="Back to Top"
             >
               <div
-                className="flex items-center justify-center rounded-xl"
+                className="flex items-center justify-center rounded-xl w-[45px] h-[45px] sm:w-[55px] sm:h-[55px] md:w-[65px] md:h-[65px]"
                 style={{
                   backgroundImage:
                     "url(https://cdn.builder.io/api/v1/image/assets%2F929e4df9940a4d789ccda51924367667%2F73bba102e8354fd08a042b5f690f50cd)",
                   backgroundRepeat: "no-repeat",
                   backgroundPosition: "center",
                   backgroundSize: "cover",
-                  width: "75px",
-                  height: "75px",
                   margin: "1px 0 0 -5px",
                   borderColor: "rgba(255, 236, 179, 1)",
                   boxShadow: "1px 1px 3px 0 rgba(0, 0, 0, 1)",
