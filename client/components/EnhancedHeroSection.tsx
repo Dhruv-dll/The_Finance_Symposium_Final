@@ -25,7 +25,7 @@ function FinancialParticles() {
     }>
   >([]);
 
-  const symbols = ["₹", "$", "€", "£", "¥", "📈", "📊", "💰", "💎", "⚡"];
+  const symbols = ["₹", "$", "€", "£", "¥", "📈", "📊", "💰", "💎", "���"];
 
   useEffect(() => {
     const newParticles = Array.from({ length: 50 }, (_, i) => ({
@@ -755,9 +755,9 @@ export default function EnhancedHeroSection() {
 
           <motion.div
             className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8"
-            initial={{ opacity: 0, y: 30 }}
+            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 1.5 }}
+            transition={isMobile ? { duration: 0 } : { duration: 1, delay: 1.5 }}
           >
             <motion.button
               className="px-10 py-4 bg-gradient-to-r from-finance-gold to-finance-electric text-finance-navy font-bold rounded-xl relative overflow-hidden group"
