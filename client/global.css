@@ -847,6 +847,28 @@
     }
   }
 
+  /* Large screen optimizations */
+  @media (min-width: 1024px) {
+    /* Ensure optimal layout for large screens */
+    .container {
+      max-width: 1400px !important;
+    }
+
+    /* Enhanced navigation for large screens */
+    nav {
+      min-height: 80px !important;
+    }
+
+    /* Better positioning for large screens */
+    .fixed.bottom-5 {
+      bottom: 24px !important;
+    }
+
+    .fixed.right-5 {
+      right: 24px !important;
+    }
+  }
+
   /* Comprehensive mobile animation disabling */
   @media (max-width: 768px) {
       /* Disable most framer-motion animations */
