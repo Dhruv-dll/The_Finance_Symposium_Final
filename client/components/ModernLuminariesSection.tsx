@@ -555,75 +555,33 @@ export default function ModernLuminariesSection() {
       <div className="container mx-auto px-6 relative z-10">
         {/* Enhanced Section Header */}
         <motion.div
-          className="text-center mb-20"
+          className="text-center mb-16"
           initial={{ opacity: 0, y: -50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.8 }}
         >
           <motion.h2
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 relative px-4"
+            className="text-5xl md:text-7xl font-bold mb-6"
             style={{
-              background: "linear-gradient(135deg, #60a5fa 0%, #a855f7 25%, #fbbf24 50%, #06b6d4 75%, #60a5fa 100%)",
-              backgroundSize: "300% 100%",
+              background: "linear-gradient(135deg, #FFD700 0%, #00FFFF 50%, #FFD700 100%)",
               backgroundClip: "text",
               WebkitBackgroundClip: "text",
               color: "transparent",
-            }}
-            animate={{
-              backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "linear",
+              textShadow: "0 0 30px rgba(255, 215, 0, 0.5)",
             }}
           >
             Meet Our Luminaries
           </motion.h2>
-          
           <motion.div
-            className="flex items-center justify-center space-x-4 mb-8"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            <motion.div
-              className="w-32 h-1 bg-gradient-to-r from-transparent via-blue-400 to-transparent"
-              animate={{
-                scaleX: [0.5, 1, 0.5],
-                opacity: [0.5, 1, 0.5],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-            <Sparkles className="w-6 h-6 text-amber-400" />
-            <motion.div
-              className="w-32 h-1 bg-gradient-to-r from-transparent via-purple-400 to-transparent"
-              animate={{
-                scaleX: [0.5, 1, 0.5],
-                opacity: [0.5, 1, 0.5],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1.5,
-              }}
-            />
-          </motion.div>
-
-          <motion.p
-            className="text-lg sm:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed px-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.5 }}
-          >
+            className="w-32 h-1 bg-gradient-to-r from-transparent via-finance-gold to-transparent mx-auto mb-6"
+            initial={{ scaleX: 0 }}
+            animate={isInView ? { scaleX: 1 } : {}}
+            transition={{ duration: 1, delay: 0.5 }}
+          />
+          <p className="text-xl text-foreground/80 max-w-3xl mx-auto">
             Discover the brilliant minds shaping the future of finance education.
             Our distinguished faculty and visionary student leaders are here to guide your journey.
-          </motion.p>
+          </p>
         </motion.div>
 
         {/* Group Selector */}
