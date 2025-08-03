@@ -3,7 +3,7 @@ import ModernNavigation from "../components/ModernNavigation";
 import EnhancedHeroSection from "../components/EnhancedHeroSection";
 import TerminalLoader from "../components/TerminalLoader";
 import ModernLuminariesSection from "../components/ModernLuminariesSection";
-import ModernFinsightSection from "../components/ModernFinsightSection";
+import OptimizedFinsightSection from "../components/OptimizedFinsightSection";
 import MarketDataErrorBoundary, {
   NetworkStatusIndicator,
 } from "../components/MarketDataErrorBoundary";
@@ -410,7 +410,7 @@ export default function Index() {
 
               {/* Insights Section */}
               <section id="insights">
-                <ModernFinsightSection />
+                <OptimizedFinsightSection />
               </section>
 
               {/* Sponsors Section */}
