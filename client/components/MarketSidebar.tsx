@@ -137,7 +137,7 @@ export default function MarketSidebar() {
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         >
           {/* Header */}
-          <div className="p-4 border-b border-finance-gold/20 bg-finance-navy/50">
+          <div className="p-2 sm:p-4 border-b border-finance-gold/20 bg-finance-navy/50">
             <div className="flex items-center justify-between">
               {!isMinimized && (
                 <motion.h3
