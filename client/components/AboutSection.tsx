@@ -55,9 +55,9 @@ export default function AboutSection() {
         {/* Section Header */}
         <motion.div
           className="text-center mb-16"
-          initial={{ opacity: 0, y: -30 }}
+          initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: -30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+          transition={isMobile ? { duration: 0 } : { duration: 0.8 }}
         >
           <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-finance-gold to-finance-electric bg-clip-text text-transparent">
             About TFS
