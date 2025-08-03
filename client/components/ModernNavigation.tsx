@@ -31,6 +31,18 @@ interface ModernNavigationProps {
   scrolled: boolean;
 }
 
+interface NavigationItem {
+  name: string;
+  href: string;
+  icon: any;
+  color: string;
+  hoverIcon: string;
+  section: string;
+  dropdown?: any[];
+  noHover?: boolean;
+  mobileOnly?: boolean;
+}
+
 export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
