@@ -528,6 +528,11 @@ function CursorTrail() {
     };
   }, [isMobile]);
 
+  // Don't render anything on mobile devices
+  if (isMobile) {
+    return null;
+  }
+
   return (
     <div className="fixed inset-0 pointer-events-none z-30">
       {/* Main cursor glow */}
