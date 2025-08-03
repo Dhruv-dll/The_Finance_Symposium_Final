@@ -6,7 +6,6 @@ import {
   TrendingDown,
   Calendar,
   DollarSign,
-
   Activity,
   ChevronRight,
   Eye,
@@ -16,7 +15,6 @@ import {
   accurateMarketDataService,
   AccurateStockData,
   MarketSentiment,
-
   ForexData,
   safeFormatTimestamp,
 } from "../services/accurateMarketData";
@@ -268,8 +266,6 @@ export default function MarketSidebar() {
                   ))}
                 </div>
               </div>
-
-
 
               {/* Forex Exchange Rates */}
               <div className="space-y-3">

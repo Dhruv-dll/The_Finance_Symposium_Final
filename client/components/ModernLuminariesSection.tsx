@@ -26,7 +26,10 @@ import {
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
-import { DesktopLightElements, MobileLightElements } from "./LightMorphingElements";
+import {
+  DesktopLightElements,
+  MobileLightElements,
+} from "./LightMorphingElements";
 
 interface TeamMember {
   id: string;
@@ -56,10 +59,16 @@ const facultyMembers: TeamMember[] = [
       "PhD in Financial Economics",
       "Published 25+ research papers",
       "Former Investment Banking Analyst",
-      "Best Teacher Award 2023"
+      "Best Teacher Award 2023",
     ],
-    expertise: ["Behavioral Finance", "Market Analysis", "Portfolio Management", "Financial Modeling"],
-    quote: "Finance is not just about numbers, it's about understanding human behavior and market psychology."
+    expertise: [
+      "Behavioral Finance",
+      "Market Analysis",
+      "Portfolio Management",
+      "Financial Modeling",
+    ],
+    quote:
+      "Finance is not just about numbers, it's about understanding human behavior and market psychology.",
   },
   {
     id: "pratik-purohit",
@@ -73,10 +82,16 @@ const facultyMembers: TeamMember[] = [
       "CFA Charterholder",
       "Former Quant Analyst",
       "FinTech Innovation Award",
-      "Industry Consultant"
+      "Industry Consultant",
     ],
-    expertise: ["Quantitative Finance", "Algorithmic Trading", "Risk Management", "FinTech"],
-    quote: "The future of finance lies in the intersection of technology and traditional financial wisdom."
+    expertise: [
+      "Quantitative Finance",
+      "Algorithmic Trading",
+      "Risk Management",
+      "FinTech",
+    ],
+    quote:
+      "The future of finance lies in the intersection of technology and traditional financial wisdom.",
   },
   {
     id: "kamalika-ray",
@@ -89,10 +104,16 @@ const facultyMembers: TeamMember[] = [
       "MBA Finance",
       "10+ years industry experience",
       "Corporate Training Expert",
-      "Industry Partnership Leader"
+      "Industry Partnership Leader",
     ],
-    expertise: ["Corporate Finance", "Financial Planning", "Industry Relations", "Training"],
-    quote: "Bridging the gap between academic knowledge and industry practice is key to student success."
+    expertise: [
+      "Corporate Finance",
+      "Financial Planning",
+      "Industry Relations",
+      "Training",
+    ],
+    quote:
+      "Bridging the gap between academic knowledge and industry practice is key to student success.",
   },
   {
     id: "vinayak-thool",
@@ -105,10 +126,16 @@ const facultyMembers: TeamMember[] = [
       "Financial Technology Expert",
       "Digital Innovation Leader",
       "Platform Development",
-      "Tech Integration Specialist"
+      "Tech Integration Specialist",
     ],
-    expertise: ["Financial Technology", "Digital Platforms", "Innovation", "Tech Integration"],
-    quote: "Technology is transforming finance, and we must embrace this change to stay ahead."
+    expertise: [
+      "Financial Technology",
+      "Digital Platforms",
+      "Innovation",
+      "Tech Integration",
+    ],
+    quote:
+      "Technology is transforming finance, and we must embrace this change to stay ahead.",
   },
   {
     id: "lloyd-serrao",
@@ -121,11 +148,17 @@ const facultyMembers: TeamMember[] = [
       "Market Research Expert",
       "Data Analytics Specialist",
       "Investment Strategy Advisor",
-      "Research Publication Leader"
+      "Research Publication Leader",
     ],
-    expertise: ["Market Analytics", "Data Science", "Investment Research", "Statistical Analysis"],
-    quote: "In the world of finance, data tells the story that drives successful investment decisions."
-  }
+    expertise: [
+      "Market Analytics",
+      "Data Science",
+      "Investment Research",
+      "Statistical Analysis",
+    ],
+    quote:
+      "In the world of finance, data tells the story that drives successful investment decisions.",
+  },
 ];
 
 const leadershipMembers: TeamMember[] = [
@@ -141,11 +174,17 @@ const leadershipMembers: TeamMember[] = [
       "President's Honor Roll",
       "Finance Competition Winner",
       "Leadership Excellence Award",
-      "Community Service Champion"
+      "Community Service Champion",
     ],
-    expertise: ["Leadership", "Strategic Planning", "Team Management", "Vision Setting"],
-    quote: "Leading by example and empowering others to achieve their financial dreams.",
-    isLeadership: true
+    expertise: [
+      "Leadership",
+      "Strategic Planning",
+      "Team Management",
+      "Vision Setting",
+    ],
+    quote:
+      "Leading by example and empowering others to achieve their financial dreams.",
+    isLeadership: true,
   },
   {
     id: "akarsh-ojha",
@@ -159,11 +198,17 @@ const leadershipMembers: TeamMember[] = [
       "Networking Excellence Award",
       "Industry Connect Leader",
       "Event Management Expert",
-      "Alumni Relations Champion"
+      "Alumni Relations Champion",
     ],
-    expertise: ["Networking", "Relationship Building", "Event Planning", "Industry Connections"],
-    quote: "Every connection is an opportunity, every conversation is a chance to grow.",
-    isLeadership: true
+    expertise: [
+      "Networking",
+      "Relationship Building",
+      "Event Planning",
+      "Industry Connections",
+    ],
+    quote:
+      "Every connection is an opportunity, every conversation is a chance to grow.",
+    isLeadership: true,
   },
   {
     id: "jatin-phulwani",
@@ -177,19 +222,27 @@ const leadershipMembers: TeamMember[] = [
       "Operations Excellence Award",
       "Project Management Certification",
       "Process Optimization Leader",
-      "Team Coordination Expert"
+      "Team Coordination Expert",
     ],
-    expertise: ["Operations Management", "Project Planning", "Process Optimization", "Team Coordination"],
-    quote: "Excellence in execution transforms great ideas into exceptional results.",
-    isLeadership: true
-  }
+    expertise: [
+      "Operations Management",
+      "Project Planning",
+      "Process Optimization",
+      "Team Coordination",
+    ],
+    quote:
+      "Excellence in execution transforms great ideas into exceptional results.",
+    isLeadership: true,
+  },
 ];
 
 export default function ModernLuminariesSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
-  const [activeGroup, setActiveGroup] = useState<'faculty' | 'leadership'>('faculty');
+  const [activeGroup, setActiveGroup] = useState<"faculty" | "leadership">(
+    "faculty",
+  );
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -199,13 +252,13 @@ export default function ModernLuminariesSection() {
     };
 
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start end", "end start"]
+    offset: ["start end", "end start"],
   });
 
   // 3D transformation values based on scroll
@@ -225,13 +278,20 @@ export default function ModernLuminariesSection() {
       mouseY.set((e.clientY - window.innerHeight / 2) / 50);
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [mouseX, mouseY]);
 
-  const currentMembers = activeGroup === 'faculty' ? facultyMembers : leadershipMembers;
+  const currentMembers =
+    activeGroup === "faculty" ? facultyMembers : leadershipMembers;
 
-  const MemberCard = ({ member, index }: { member: TeamMember; index: number }) => {
+  const MemberCard = ({
+    member,
+    index,
+  }: {
+    member: TeamMember;
+    index: number;
+  }) => {
     const isHovered = hoveredCard === member.id;
 
     return (
@@ -261,7 +321,7 @@ export default function ModernLuminariesSection() {
             }}
             whileHover={{
               scale: 1.02,
-              boxShadow: "0 20px 40px -10px rgba(255, 215, 0, 0.3)"
+              boxShadow: "0 20px 40px -10px rgba(255, 215, 0, 0.3)",
             }}
             transition={{ duration: 0.3 }}
           >
@@ -321,18 +381,12 @@ export default function ModernLuminariesSection() {
                 )}
 
                 {/* Avatar Placeholder with Glow */}
-                <div
-                  className="relative w-16 h-16 sm:w-20 sm:h-20 mx-auto"
-                >
-                  <div
-                    className="w-full h-full rounded-2xl bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm border border-white/20 flex items-center justify-center relative overflow-hidden"
-                  >
+                <div className="relative w-16 h-16 sm:w-20 sm:h-20 mx-auto">
+                  <div className="w-full h-full rounded-2xl bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm border border-white/20 flex items-center justify-center relative overflow-hidden">
                     <Users className="w-8 h-8 sm:w-10 sm:h-10 text-white/80" />
 
                     {/* Glow Effect */}
-                    <div
-                      className="absolute inset-0 rounded-2xl"
-                    />
+                    <div className="absolute inset-0 rounded-2xl" />
                   </div>
                 </div>
               </div>
@@ -345,10 +399,8 @@ export default function ModernLuminariesSection() {
                 >
                   {member.name}
                 </h3>
-                
-                <p
-                  className="text-xs sm:text-sm text-white/90 font-medium text-center"
-                >
+
+                <p className="text-xs sm:text-sm text-white/90 font-medium text-center">
                   {member.title}
                 </p>
 
@@ -365,9 +417,7 @@ export default function ModernLuminariesSection() {
                 </div>
 
                 {/* CTA */}
-                <div
-                  className="pt-2"
-                >
+                <div className="pt-2">
                   <Button
                     variant="ghost"
                     size="sm"
@@ -392,7 +442,8 @@ export default function ModernLuminariesSection() {
               <motion.div
                 className="absolute inset-0 rounded-3xl"
                 style={{
-                  background: "linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%)",
+                  background:
+                    "linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%)",
                 }}
                 animate={{
                   x: isHovered ? "100%" : "-100%",
@@ -428,7 +479,8 @@ export default function ModernLuminariesSection() {
       ref={sectionRef}
       className="relative min-h-screen py-20 overflow-hidden"
       style={{
-        background: "linear-gradient(135deg, #000012 0%, #0a0a23 25%, #1a1a2e 50%, #16213e 75%, #0f3460 100%)",
+        background:
+          "linear-gradient(135deg, #000012 0%, #0a0a23 25%, #1a1a2e 50%, #16213e 75%, #0f3460 100%)",
       }}
     >
       {/* Background Particles */}
@@ -544,7 +596,8 @@ export default function ModernLuminariesSection() {
           <motion.h2
             className="text-5xl md:text-7xl font-bold mb-6"
             style={{
-              background: "linear-gradient(135deg, #FFD700 0%, #00FFFF 50%, #FFD700 100%)",
+              background:
+                "linear-gradient(135deg, #FFD700 0%, #00FFFF 50%, #FFD700 100%)",
               backgroundClip: "text",
               WebkitBackgroundClip: "text",
               color: "transparent",
@@ -560,8 +613,9 @@ export default function ModernLuminariesSection() {
             transition={{ duration: 1, delay: 0.5 }}
           />
           <p className="text-xl text-foreground/80 max-w-3xl mx-auto">
-            Discover the brilliant minds shaping the future of finance education.
-            Our distinguished faculty and visionary student leaders are here to guide your journey.
+            Discover the brilliant minds shaping the future of finance
+            education. Our distinguished faculty and visionary student leaders
+            are here to guide your journey.
           </p>
         </motion.div>
 
@@ -576,35 +630,35 @@ export default function ModernLuminariesSection() {
             <motion.div
               className="absolute inset-y-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl"
               animate={{
-                x: activeGroup === 'faculty' ? 2 : '50%',
-                width: activeGroup === 'faculty' ? '48%' : '48%',
+                x: activeGroup === "faculty" ? 2 : "50%",
+                width: activeGroup === "faculty" ? "48%" : "48%",
               }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
             />
-            
+
             <div className="relative flex space-x-2">
               <Button
                 variant="ghost"
                 size="lg"
-                onClick={() => setActiveGroup('faculty')}
+                onClick={() => setActiveGroup("faculty")}
                 className={`relative z-10 px-8 py-3 transition-colors duration-300 ${
-                  activeGroup === 'faculty' 
-                    ? 'text-white' 
-                    : 'text-white/60 hover:text-white/80'
+                  activeGroup === "faculty"
+                    ? "text-white"
+                    : "text-white/60 hover:text-white/80"
                 }`}
               >
                 <Star className="w-5 h-5 mr-2" />
                 Faculty Excellence
               </Button>
-              
+
               <Button
                 variant="ghost"
                 size="lg"
-                onClick={() => setActiveGroup('leadership')}
+                onClick={() => setActiveGroup("leadership")}
                 className={`relative z-10 px-8 py-3 transition-colors duration-300 ${
-                  activeGroup === 'leadership' 
-                    ? 'text-white' 
-                    : 'text-white/60 hover:text-white/80'
+                  activeGroup === "leadership"
+                    ? "text-white"
+                    : "text-white/60 hover:text-white/80"
                 }`}
               >
                 <Crown className="w-5 h-5 mr-2" />
@@ -703,7 +757,7 @@ export default function ModernLuminariesSection() {
                       >
                         {selectedMember.title}
                       </motion.p>
-                      
+
                       <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -743,8 +797,12 @@ export default function ModernLuminariesSection() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.6 }}
                       >
-                        <h4 className="text-lg font-semibold text-white mb-3">About</h4>
-                        <p className="text-white/80 leading-relaxed">{selectedMember.bio}</p>
+                        <h4 className="text-lg font-semibold text-white mb-3">
+                          About
+                        </h4>
+                        <p className="text-white/80 leading-relaxed">
+                          {selectedMember.bio}
+                        </p>
                       </motion.div>
 
                       <motion.div
@@ -754,7 +812,9 @@ export default function ModernLuminariesSection() {
                         className="relative p-4 rounded-xl bg-white/5 border border-white/10"
                       >
                         <div className="text-4xl text-white/20 mb-2">"</div>
-                        <p className="text-white/90 italic text-sm">{selectedMember.quote}</p>
+                        <p className="text-white/90 italic text-sm">
+                          {selectedMember.quote}
+                        </p>
                       </motion.div>
                     </div>
 
@@ -770,18 +830,20 @@ export default function ModernLuminariesSection() {
                           Achievements
                         </h4>
                         <div className="space-y-2">
-                          {selectedMember.achievements.map((achievement, index) => (
-                            <motion.div
-                              key={achievement}
-                              initial={{ opacity: 0, x: 20 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: 0.9 + index * 0.1 }}
-                              className="flex items-center space-x-2 text-white/80 text-sm"
-                            >
-                              <div className="w-1.5 h-1.5 bg-amber-400 rounded-full" />
-                              <span>{achievement}</span>
-                            </motion.div>
-                          ))}
+                          {selectedMember.achievements.map(
+                            (achievement, index) => (
+                              <motion.div
+                                key={achievement}
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.9 + index * 0.1 }}
+                                className="flex items-center space-x-2 text-white/80 text-sm"
+                              >
+                                <div className="w-1.5 h-1.5 bg-amber-400 rounded-full" />
+                                <span>{achievement}</span>
+                              </motion.div>
+                            ),
+                          )}
                         </div>
                       </motion.div>
 
@@ -800,7 +862,11 @@ export default function ModernLuminariesSection() {
                               key={skill}
                               initial={{ opacity: 0, scale: 0 }}
                               animate={{ opacity: 1, scale: 1 }}
-                              transition={{ delay: 1.1 + index * 0.1, type: "spring", bounce: 0.4 }}
+                              transition={{
+                                delay: 1.1 + index * 0.1,
+                                type: "spring",
+                                bounce: 0.4,
+                              }}
                               className="px-3 py-1 text-xs bg-white/10 border border-white/20 rounded-full text-white/90 backdrop-blur-sm"
                             >
                               {skill}

@@ -103,13 +103,9 @@ export default function EventsSection() {
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
-
-
-
-
 
   // Handle event card click
   const handleEventCardClick = (eventId: string) => {
@@ -336,7 +332,8 @@ export default function EventsSection() {
             <motion.h3
               className="text-5xl font-bold mb-4"
               style={{
-                background: "linear-gradient(135deg, #06b6d4 0%, #f59e0b 50%, #06b6d4 100%)",
+                background:
+                  "linear-gradient(135deg, #06b6d4 0%, #f59e0b 50%, #06b6d4 100%)",
                 backgroundClip: "text",
                 WebkitBackgroundClip: "text",
                 color: "transparent",
@@ -356,7 +353,8 @@ export default function EventsSection() {
               transition={{ duration: 0.6, delay: 1 }}
               className="text-lg text-white/70 max-w-2xl mx-auto"
             >
-              Stay updated with our exciting upcoming events and secure your spot!
+              Stay updated with our exciting upcoming events and secure your
+              spot!
             </motion.p>
           </motion.div>
 
@@ -387,12 +385,12 @@ export default function EventsSection() {
                     <motion.div
                       animate={{
                         rotate: [0, 10, -10, 0],
-                        scale: [1, 1.1, 1]
+                        scale: [1, 1.1, 1],
                       }}
                       transition={{
                         duration: 3,
                         repeat: Infinity,
-                        ease: "easeInOut"
+                        ease: "easeInOut",
                       }}
                       className="text-8xl mb-6"
                     >
@@ -462,7 +460,8 @@ export default function EventsSection() {
                     transition={{ duration: 0.5, delay: 0.1 }}
                     className="text-4xl font-bold text-white mb-2"
                     style={{
-                      background: "linear-gradient(135deg, #FFD700 0%, #00FFFF 50%, #FFD700 100%)",
+                      background:
+                        "linear-gradient(135deg, #FFD700 0%, #00FFFF 50%, #FFD700 100%)",
                       backgroundClip: "text",
                       WebkitBackgroundClip: "text",
                       color: "transparent",
@@ -493,12 +492,12 @@ export default function EventsSection() {
                       <motion.div
                         animate={{
                           rotate: [0, 10, -10, 0],
-                          scale: [1, 1.1, 1]
+                          scale: [1, 1.1, 1],
                         }}
                         transition={{
                           duration: 2,
                           repeat: Infinity,
-                          ease: "easeInOut"
+                          ease: "easeInOut",
                         }}
                         className="text-8xl mb-6"
                       >
@@ -508,8 +507,8 @@ export default function EventsSection() {
                         Coming Soon
                       </h4>
                       <p className="text-white/70 text-lg max-w-md mx-auto leading-relaxed">
-                        We're currently planning exciting events for this category.
-                        Stay tuned for amazing announcements!
+                        We're currently planning exciting events for this
+                        category. Stay tuned for amazing announcements!
                       </p>
                     </motion.div>
                   ) : (
@@ -531,7 +530,7 @@ export default function EventsSection() {
                           transition={{
                             duration: 0.5,
                             delay: 0.4 + index * 0.1,
-                            ease: [0.22, 1, 0.36, 1]
+                            ease: [0.22, 1, 0.36, 1],
                           }}
                           className="group relative overflow-hidden"
                         >
@@ -545,7 +544,8 @@ export default function EventsSection() {
                             <motion.div
                               className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                               style={{
-                                background: "linear-gradient(45deg, rgba(255,215,0,0.05) 0%, rgba(0,255,255,0.05) 100%)",
+                                background:
+                                  "linear-gradient(45deg, rgba(255,215,0,0.05) 0%, rgba(0,255,255,0.05) 100%)",
                               }}
                             />
 

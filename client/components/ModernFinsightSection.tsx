@@ -59,7 +59,8 @@ const magazines: Magazine[] = [
     edition: "Q4 2024 Edition",
     date: "December 2024",
     coverImage: "/placeholder.svg",
-    description: "Exploring the revolutionary technologies reshaping the financial landscape. From AI-driven trading to blockchain innovations.",
+    description:
+      "Exploring the revolutionary technologies reshaping the financial landscape. From AI-driven trading to blockchain innovations.",
     featured: true,
     articles: 12,
     downloads: 2847,
@@ -69,8 +70,8 @@ const magazines: Magazine[] = [
       "Exclusive interview with fintech CEOs",
       "Deep dive into DeFi protocols",
       "Student success stories in crypto",
-      "Market analysis and predictions"
-    ]
+      "Market analysis and predictions",
+    ],
   },
   {
     id: "2024-q3",
@@ -78,7 +79,8 @@ const magazines: Magazine[] = [
     edition: "Q3 2024 Edition",
     date: "September 2024",
     coverImage: "/placeholder.svg",
-    description: "ESG investing and sustainable finance practices taking center stage in modern portfolio management.",
+    description:
+      "ESG investing and sustainable finance practices taking center stage in modern portfolio management.",
     featured: false,
     articles: 8,
     downloads: 1923,
@@ -88,8 +90,8 @@ const magazines: Magazine[] = [
       "Green bonds market analysis",
       "ESG scoring methodologies",
       "Climate risk assessment",
-      "Impact investing strategies"
-    ]
+      "Impact investing strategies",
+    ],
   },
   {
     id: "2024-q2",
@@ -97,7 +99,8 @@ const magazines: Magazine[] = [
     edition: "Q2 2024 Edition",
     date: "June 2024",
     coverImage: "/placeholder.svg",
-    description: "Understanding market dynamics and volatility patterns in the post-pandemic era.",
+    description:
+      "Understanding market dynamics and volatility patterns in the post-pandemic era.",
     featured: false,
     articles: 10,
     downloads: 2156,
@@ -107,8 +110,8 @@ const magazines: Magazine[] = [
       "Volatility trading strategies",
       "Options market insights",
       "Risk management techniques",
-      "Behavioral finance studies"
-    ]
+      "Behavioral finance studies",
+    ],
   },
   {
     id: "2024-q1",
@@ -116,7 +119,8 @@ const magazines: Magazine[] = [
     edition: "Q1 2024 Edition",
     date: "March 2024",
     coverImage: "/placeholder.svg",
-    description: "The transformation of traditional banking through digital innovation and customer experience.",
+    description:
+      "The transformation of traditional banking through digital innovation and customer experience.",
     featured: false,
     articles: 9,
     downloads: 1734,
@@ -126,23 +130,25 @@ const magazines: Magazine[] = [
       "Neobank business models",
       "Customer experience design",
       "Regulatory compliance",
-      "Future of payments"
-    ]
-  }
+      "Future of payments",
+    ],
+  },
 ];
 
 export default function ModernFinsightSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const magazineRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
-  const [selectedMagazine, setSelectedMagazine] = useState<Magazine | null>(null);
+  const [selectedMagazine, setSelectedMagazine] = useState<Magazine | null>(
+    null,
+  );
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start end", "end start"]
+    offset: ["start end", "end start"],
   });
 
   // 3D transformations for magazine
@@ -162,17 +168,18 @@ export default function ModernFinsightSection() {
         const rect = magazineRef.current.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
-        
+
         mouseX.set((e.clientX - centerX) / 20);
         mouseY.set((e.clientY - centerY) / 20);
       }
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [mouseX, mouseY]);
 
-  const featuredMagazine = magazines.find(mag => mag.featured) || magazines[0];
+  const featuredMagazine =
+    magazines.find((mag) => mag.featured) || magazines[0];
 
   const nextMagazine = () => {
     setCurrentIndex((prev) => (prev + 1) % magazines.length);
@@ -182,12 +189,18 @@ export default function ModernFinsightSection() {
     setCurrentIndex((prev) => (prev - 1 + magazines.length) % magazines.length);
   };
 
-  const Magazine3D = ({ magazine, featured = false }: { magazine: Magazine; featured?: boolean }) => {
+  const Magazine3D = ({
+    magazine,
+    featured = false,
+  }: {
+    magazine: Magazine;
+    featured?: boolean;
+  }) => {
     const [isHovered, setIsHovered] = useState(false);
 
     return (
       <motion.div
-        className={`relative ${featured ? 'w-80 h-96' : 'w-64 h-80'} perspective-1000 cursor-pointer`}
+        className={`relative ${featured ? "w-80 h-96" : "w-64 h-80"} perspective-1000 cursor-pointer`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={() => setSelectedMagazine(magazine)}
@@ -199,7 +212,11 @@ export default function ModernFinsightSection() {
           className="relative w-full h-full preserve-3d"
           style={{
             rotateY: featured ? springX : isHovered ? 5 : 0,
-            rotateX: featured ? useTransform(springY, (y) => -y * 0.5) : isHovered ? -2 : 0,
+            rotateX: featured
+              ? useTransform(springY, (y) => -y * 0.5)
+              : isHovered
+                ? -2
+                : 0,
           }}
           transition={{ duration: 0.4, ease: "easeOut" }}
           whileHover={{
@@ -210,8 +227,9 @@ export default function ModernFinsightSection() {
           <motion.div
             className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl backface-hidden"
             style={{
-              background: "linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%)",
-              boxShadow: featured 
+              background:
+                "linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%)",
+              boxShadow: featured
                 ? "0 25px 60px rgba(0, 0, 0, 0.4), 0 0 50px rgba(59, 130, 246, 0.3)"
                 : "0 15px 40px rgba(0, 0, 0, 0.3)",
             }}
@@ -264,7 +282,7 @@ export default function ModernFinsightSection() {
                       <TrendingUp className="w-16 h-16 text-blue-400/60" />
                     </motion.div>
                   </div>
-                  
+
                   {/* Floating elements */}
                   {[...Array(6)].map((_, i) => (
                     <motion.div
@@ -319,7 +337,8 @@ export default function ModernFinsightSection() {
               <motion.div
                 className="absolute inset-0 rounded-2xl"
                 style={{
-                  background: "linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%)",
+                  background:
+                    "linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%)",
                 }}
                 animate={{
                   x: isHovered ? "100%" : "-100%",
@@ -334,7 +353,8 @@ export default function ModernFinsightSection() {
             className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl backface-hidden"
             style={{
               rotateY: 180,
-              background: "linear-gradient(135deg, #374151 0%, #4b5563 50%, #6b7280 100%)",
+              background:
+                "linear-gradient(135deg, #374151 0%, #4b5563 50%, #6b7280 100%)",
             }}
           >
             <div className="h-full p-6 flex flex-col justify-center items-center text-center text-white">
@@ -355,7 +375,8 @@ export default function ModernFinsightSection() {
           <motion.div
             className="absolute inset-0 rounded-2xl -z-10"
             style={{
-              background: "linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%)",
+              background:
+                "linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%)",
               filter: "blur(20px)",
               transform: "translateZ(-20px) scale(0.9)",
             }}
@@ -375,7 +396,8 @@ export default function ModernFinsightSection() {
       id="insights"
       className="relative min-h-screen py-20 overflow-hidden"
       style={{
-        background: "linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%)",
+        background:
+          "linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%)",
       }}
     >
       {/* Morphing 3D Financial Elements */}
@@ -488,7 +510,8 @@ export default function ModernFinsightSection() {
               <h2
                 className="text-6xl md:text-8xl font-bold"
                 style={{
-                  background: "linear-gradient(135deg, #3b82f6 0%, #8b5cf6 25%, #06b6d4 50%, #10b981 75%, #f59e0b 100%)",
+                  background:
+                    "linear-gradient(135deg, #3b82f6 0%, #8b5cf6 25%, #06b6d4 50%, #10b981 75%, #f59e0b 100%)",
                   backgroundSize: "300% 100%",
                   backgroundClip: "text",
                   WebkitBackgroundClip: "text",
@@ -552,9 +575,9 @@ export default function ModernFinsightSection() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.5 }}
           >
-            Dive deep into the world of finance with our quarterly digital magazine. 
-            Featuring cutting-edge insights, market analysis, and exclusive interviews 
-            from industry leaders and rising stars.
+            Dive deep into the world of finance with our quarterly digital
+            magazine. Featuring cutting-edge insights, market analysis, and
+            exclusive interviews from industry leaders and rising stars.
           </motion.p>
         </motion.div>
 
@@ -568,7 +591,7 @@ export default function ModernFinsightSection() {
         >
           <div className="relative">
             <Magazine3D magazine={featuredMagazine} featured={true} />
-            
+
             {/* Magazine Stats Floating */}
             <motion.div
               className="absolute -top-8 -left-8"
@@ -580,7 +603,9 @@ export default function ModernFinsightSection() {
                 <div className="flex items-center space-x-3 text-white">
                   <Eye className="w-5 h-5 text-blue-400" />
                   <div>
-                    <div className="text-lg font-bold">{featuredMagazine.downloads.toLocaleString()}</div>
+                    <div className="text-lg font-bold">
+                      {featuredMagazine.downloads.toLocaleString()}
+                    </div>
                     <div className="text-xs text-white/70">Total Reads</div>
                   </div>
                 </div>
@@ -614,7 +639,9 @@ export default function ModernFinsightSection() {
                 <div className="flex items-center space-x-3 text-white">
                   <TrendingUp className="w-5 h-5 text-green-400" />
                   <div>
-                    <div className="text-lg font-bold">{featuredMagazine.articles}</div>
+                    <div className="text-lg font-bold">
+                      {featuredMagazine.articles}
+                    </div>
                     <div className="text-xs text-white/70">Expert Articles</div>
                   </div>
                 </div>
@@ -631,8 +658,12 @@ export default function ModernFinsightSection() {
           transition={{ duration: 0.8, delay: 0.8 }}
         >
           <div className="text-center mb-12">
-            <h3 className="text-4xl font-bold text-white mb-4">Magazine Archive</h3>
-            <p className="text-white/70 text-lg">Explore our collection of financial insights</p>
+            <h3 className="text-4xl font-bold text-white mb-4">
+              Magazine Archive
+            </h3>
+            <p className="text-white/70 text-lg">
+              Explore our collection of financial insights
+            </p>
           </div>
 
           <div className="relative">
@@ -668,7 +699,7 @@ export default function ModernFinsightSection() {
                   key={magazine.id}
                   className="flex-shrink-0"
                   initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ 
+                  animate={{
                     opacity: Math.abs(index - currentIndex) <= 1 ? 1 : 0.5,
                     scale: index === currentIndex ? 1 : 0.8,
                   }}
@@ -691,9 +722,10 @@ export default function ModernFinsightSection() {
           <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-xl rounded-3xl p-8 border border-white/10 max-w-2xl mx-auto">
             <h3 className="text-2xl font-bold text-white mb-4">Stay Updated</h3>
             <p className="text-white/80 mb-6">
-              Get notified when new editions are released and never miss out on the latest financial insights.
+              Get notified when new editions are released and never miss out on
+              the latest financial insights.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 size="lg"
@@ -702,7 +734,7 @@ export default function ModernFinsightSection() {
                 <Download className="w-5 h-5 mr-2" />
                 Download Latest
               </Button>
-              
+
               <Button
                 variant="outline"
                 size="lg"
@@ -742,14 +774,20 @@ export default function ModernFinsightSection() {
                       <div className="w-24 h-32 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
                         <BookOpen className="w-12 h-12 text-white" />
                       </div>
-                      
+
                       <div className="flex-1">
-                        <h3 className="text-3xl font-bold text-white mb-2">{selectedMagazine.title}</h3>
-                        <p className="text-xl text-blue-300 mb-4">{selectedMagazine.edition}</p>
-                        <p className="text-white/80 leading-relaxed">{selectedMagazine.description}</p>
+                        <h3 className="text-3xl font-bold text-white mb-2">
+                          {selectedMagazine.title}
+                        </h3>
+                        <p className="text-xl text-blue-300 mb-4">
+                          {selectedMagazine.edition}
+                        </p>
+                        <p className="text-white/80 leading-relaxed">
+                          {selectedMagazine.description}
+                        </p>
                       </div>
                     </div>
-                    
+
                     <Button
                       variant="ghost"
                       size="sm"
@@ -766,9 +804,21 @@ export default function ModernFinsightSection() {
                   {/* Stats */}
                   <div className="grid grid-cols-4 gap-4">
                     {[
-                      { label: "Articles", value: selectedMagazine.articles, icon: BookOpen },
-                      { label: "Downloads", value: selectedMagazine.downloads.toLocaleString(), icon: Download },
-                      { label: "Read Time", value: selectedMagazine.readTime, icon: Calendar },
+                      {
+                        label: "Articles",
+                        value: selectedMagazine.articles,
+                        icon: BookOpen,
+                      },
+                      {
+                        label: "Downloads",
+                        value: selectedMagazine.downloads.toLocaleString(),
+                        icon: Download,
+                      },
+                      {
+                        label: "Read Time",
+                        value: selectedMagazine.readTime,
+                        icon: Calendar,
+                      },
                       { label: "Rating", value: "4.9/5", icon: Star },
                     ].map((stat, index) => (
                       <motion.div
@@ -779,15 +829,21 @@ export default function ModernFinsightSection() {
                         className="text-center p-4 bg-white/5 rounded-xl border border-white/10"
                       >
                         <stat.icon className="w-6 h-6 text-blue-400 mx-auto mb-2" />
-                        <div className="text-xl font-bold text-white">{stat.value}</div>
-                        <div className="text-sm text-white/70">{stat.label}</div>
+                        <div className="text-xl font-bold text-white">
+                          {stat.value}
+                        </div>
+                        <div className="text-sm text-white/70">
+                          {stat.label}
+                        </div>
                       </motion.div>
                     ))}
                   </div>
 
                   {/* Highlights */}
                   <div>
-                    <h4 className="text-xl font-semibold text-white mb-4">Key Highlights</h4>
+                    <h4 className="text-xl font-semibold text-white mb-4">
+                      Key Highlights
+                    </h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {selectedMagazine.highlights.map((highlight, index) => (
                         <motion.div
@@ -813,7 +869,7 @@ export default function ModernFinsightSection() {
                       <Download className="w-5 h-5 mr-2" />
                       Download PDF
                     </Button>
-                    
+
                     <Button
                       variant="outline"
                       size="lg"

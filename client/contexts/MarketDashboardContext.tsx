@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from "react";
 
 interface MarketDashboardContextType {
   isOpen: boolean;
@@ -6,12 +6,14 @@ interface MarketDashboardContextType {
   toggleOpen: () => void;
 }
 
-const MarketDashboardContext = createContext<MarketDashboardContextType | undefined>(undefined);
+const MarketDashboardContext = createContext<
+  MarketDashboardContextType | undefined
+>(undefined);
 
 export function MarketDashboardProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleOpen = () => setIsOpen(prev => !prev);
+  const toggleOpen = () => setIsOpen((prev) => !prev);
 
   return (
     <MarketDashboardContext.Provider value={{ isOpen, setIsOpen, toggleOpen }}>
@@ -23,7 +25,9 @@ export function MarketDashboardProvider({ children }: { children: ReactNode }) {
 export function useMarketDashboard() {
   const context = useContext(MarketDashboardContext);
   if (context === undefined) {
-    throw new Error('useMarketDashboard must be used within a MarketDashboardProvider');
+    throw new Error(
+      "useMarketDashboard must be used within a MarketDashboardProvider",
+    );
   }
   return context;
 }

@@ -37,8 +37,8 @@ export default function AboutSection() {
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   return (
@@ -70,7 +70,9 @@ export default function AboutSection() {
           <motion.div
             initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={isMobile ? { duration: 0 } : { duration: 0.8, delay: 0.2 }}
+            transition={
+              isMobile ? { duration: 0 } : { duration: 0.8, delay: 0.2 }
+            }
           >
             <h3 className="text-3xl font-bold text-finance-gold mb-6">
               Bridging Theory and Practice in Finance
@@ -99,14 +101,24 @@ export default function AboutSection() {
             className="grid grid-cols-2 gap-6"
             initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={isMobile ? { duration: 0 } : { duration: 0.8, delay: 0.4 }}
+            transition={
+              isMobile ? { duration: 0 } : { duration: 0.8, delay: 0.4 }
+            }
           >
             {stats.map((stat, index) => (
               <motion.div
                 key={stat.label}
-                initial={isMobile ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
+                initial={
+                  isMobile
+                    ? { opacity: 1, scale: 1 }
+                    : { opacity: 0, scale: 0.5 }
+                }
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={isMobile ? { duration: 0 } : { duration: 0.6, delay: 0.6 + index * 0.1 }}
+                transition={
+                  isMobile
+                    ? { duration: 0 }
+                    : { duration: 0.6, delay: 0.6 + index * 0.1 }
+                }
                 className="relative group"
               >
                 <div

@@ -238,7 +238,9 @@ export const useScrollProgress = () => {
       }
     };
 
-    window.addEventListener("scroll", throttledUpdateScrollProgress, { passive: true });
+    window.addEventListener("scroll", throttledUpdateScrollProgress, {
+      passive: true,
+    });
     updateScrollProgress();
 
     return () => {

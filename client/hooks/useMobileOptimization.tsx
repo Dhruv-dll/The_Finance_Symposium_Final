@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 export function useMobileOptimization() {
   const [isMobile, setIsMobile] = useState(false);
@@ -7,23 +7,26 @@ export function useMobileOptimization() {
     const checkMobile = () => {
       const mobile = window.innerWidth < 768;
       setIsMobile(mobile);
-      
+
       if (mobile) {
         // Apply mobile-specific styles
-        document.body.classList.add('mobile-static');
+        document.body.classList.add("mobile-static");
       } else {
-        document.body.classList.remove('mobile-static');
+        document.body.classList.remove("mobile-static");
       }
     };
 
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   // Return animation configs based on mobile state
-  const getAnimationConfig = (mobileConfig: any = {}, desktopConfig: any = {}) => {
+  const getAnimationConfig = (
+    mobileConfig: any = {},
+    desktopConfig: any = {},
+  ) => {
     if (isMobile) {
       return {
         initial: { opacity: 1, x: 0, y: 0, scale: 1, ...mobileConfig.initial },

@@ -635,11 +635,11 @@ export default function EnhancedHeroSection() {
     };
 
     checkMobile();
-    window.addEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
     window.addEventListener("mousemove", handleMouseMove);
 
     return () => {
-      window.removeEventListener('resize', checkMobile);
+      window.removeEventListener("resize", checkMobile);
       window.removeEventListener("mousemove", handleMouseMove);
     };
   }, [isMobile]);
@@ -705,7 +705,9 @@ export default function EnhancedHeroSection() {
             className="text-6xl md:text-8xl font-bold mb-8 leading-tight"
             initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.5 }}
+            transition={
+              isMobile ? { duration: 0 } : { duration: 1, delay: 0.5 }
+            }
           >
             <motion.span
               className="block bg-gradient-to-r from-finance-electric via-finance-gold to-finance-electric bg-clip-text text-transparent"
@@ -757,7 +759,9 @@ export default function EnhancedHeroSection() {
             className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8"
             initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={isMobile ? { duration: 0 } : { duration: 1, delay: 1.5 }}
+            transition={
+              isMobile ? { duration: 0 } : { duration: 1, delay: 1.5 }
+            }
           >
             <motion.button
               className="px-10 py-4 bg-gradient-to-r from-finance-gold to-finance-electric text-finance-navy font-bold rounded-xl relative overflow-hidden group"

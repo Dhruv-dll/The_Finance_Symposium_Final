@@ -25,118 +25,118 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <SoundProvider>
-        <MarketDashboardProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/about" element={<About />} />
+      <TooltipProvider>
+        <SoundProvider>
+          <MarketDashboardProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/about" element={<About />} />
 
-            {/* Events Routes */}
-            <Route
-              path="/events/saturday-sessions"
-              element={
-                <PlaceholderPage
-                  title="Saturday Sessions"
-                  description="Educational workshops and seminars held every Saturday, covering trending finance topics and practical skills."
-                  category="Educational Events"
+                {/* Events Routes */}
+                <Route
+                  path="/events/saturday-sessions"
+                  element={
+                    <PlaceholderPage
+                      title="Saturday Sessions"
+                      description="Educational workshops and seminars held every Saturday, covering trending finance topics and practical skills."
+                      category="Educational Events"
+                    />
+                  }
                 />
-              }
-            />
-            <Route
-              path="/events/networking"
-              element={
-                <PlaceholderPage
-                  title="Networking Events"
-                  description="Connect with finance professionals, alumni, and industry experts through our curated networking sessions."
-                  category="Professional Networking"
+                <Route
+                  path="/events/networking"
+                  element={
+                    <PlaceholderPage
+                      title="Networking Events"
+                      description="Connect with finance professionals, alumni, and industry experts through our curated networking sessions."
+                      category="Professional Networking"
+                    />
+                  }
                 />
-              }
-            />
-            <Route
-              path="/events/conclave"
-              element={
-                <PlaceholderPage
-                  title="Flagship Conclave"
-                  description="Our premier annual event featuring keynote speakers, panel discussions, and industry insights."
-                  category="Flagship Event"
+                <Route
+                  path="/events/conclave"
+                  element={
+                    <PlaceholderPage
+                      title="Flagship Conclave"
+                      description="Our premier annual event featuring keynote speakers, panel discussions, and industry insights."
+                      category="Flagship Event"
+                    />
+                  }
                 />
-              }
-            />
-            <Route
-              path="/events/upcoming"
-              element={
-                <PlaceholderPage
-                  title="Upcoming Events"
-                  description="Stay updated with our upcoming finance events, workshops, and networking opportunities."
-                  category="Event Calendar"
+                <Route
+                  path="/events/upcoming"
+                  element={
+                    <PlaceholderPage
+                      title="Upcoming Events"
+                      description="Stay updated with our upcoming finance events, workshops, and networking opportunities."
+                      category="Event Calendar"
+                    />
+                  }
                 />
-              }
-            />
 
-            {/* Other Routes */}
-            <Route
-              path="/finsight"
-              element={
-                <PlaceholderPage
-                  title="Finsight Magazine"
-                  description="Our digital magazine featuring financial insights, market analysis, and student perspectives on finance."
-                  category="Publications"
+                {/* Other Routes */}
+                <Route
+                  path="/finsight"
+                  element={
+                    <PlaceholderPage
+                      title="Finsight Magazine"
+                      description="Our digital magazine featuring financial insights, market analysis, and student perspectives on finance."
+                      category="Publications"
+                    />
+                  }
                 />
-              }
-            />
-            <Route
-              path="/sponsors/past"
-              element={
-                <PlaceholderPage
-                  title="Past Sponsors"
-                  description="Celebrating our previous sponsors who have supported The Finance Symposium over the years."
-                  category="Sponsorship"
+                <Route
+                  path="/sponsors/past"
+                  element={
+                    <PlaceholderPage
+                      title="Past Sponsors"
+                      description="Celebrating our previous sponsors who have supported The Finance Symposium over the years."
+                      category="Sponsorship"
+                    />
+                  }
                 />
-              }
-            />
-            <Route
-              path="/sponsors/present"
-              element={
-                <PlaceholderPage
-                  title="Present Sponsors"
-                  description="Meet our current sponsors and partners who make our events and initiatives possible."
-                  category="Sponsorship"
+                <Route
+                  path="/sponsors/present"
+                  element={
+                    <PlaceholderPage
+                      title="Present Sponsors"
+                      description="Meet our current sponsors and partners who make our events and initiatives possible."
+                      category="Sponsorship"
+                    />
+                  }
                 />
-              }
-            />
-            <Route
-              path="/team"
-              element={
-                <PlaceholderPage
-                  title="Meet the Team"
-                  description="Get to know the dedicated faculty and students who make The Finance Symposium a success."
-                  category="Team"
+                <Route
+                  path="/team"
+                  element={
+                    <PlaceholderPage
+                      title="Meet the Team"
+                      description="Get to know the dedicated faculty and students who make The Finance Symposium a success."
+                      category="Team"
+                    />
+                  }
                 />
-              }
-            />
-            <Route
-              path="/contact"
-              element={
-                <PlaceholderPage
-                  title="Contact Us"
-                  description="Get in touch with us for inquiries, collaborations, or to join our finance community."
-                  category="Contact"
+                <Route
+                  path="/contact"
+                  element={
+                    <PlaceholderPage
+                      title="Contact Us"
+                      description="Get in touch with us for inquiries, collaborations, or to join our finance community."
+                      category="Contact"
+                    />
+                  }
                 />
-              }
-            />
 
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-        </MarketDashboardProvider>
-      </SoundProvider>
-    </TooltipProvider>
-  </QueryClientProvider>
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </MarketDashboardProvider>
+        </SoundProvider>
+      </TooltipProvider>
+    </QueryClientProvider>
   );
 };
 

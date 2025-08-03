@@ -578,11 +578,11 @@
 
     /* Maintain TFS brand consistency on mobile */
     .finance-gold {
-      color: #FFD700 !important;
+      color: #ffd700 !important;
     }
 
     .finance-electric {
-      color: #00FFFF !important;
+      color: #00ffff !important;
     }
 
     /* Ensure readable text on all mobile devices */
@@ -762,146 +762,163 @@
     }
 
     /* Tablet-specific optimizations */
-  @media (min-width: 768px) and (max-width: 1024px) {
-    /* Ensure proper spacing for tablet layouts */
-    .container {
-      padding: 0 32px !important;
+    @media (min-width: 768px) and (max-width: 1024px) {
+      /* Ensure proper spacing for tablet layouts */
+      .container {
+        padding: 0 32px !important;
+      }
+
+      /* Tablet navigation optimizations */
+      nav {
+        min-height: 72px !important;
+      }
+
+      /* Better touch targets for tablets */
+      button,
+      a,
+      [role="button"] {
+        min-height: 42px !important;
+        min-width: 42px !important;
+      }
+
+      /* Market dashboard positioning for tablets */
+      .fixed.bottom-3,
+      .fixed.bottom-4,
+      .fixed.bottom-5 {
+        bottom: 20px !important;
+      }
+
+      .fixed.right-3,
+      .fixed.right-4,
+      .fixed.right-5 {
+        right: 20px !important;
+      }
+
+      /* Scroll progress indicator for tablets */
+      .fixed.top-1\/2 {
+        right: 16px !important;
+      }
     }
 
-    /* Tablet navigation optimizations */
-    nav {
-      min-height: 72px !important;
+    /* Force desktop view on mobile - disable most responsive behavior */
+    @media (max-width: 768px) {
+      /* Disable mobile-specific styles - force desktop layout */
+      .container {
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+        padding: 0 24px !important;
+      }
+
+      /* Force desktop navigation behavior */
+      .lg\\:hidden {
+        display: block !important;
+      }
+
+      .hidden.lg\\:flex,
+      .hidden.lg\\:block {
+        display: flex !important;
+      }
+
+      /* Ensure desktop sizing for key elements */
+      nav {
+        min-height: 80px !important;
+      }
+
+      /* Keep touch targets accessible */
+      button,
+      a,
+      [role="button"] {
+        min-height: 44px !important;
+        min-width: 44px !important;
+        touch-action: manipulation !important;
+      }
+
+      /* Improve text readability on scaled desktop view */
+      body {
+        font-size: 16px !important;
+        line-height: 1.5 !important;
+      }
+
+      /* Ensure interactive elements are easily tappable */
+      .market-card,
+      .stock-item,
+      .crypto-item,
+      .forex-item {
+        min-height: 48px !important;
+        padding: 8px 12px !important;
+      }
+
+      /* Better spacing for touch interactions */
+      .space-x-2 > * + * {
+        margin-left: 12px !important;
+      }
+
+      .space-y-2 > * + * {
+        margin-top: 12px !important;
+      }
     }
 
-    /* Better touch targets for tablets */
-    button, a, [role="button"] {
-      min-height: 42px !important;
-      min-width: 42px !important;
+    /* Cross-device functionality consistency */
+    @media (hover: hover) and (pointer: fine) {
+      /* Desktop/laptop with precise pointers */
+      button:hover,
+      a:hover,
+      [role="button"]:hover {
+        transform: translateY(-1px) !important;
+        transition: transform 0.2s ease !important;
+      }
     }
 
-    /* Market dashboard positioning for tablets */
-    .fixed.bottom-3, .fixed.bottom-4, .fixed.bottom-5 {
-      bottom: 20px !important;
+    @media (hover: none) and (pointer: coarse) {
+      /* Touch devices - tablets and phones */
+      button:active,
+      a:active,
+      [role="button"]:active {
+        transform: scale(0.98) !important;
+        transition: transform 0.1s ease !important;
+      }
+
+      /* Ensure focus states are visible on touch devices */
+      button:focus,
+      a:focus,
+      [role="button"]:focus {
+        outline: 2px solid rgba(255, 215, 0, 0.8) !important;
+        outline-offset: 2px !important;
+      }
     }
 
-    .fixed.right-3, .fixed.right-4, .fixed.right-5 {
-      right: 20px !important;
+    /* Universal improvements */
+    * {
+      /* Improve text rendering across all devices */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
     }
 
-    /* Scroll progress indicator for tablets */
-    .fixed.top-1\/2 {
-      right: 16px !important;
-    }
-  }
+    /* Large screen optimizations */
+    @media (min-width: 1024px) {
+      /* Ensure optimal layout for large screens */
+      .container {
+        max-width: 1400px !important;
+      }
 
-  /* Force desktop view on mobile - disable most responsive behavior */
-  @media (max-width: 768px) {
-    /* Disable mobile-specific styles - force desktop layout */
-    .container {
-      max-width: 1200px !important;
-      margin: 0 auto !important;
-      padding: 0 24px !important;
-    }
+      /* Enhanced navigation for large screens */
+      nav {
+        min-height: 80px !important;
+      }
 
-    /* Force desktop navigation behavior */
-    .lg\\:hidden {
-      display: block !important;
-    }
+      /* Better positioning for large screens */
+      .fixed.bottom-5 {
+        bottom: 24px !important;
+      }
 
-    .hidden.lg\\:flex,
-    .hidden.lg\\:block {
-      display: flex !important;
+      .fixed.right-5 {
+        right: 24px !important;
+      }
     }
 
-    /* Ensure desktop sizing for key elements */
-    nav {
-      min-height: 80px !important;
-    }
-
-    /* Keep touch targets accessible */
-    button, a, [role="button"] {
-      min-height: 44px !important;
-      min-width: 44px !important;
-      touch-action: manipulation !important;
-    }
-
-    /* Improve text readability on scaled desktop view */
-    body {
-      font-size: 16px !important;
-      line-height: 1.5 !important;
-    }
-
-    /* Ensure interactive elements are easily tappable */
-    .market-card, .stock-item, .crypto-item, .forex-item {
-      min-height: 48px !important;
-      padding: 8px 12px !important;
-    }
-
-    /* Better spacing for touch interactions */
-    .space-x-2 > * + * {
-      margin-left: 12px !important;
-    }
-
-    .space-y-2 > * + * {
-      margin-top: 12px !important;
-    }
-  }
-
-  /* Cross-device functionality consistency */
-  @media (hover: hover) and (pointer: fine) {
-    /* Desktop/laptop with precise pointers */
-    button:hover, a:hover, [role="button"]:hover {
-      transform: translateY(-1px) !important;
-      transition: transform 0.2s ease !important;
-    }
-  }
-
-  @media (hover: none) and (pointer: coarse) {
-    /* Touch devices - tablets and phones */
-    button:active, a:active, [role="button"]:active {
-      transform: scale(0.98) !important;
-      transition: transform 0.1s ease !important;
-    }
-
-    /* Ensure focus states are visible on touch devices */
-    button:focus, a:focus, [role="button"]:focus {
-      outline: 2px solid rgba(255, 215, 0, 0.8) !important;
-      outline-offset: 2px !important;
-    }
-  }
-
-  /* Universal improvements */
-  * {
-    /* Improve text rendering across all devices */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-  }
-
-  /* Large screen optimizations */
-  @media (min-width: 1024px) {
-    /* Ensure optimal layout for large screens */
-    .container {
-      max-width: 1400px !important;
-    }
-
-    /* Enhanced navigation for large screens */
-    nav {
-      min-height: 80px !important;
-    }
-
-    /* Better positioning for large screens */
-    .fixed.bottom-5 {
-      bottom: 24px !important;
-    }
-
-    .fixed.right-5 {
-      right: 24px !important;
-    }
-  }
-
-  /* Comprehensive mobile animation disabling */
-  @media (max-width: 768px) {
+    /* Comprehensive mobile animation disabling */
+    @media (max-width: 768px) {
       /* Disable most framer-motion animations */
       .mobile-static {
         opacity: 1 !important;
@@ -953,7 +970,7 @@
 
       /* Ensure text is immediately visible */
       .text-transparent {
-        color: #FFD700 !important;
+        color: #ffd700 !important;
         background: none !important;
         -webkit-background-clip: unset !important;
         background-clip: unset !important;
