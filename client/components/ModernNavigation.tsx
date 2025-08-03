@@ -189,7 +189,7 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
         backdropFilter: scrolled ? "blur(15px)" : "none",
         transition: "all 0.7s ease-in-out",
       }}
-      onMouseEnter={() => {
+      onMouseEnter={!isMobile ? () => {
         if (scrolled) {
           const nav = document.querySelector("nav");
           if (nav) {
@@ -200,8 +200,8 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
               "0 8px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 215, 0, 0.2)";
           }
         }
-      }}
-      onMouseLeave={() => {
+      } : undefined}
+      onMouseLeave={!isMobile ? () => {
         if (scrolled) {
           const nav = document.querySelector("nav");
           if (nav) {
@@ -211,7 +211,7 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
             nav.style.boxShadow = "0 4px 20px rgba(0, 0, 0, 0.3)";
           }
         }
-      }}
+      } : undefined}
     >
       {/* Enhanced Glassmorphic background effect */}
       {scrolled && (
