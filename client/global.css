@@ -847,6 +847,37 @@
     }
   }
 
+  /* Cross-device functionality consistency */
+  @media (hover: hover) and (pointer: fine) {
+    /* Desktop/laptop with precise pointers */
+    button:hover, a:hover, [role="button"]:hover {
+      transform: translateY(-1px) !important;
+      transition: transform 0.2s ease !important;
+    }
+  }
+
+  @media (hover: none) and (pointer: coarse) {
+    /* Touch devices - tablets and phones */
+    button:active, a:active, [role="button"]:active {
+      transform: scale(0.98) !important;
+      transition: transform 0.1s ease !important;
+    }
+
+    /* Ensure focus states are visible on touch devices */
+    button:focus, a:focus, [role="button"]:focus {
+      outline: 2px solid rgba(255, 215, 0, 0.8) !important;
+      outline-offset: 2px !important;
+    }
+  }
+
+  /* Universal improvements */
+  * {
+    /* Improve text rendering across all devices */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
   /* Large screen optimizations */
   @media (min-width: 1024px) {
     /* Ensure optimal layout for large screens */
