@@ -405,7 +405,7 @@ export default function Index() {
 
               {/* Events Section */}
               <section id="events">
-                <EventsSection />
+                <MobileOptimizedEventsSection />
               </section>
 
               {/* Insights Section */}
