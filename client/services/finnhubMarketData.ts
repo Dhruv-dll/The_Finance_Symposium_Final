@@ -461,6 +461,7 @@ class FinnhubMarketDataService {
         }
 
         this.lastSuccessfulData = data;
+        this.isInitialized = true;
 
         try {
           this.subscribers.forEach((callback) => {
