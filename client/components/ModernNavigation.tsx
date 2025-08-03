@@ -48,6 +48,7 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const { toggleOpen: toggleMarketDashboard } = useMarketDashboard();
   const {
     scrollToElement,
     activeSection,
