@@ -75,7 +75,7 @@ export default function FloatingMarketIcon({
     <>
       {/* Floating Market Dashboard Icon */}
       <motion.div
-        className={`fixed bottom-3 right-3 sm:bottom-4 sm:right-4 md:bottom-5 md:right-5 z-50 ${className}`}
+        className={`fixed bottom-3 right-3 sm:bottom-4 sm:right-4 md:bottom-6 md:right-6 lg:bottom-5 lg:right-5 z-50 ${className}`}
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, delay: 0.5 }}
