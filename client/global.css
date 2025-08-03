@@ -752,6 +752,24 @@
       box-shadow: none !important;
       text-shadow: none !important;
     }
+
+    /* Disable entrance animations on mobile for smooth scrolling */
+    .mobile-no-entrance-animations * {
+      animation-duration: 0.01ms !important;
+      animation-delay: 0ms !important;
+      transition-duration: 0.15s !important;
+      transform: none !important;
+    }
+
+    /* Force static positioning for mobile elements */
+    @media (max-width: 768px) {
+      .mobile-static {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        animation: none !important;
+      }
+    }
   }
 
   /* Accessibility improvements */
