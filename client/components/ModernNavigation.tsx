@@ -337,19 +337,21 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                   boxShadow: "1px 1px 3px 0 rgba(0, 0, 0, 1)",
                 }}
               />
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-finance-gold to-finance-electric rounded-xl opacity-50 blur-md -z-10"
-                animate={{
-                  scale: [1, 1.2, 1],
-                  opacity: [0.3, 0.7, 0.3],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 1.5, // Offset animation for visual variety
-                }}
-              />
+              {!reducedMotion && (
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-br from-finance-gold to-finance-electric rounded-xl opacity-50 blur-md -z-10"
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.3, 0.7, 0.3],
+                  }}
+                  transition={{
+                    duration: isMobile ? 6 : 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 1.5, // Offset animation for visual variety
+                  }}
+                />
+              )}
             </motion.div>
 
             <div className="hidden md:block ml-4">
