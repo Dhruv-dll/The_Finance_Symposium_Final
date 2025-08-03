@@ -22,7 +22,7 @@ import {
 } from "../services/accurateMarketData";
 
 export default function MarketSidebar() {
-  const [isVisible, setIsVisible] = useState(true);
+  const { isOpen: isVisible, setIsOpen: setIsVisible } = useMarketDashboard();
   const [stockData, setStockData] = useState<AccurateStockData[]>([]);
   const [marketSentiment, setMarketSentiment] = useState<MarketSentiment>({
     sentiment: "neutral",
