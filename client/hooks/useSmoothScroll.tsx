@@ -243,7 +243,7 @@ export const useScrollProgress = () => {
 
     return () => {
       try {
-        window.removeEventListener("scroll", updateScrollProgress);
+        window.removeEventListener("scroll", throttledUpdateScrollProgress);
       } catch (error) {
         // Silently handle cleanup errors during HMR
       }
