@@ -312,16 +312,12 @@ export default function ModernLuminariesSection() {
               {/* Header with Role Badge */}
               <div className="space-y-4">
                 {member.isLeadership && (
-                  <motion.div
-                    initial={{ scale: 0, rotate: -180 }}
-                    animate={{ scale: 1, rotate: 0 }}
-                    transition={{ delay: 0.5 + index * 0.1, type: "spring", bounce: 0.4 }}
-                  >
+                  <div>
                     <Badge className="bg-gradient-to-r from-purple-500 to-amber-500 text-black font-bold">
                       <Crown className="w-3 h-3 mr-1" />
                       Leadership
                     </Badge>
-                  </motion.div>
+                  </div>
                 )}
 
                 {/* Avatar Placeholder with Glow */}
