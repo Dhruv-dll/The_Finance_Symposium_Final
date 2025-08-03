@@ -234,7 +234,7 @@ export const NetworkStatusIndicator = ({
   <motion.div
     initial={{ scale: 0 }}
     animate={{ scale: 1 }}
-    className={`fixed top-4 right-4 z-50 px-3 py-1 rounded-full text-xs font-medium ${
+    className={`fixed top-4 right-4 z-50 px-3 py-1 rounded-full text-xs font-medium hidden md:flex ${
       isOnline
         ? "bg-finance-green/20 text-finance-green border border-finance-green/30"
         : "bg-finance-red/20 text-finance-red border border-finance-red/30"
