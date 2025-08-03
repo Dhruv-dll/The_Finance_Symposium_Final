@@ -668,7 +668,7 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
               e.stopPropagation();
               setMobileMenuOpen(!mobileMenuOpen);
             }}
-            className="lg:hidden p-2 sm:p-3 rounded-lg sm:rounded-xl backdrop-blur-md bg-finance-navy/30 border border-finance-gold/30 relative overflow-hidden group hover:bg-transparent"
+            className="lg:hidden p-3 sm:p-4 rounded-lg sm:rounded-xl backdrop-blur-md bg-finance-navy/30 border border-finance-gold/30 relative overflow-hidden group hover:bg-transparent min-w-[48px] min-h-[48px]"
           >
             <motion.div className="absolute inset-0 bg-gradient-to-br from-finance-gold/20 to-finance-electric/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <AnimatePresence mode="wait">
