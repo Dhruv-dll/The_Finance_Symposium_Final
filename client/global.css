@@ -689,6 +689,29 @@
     select {
       font-size: 16px;
     }
+
+    /* Force hardware acceleration for better performance */
+    * {
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      perspective: 1000px;
+    }
+
+    /* Optimize animations for mobile */
+    .motion-reduce {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    /* Disable expensive effects on mobile */
+    .mobile-performance-mode {
+      filter: none !important;
+      backdrop-filter: none !important;
+      box-shadow: none !important;
+      text-shadow: none !important;
+    }
   }
 
   /* Accessibility improvements */
