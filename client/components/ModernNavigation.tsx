@@ -680,7 +680,7 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                   exit={{ rotate: 90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <X className="w-5 h-5 sm:w-6 sm:h-6 text-finance-gold relative z-10" />
+                  <X className="w-6 h-6 sm:w-7 sm:h-7 text-finance-gold relative z-10" />
                 </motion.div>
               ) : (
                 <motion.div
