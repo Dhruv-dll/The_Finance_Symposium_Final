@@ -289,9 +289,10 @@ class FinnhubMarketDataService {
     return timeInMinutes >= marketOpen && timeInMinutes <= marketClose;
   }
 
-  // Fallback mode tracking
+  // Fallback mode tracking with immediate initialization
   private fallbackMode = false; // Start with server API, fallback if needed
   private apiFailureCount = 0;
+  private isInitialized = false;
   private subscribers: ((data: {
     stocks: FinnhubStockData[];
     sentiment: MarketSentiment;
