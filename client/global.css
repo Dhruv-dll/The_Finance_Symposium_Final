@@ -794,5 +794,37 @@
       will-change: auto;
       transform: translateZ(0);
     }
+
+    /* Ensure Events section is visible on mobile */
+    #events {
+      min-height: auto !important;
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+
+    /* Fix any potential layout issues with Events section */
+    section[id="events"] {
+      position: relative !important;
+      z-index: 1 !important;
+      width: 100% !important;
+      max-width: 100vw !important;
+      overflow-x: hidden !important;
+    }
+
+    /* Line clamp utility for mobile */
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .line-clamp-3 {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
   }
 }
