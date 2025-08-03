@@ -35,6 +35,7 @@ interface EventsConfig {
     };
   };
   upcomingEvents: UpcomingEvent[];
+  lastModified?: number;
 }
 
 const defaultConfig: EventsConfig = {
