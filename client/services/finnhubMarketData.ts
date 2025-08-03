@@ -88,26 +88,38 @@ class FinnhubMarketDataService {
         return this.getFallbackMarketData();
       }
 
-      // Add timeout wrapper to prevent hanging
+      // Add timeout wrapper to prevent hanging with better error handling
       const fetchWithTimeout = new Promise<Response>((resolve, reject) => {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => {
           controller.abort();
-          reject(new Error("Request timeout"));
-        }, 10000); // 10 second timeout
+          reject(new Error("Request timeout after 8 seconds"));
+        }, 8000); // Reduced to 8 second timeout
 
+        // Enhanced fetch with better error handling
         fetch("/api/market-data", {
           method: "GET",
           headers: {
             Accept: "application/json",
             "Cache-Control": "no-cache",
+            "Content-Type": "application/json",
           },
           signal: controller.signal,
         })
-          .then(resolve)
-          .catch(reject)
-          .finally(() => {
+          .then((response) => {
             clearTimeout(timeoutId);
+            resolve(response);
+          })
+          .catch((error) => {
+            clearTimeout(timeoutId);
+            // Classify different types of errors
+            if (error.name === 'AbortError') {
+              reject(new Error("Request was aborted"));
+            } else if (error.message && error.message.includes('Failed to fetch')) {
+              reject(new Error("Network error - server may be unreachable"));
+            } else {
+              reject(error);
+            }
           });
       });
 
