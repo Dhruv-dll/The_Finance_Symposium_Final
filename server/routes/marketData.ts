@@ -255,24 +255,45 @@ async function fetchCurrencyData(symbol: string): Promise<CurrencyData | null> {
 
 // API endpoint to get all market data
 export const getMarketData: RequestHandler = async (req, res) => {
+  // Set response timeout to prevent hanging
+  const timeout = setTimeout(() => {
+    if (!res.headersSent) {
+      console.warn("⚠️ Request timeout, sending fallback data");
+      res.status(200).json({
+        stocks: [],
+        currencies: [],
+        sentiment: { sentiment: "neutral", advanceDeclineRatio: 0.5, positiveStocks: 0, totalStocks: 0 },
+        timestamp: new Date(),
+        marketState: isMarketOpen() ? "OPEN" : "CLOSED",
+        fallback: true,
+      });
+    }
+  }, 12000); // 12 second timeout for the entire request
+
   try {
     console.log("📊 Fetching comprehensive market data from server...");
 
-    // Fetch stocks and currencies in parallel
+    // Fetch stocks and currencies in parallel with individual timeouts
     const stockPromises = STOCK_SYMBOLS.map((stock) =>
-      fetchStockData(stock.symbol),
+      Promise.race([
+        fetchStockData(stock.symbol),
+        new Promise<null>((resolve) => setTimeout(() => resolve(null), 6000))
+      ])
     );
 
     const currencyPromises = CURRENCY_SYMBOLS.map((currency) =>
-      fetchCurrencyData(currency.symbol),
+      Promise.race([
+        fetchCurrencyData(currency.symbol),
+        new Promise<null>((resolve) => setTimeout(() => resolve(null), 6000))
+      ])
     );
-
-
 
     const [stockResults, currencyResults] = await Promise.all([
       Promise.all(stockPromises),
       Promise.all(currencyPromises),
     ]);
+
+    clearTimeout(timeout);
 
     const stocks = stockResults.filter(
       (stock): stock is StockData => stock !== null,
@@ -331,10 +352,19 @@ export const getMarketData: RequestHandler = async (req, res) => {
     });
   } catch (error) {
     console.error("❌ Error fetching comprehensive market data:", error);
-    res.status(500).json({
-      error: "Failed to fetch market data",
-      message: error.message,
-      timestamp: new Date(),
-    });
+    clearTimeout(timeout);
+
+    if (!res.headersSent) {
+      // Send empty data instead of error to prevent client crashes
+      res.status(200).json({
+        stocks: [],
+        currencies: [],
+        sentiment: { sentiment: "neutral", advanceDeclineRatio: 0.5, positiveStocks: 0, totalStocks: 0 },
+        timestamp: new Date(),
+        marketState: isMarketOpen() ? "OPEN" : "CLOSED",
+        error: true,
+        message: "Server temporarily unavailable",
+      });
+    }
   }
 };
