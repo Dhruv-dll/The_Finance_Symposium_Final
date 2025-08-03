@@ -65,7 +65,7 @@ export default function ScrollProgressIndicator({
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 100 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className={`fixed top-1/2 right-4 sm:right-6 md:right-8 transform -translate-y-1/2 z-40 ${className}`}
+          className={`fixed top-1/2 right-2 sm:right-4 md:right-6 lg:right-8 transform -translate-y-1/2 z-40 ${className}`}
         >
           <div className="relative">
             {/* Main Level Indicator */}
