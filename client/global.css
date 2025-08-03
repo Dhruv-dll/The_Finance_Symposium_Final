@@ -787,8 +787,30 @@
 
     /* Keep touch targets accessible */
     button, a, [role="button"] {
-      min-height: 40px !important;
-      min-width: 40px !important;
+      min-height: 44px !important;
+      min-width: 44px !important;
+      touch-action: manipulation !important;
+    }
+
+    /* Improve text readability on scaled desktop view */
+    body {
+      font-size: 16px !important;
+      line-height: 1.5 !important;
+    }
+
+    /* Ensure interactive elements are easily tappable */
+    .market-card, .stock-item, .crypto-item, .forex-item {
+      min-height: 48px !important;
+      padding: 8px 12px !important;
+    }
+
+    /* Better spacing for touch interactions */
+    .space-x-2 > * + * {
+      margin-left: 12px !important;
+    }
+
+    .space-y-2 > * + * {
+      margin-top: 12px !important;
     }
   }
 
