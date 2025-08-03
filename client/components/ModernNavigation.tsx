@@ -662,7 +662,15 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                     key={index}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                    transition={{
+                      duration: isMobile ? 0.15 : 0.3,
+                      delay: index * (isMobile ? 0.02 : 0.05),
+                      ease: "easeOut"
+                    }}
+                    style={{
+                      willChange: 'transform, opacity',
+                      backfaceVisibility: 'hidden',
+                    }}
                   >
                     {item.dropdown ? (
                       <div className="space-y-2">
