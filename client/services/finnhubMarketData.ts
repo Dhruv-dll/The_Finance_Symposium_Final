@@ -112,14 +112,20 @@ class FinnhubMarketDataService {
           })
           .catch((error) => {
             clearTimeout(timeoutId);
-            // Classify different types of errors
+            // Classify different types of errors for better debugging
+            let friendlyError: Error;
+
             if (error.name === 'AbortError') {
-              reject(new Error("Request was aborted"));
-            } else if (error.message && error.message.includes('Failed to fetch')) {
-              reject(new Error("Network error - server may be unreachable"));
+              friendlyError = new Error("Request timeout - switching to offline mode");
+            } else if (error.message && error.message.toLowerCase().includes('failed to fetch')) {
+              friendlyError = new Error("Connection failed - using cached data");
+            } else if (error.message && error.message.toLowerCase().includes('network')) {
+              friendlyError = new Error("Network unavailable - running in offline mode");
             } else {
-              reject(error);
+              friendlyError = new Error(`API unavailable: ${error.message}`);
             }
+
+            reject(friendlyError);
           });
       });
 
