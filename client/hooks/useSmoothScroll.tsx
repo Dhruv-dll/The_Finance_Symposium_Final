@@ -217,7 +217,9 @@ export const useScrollProgress = () => {
         const docHeight =
           document.documentElement.scrollHeight - window.innerHeight;
         const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-        setScrollProgress(Math.min(progress, 100));
+        // Ensure progress is properly bounded and updated
+        const boundedProgress = Math.max(0, Math.min(progress, 100));
+        setScrollProgress(boundedProgress);
       } catch (error) {
         // Silently handle errors during HMR
         console.warn("Scroll progress update error:", error);
