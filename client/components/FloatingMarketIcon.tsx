@@ -16,7 +16,7 @@ interface FloatingMarketIconProps {
 export default function FloatingMarketIcon({
   className,
 }: FloatingMarketIconProps) {
-  const { isOpen, toggleOpen } = useMarketDashboard();
+  const { isOpen, setIsOpen, toggleOpen } = useMarketDashboard();
   const [marketSentiment, setMarketSentiment] = useState<MarketSentiment>({
     sentiment: "neutral",
     advanceDeclineRatio: 0.5,
