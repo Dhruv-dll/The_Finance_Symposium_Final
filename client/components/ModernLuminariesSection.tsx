@@ -365,10 +365,7 @@ export default function ModernLuminariesSection() {
                 </div>
 
                 {/* CTA */}
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 + index * 0.1 }}
+                <div
                   className="pt-2"
                 >
                   <Button
@@ -378,14 +375,9 @@ export default function ModernLuminariesSection() {
                   >
                     <Brain className="w-4 h-4 mr-2" />
                     <span>Learn More</span>
-                    <motion.div
-                      animate={{ x: isHovered ? 2 : 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <ChevronRight className="w-4 h-4 ml-1" />
-                    </motion.div>
+                    <ChevronRight className="w-4 h-4 ml-1" />
                   </Button>
-                </motion.div>
+                </div>
               </div>
             </div>
 
