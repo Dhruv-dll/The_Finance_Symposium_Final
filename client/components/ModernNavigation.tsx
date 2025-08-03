@@ -228,7 +228,9 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
 
       {/* Enhanced Scroll Progress Indicator */}
       <motion.div
-        className={`absolute bottom-0 left-0 h-1 origin-left transition-all duration-300 ${
+        className={`absolute bottom-0 left-0 h-1 origin-left transition-all ${
+          isMobile ? 'duration-100' : 'duration-300'
+        } ${
           isScrolling
             ? "bg-gradient-to-r from-finance-electric via-finance-gold to-finance-electric animate-pulse"
             : "bg-gradient-to-r from-finance-gold to-finance-electric"
@@ -236,8 +238,12 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
         style={{
           scaleX:
             (isScrolling ? smoothScrollProgress : pageScrollProgress) / 100,
+          willChange: 'transform',
         }}
-        transition={{ duration: isScrolling ? 0.05 : 0.1 }}
+        transition={{
+          duration: isScrolling ? (isMobile ? 0.02 : 0.05) : (isMobile ? 0.05 : 0.1),
+          ease: "linear"
+        }}
       />
 
       {/* Smooth Scroll Indicator */}
