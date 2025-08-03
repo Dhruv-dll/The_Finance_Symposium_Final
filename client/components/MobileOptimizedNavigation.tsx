@@ -32,7 +32,9 @@ interface MobileOptimizedNavigationProps {
   scrolled: boolean;
 }
 
-export default function MobileOptimizedNavigation({ scrolled }: MobileOptimizedNavigationProps) {
+export default function MobileOptimizedNavigation({
+  scrolled,
+}: MobileOptimizedNavigationProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isMobile = useMobile();
   const isTablet = useMobile(1024);
@@ -157,7 +159,7 @@ export default function MobileOptimizedNavigation({ scrolled }: MobileOptimizedN
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Element;
-      if (mobileMenuOpen && !target.closest('nav')) {
+      if (mobileMenuOpen && !target.closest("nav")) {
         setMobileMenuOpen(false);
       }
     };
@@ -215,9 +217,11 @@ export default function MobileOptimizedNavigation({ scrolled }: MobileOptimizedN
         transition={{ duration: isScrolling ? 0.05 : 0.1 }}
       />
 
-      <div className={`container mx-auto relative ${
-        isMobile ? "px-4 py-3" : "px-6 py-4"
-      }`}>
+      <div
+        className={`container mx-auto relative ${
+          isMobile ? "px-4 py-3" : "px-6 py-4"
+        }`}
+      >
         <div className="flex items-start justify-between">
           {/* Enhanced Logo Section - Mobile Optimized */}
           <motion.div
@@ -308,7 +312,9 @@ export default function MobileOptimizedNavigation({ scrolled }: MobileOptimizedN
             </motion.div>
 
             {/* Text - Hide on mobile, show on tablet+ */}
-            <div className={`${isMobile ? "hidden" : "hidden sm:block"} ml-3 sm:ml-4`}>
+            <div
+              className={`${isMobile ? "hidden" : "hidden sm:block"} ml-3 sm:ml-4`}
+            >
               <motion.h1
                 className={`font-bold bg-gradient-to-r from-finance-gold to-finance-electric bg-clip-text text-transparent ${
                   isTablet ? "text-lg" : "text-xl"
@@ -324,9 +330,11 @@ export default function MobileOptimizedNavigation({ scrolled }: MobileOptimizedN
               >
                 The Finance Symposium
               </motion.h1>
-              <p className={`text-muted-foreground ${
-                isTablet ? "text-xs" : "text-sm"
-              }`}>
+              <p
+                className={`text-muted-foreground ${
+                  isTablet ? "text-xs" : "text-sm"
+                }`}
+              >
                 St. Xavier's College Mumbai
               </p>
             </div>
@@ -395,9 +403,7 @@ export default function MobileOptimizedNavigation({ scrolled }: MobileOptimizedN
                                           dropdownItem.eventId &&
                                           openEventPopup
                                         ) {
-                                          openEventPopup(
-                                            dropdownItem.eventId,
-                                          );
+                                          openEventPopup(dropdownItem.eventId);
                                         } else if (dropdownItem.section) {
                                           scrollToElement(
                                             `#${dropdownItem.section}`,
@@ -477,7 +483,7 @@ export default function MobileOptimizedNavigation({ scrolled }: MobileOptimizedN
               }
             }}
             className={`lg:hidden backdrop-blur-md bg-finance-navy/30 border border-finance-gold/30 relative overflow-hidden group hover:bg-transparent ${
-              isMobile 
+              isMobile
                 ? "p-3 rounded-xl min-w-[48px] min-h-[48px]" // Mobile touch target
                 : "p-3 rounded-xl"
             }`}
@@ -492,9 +498,11 @@ export default function MobileOptimizedNavigation({ scrolled }: MobileOptimizedN
                   exit={{ rotate: 90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <X className={`text-finance-gold relative z-10 ${
-                    isMobile ? "w-5 h-5" : "w-6 h-6"
-                  }`} />
+                  <X
+                    className={`text-finance-gold relative z-10 ${
+                      isMobile ? "w-5 h-5" : "w-6 h-6"
+                    }`}
+                  />
                 </motion.div>
               ) : (
                 <motion.div
@@ -504,9 +512,11 @@ export default function MobileOptimizedNavigation({ scrolled }: MobileOptimizedN
                   exit={{ rotate: -90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <Menu className={`text-finance-gold relative z-10 ${
-                    isMobile ? "w-5 h-5" : "w-6 h-6"
-                  }`} />
+                  <Menu
+                    className={`text-finance-gold relative z-10 ${
+                      isMobile ? "w-5 h-5" : "w-6 h-6"
+                    }`}
+                  />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -527,7 +537,9 @@ export default function MobileOptimizedNavigation({ scrolled }: MobileOptimizedN
             >
               <div className="absolute inset-0 bg-gradient-to-br from-finance-gold/10 to-finance-electric/10 -z-10"></div>
 
-              <div className={`space-y-1 ${isMobile ? "space-y-0.5" : "space-y-2"}`}>
+              <div
+                className={`space-y-1 ${isMobile ? "space-y-0.5" : "space-y-2"}`}
+              >
                 {navItems.map((item, index) => (
                   <motion.div
                     key={index}
@@ -537,30 +549,42 @@ export default function MobileOptimizedNavigation({ scrolled }: MobileOptimizedN
                   >
                     {item.dropdown ? (
                       <div className="space-y-1">
-                        <div className={`flex items-center justify-between text-foreground border-b border-finance-gold/20 ${
-                          isMobile ? "py-2 px-3" : "py-3 px-4"
-                        }`}>
+                        <div
+                          className={`flex items-center justify-between text-foreground border-b border-finance-gold/20 ${
+                            isMobile ? "py-2 px-3" : "py-3 px-4"
+                          }`}
+                        >
                           <div className="flex items-center space-x-3">
-                            <item.icon className={`text-finance-gold ${
-                              isMobile ? "w-4 h-4" : "w-5 h-5"
-                            }`} />
-                            <span className={`font-medium text-finance-gold ${
-                              isMobile ? "text-sm" : "text-base"
-                            }`}>
+                            <item.icon
+                              className={`text-finance-gold ${
+                                isMobile ? "w-4 h-4" : "w-5 h-5"
+                              }`}
+                            />
+                            <span
+                              className={`font-medium text-finance-gold ${
+                                isMobile ? "text-sm" : "text-base"
+                              }`}
+                            >
                               {item.name}
                             </span>
-                            <span className={isMobile ? "text-base" : "text-lg"}>
+                            <span
+                              className={isMobile ? "text-base" : "text-lg"}
+                            >
                               {item.hoverIcon}
                             </span>
                           </div>
-                          <ChevronDown className={`text-finance-gold ${
-                            isMobile ? "w-3 h-3" : "w-4 h-4"
-                          }`} />
+                          <ChevronDown
+                            className={`text-finance-gold ${
+                              isMobile ? "w-3 h-3" : "w-4 h-4"
+                            }`}
+                          />
                         </div>
 
-                        <div className={`space-y-0.5 ${
-                          isMobile ? "ml-4" : "ml-6"
-                        }`}>
+                        <div
+                          className={`space-y-0.5 ${
+                            isMobile ? "ml-4" : "ml-6"
+                          }`}
+                        >
                           {item.dropdown.map((dropdownItem, dropdownIndex) => (
                             <Button
                               key={dropdownIndex}
@@ -577,10 +601,14 @@ export default function MobileOptimizedNavigation({ scrolled }: MobileOptimizedN
                                 setMobileMenuOpen(false);
                               }}
                             >
-                              <div className={`flex items-center space-x-3 ${
-                                isMobile ? "py-1 px-2" : "py-2 px-3"
-                              }`}>
-                                <span className={isMobile ? "text-sm" : "text-base"}>
+                              <div
+                                className={`flex items-center space-x-3 ${
+                                  isMobile ? "py-1 px-2" : "py-2 px-3"
+                                }`}
+                              >
+                                <span
+                                  className={isMobile ? "text-sm" : "text-base"}
+                                >
                                   {dropdownItem.icon}
                                 </span>
                                 <span>{dropdownItem.name}</span>
@@ -602,14 +630,20 @@ export default function MobileOptimizedNavigation({ scrolled }: MobileOptimizedN
                           setMobileMenuOpen(false);
                         }}
                       >
-                        <div className={`flex items-center space-x-3 ${
-                          isMobile ? "py-2 px-3" : "py-3 px-4"
-                        }`}>
-                          <item.icon className={isMobile ? "w-4 h-4" : "w-5 h-5"} />
+                        <div
+                          className={`flex items-center space-x-3 ${
+                            isMobile ? "py-2 px-3" : "py-3 px-4"
+                          }`}
+                        >
+                          <item.icon
+                            className={isMobile ? "w-4 h-4" : "w-5 h-5"}
+                          />
                           <span className="font-medium">{item.name}</span>
-                          <span className={`ml-auto group-hover:scale-110 transition-transform duration-200 ${
-                            isMobile ? "text-base" : "text-lg"
-                          }`}>
+                          <span
+                            className={`ml-auto group-hover:scale-110 transition-transform duration-200 ${
+                              isMobile ? "text-base" : "text-lg"
+                            }`}
+                          >
                             {item.hoverIcon}
                           </span>
                         </div>

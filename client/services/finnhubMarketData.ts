@@ -115,12 +115,24 @@ class FinnhubMarketDataService {
             // Classify different types of errors for better debugging
             let friendlyError: Error;
 
-            if (error.name === 'AbortError') {
-              friendlyError = new Error("Request timeout - switching to offline mode");
-            } else if (error.message && error.message.toLowerCase().includes('failed to fetch')) {
-              friendlyError = new Error("Connection failed - using cached data");
-            } else if (error.message && error.message.toLowerCase().includes('network')) {
-              friendlyError = new Error("Network unavailable - running in offline mode");
+            if (error.name === "AbortError") {
+              friendlyError = new Error(
+                "Request timeout - switching to offline mode",
+              );
+            } else if (
+              error.message &&
+              error.message.toLowerCase().includes("failed to fetch")
+            ) {
+              friendlyError = new Error(
+                "Connection failed - using cached data",
+              );
+            } else if (
+              error.message &&
+              error.message.toLowerCase().includes("network")
+            ) {
+              friendlyError = new Error(
+                "Network unavailable - running in offline mode",
+              );
             } else {
               friendlyError = new Error(`API unavailable: ${error.message}`);
             }
@@ -173,12 +185,17 @@ class FinnhubMarketDataService {
       this.apiFailureCount++;
 
       // More aggressive fallback for network errors
-      if (errorMessage.includes('Network error') ||
-          errorMessage.includes('Failed to fetch') ||
-          errorMessage.includes('timeout') ||
-          this.apiFailureCount >= 2) {
+      if (
+        errorMessage.includes("Network error") ||
+        errorMessage.includes("Failed to fetch") ||
+        errorMessage.includes("timeout") ||
+        this.apiFailureCount >= 2
+      ) {
         this.fallbackMode = true;
-        console.log("⚠️ Switching to fallback mode due to API issues:", errorMessage);
+        console.log(
+          "⚠️ Switching to fallback mode due to API issues:",
+          errorMessage,
+        );
         return this.getFallbackMarketData();
       }
 
@@ -429,7 +446,10 @@ class FinnhubMarketDataService {
         try {
           this.subscribers.forEach((callback) => callback(fallbackData));
         } catch (error) {
-          console.warn("Error notifying subscribers with immediate fallback:", error);
+          console.warn(
+            "Error notifying subscribers with immediate fallback:",
+            error,
+          );
         }
       }
       return;
@@ -447,7 +467,10 @@ class FinnhubMarketDataService {
         try {
           data = await this.fetchAllMarketData();
         } catch (fetchError) {
-          console.warn("📊 Fetch failed, switching to fallback:", fetchError.message);
+          console.warn(
+            "📊 Fetch failed, switching to fallback:",
+            fetchError.message,
+          );
           this.fallbackMode = true;
           data = this.getFallbackMarketData();
         }

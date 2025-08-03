@@ -144,24 +144,24 @@ export default function MobileOptimizedMarketDashboard({
   const handleStockClick = (stock: FinnhubStockData) => {
     const searchQuery = `${stock.displayName || stock.name} current stock price`;
     const url = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
-    window.open(url, '_blank');
+    window.open(url, "_blank");
   };
 
   const handleCurrencyClick = (currency: CurrencyRate) => {
     const searchQuery = `${currency.name} current exchange rate conversion`;
     const url = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
-    window.open(url, '_blank');
+    window.open(url, "_blank");
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent
         className={`bg-finance-navy/95 backdrop-blur-xl border border-finance-gold/20 text-foreground ${
-          isMobile 
-            ? "max-w-[95vw] max-h-[95vh] m-2 p-0 rounded-xl" 
-            : isTablet 
-            ? "max-w-4xl max-h-[90vh] rounded-2xl"
-            : "max-w-7xl max-h-[95vh] rounded-2xl"
+          isMobile
+            ? "max-w-[95vw] max-h-[95vh] m-2 p-0 rounded-xl"
+            : isTablet
+              ? "max-w-4xl max-h-[90vh] rounded-2xl"
+              : "max-w-7xl max-h-[95vh] rounded-2xl"
         }`}
         style={{
           background:
@@ -182,13 +182,17 @@ export default function MobileOptimizedMarketDashboard({
                   animate={{ rotate: [0, 360] }}
                   transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
                 >
-                  <BarChart3 className={`text-finance-gold ${
-                    isMobile ? "w-5 h-5" : "w-6 h-6"
-                  }`} />
+                  <BarChart3
+                    className={`text-finance-gold ${
+                      isMobile ? "w-5 h-5" : "w-6 h-6"
+                    }`}
+                  />
                 </motion.div>
-                <span className={`font-bold bg-gradient-to-r from-finance-gold to-finance-electric bg-clip-text text-transparent ${
-                  isMobile ? "text-base" : "text-xl"
-                }`}>
+                <span
+                  className={`font-bold bg-gradient-to-r from-finance-gold to-finance-electric bg-clip-text text-transparent ${
+                    isMobile ? "text-base" : "text-xl"
+                  }`}
+                >
                   📈 Live Market Dashboard
                 </span>
                 <Badge
@@ -245,22 +249,30 @@ export default function MobileOptimizedMarketDashboard({
 
           {/* Error State */}
           {connectionStatus === "error" && (
-            <div className={`p-4 bg-finance-red/10 border border-finance-red/30 rounded-lg ${
-              isMobile ? "mx-4 mb-4" : "mx-6 mb-6"
-            }`}>
+            <div
+              className={`p-4 bg-finance-red/10 border border-finance-red/30 rounded-lg ${
+                isMobile ? "mx-4 mb-4" : "mx-6 mb-6"
+              }`}
+            >
               <div className="flex items-center space-x-2 mb-2">
-                <AlertTriangle className={`text-finance-red ${
-                  isMobile ? "w-3 h-3" : "w-4 h-4"
-                }`} />
-                <span className={`font-medium text-finance-red ${
-                  isMobile ? "text-xs" : "text-sm"
-                }`}>
+                <AlertTriangle
+                  className={`text-finance-red ${
+                    isMobile ? "w-3 h-3" : "w-4 h-4"
+                  }`}
+                />
+                <span
+                  className={`font-medium text-finance-red ${
+                    isMobile ? "text-xs" : "text-sm"
+                  }`}
+                >
                   Connection Error
                 </span>
               </div>
-              <div className={`text-foreground/70 mb-3 ${
-                isMobile ? "text-xs" : "text-xs"
-              }`}>
+              <div
+                className={`text-foreground/70 mb-3 ${
+                  isMobile ? "text-xs" : "text-xs"
+                }`}
+              >
                 {errorMessage || "Unable to fetch market data"}
               </div>
               <Button
@@ -290,19 +302,25 @@ export default function MobileOptimizedMarketDashboard({
                 onValueChange={setActiveTab}
                 className="w-full"
               >
-                <TabsList className={`grid w-full grid-cols-3 bg-finance-navy-light/50 ${
-                  isMobile ? "h-10" : "h-12"
-                }`}>
+                <TabsList
+                  className={`grid w-full grid-cols-3 bg-finance-navy-light/50 ${
+                    isMobile ? "h-10" : "h-12"
+                  }`}
+                >
                   <TabsTrigger
                     value="stocks"
                     className={`data-[state=active]:bg-finance-gold data-[state=active]:text-finance-navy ${
                       isMobile ? "text-xs px-2" : "text-sm"
                     }`}
                   >
-                    <Building2 className={`mr-1 sm:mr-2 ${
-                      isMobile ? "w-3 h-3" : "w-4 h-4"
-                    }`} />
-                    <span className={isMobile ? "hidden xs:inline" : ""}>Stocks</span>
+                    <Building2
+                      className={`mr-1 sm:mr-2 ${
+                        isMobile ? "w-3 h-3" : "w-4 h-4"
+                      }`}
+                    />
+                    <span className={isMobile ? "hidden xs:inline" : ""}>
+                      Stocks
+                    </span>
                   </TabsTrigger>
                   <TabsTrigger
                     value="currencies"
@@ -310,10 +328,14 @@ export default function MobileOptimizedMarketDashboard({
                       isMobile ? "text-xs px-2" : "text-sm"
                     }`}
                   >
-                    <DollarSign className={`mr-1 sm:mr-2 ${
-                      isMobile ? "w-3 h-3" : "w-4 h-4"
-                    }`} />
-                    <span className={isMobile ? "hidden xs:inline" : ""}>Currencies</span>
+                    <DollarSign
+                      className={`mr-1 sm:mr-2 ${
+                        isMobile ? "w-3 h-3" : "w-4 h-4"
+                      }`}
+                    />
+                    <span className={isMobile ? "hidden xs:inline" : ""}>
+                      Currencies
+                    </span>
                   </TabsTrigger>
                   <TabsTrigger
                     value="summary"
@@ -321,26 +343,37 @@ export default function MobileOptimizedMarketDashboard({
                       isMobile ? "text-xs px-2" : "text-sm"
                     }`}
                   >
-                    <BarChart3 className={`mr-1 sm:mr-2 ${
-                      isMobile ? "w-3 h-3" : "w-4 h-4"
-                    }`} />
-                    <span className={isMobile ? "hidden xs:inline" : ""}>Summary</span>
+                    <BarChart3
+                      className={`mr-1 sm:mr-2 ${
+                        isMobile ? "w-3 h-3" : "w-4 h-4"
+                      }`}
+                    />
+                    <span className={isMobile ? "hidden xs:inline" : ""}>
+                      Summary
+                    </span>
                   </TabsTrigger>
                 </TabsList>
 
-                <TabsContent value="stocks" className={isMobile ? "mt-4" : "mt-6"}>
+                <TabsContent
+                  value="stocks"
+                  className={isMobile ? "mt-4" : "mt-6"}
+                >
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <h3 className={`font-semibold text-finance-gold mb-3 sm:mb-4 ${
-                      isMobile ? "text-base" : "text-lg"
-                    }`}>
+                    <h3
+                      className={`font-semibold text-finance-gold mb-3 sm:mb-4 ${
+                        isMobile ? "text-base" : "text-lg"
+                      }`}
+                    >
                       📈 Indian Market Stocks
                     </h3>
                     <ScrollArea className={isMobile ? "h-[40vh]" : "h-[400px]"}>
-                      <div className={`space-y-2 sm:space-y-3 ${isMobile ? "pr-2" : ""}`}>
+                      <div
+                        className={`space-y-2 sm:space-y-3 ${isMobile ? "pr-2" : ""}`}
+                      >
                         {marketData.stocks.map((stock) => (
                           <motion.div
                             key={stock.symbol}
@@ -355,22 +388,28 @@ export default function MobileOptimizedMarketDashboard({
                           >
                             <div className="flex items-center justify-between">
                               <div className="flex-1 min-w-0">
-                                <div className={`font-bold text-finance-gold truncate ${
-                                  isMobile ? "text-sm" : "text-base"
-                                }`}>
+                                <div
+                                  className={`font-bold text-finance-gold truncate ${
+                                    isMobile ? "text-sm" : "text-base"
+                                  }`}
+                                >
                                   {stock.displayName || stock.name}
                                 </div>
-                                <div className={`text-muted-foreground ${
-                                  isMobile ? "text-xs" : "text-sm"
-                                }`}>
+                                <div
+                                  className={`text-muted-foreground ${
+                                    isMobile ? "text-xs" : "text-sm"
+                                  }`}
+                                >
                                   {stock.symbol}
                                 </div>
                               </div>
 
                               <div className="text-right">
-                                <div className={`font-bold text-foreground ${
-                                  isMobile ? "text-sm" : "text-lg"
-                                }`}>
+                                <div
+                                  className={`font-bold text-foreground ${
+                                    isMobile ? "text-sm" : "text-lg"
+                                  }`}
+                                >
                                   {formatPrice(stock.symbol, stock.price)}
                                 </div>
                                 <div
@@ -393,9 +432,11 @@ export default function MobileOptimizedMarketDashboard({
                               </div>
                             </div>
 
-                            <div className={`mt-2 flex justify-between items-center ${
-                              isMobile ? "text-xs" : "text-xs"
-                            } text-muted-foreground`}>
+                            <div
+                              className={`mt-2 flex justify-between items-center ${
+                                isMobile ? "text-xs" : "text-xs"
+                              } text-muted-foreground`}
+                            >
                               <span className="truncate">
                                 H: {formatPrice(stock.symbol, stock.dayHigh)} L:{" "}
                                 {formatPrice(stock.symbol, stock.dayLow)}
@@ -417,20 +458,27 @@ export default function MobileOptimizedMarketDashboard({
                   </motion.div>
                 </TabsContent>
 
-                <TabsContent value="currencies" className={isMobile ? "mt-4" : "mt-6"}>
+                <TabsContent
+                  value="currencies"
+                  className={isMobile ? "mt-4" : "mt-6"}
+                >
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <h3 className={`font-semibold text-finance-gold mb-3 sm:mb-4 ${
-                      isMobile ? "text-base" : "text-lg"
-                    }`}>
+                    <h3
+                      className={`font-semibold text-finance-gold mb-3 sm:mb-4 ${
+                        isMobile ? "text-base" : "text-lg"
+                      }`}
+                    >
                       💱 Currency Exchange Rates
                     </h3>
-                    <div className={`grid gap-3 sm:gap-4 ${
-                      isMobile ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2"
-                    }`}>
+                    <div
+                      className={`grid gap-3 sm:gap-4 ${
+                        isMobile ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2"
+                      }`}
+                    >
                       {marketData.currencies.map((currency) => (
                         <motion.div
                           key={currency.symbol}
@@ -444,21 +492,27 @@ export default function MobileOptimizedMarketDashboard({
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex-1 min-w-0">
-                              <div className={`font-semibold text-finance-gold truncate ${
-                                isMobile ? "text-sm" : "text-base"
-                              }`}>
+                              <div
+                                className={`font-semibold text-finance-gold truncate ${
+                                  isMobile ? "text-sm" : "text-base"
+                                }`}
+                              >
                                 {currency.name}
                               </div>
-                              <div className={`text-muted-foreground ${
-                                isMobile ? "text-xs" : "text-sm"
-                              }`}>
+                              <div
+                                className={`text-muted-foreground ${
+                                  isMobile ? "text-xs" : "text-sm"
+                                }`}
+                              >
                                 {currency.symbol}
                               </div>
                             </div>
                             <div className="text-right">
-                              <div className={`font-bold text-foreground ${
-                                isMobile ? "text-sm" : "text-base"
-                              }`}>
+                              <div
+                                className={`font-bold text-foreground ${
+                                  isMobile ? "text-sm" : "text-base"
+                                }`}
+                              >
                                 ₹{currency.rate.toFixed(4)}
                               </div>
                               {currency.change !== 0 && (
@@ -485,20 +539,29 @@ export default function MobileOptimizedMarketDashboard({
                   </motion.div>
                 </TabsContent>
 
-                <TabsContent value="summary" className={isMobile ? "mt-4" : "mt-6"}>
+                <TabsContent
+                  value="summary"
+                  className={isMobile ? "mt-4" : "mt-6"}
+                >
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <div className={`grid gap-3 sm:gap-4 mb-4 sm:mb-6 ${
-                      isMobile ? "grid-cols-2" : "grid-cols-1 md:grid-cols-4"
-                    }`}>
+                    <div
+                      className={`grid gap-3 sm:gap-4 mb-4 sm:mb-6 ${
+                        isMobile ? "grid-cols-2" : "grid-cols-1 md:grid-cols-4"
+                      }`}
+                    >
                       <Card className="bg-finance-navy-light/50 border-finance-gold/20">
-                        <CardHeader className={isMobile ? "pb-1 px-3 pt-3" : "pb-2"}>
-                          <CardTitle className={`text-muted-foreground ${
-                            isMobile ? "text-xs" : "text-sm"
-                          }`}>
+                        <CardHeader
+                          className={isMobile ? "pb-1 px-3 pt-3" : "pb-2"}
+                        >
+                          <CardTitle
+                            className={`text-muted-foreground ${
+                              isMobile ? "text-xs" : "text-sm"
+                            }`}
+                          >
                             Market Sentiment
                           </CardTitle>
                         </CardHeader>
@@ -521,71 +584,95 @@ export default function MobileOptimizedMarketDashboard({
                       </Card>
 
                       <Card className="bg-finance-navy-light/50 border-finance-gold/20">
-                        <CardHeader className={isMobile ? "pb-1 px-3 pt-3" : "pb-2"}>
-                          <CardTitle className={`text-muted-foreground ${
-                            isMobile ? "text-xs" : "text-sm"
-                          }`}>
+                        <CardHeader
+                          className={isMobile ? "pb-1 px-3 pt-3" : "pb-2"}
+                        >
+                          <CardTitle
+                            className={`text-muted-foreground ${
+                              isMobile ? "text-xs" : "text-sm"
+                            }`}
+                          >
                             Total Gainers
                           </CardTitle>
                         </CardHeader>
                         <CardContent className={isMobile ? "px-3 pb-3" : ""}>
-                          <div className={`font-bold text-finance-green ${
-                            isMobile ? "text-sm" : "text-lg"
-                          }`}>
+                          <div
+                            className={`font-bold text-finance-green ${
+                              isMobile ? "text-sm" : "text-lg"
+                            }`}
+                          >
                             {marketData.sentiment.positiveStocks}
                           </div>
-                          <div className={`text-muted-foreground ${
-                            isMobile ? "text-xs" : "text-xs"
-                          }`}>
+                          <div
+                            className={`text-muted-foreground ${
+                              isMobile ? "text-xs" : "text-xs"
+                            }`}
+                          >
                             of {marketData.sentiment.totalStocks} stocks
                           </div>
                         </CardContent>
                       </Card>
 
                       <Card className="bg-finance-navy-light/50 border-finance-gold/20">
-                        <CardHeader className={isMobile ? "pb-1 px-3 pt-3" : "pb-2"}>
-                          <CardTitle className={`text-muted-foreground ${
-                            isMobile ? "text-xs" : "text-sm"
-                          }`}>
+                        <CardHeader
+                          className={isMobile ? "pb-1 px-3 pt-3" : "pb-2"}
+                        >
+                          <CardTitle
+                            className={`text-muted-foreground ${
+                              isMobile ? "text-xs" : "text-sm"
+                            }`}
+                          >
                             Total Losers
                           </CardTitle>
                         </CardHeader>
                         <CardContent className={isMobile ? "px-3 pb-3" : ""}>
-                          <div className={`font-bold text-finance-red ${
-                            isMobile ? "text-sm" : "text-lg"
-                          }`}>
+                          <div
+                            className={`font-bold text-finance-red ${
+                              isMobile ? "text-sm" : "text-lg"
+                            }`}
+                          >
                             {marketData.sentiment.totalStocks -
                               marketData.sentiment.positiveStocks}
                           </div>
-                          <div className={`text-muted-foreground ${
-                            isMobile ? "text-xs" : "text-xs"
-                          }`}>
+                          <div
+                            className={`text-muted-foreground ${
+                              isMobile ? "text-xs" : "text-xs"
+                            }`}
+                          >
                             of {marketData.sentiment.totalStocks} stocks
                           </div>
                         </CardContent>
                       </Card>
 
                       <Card className="bg-finance-navy-light/50 border-finance-gold/20">
-                        <CardHeader className={isMobile ? "pb-1 px-3 pt-3" : "pb-2"}>
-                          <CardTitle className={`text-muted-foreground ${
-                            isMobile ? "text-xs" : "text-sm"
-                          }`}>
+                        <CardHeader
+                          className={isMobile ? "pb-1 px-3 pt-3" : "pb-2"}
+                        >
+                          <CardTitle
+                            className={`text-muted-foreground ${
+                              isMobile ? "text-xs" : "text-sm"
+                            }`}
+                          >
                             Last Update
                           </CardTitle>
                         </CardHeader>
                         <CardContent className={isMobile ? "px-3 pb-3" : ""}>
-                          <div className={`text-finance-electric ${
-                            isMobile ? "text-xs" : "text-sm"
-                          }`}>
+                          <div
+                            className={`text-finance-electric ${
+                              isMobile ? "text-xs" : "text-sm"
+                            }`}
+                          >
                             {safeFormatTimestamp(lastUpdate)}
                           </div>
                         </CardContent>
                       </Card>
                     </div>
 
-                    <div className={`text-center text-muted-foreground ${
-                      isMobile ? "text-xs" : "text-sm"
-                    }`}>
+                    <div
+                      className={`text-center text-muted-foreground ${
+                        isMobile ? "text-xs" : "text-sm"
+                      }`}
+                    >
                       <p>
                         Switch between tabs to view detailed information about
                         stocks and currencies.

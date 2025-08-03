@@ -152,7 +152,10 @@ export function SoundProvider({ children }: SoundProviderProps) {
         oscillator.type = "square";
 
         gainNode.gain.setValueAtTime(volume * 0.2, ctx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
+        gainNode.gain.exponentialRampToValueAtTime(
+          0.01,
+          ctx.currentTime + 0.05,
+        );
 
         oscillator.start(ctx.currentTime);
         oscillator.stop(ctx.currentTime + 0.05);
@@ -231,9 +234,9 @@ export default function MobileOptimizedSoundControls() {
   const isMobile = useMobile();
 
   return (
-    <div 
+    <div
       className={`fixed z-50 ${
-        isMobile 
+        isMobile
           ? "bottom-2 left-2" // Mobile positioning
           : "bottom-6 left-6" // Desktop positioning
       }`}
@@ -253,14 +256,18 @@ export default function MobileOptimizedSoundControls() {
             >
               <div className="space-y-3 sm:space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className={`font-medium text-finance-gold ${
-                    isMobile ? "text-xs" : "text-sm"
-                  }`}>
+                  <span
+                    className={`font-medium text-finance-gold ${
+                      isMobile ? "text-xs" : "text-sm"
+                    }`}
+                  >
                     Sound Effects
                   </span>
-                  <span className={`text-muted-foreground ${
-                    isMobile ? "text-xs" : "text-xs"
-                  }`}>
+                  <span
+                    className={`text-muted-foreground ${
+                      isMobile ? "text-xs" : "text-xs"
+                    }`}
+                  >
                     {Math.round(volume * 100)}%
                   </span>
                 </div>
@@ -317,7 +324,7 @@ export default function MobileOptimizedSoundControls() {
         <motion.button
           onClick={() => setShowControls(!showControls)}
           className={`backdrop-blur-xl bg-finance-navy/80 rounded-full border border-finance-gold/20 shadow-2xl hover:border-finance-gold/40 transition-all duration-300 group ${
-            isMobile 
+            isMobile
               ? "p-3 min-w-[48px] min-h-[48px]" // Mobile touch target
               : "p-4"
           }`}
@@ -341,21 +348,23 @@ export default function MobileOptimizedSoundControls() {
           }}
         >
           {isMuted ? (
-            <VolumeX className={`text-finance-red ${
-              isMobile ? "w-5 h-5" : "w-6 h-6"
-            }`} />
+            <VolumeX
+              className={`text-finance-red ${isMobile ? "w-5 h-5" : "w-6 h-6"}`}
+            />
           ) : (
-            <Volume2 className={`text-finance-gold ${
-              isMobile ? "w-5 h-5" : "w-6 h-6"
-            }`} />
+            <Volume2
+              className={`text-finance-gold ${
+                isMobile ? "w-5 h-5" : "w-6 h-6"
+              }`}
+            />
           )}
 
           {/* Settings indicator - adjusted for mobile */}
           {showControls && (
             <motion.div
               className={`absolute bg-finance-electric rounded-full ${
-                isMobile 
-                  ? "-top-0.5 -right-0.5 w-2.5 h-2.5" 
+                isMobile
+                  ? "-top-0.5 -right-0.5 w-2.5 h-2.5"
                   : "-top-1 -right-1 w-3 h-3"
               }`}
               animate={{ scale: [1, 1.2, 1] }}

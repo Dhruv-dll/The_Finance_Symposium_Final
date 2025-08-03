@@ -37,8 +37,6 @@ interface CurrencyData {
   timestamp: Date;
 }
 
-
-
 // Stock symbols mapping for accurate data
 const STOCK_SYMBOLS = [
   {
@@ -64,8 +62,6 @@ const CURRENCY_SYMBOLS = [
   { symbol: "GBPINR=X", name: "GBP/INR", fallbackRate: 103.45 },
   { symbol: "JPYINR=X", name: "JPY/INR", fallbackRate: 0.56 },
 ];
-
-
 
 // Check if Indian market is open
 function isMarketOpen(): boolean {
@@ -249,10 +245,6 @@ async function fetchCurrencyData(symbol: string): Promise<CurrencyData | null> {
   }
 }
 
-
-
-
-
 // API endpoint to get all market data
 export const getMarketData: RequestHandler = async (req, res) => {
   // Set response timeout to prevent hanging
@@ -262,7 +254,12 @@ export const getMarketData: RequestHandler = async (req, res) => {
       res.status(200).json({
         stocks: [],
         currencies: [],
-        sentiment: { sentiment: "neutral", advanceDeclineRatio: 0.5, positiveStocks: 0, totalStocks: 0 },
+        sentiment: {
+          sentiment: "neutral",
+          advanceDeclineRatio: 0.5,
+          positiveStocks: 0,
+          totalStocks: 0,
+        },
         timestamp: new Date(),
         marketState: isMarketOpen() ? "OPEN" : "CLOSED",
         fallback: true,
@@ -277,15 +274,15 @@ export const getMarketData: RequestHandler = async (req, res) => {
     const stockPromises = STOCK_SYMBOLS.map((stock) =>
       Promise.race([
         fetchStockData(stock.symbol),
-        new Promise<null>((resolve) => setTimeout(() => resolve(null), 6000))
-      ])
+        new Promise<null>((resolve) => setTimeout(() => resolve(null), 6000)),
+      ]),
     );
 
     const currencyPromises = CURRENCY_SYMBOLS.map((currency) =>
       Promise.race([
         fetchCurrencyData(currency.symbol),
-        new Promise<null>((resolve) => setTimeout(() => resolve(null), 6000))
-      ])
+        new Promise<null>((resolve) => setTimeout(() => resolve(null), 6000)),
+      ]),
     );
 
     const [stockResults, currencyResults] = await Promise.all([
@@ -302,14 +299,12 @@ export const getMarketData: RequestHandler = async (req, res) => {
       (currency): currency is CurrencyData => currency !== null,
     );
 
-
     console.log(
       `📊 Results: ${stocks.length} stocks, ${currencies.length} currencies`,
     );
     if (currencies.length > 0) {
       console.log(`💱 Currency sample:`, currencies[0]);
     }
-
 
     // Calculate market sentiment
     const stocksOnly = stocks.filter(
@@ -359,7 +354,12 @@ export const getMarketData: RequestHandler = async (req, res) => {
       res.status(200).json({
         stocks: [],
         currencies: [],
-        sentiment: { sentiment: "neutral", advanceDeclineRatio: 0.5, positiveStocks: 0, totalStocks: 0 },
+        sentiment: {
+          sentiment: "neutral",
+          advanceDeclineRatio: 0.5,
+          positiveStocks: 0,
+          totalStocks: 0,
+        },
         timestamp: new Date(),
         marketState: isMarketOpen() ? "OPEN" : "CLOSED",
         error: true,

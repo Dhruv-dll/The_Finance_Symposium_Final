@@ -45,8 +45,10 @@ const defaultConfig: EventsConfig = {
             "Exploring the intersection of data analytics and financial decision-making",
         },
         {
-          title: "Saturday Seminar 2: Banking 101: Demystifying India's Backbone",
-          description: "Understanding the fundamentals of India's banking system",
+          title:
+            "Saturday Seminar 2: Banking 101: Demystifying India's Backbone",
+          description:
+            "Understanding the fundamentals of India's banking system",
         },
       ],
     },
@@ -161,10 +163,12 @@ export const checkEventsSync: RequestHandler = async (req, res) => {
   try {
     const { lastModified } = req.query;
     const serverConfig = await loadEventsData();
-    
-    const clientLastModified = lastModified ? parseInt(lastModified as string) : 0;
+
+    const clientLastModified = lastModified
+      ? parseInt(lastModified as string)
+      : 0;
     const needsUpdate = serverConfig.lastModified > clientLastModified;
-    
+
     res.json({
       success: true,
       needsUpdate,

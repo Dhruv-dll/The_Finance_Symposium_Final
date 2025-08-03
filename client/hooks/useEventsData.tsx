@@ -96,13 +96,18 @@ export function useEventsData() {
         if (result.success && result.data) {
           setEventsConfig(result.data);
           // Update local storage with server data
-          localStorage.setItem("tfs-events-config", JSON.stringify(result.data));
+          localStorage.setItem(
+            "tfs-events-config",
+            JSON.stringify(result.data),
+          );
           return true;
         }
       }
       throw new Error("Server request failed");
     } catch (error) {
-      console.warn("Failed to load events from server, using local/default data");
+      console.warn(
+        "Failed to load events from server, using local/default data",
+      );
       return false;
     }
   };
@@ -115,7 +120,9 @@ export function useEventsData() {
         ? JSON.parse(localConfig).lastModified || 0
         : 0;
 
-      const response = await fetch(`/api/events/sync?lastModified=${localLastModified}`);
+      const response = await fetch(
+        `/api/events/sync?lastModified=${localLastModified}`,
+      );
       if (response.ok) {
         const result = await response.json();
         if (result.success && result.needsUpdate) {
@@ -181,7 +188,10 @@ export function useEventsData() {
 
     return () => {
       window.removeEventListener("storage", handleStorageChange);
-      window.removeEventListener("tfs-events-updated", handleCustomStorageChange);
+      window.removeEventListener(
+        "tfs-events-updated",
+        handleCustomStorageChange,
+      );
     };
   }, []);
 

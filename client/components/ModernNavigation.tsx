@@ -271,8 +271,18 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
                   backgroundRepeat: "no-repeat",
                   backgroundPosition: "center",
                   backgroundSize: "cover",
-                  width: window.innerWidth < 640 ? "45px" : window.innerWidth < 768 ? "55px" : "75px",
-                  height: window.innerWidth < 640 ? "45px" : window.innerWidth < 768 ? "55px" : "75px",
+                  width:
+                    window.innerWidth < 640
+                      ? "45px"
+                      : window.innerWidth < 768
+                        ? "55px"
+                        : "75px",
+                  height:
+                    window.innerWidth < 640
+                      ? "45px"
+                      : window.innerWidth < 768
+                        ? "55px"
+                        : "75px",
                   marginTop: "1px",
                   boxShadow: "1px 1px 3px 0px rgba(0, 0, 0, 1)",
                 }}

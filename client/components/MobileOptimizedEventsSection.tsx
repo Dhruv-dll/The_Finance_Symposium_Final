@@ -1,9 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  motion,
-  useInView,
-  AnimatePresence,
-} from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import {
   Calendar,
   Users,
@@ -126,7 +122,7 @@ const MobileEventCard: React.FC<{
             <h3 className="text-lg sm:text-xl font-bold leading-tight">
               {event.title}
             </h3>
-            
+
             <p className="text-white/90 text-xs sm:text-sm leading-relaxed line-clamp-3">
               {event.description}
             </p>
@@ -194,9 +190,7 @@ const MobileTimelineEvent: React.FC<{
 
       {/* Timeline node */}
       <div className="relative z-10 flex-shrink-0">
-        <div
-          className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center bg-gradient-to-r from-amber-500 to-orange-500"
-        >
+        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center bg-gradient-to-r from-amber-500 to-orange-500">
           <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-black" />
         </div>
       </div>
@@ -210,7 +204,7 @@ const MobileTimelineEvent: React.FC<{
               <h4 className="text-lg sm:text-xl font-bold text-white mb-2 truncate">
                 {event.title}
               </h4>
-              
+
               {/* Event meta - stacked on mobile */}
               <div className="space-y-1 sm:space-y-0 sm:flex sm:flex-wrap sm:gap-3 text-xs sm:text-sm">
                 <div className="flex items-center text-cyan-400">
@@ -235,18 +229,17 @@ const MobileTimelineEvent: React.FC<{
                   isEventPast
                     ? "bg-gradient-to-r from-gray-600 to-gray-700"
                     : isEventToday
-                    ? "bg-gradient-to-r from-green-500 to-emerald-500"
-                    : isEventSoon
-                    ? "bg-gradient-to-r from-red-500 to-pink-500"
-                    : "bg-gradient-to-r from-amber-500 to-orange-500"
+                      ? "bg-gradient-to-r from-green-500 to-emerald-500"
+                      : isEventSoon
+                        ? "bg-gradient-to-r from-red-500 to-pink-500"
+                        : "bg-gradient-to-r from-amber-500 to-orange-500"
                 } text-black font-bold px-2 py-1 text-xs`}
               >
                 {isEventPast
                   ? `${Math.abs(daysLeft)}d ago`
                   : isEventToday
-                  ? "TODAY"
-                  : `${daysLeft}d left`
-                }
+                    ? "TODAY"
+                    : `${daysLeft}d left`}
               </Badge>
             </div>
           </div>
@@ -317,7 +310,8 @@ export default function MobileOptimizedEventsSection() {
       id="events"
       className="relative min-h-screen py-12 sm:py-16 md:py-20 overflow-hidden mobile-container"
       style={{
-        background: "linear-gradient(135deg, #000012 0%, #0a0a23 50%, #1a1a2e 100%)",
+        background:
+          "linear-gradient(135deg, #000012 0%, #0a0a23 50%, #1a1a2e 100%)",
       }}
     >
       {/* Simplified background particles for mobile */}
@@ -394,7 +388,8 @@ export default function MobileOptimizedEventsSection() {
             </h3>
             <div className="w-20 sm:w-32 h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent mx-auto mb-3" />
             <p className="text-sm sm:text-base md:text-lg text-white/70 max-w-2xl mx-auto px-4">
-              Stay updated with our exciting upcoming events and secure your spot!
+              Stay updated with our exciting upcoming events and secure your
+              spot!
             </p>
           </div>
 
@@ -409,7 +404,9 @@ export default function MobileOptimizedEventsSection() {
               >
                 <div className="relative max-w-lg mx-auto mobile-container px-4">
                   <div className="relative bg-slate-900/60 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 border border-white/10">
-                    <div className="text-4xl sm:text-6xl md:text-8xl mb-4 sm:mb-6">🚀</div>
+                    <div className="text-4xl sm:text-6xl md:text-8xl mb-4 sm:mb-6">
+                      🚀
+                    </div>
                     <h4 className="text-xl sm:text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-amber-400 mb-4 sm:mb-6">
                       Amazing Events Coming Soon
                     </h4>
@@ -476,13 +473,15 @@ export default function MobileOptimizedEventsSection() {
                 <div className="p-6 sm:p-8 max-h-[60vh] overflow-y-auto custom-scrollbar">
                   {selectedEvent.comingSoon ? (
                     <div className="text-center py-8 sm:py-12 md:py-16">
-                      <div className="text-4xl sm:text-6xl md:text-8xl mb-4 sm:mb-6">🚧</div>
+                      <div className="text-4xl sm:text-6xl md:text-8xl mb-4 sm:mb-6">
+                        🚧
+                      </div>
                       <h4 className="text-xl sm:text-2xl md:text-3xl font-bold text-amber-400 mb-4 sm:mb-6">
                         Coming Soon
                       </h4>
                       <p className="text-white/70 text-sm sm:text-base md:text-lg max-w-md mx-auto leading-relaxed">
-                        We're currently planning exciting events for this category.
-                        Stay tuned for amazing announcements!
+                        We're currently planning exciting events for this
+                        category. Stay tuned for amazing announcements!
                       </p>
                     </div>
                   ) : (

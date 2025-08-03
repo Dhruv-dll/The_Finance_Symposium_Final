@@ -313,7 +313,9 @@ function EnhancedMarketTicker() {
 
             <div className="flex items-center space-x-2 text-xs">
               <div className="w-2 h-2 bg-finance-electric rounded-full animate-pulse"></div>
-              <span className="text-finance-electric">📈 Yahoo Finance Live</span>
+              <span className="text-finance-electric">
+                📈 Yahoo Finance Live
+              </span>
             </div>
 
             {isLoading && (
@@ -488,13 +490,14 @@ function CursorTrail() {
   useEffect(() => {
     // Check if device is mobile/touch device
     const checkMobile = () => {
-      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      const isTouchDevice =
+        "ontouchstart" in window || navigator.maxTouchPoints > 0;
       const isSmallScreen = window.innerWidth < 768;
       setIsMobile(isTouchDevice || isSmallScreen);
     };
 
     checkMobile();
-    window.addEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
 
     // Only add mouse tracking on non-mobile devices
     if (!isMobile) {
@@ -518,13 +521,13 @@ function CursorTrail() {
 
       return () => {
         window.removeEventListener("mousemove", handleMouseMove);
-        window.removeEventListener('resize', checkMobile);
+        window.removeEventListener("resize", checkMobile);
         clearInterval(cleanup);
       };
     }
 
     return () => {
-      window.removeEventListener('resize', checkMobile);
+      window.removeEventListener("resize", checkMobile);
     };
   }, [isMobile]);
 
