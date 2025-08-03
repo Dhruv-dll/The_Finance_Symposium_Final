@@ -164,15 +164,46 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
       setReducedMotion(mobile || window.matchMedia('(prefers-reduced-motion: reduce)').matches);
     };
 
+    // Optimize touch interactions
+    const optimizeTouchPerformance = () => {
+      if (isMobile) {
+        // Reduce animation complexity during touch
+        document.body.classList.add('mobile-performance-mode');
+      } else {
+        document.body.classList.remove('mobile-performance-mode');
+      }
+    };
+
+    const handleTouchStart = () => {
+      if (isMobile) {
+        document.body.style.pointerEvents = 'auto';
+      }
+    };
+
+    const handleTouchEnd = () => {
+      if (isMobile) {
+        // Small delay to ensure smooth completion
+        setTimeout(() => {
+          document.body.style.pointerEvents = '';
+        }, 100);
+      }
+    };
+
     checkMobile();
+    optimizeTouchPerformance();
+
     window.addEventListener('resize', checkMobile);
     document.addEventListener("click", handleClickOutside);
+    document.addEventListener('touchstart', handleTouchStart, { passive: true });
+    document.addEventListener('touchend', handleTouchEnd, { passive: true });
 
     return () => {
       window.removeEventListener('resize', checkMobile);
       document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener('touchstart', handleTouchStart);
+      document.removeEventListener('touchend', handleTouchEnd);
     };
-  }, []);
+  }, [isMobile]);
 
   return (
     <motion.nav
