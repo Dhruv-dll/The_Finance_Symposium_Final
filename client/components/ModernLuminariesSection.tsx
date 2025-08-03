@@ -321,31 +321,20 @@ export default function ModernLuminariesSection() {
                 )}
 
                 {/* Avatar Placeholder with Glow */}
-                <motion.div
+                <div
                   className="relative w-16 h-16 sm:w-20 sm:h-20 mx-auto"
-                  animate={{
-                    scale: isHovered ? 1.1 : 1,
-                    rotate: isHovered ? 5 : 0,
-                  }}
-                  transition={{ duration: 0.3 }}
                 >
-                  <div 
+                  <div
                     className="w-full h-full rounded-2xl bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm border border-white/20 flex items-center justify-center relative overflow-hidden"
                   >
                     <Users className="w-8 h-8 sm:w-10 sm:h-10 text-white/80" />
-                    
+
                     {/* Glow Effect */}
-                    <motion.div
+                    <div
                       className="absolute inset-0 rounded-2xl"
-                      animate={{
-                        boxShadow: isHovered 
-                          ? "0 0 30px rgba(255,255,255,0.5), inset 0 0 20px rgba(255,255,255,0.2)"
-                          : "0 0 0px rgba(255,255,255,0)",
-                      }}
-                      transition={{ duration: 0.3 }}
                     />
                   </div>
-                </motion.div>
+                </div>
               </div>
 
               {/* Member Info */}
