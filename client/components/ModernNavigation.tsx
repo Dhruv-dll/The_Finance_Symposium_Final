@@ -157,8 +157,21 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
       setMobileMenuOpen(false);
     };
 
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      // Detect if user prefers reduced motion
+      setReducedMotion(mobile || window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
     document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
+
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      document.removeEventListener("click", handleClickOutside);
+    };
   }, []);
 
   return (
