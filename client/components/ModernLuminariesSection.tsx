@@ -339,16 +339,12 @@ export default function ModernLuminariesSection() {
 
               {/* Member Info */}
               <div className="text-center text-white space-y-3">
-                <motion.h3
+                <h3
                   className="text-lg sm:text-xl font-bold text-center"
                   style={{ textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}
-                  animate={{
-                    scale: isHovered ? 1.05 : 1,
-                  }}
-                  transition={{ duration: 0.2 }}
                 >
                   {member.name}
-                </motion.h3>
+                </h3>
                 
                 <motion.p
                   className="text-xs sm:text-sm text-white/90 font-medium text-center"
