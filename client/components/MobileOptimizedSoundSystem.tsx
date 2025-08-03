@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, createContext, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Volume2, VolumeX, Settings } from "lucide-react";
+import { useMobile } from "../hooks/useMobile";
 
 interface SoundContextType {
   playSound: (
@@ -57,7 +58,6 @@ export function SoundProvider({ children }: SoundProviderProps) {
       }
     };
 
-    // Initialize on first user interaction
     const handleFirstInteraction = () => {
       initAudio();
       document.removeEventListener("click", handleFirstInteraction);
@@ -73,49 +73,39 @@ export function SoundProvider({ children }: SoundProviderProps) {
     };
   }, []);
 
-  // Ambient sound management
+  // Simplified ambient sound for mobile performance
   useEffect(() => {
     if (!isMuted && volume > 0) {
-      // Create or resume ambient sound
       if (!ambientAudioRef.current) {
         ambientAudioRef.current = new Audio();
         ambientAudioRef.current.loop = true;
-        ambientAudioRef.current.volume = volume * 0.2; // Very subtle ambient
+        ambientAudioRef.current.volume = volume * 0.1; // Even more subtle on mobile
 
-        // Create a simple ambient sound using oscillators
+        // Simplified oscillator for mobile
         if (audioContextRef.current) {
-          const oscillator1 = audioContextRef.current.createOscillator();
-          const oscillator2 = audioContextRef.current.createOscillator();
+          const oscillator = audioContextRef.current.createOscillator();
           const gainNode = audioContextRef.current.createGain();
 
-          oscillator1.frequency.setValueAtTime(
+          oscillator.frequency.setValueAtTime(
             40,
             audioContextRef.current.currentTime,
           );
-          oscillator2.frequency.setValueAtTime(
-            60,
-            audioContextRef.current.currentTime,
-          );
-          oscillator1.type = "sine";
-          oscillator2.type = "sine";
+          oscillator.type = "sine";
 
           gainNode.gain.setValueAtTime(
-            volume * 0.05,
+            volume * 0.02, // Very low for mobile
             audioContextRef.current.currentTime,
           );
 
-          oscillator1.connect(gainNode);
-          oscillator2.connect(gainNode);
+          oscillator.connect(gainNode);
           gainNode.connect(audioContextRef.current.destination);
 
-          oscillator1.start();
-          oscillator2.start();
+          oscillator.start();
 
-          // Stop oscillators after 30 seconds to prevent memory leak
+          // Stop after 15 seconds on mobile to save battery
           setTimeout(() => {
-            oscillator1.stop();
-            oscillator2.stop();
-          }, 30000);
+            oscillator.stop();
+          }, 15000);
         }
       }
     } else if (ambientAudioRef.current) {
@@ -131,48 +121,50 @@ export function SoundProvider({ children }: SoundProviderProps) {
     const ctx = audioContextRef.current;
     const gainNode = ctx.createGain();
     gainNode.connect(ctx.destination);
-    gainNode.gain.setValueAtTime(volume, ctx.currentTime);
+    gainNode.gain.setValueAtTime(volume * 0.7, ctx.currentTime); // Slightly reduced for mobile
 
+    // Simplified sound generation for mobile performance
     switch (type) {
       case "bell": {
-        // Market bell chime
         const oscillator = ctx.createOscillator();
         oscillator.connect(gainNode);
         oscillator.frequency.setValueAtTime(800, ctx.currentTime);
         oscillator.frequency.exponentialRampToValueAtTime(
           400,
-          ctx.currentTime + 0.5,
+          ctx.currentTime + 0.3, // Shorter duration
         );
         oscillator.type = "sine";
 
-        gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 1);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
 
         oscillator.start(ctx.currentTime);
-        oscillator.stop(ctx.currentTime + 1);
+        oscillator.stop(ctx.currentTime + 0.5);
         break;
       }
 
       case "typing": {
-        // Gentle typing sound
         const oscillator = ctx.createOscillator();
         oscillator.connect(gainNode);
         oscillator.frequency.setValueAtTime(
-          300 + Math.random() * 200,
+          300 + Math.random() * 100, // Reduced randomness
           ctx.currentTime,
         );
         oscillator.type = "square";
 
-        gainNode.gain.setValueAtTime(volume * 0.3, ctx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
+        gainNode.gain.setValueAtTime(volume * 0.2, ctx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(
+          0.01,
+          ctx.currentTime + 0.05,
+        );
 
         oscillator.start(ctx.currentTime);
-        oscillator.stop(ctx.currentTime + 0.1);
+        oscillator.stop(ctx.currentTime + 0.05);
         break;
       }
 
       case "success": {
-        // Success notification - ascending notes
-        const frequencies = [262, 330, 392, 523]; // C, E, G, C
+        // Simplified success sound
+        const frequencies = [262, 330, 392]; // Reduced notes
         frequencies.forEach((freq, index) => {
           const oscillator = ctx.createOscillator();
           const noteGain = ctx.createGain();
@@ -182,65 +174,46 @@ export function SoundProvider({ children }: SoundProviderProps) {
 
           oscillator.frequency.setValueAtTime(
             freq,
-            ctx.currentTime + index * 0.1,
+            ctx.currentTime + index * 0.08,
           );
           oscillator.type = "sine";
 
-          noteGain.gain.setValueAtTime(0, ctx.currentTime + index * 0.1);
+          noteGain.gain.setValueAtTime(0, ctx.currentTime + index * 0.08);
           noteGain.gain.linearRampToValueAtTime(
-            volume * 0.4,
-            ctx.currentTime + index * 0.1 + 0.02,
+            volume * 0.3,
+            ctx.currentTime + index * 0.08 + 0.02,
           );
           noteGain.gain.exponentialRampToValueAtTime(
             0.01,
-            ctx.currentTime + index * 0.1 + 0.3,
+            ctx.currentTime + index * 0.08 + 0.2,
           );
 
-          oscillator.start(ctx.currentTime + index * 0.1);
-          oscillator.stop(ctx.currentTime + index * 0.1 + 0.3);
+          oscillator.start(ctx.currentTime + index * 0.08);
+          oscillator.stop(ctx.currentTime + index * 0.08 + 0.2);
         });
         break;
       }
 
       case "notification": {
-        // Subtle notification sound
         const oscillator = ctx.createOscillator();
         oscillator.connect(gainNode);
         oscillator.frequency.setValueAtTime(600, ctx.currentTime);
         oscillator.frequency.exponentialRampToValueAtTime(
-          800,
+          700,
           ctx.currentTime + 0.1,
         );
         oscillator.type = "sine";
 
-        gainNode.gain.setValueAtTime(volume * 0.5, ctx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+        gainNode.gain.setValueAtTime(volume * 0.3, ctx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.2);
 
         oscillator.start(ctx.currentTime);
-        oscillator.stop(ctx.currentTime + 0.3);
+        oscillator.stop(ctx.currentTime + 0.2);
         break;
       }
 
       case "ambient": {
-        // Subtle trading floor ambience
-        const bufferSize = ctx.sampleRate * 2; // 2 seconds
-        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-        const data = buffer.getChannelData(0);
-
-        // Generate subtle noise
-        for (let i = 0; i < bufferSize; i++) {
-          data[i] = (Math.random() - 0.5) * 0.1 * volume;
-        }
-
-        const source = ctx.createBufferSource();
-        source.buffer = buffer;
-        source.connect(gainNode);
-        source.loop = true;
-
-        gainNode.gain.setValueAtTime(0.05, ctx.currentTime);
-
-        source.start(ctx.currentTime);
-        source.stop(ctx.currentTime + 10); // Play for 10 seconds
+        // Skip ambient generation on mobile for performance
         break;
       }
     }
@@ -255,13 +228,20 @@ export function SoundProvider({ children }: SoundProviderProps) {
   );
 }
 
-export default function SoundControls() {
+export default function MobileOptimizedSoundControls() {
   const { isMuted, setMuted, volume, setVolume } = useSound();
   const [showControls, setShowControls] = useState(false);
+  const isMobile = useMobile();
 
   return (
-    <div className="fixed bottom-3 left-3 sm:bottom-4 sm:left-4 md:bottom-6 md:left-6 z-50">
-      <div className="flex items-end space-x-3">
+    <div
+      className={`fixed z-50 ${
+        isMobile
+          ? "bottom-2 left-2" // Mobile positioning
+          : "bottom-6 left-6" // Desktop positioning
+      }`}
+    >
+      <div className="flex items-end space-x-2 sm:space-x-3">
         {/* Volume Controls Panel */}
         <AnimatePresence>
           {showControls && (
@@ -270,19 +250,29 @@ export default function SoundControls() {
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: -20, scale: 0.9 }}
               transition={{ duration: 0.2 }}
-              className="backdrop-blur-xl bg-finance-navy/80 rounded-xl p-4 border border-finance-gold/20 shadow-2xl"
+              className={`backdrop-blur-xl bg-finance-navy/80 rounded-xl border border-finance-gold/20 shadow-2xl ${
+                isMobile ? "p-3 w-56" : "p-4 w-48"
+              }`}
             >
-              <div className="space-y-4 w-48">
+              <div className="space-y-3 sm:space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-finance-gold">
+                  <span
+                    className={`font-medium text-finance-gold ${
+                      isMobile ? "text-xs" : "text-sm"
+                    }`}
+                  >
                     Sound Effects
                   </span>
-                  <span className="text-xs text-muted-foreground">
+                  <span
+                    className={`text-muted-foreground ${
+                      isMobile ? "text-xs" : "text-xs"
+                    }`}
+                  >
                     {Math.round(volume * 100)}%
                   </span>
                 </div>
 
-                <div className="space-y-3">
+                <div className="space-y-2 sm:space-y-3">
                   <input
                     type="range"
                     min="0"
@@ -290,7 +280,9 @@ export default function SoundControls() {
                     step="0.1"
                     value={volume}
                     onChange={(e) => setVolume(parseFloat(e.target.value))}
-                    className="w-full h-2 bg-finance-navy-light rounded-lg appearance-none cursor-pointer slider"
+                    className={`w-full bg-finance-navy-light rounded-lg appearance-none cursor-pointer slider ${
+                      isMobile ? "h-1.5" : "h-2"
+                    }`}
                   />
 
                   <div className="flex items-center space-x-2">
@@ -299,36 +291,44 @@ export default function SoundControls() {
                       id="mute-toggle"
                       checked={isMuted}
                       onChange={(e) => setMuted(e.target.checked)}
-                      className="rounded"
+                      className={`rounded ${isMobile ? "w-3 h-3" : "w-4 h-4"}`}
                     />
                     <label
                       htmlFor="mute-toggle"
-                      className="text-sm text-muted-foreground"
+                      className={`text-muted-foreground ${
+                        isMobile ? "text-xs" : "text-sm"
+                      }`}
                     >
                       Mute all sounds
                     </label>
                   </div>
 
-                  <div className="text-xs text-muted-foreground">
-                    <p>Includes:</p>
-                    <ul className="list-disc list-inside space-y-1 mt-1">
-                      <li>Market bell chimes</li>
-                      <li>Typing animations</li>
-                      <li>Success notifications</li>
-                      <li>Subtle ambience</li>
-                    </ul>
-                  </div>
+                  {!isMobile && (
+                    <div className="text-xs text-muted-foreground">
+                      <p>Includes:</p>
+                      <ul className="list-disc list-inside space-y-1 mt-1">
+                        <li>Market bell chimes</li>
+                        <li>Typing animations</li>
+                        <li>Success notifications</li>
+                        <li>Subtle ambience</li>
+                      </ul>
+                    </div>
+                  )}
                 </div>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Main Control Button */}
+        {/* Main Control Button - Mobile Optimized */}
         <motion.button
           onClick={() => setShowControls(!showControls)}
-          className="p-2 sm:p-3 md:p-4 backdrop-blur-xl bg-finance-navy/80 rounded-full border border-finance-gold/20 shadow-2xl hover:border-finance-gold/40 transition-all duration-300 group"
-          whileHover={{ scale: 1.1 }}
+          className={`backdrop-blur-xl bg-finance-navy/80 rounded-full border border-finance-gold/20 shadow-2xl hover:border-finance-gold/40 transition-all duration-300 group ${
+            isMobile
+              ? "p-3 min-w-[48px] min-h-[48px]" // Mobile touch target
+              : "p-4"
+          }`}
+          whileHover={{ scale: isMobile ? 1.05 : 1.1 }}
           whileTap={{ scale: 0.9 }}
           animate={{
             boxShadow: [
@@ -340,17 +340,33 @@ export default function SoundControls() {
           transition={{
             boxShadow: { duration: 3, repeat: Infinity, ease: "easeInOut" },
           }}
+          // Mobile haptic feedback
+          onTouchStart={() => {
+            if (isMobile && navigator.vibrate) {
+              navigator.vibrate(50);
+            }
+          }}
         >
           {isMuted ? (
-            <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-finance-red" />
+            <VolumeX
+              className={`text-finance-red ${isMobile ? "w-5 h-5" : "w-6 h-6"}`}
+            />
           ) : (
-            <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-finance-gold" />
+            <Volume2
+              className={`text-finance-gold ${
+                isMobile ? "w-5 h-5" : "w-6 h-6"
+              }`}
+            />
           )}
 
-          {/* Settings indicator */}
+          {/* Settings indicator - adjusted for mobile */}
           {showControls && (
             <motion.div
-              className="absolute -top-1 -right-1 w-3 h-3 bg-finance-electric rounded-full"
+              className={`absolute bg-finance-electric rounded-full ${
+                isMobile
+                  ? "-top-0.5 -right-0.5 w-2.5 h-2.5"
+                  : "-top-1 -right-1 w-3 h-3"
+              }`}
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 1.5, repeat: Infinity }}
             />

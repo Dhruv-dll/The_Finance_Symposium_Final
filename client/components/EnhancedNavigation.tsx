@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSmoothScroll } from "../hooks/useSmoothScroll";
 import {
   Menu,
   X,
@@ -26,6 +27,7 @@ export default function EnhancedNavigation({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [eventsDropdownOpen, setEventsDropdownOpen] = useState(false);
   const [sponsorsDropdownOpen, setSponsorsDropdownOpen] = useState(false);
+  const { scrollToElement } = useSmoothScroll();
 
   const navItems = [
     {
@@ -62,7 +64,7 @@ export default function EnhancedNavigation({
     },
     {
       name: "Finsight",
-      href: "/finsight",
+      href: "#insights",
       icon: TrendingUp,
       color: "text-finance-electric",
       hoverIcon: "📈",
@@ -279,7 +281,7 @@ export default function EnhancedNavigation({
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: -10, scale: 0.95 }}
                           transition={{ duration: 0.2, ease: "easeOut" }}
-                          className="absolute top-full left-0 mt-2 w-56 backdrop-blur-xl bg-finance-navy/80 rounded-xl shadow-2xl border border-finance-gold/20 overflow-hidden"
+                          className={`absolute top-full mt-2 w-56 backdrop-blur-xl bg-finance-navy/80 rounded-xl shadow-2xl border border-finance-gold/20 overflow-hidden z-50 ${item.name === "SPONSORS" ? "right-0" : "left-0"}`}
                         >
                           {/* Glow effect background */}
                           <div className="absolute inset-0 bg-gradient-to-br from-finance-gold/10 to-finance-electric/10 -z-10"></div>
@@ -334,6 +336,12 @@ export default function EnhancedNavigation({
                 ) : (
                   <Link
                     to={item.href}
+                    onClick={(e) => {
+                      if (item.href.startsWith("#")) {
+                        e.preventDefault();
+                        scrollToElement(item.href);
+                      }
+                    }}
                     className={`flex items-center space-x-2 text-foreground hover:${item.color} transition-all duration-300 group relative px-4 py-2 rounded-lg overflow-hidden`}
                   >
                     {/* Hover glow background */}
@@ -477,7 +485,13 @@ export default function EnhancedNavigation({
                       <Link
                         to={item.href}
                         className="flex items-center space-x-3 py-3 px-4 text-foreground hover:text-finance-gold hover:bg-finance-gold/10 rounded-lg transition-all duration-300 group"
-                        onClick={() => setMobileMenuOpen(false)}
+                        onClick={(e) => {
+                          if (item.href.startsWith("#")) {
+                            e.preventDefault();
+                            scrollToElement(item.href);
+                          }
+                          setMobileMenuOpen(false);
+                        }}
                       >
                         <item.icon className="w-5 h-5" />
                         <span className="font-medium">{item.name}</span>

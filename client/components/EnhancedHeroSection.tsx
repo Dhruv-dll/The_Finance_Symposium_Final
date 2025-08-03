@@ -9,7 +9,7 @@ import {
   MarketSentiment,
   safeFormatTimestamp,
 } from "../services/finnhubMarketData";
-import MarketDashboardDialog from "./MarketDashboardDialog";
+import FloatingMarketIcon from "./FloatingMarketIcon";
 
 // Enhanced Particle System with Financial Symbols
 function FinancialParticles() {
@@ -25,7 +25,7 @@ function FinancialParticles() {
     }>
   >([]);
 
-  const symbols = ["₹", "$", "€", "£", "¥", "📈", "📊", "💰", "💎", "⚡"];
+  const symbols = ["₹", "$", "€", "£", "¥", "📈", "📊", "💰", "💎", "���"];
 
   useEffect(() => {
     const newParticles = Array.from({ length: 50 }, (_, i) => ({
@@ -202,7 +202,7 @@ function EnhancedMarketTicker() {
   }, []);
 
   useEffect(() => {
-    // Subscribe to Finnhub real-time market updates
+    // Subscribe to Yahoo Finance real-time market updates
     setConnectionStatus("reconnecting");
     const unsubscribe = finnhubMarketDataService.subscribeToUpdates((data) => {
       setStockData(data.stocks);
@@ -313,7 +313,9 @@ function EnhancedMarketTicker() {
 
             <div className="flex items-center space-x-2 text-xs">
               <div className="w-2 h-2 bg-finance-electric rounded-full animate-pulse"></div>
-              <span className="text-finance-electric">Finnhub Live</span>
+              <span className="text-finance-electric">
+                📈 Yahoo Finance Live
+              </span>
             </div>
 
             {isLoading && (
@@ -477,37 +479,62 @@ function EnhancedMarketTicker() {
   );
 }
 
-// Mouse Cursor Trail Effect
+// Mouse Cursor Trail Effect (Desktop only)
 function CursorTrail() {
   const [trails, setTrails] = useState<
     Array<{ x: number; y: number; id: number }>
   >([]);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    let trailId = 0;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-
-      setTrails((prev) => [
-        ...prev.slice(-10), // Keep only last 10 trails
-        { x: e.clientX, y: e.clientY, id: trailId++ },
-      ]);
+    // Check if device is mobile/touch device
+    const checkMobile = () => {
+      const isTouchDevice =
+        "ontouchstart" in window || navigator.maxTouchPoints > 0;
+      const isSmallScreen = window.innerWidth < 768;
+      setIsMobile(isTouchDevice || isSmallScreen);
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
 
-    // Clean up old trails
-    const cleanup = setInterval(() => {
-      setTrails((prev) => prev.slice(-8));
-    }, 100);
+    // Only add mouse tracking on non-mobile devices
+    if (!isMobile) {
+      let trailId = 0;
+
+      const handleMouseMove = (e: MouseEvent) => {
+        setMousePos({ x: e.clientX, y: e.clientY });
+
+        setTrails((prev) => [
+          ...prev.slice(-10), // Keep only last 10 trails
+          { x: e.clientX, y: e.clientY, id: trailId++ },
+        ]);
+      };
+
+      window.addEventListener("mousemove", handleMouseMove);
+
+      // Clean up old trails
+      const cleanup = setInterval(() => {
+        setTrails((prev) => prev.slice(-8));
+      }, 100);
+
+      return () => {
+        window.removeEventListener("mousemove", handleMouseMove);
+        window.removeEventListener("resize", checkMobile);
+        clearInterval(cleanup);
+      };
+    }
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      clearInterval(cleanup);
+      window.removeEventListener("resize", checkMobile);
     };
-  }, []);
+  }, [isMobile]);
+
+  // Don't render anything on mobile devices
+  if (isMobile) {
+    return null;
+  }
 
   return (
     <div className="fixed inset-0 pointer-events-none z-30">
@@ -569,6 +596,7 @@ function CursorTrail() {
 
 export default function EnhancedHeroSection() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
   const { scrollYProgress } = useScroll();
 
   // Color temperature transformation
@@ -594,15 +622,27 @@ export default function EnhancedHeroSection() {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth) * 2 - 1,
-        y: -(e.clientY / window.innerHeight) * 2 + 1,
-      });
+      if (!isMobile) {
+        setMousePosition({
+          x: (e.clientX / window.innerWidth) * 2 - 1,
+          y: -(e.clientY / window.innerHeight) * 2 + 1,
+        });
+      }
     };
 
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+
+    return () => {
+      window.removeEventListener("resize", checkMobile);
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, [isMobile]);
 
   return (
     <motion.section
@@ -663,9 +703,11 @@ export default function EnhancedHeroSection() {
         <div className="text-center px-6 max-w-5xl mx-auto">
           <motion.h1
             className="text-6xl md:text-8xl font-bold mb-8 leading-tight"
-            initial={{ opacity: 0, y: 50 }}
+            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.5 }}
+            transition={
+              isMobile ? { duration: 0 } : { duration: 1, delay: 0.5 }
+            }
           >
             <motion.span
               className="block bg-gradient-to-r from-finance-electric via-finance-gold to-finance-electric bg-clip-text text-transparent"
@@ -700,9 +742,9 @@ export default function EnhancedHeroSection() {
 
           <motion.div
             className="relative mb-12"
-            initial={{ opacity: 0, y: 30 }}
+            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 1 }}
+            transition={isMobile ? { duration: 0 } : { duration: 1, delay: 1 }}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-finance-gold/20 to-finance-electric/20 blur-3xl rounded-full"></div>
             <p className="relative text-xl md:text-2xl text-foreground/90 font-medium mb-2">
@@ -715,9 +757,11 @@ export default function EnhancedHeroSection() {
 
           <motion.div
             className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8"
-            initial={{ opacity: 0, y: 30 }}
+            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 1.5 }}
+            transition={
+              isMobile ? { duration: 0 } : { duration: 1, delay: 1.5 }
+            }
           >
             <motion.button
               className="px-10 py-4 bg-gradient-to-r from-finance-gold to-finance-electric text-finance-navy font-bold rounded-xl relative overflow-hidden group"
@@ -738,17 +782,20 @@ export default function EnhancedHeroSection() {
               />
             </motion.button>
 
-            {/* Market Dashboard Button */}
-            <MarketDashboardDialog className="" />
+            {/* Floating Market Dashboard Icon - now positioned as fixed element */}
+            <FloatingMarketIcon />
 
-            <motion.button
-              className="px-10 py-4 border-2 border-finance-gold text-finance-gold rounded-xl hover:bg-finance-gold hover:text-finance-navy transition-all duration-500 relative overflow-hidden group"
+            <motion.a
+              href="https://xaviers.edu/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-10 py-4 border-2 border-finance-gold text-finance-gold rounded-xl hover:bg-finance-gold hover:text-finance-navy transition-all duration-500 relative overflow-hidden group inline-block"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <span className="relative z-10">Join Community</span>
+              <span className="relative z-10">Visit College Website</span>
               <motion.div className="absolute inset-0 bg-gradient-to-r from-transparent via-finance-gold/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-            </motion.button>
+            </motion.a>
           </motion.div>
 
           {/* Enhanced floating financial symbols */}

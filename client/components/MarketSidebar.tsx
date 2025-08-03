@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useMarketDashboard } from "../contexts/MarketDashboardContext";
 import {
   TrendingUp,
   TrendingDown,
   Calendar,
   DollarSign,
-  Bitcoin,
   Activity,
   ChevronRight,
   Eye,
@@ -15,13 +15,12 @@ import {
   accurateMarketDataService,
   AccurateStockData,
   MarketSentiment,
-  CryptoData,
   ForexData,
   safeFormatTimestamp,
 } from "../services/accurateMarketData";
 
 export default function MarketSidebar() {
-  const [isVisible, setIsVisible] = useState(true);
+  const { isOpen: isVisible, setIsOpen: setIsVisible } = useMarketDashboard();
   const [stockData, setStockData] = useState<AccurateStockData[]>([]);
   const [marketSentiment, setMarketSentiment] = useState<MarketSentiment>({
     sentiment: "neutral",
@@ -29,7 +28,7 @@ export default function MarketSidebar() {
     positiveStocks: 0,
     totalStocks: 0,
   });
-  const [cryptoData, setCryptoData] = useState<CryptoData[]>([]);
+
   const [forexData, setForexData] = useState<ForexData[]>([]);
   const [topPerformers, setTopPerformers] = useState<AccurateStockData[]>([]);
   const [isMinimized, setIsMinimized] = useState(false);
@@ -43,7 +42,7 @@ export default function MarketSidebar() {
     const unsubscribe = accurateMarketDataService.subscribeToUpdates((data) => {
       setStockData(data.stocks);
       setMarketSentiment(data.sentiment);
-      setCryptoData(data.crypto);
+
       setForexData(data.forex);
       setLastUpdate(new Date());
       setConnectionStatus("connected");
@@ -121,7 +120,9 @@ export default function MarketSidebar() {
         animate={{ x: 0, opacity: 1 }}
         exit={{ x: 400, opacity: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className={`fixed right-4 top-24 bottom-4 ${isMinimized ? "w-16" : "w-80"} z-40 transition-all duration-500`}
+        className={`fixed right-2 sm:right-4 top-20 sm:top-24 bottom-2 sm:bottom-4 ${
+          isMinimized ? "w-12 sm:w-16" : "w-72 sm:w-80"
+        } z-40 transition-all duration-500`}
       >
         <motion.div
           className={`h-full backdrop-blur-xl bg-gradient-to-b ${sentimentColors.bg} ${sentimentColors.border} ${sentimentColors.glow} border rounded-2xl overflow-hidden transition-all duration-500`}
@@ -135,7 +136,7 @@ export default function MarketSidebar() {
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         >
           {/* Header */}
-          <div className="p-4 border-b border-finance-gold/20 bg-finance-navy/50">
+          <div className="p-2 sm:p-4 border-b border-finance-gold/20 bg-finance-navy/50">
             <div className="flex items-center justify-between">
               {!isMinimized && (
                 <motion.h3
@@ -177,11 +178,11 @@ export default function MarketSidebar() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.1 }}
-              className="p-4 space-y-6 h-full overflow-y-auto custom-scrollbar"
+              className="p-2 sm:p-4 space-y-4 sm:space-y-6 h-full overflow-y-auto custom-scrollbar"
             >
               {/* Market Sentiment Indicator */}
               <div className="space-y-3">
-                <h4 className="text-sm font-semibold text-finance-electric">
+                <h4 className="text-xs sm:text-sm font-semibold text-finance-electric">
                   Market Sentiment
                 </h4>
                 <motion.div
@@ -228,7 +229,7 @@ export default function MarketSidebar() {
 
               {/* Top Performers */}
               <div className="space-y-3">
-                <h4 className="text-sm font-semibold text-finance-electric">
+                <h4 className="text-xs sm:text-sm font-semibold text-finance-electric">
                   Top Performers
                 </h4>
                 <div className="space-y-2">
@@ -238,14 +239,14 @@ export default function MarketSidebar() {
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className="p-3 rounded-lg bg-finance-navy/30 border border-finance-gold/20 hover:border-finance-gold/40 transition-all duration-300"
+                      className="p-2 sm:p-3 rounded-lg bg-finance-navy/30 border border-finance-gold/20 hover:border-finance-gold/40 transition-all duration-300"
                     >
                       <div className="flex items-center justify-between">
-                        <span className="font-medium text-finance-gold text-sm">
+                        <span className="font-medium text-finance-gold text-xs sm:text-sm">
                           {stock.symbol}
                         </span>
                         <div className="text-right">
-                          <div className="text-xs text-foreground">
+                          <div className="text-xs sm:text-sm font-semibold text-foreground">
                             {formatPrice(
                               stock.price,
                               stock.symbol.includes("SENSEX") ||
@@ -255,54 +256,9 @@ export default function MarketSidebar() {
                             )}
                           </div>
                           <div
-                            className={`text-xs ${getChangeColor(stock.changePercent)}`}
+                            className={`text-xs sm:text-sm font-bold ${getChangeColor(stock.changePercent)}`}
                           >
                             {formatChange(stock.changePercent)}
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Cryptocurrency Prices */}
-              <div className="space-y-3">
-                <h4 className="text-sm font-semibold text-finance-electric">
-                  Cryptocurrency
-                </h4>
-                <div className="space-y-2">
-                  {cryptoData.map((crypto, index) => (
-                    <motion.div
-                      key={crypto.symbol}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className="p-3 rounded-lg bg-finance-navy/30 border border-finance-electric/20 hover:border-finance-electric/40 transition-all duration-300"
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <Bitcoin className="w-4 h-4 text-finance-gold" />
-                          <div>
-                            <span className="font-medium text-finance-electric text-sm">
-                              {crypto.symbol}
-                            </span>
-                            <div className="text-xs text-muted-foreground">
-                              {crypto.name}
-                            </div>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <div className="text-xs text-foreground">
-                            ₹{formatPrice(crypto.price)}
-                          </div>
-                          <div
-                            className={`text-xs ${getChangeColor(crypto.changePercent)}`}
-                          >
-                            {formatChange(crypto.changePercent)}
-                          </div>
-                          <div className="text-xs text-muted-foreground">
-                            {safeFormatTimestamp(crypto.timestamp)}
                           </div>
                         </div>
                       </div>

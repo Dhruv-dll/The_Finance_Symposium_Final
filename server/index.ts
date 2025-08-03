@@ -2,6 +2,12 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
+import { getMarketData } from "./routes/marketData";
+import {
+  getEventsData,
+  updateEventsData,
+  checkEventsSync,
+} from "./routes/eventsData";
 
 export function createServer() {
   const app = express();
@@ -18,6 +24,12 @@ export function createServer() {
   });
 
   app.get("/api/demo", handleDemo);
+  app.get("/api/market-data", getMarketData);
+
+  // Events API endpoints
+  app.get("/api/events", getEventsData);
+  app.post("/api/events", updateEventsData);
+  app.get("/api/events/sync", checkEventsSync);
 
   return app;
 }
