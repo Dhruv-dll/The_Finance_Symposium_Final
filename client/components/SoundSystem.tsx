@@ -327,7 +327,7 @@ export default function SoundControls() {
         {/* Main Control Button */}
         <motion.button
           onClick={() => setShowControls(!showControls)}
-          className="p-4 backdrop-blur-xl bg-finance-navy/80 rounded-full border border-finance-gold/20 shadow-2xl hover:border-finance-gold/40 transition-all duration-300 group"
+          className="p-2 sm:p-3 md:p-4 backdrop-blur-xl bg-finance-navy/80 rounded-full border border-finance-gold/20 shadow-2xl hover:border-finance-gold/40 transition-all duration-300 group"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           animate={{
