@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { TrendingUp, Users, Award, Target } from "lucide-react";
 
