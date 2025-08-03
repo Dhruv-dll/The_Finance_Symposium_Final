@@ -266,10 +266,9 @@ export default function ModernLuminariesSection() {
                 ? "linear-gradient(135deg, #1e1b4b 0%, #7c3aed 50%, #fbbf24 100%)"
                 : "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0ea5e9 100%)",
             }}
-            whileHover={{ 
-              boxShadow: member.isLeadership
-                ? "0 25px 60px rgba(124, 58, 237, 0.4)"
-                : "0 25px 60px rgba(14, 165, 233, 0.4)"
+            whileHover={{
+              scale: 1.02,
+              boxShadow: "0 20px 40px -10px rgba(255, 215, 0, 0.3)"
             }}
             transition={{ duration: 0.3 }}
           >
