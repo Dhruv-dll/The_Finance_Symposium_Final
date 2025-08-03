@@ -84,6 +84,7 @@ const pastEvents: EventCard[] = [
 export default function EventsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
+  const [isMobile, setIsMobile] = useState(false);
   const {
     selectedEvent,
     setSelectedEvent,
