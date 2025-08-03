@@ -7,7 +7,7 @@ import OptimizedFinsightSection from "../components/OptimizedFinsightSection";
 import MarketDataErrorBoundary, {
   NetworkStatusIndicator,
 } from "../components/MarketDataErrorBoundary";
-import EventsSection from "../components/EventsSection";
+import MobileOptimizedEventsSection from "../components/MobileOptimizedEventsSection";
 import AboutSection from "../components/AboutSection";
 import AboutBAFSection from "../components/AboutBAFSection";
 import ContactSection from "../components/ContactSection";
