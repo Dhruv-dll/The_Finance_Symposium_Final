@@ -477,37 +477,56 @@ function EnhancedMarketTicker() {
   );
 }
 
-// Mouse Cursor Trail Effect
+// Mouse Cursor Trail Effect (Desktop only)
 function CursorTrail() {
   const [trails, setTrails] = useState<
     Array<{ x: number; y: number; id: number }>
   >([]);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    let trailId = 0;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-
-      setTrails((prev) => [
-        ...prev.slice(-10), // Keep only last 10 trails
-        { x: e.clientX, y: e.clientY, id: trailId++ },
-      ]);
+    // Check if device is mobile/touch device
+    const checkMobile = () => {
+      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      const isSmallScreen = window.innerWidth < 768;
+      setIsMobile(isTouchDevice || isSmallScreen);
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
 
-    // Clean up old trails
-    const cleanup = setInterval(() => {
-      setTrails((prev) => prev.slice(-8));
-    }, 100);
+    // Only add mouse tracking on non-mobile devices
+    if (!isMobile) {
+      let trailId = 0;
+
+      const handleMouseMove = (e: MouseEvent) => {
+        setMousePos({ x: e.clientX, y: e.clientY });
+
+        setTrails((prev) => [
+          ...prev.slice(-10), // Keep only last 10 trails
+          { x: e.clientX, y: e.clientY, id: trailId++ },
+        ]);
+      };
+
+      window.addEventListener("mousemove", handleMouseMove);
+
+      // Clean up old trails
+      const cleanup = setInterval(() => {
+        setTrails((prev) => prev.slice(-8));
+      }, 100);
+
+      return () => {
+        window.removeEventListener("mousemove", handleMouseMove);
+        window.removeEventListener('resize', checkMobile);
+        clearInterval(cleanup);
+      };
+    }
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      clearInterval(cleanup);
+      window.removeEventListener('resize', checkMobile);
     };
-  }, []);
+  }, [isMobile]);
 
   return (
     <div className="fixed inset-0 pointer-events-none z-30">
