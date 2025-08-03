@@ -150,6 +150,15 @@ export default function ModernNavigation({ scrolled }: ModernNavigationProps) {
       hoverIcon: "📧",
       section: "contact",
     },
+    {
+      name: "Market Dashboard",
+      href: "#market",
+      icon: BarChart3,
+      color: "text-finance-gold",
+      hoverIcon: "📊",
+      section: "market",
+      mobileOnly: true,
+    },
   ];
 
   useEffect(() => {
