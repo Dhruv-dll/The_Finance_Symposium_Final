@@ -171,6 +171,9 @@ async function fetchCurrencyData(symbol: string): Promise<CurrencyData | null> {
   try {
     console.log(`���� Fetching currency data for ${symbol}...`);
 
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
+
     const response = await fetch(
       `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1d&range=1d`,
       {
@@ -179,9 +182,11 @@ async function fetchCurrencyData(symbol: string): Promise<CurrencyData | null> {
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
           Accept: "application/json",
         },
-        timeout: 12000,
+        signal: controller.signal,
       },
     );
+
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
