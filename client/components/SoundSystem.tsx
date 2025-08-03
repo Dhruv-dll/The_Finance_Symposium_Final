@@ -342,9 +342,9 @@ export default function SoundControls() {
           }}
         >
           {isMuted ? (
-            <VolumeX className="w-6 h-6 text-finance-red" />
+            <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-finance-red" />
           ) : (
-            <Volume2 className="w-6 h-6 text-finance-gold" />
+            <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-finance-gold" />
           )}
 
           {/* Settings indicator */}
