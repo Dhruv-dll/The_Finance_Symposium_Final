@@ -131,3 +131,14 @@ const App = () => (
 );
 
 createRoot(document.getElementById("root")!).render(<App />);
+
+// Global error handler for unhandled fetch errors to prevent app crashes
+window.addEventListener('unhandledrejection', (event) => {
+  if (event.reason && event.reason.message &&
+      (event.reason.message.includes('Failed to fetch') ||
+       event.reason.message.includes('fetch') ||
+       event.reason.message.includes('Network error'))) {
+    console.warn('🔄 Unhandled fetch error caught, preventing crash:', event.reason.message);
+    event.preventDefault(); // Prevent the error from crashing the app
+  }
+});
