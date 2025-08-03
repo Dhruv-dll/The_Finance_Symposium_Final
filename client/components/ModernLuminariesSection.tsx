@@ -355,15 +355,12 @@ export default function ModernLuminariesSection() {
                 {/* Expertise Tags */}
                 <div className="flex flex-wrap gap-1 justify-center">
                   {member.expertise.slice(0, 2).map((skill, i) => (
-                    <motion.span
+                    <span
                       key={skill}
-                      initial={{ opacity: 0, scale: 0 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.8 + index * 0.1 + i * 0.1 }}
                       className="text-xs bg-white/20 px-2 py-1 rounded-full backdrop-blur-sm"
                     >
                       {skill}
-                    </motion.span>
+                    </span>
                   ))}
                 </div>
 
