@@ -13,6 +13,7 @@ import PlaceholderPage from "./components/PlaceholderPage";
 import { SoundProvider } from "./components/SoundSystem";
 import { useEffect } from "react";
 import { optimizeMobileAnimations } from "./utils/mobileOptimization";
+import { MarketDashboardProvider } from "./contexts/MarketDashboardContext";
 
 const queryClient = new QueryClient();
 
