@@ -63,6 +63,7 @@ const defaultConfig: EventsConfig = {
     },
   },
   upcomingEvents: [],
+  lastModified: Date.now(),
 };
 
 export function useEventsData() {
