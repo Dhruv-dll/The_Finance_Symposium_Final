@@ -712,12 +712,42 @@
       animation: none;
     }
 
-    /* Disable all complex animations on mobile for performance */
+    /* Optimize animations for mobile performance */
     @media (max-width: 768px) {
+      /* Reduce complex animations */
+      .complex-animation,
+      .animate-bounce,
+      .animate-pulse,
+      .animate-spin {
+        animation-duration: 0.3s !important;
+        animation-iteration-count: 3 !important;
+      }
+
+      /* Keep essential transitions but make them faster */
       * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+      }
+
+      /* Disable heavy particle effects */
+      .particle-effect,
+      .background-particles {
+        display: none !important;
+      }
+    }
+
+    /* Further optimization for very small screens */
+    @media (max-width: 480px) {
+      .complex-animation,
+      .animate-bounce,
+      .animate-pulse {
+        animation: none !important;
+      }
+
+      /* Disable all transform animations on very small screens */
+      .perspective-1000,
+      .preserve-3d {
+        perspective: none !important;
+        transform-style: flat !important;
       }
     }
   }
