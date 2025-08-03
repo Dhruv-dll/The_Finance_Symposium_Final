@@ -17,8 +17,14 @@ import { optimizeMobileAnimations } from "./utils/mobileOptimization";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
+const App = () => {
+  useEffect(() => {
+    const cleanup = optimizeMobileAnimations();
+    return cleanup;
+  }, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <SoundProvider>
         <Toaster />
@@ -130,7 +136,8 @@ const App = () => (
       </SoundProvider>
     </TooltipProvider>
   </QueryClientProvider>
-);
+  );
+};
 
 createRoot(document.getElementById("root")!).render(<App />);
 
