@@ -853,6 +853,19 @@
       transform: translateZ(0);
     }
 
+    /* Touch scroll optimization */
+    * {
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
+
+    /* Prevent layout shift during animations */
+    body {
+      overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+
     /* Ensure Events section is visible on mobile */
     #events {
       min-height: auto !important;
