@@ -761,8 +761,39 @@
       transform: none !important;
     }
 
-    /* Comprehensive mobile animation disabling */
-    @media (max-width: 768px) {
+    /* Force desktop view on mobile - disable most responsive behavior */
+  @media (max-width: 768px) {
+    /* Disable mobile-specific styles - force desktop layout */
+    .container {
+      max-width: 1200px !important;
+      margin: 0 auto !important;
+      padding: 0 24px !important;
+    }
+
+    /* Force desktop navigation behavior */
+    .lg\\:hidden {
+      display: block !important;
+    }
+
+    .hidden.lg\\:flex,
+    .hidden.lg\\:block {
+      display: flex !important;
+    }
+
+    /* Ensure desktop sizing for key elements */
+    nav {
+      min-height: 80px !important;
+    }
+
+    /* Keep touch targets accessible */
+    button, a, [role="button"] {
+      min-height: 40px !important;
+      min-width: 40px !important;
+    }
+  }
+
+  /* Comprehensive mobile animation disabling */
+  @media (max-width: 768px) {
       /* Disable most framer-motion animations */
       .mobile-static {
         opacity: 1 !important;
