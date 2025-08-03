@@ -252,7 +252,7 @@ export function useEventsData() {
     await saveConfig(newConfig);
   };
 
-  const addNetworkingEvent = (event: EventItem) => {
+  const addNetworkingEvent = async (event: EventItem) => {
     const newConfig = { ...eventsConfig };
     if (!newConfig.pastEvents["networking-events"].events) {
       newConfig.pastEvents["networking-events"].events = [];
@@ -260,10 +260,10 @@ export function useEventsData() {
     newConfig.pastEvents["networking-events"].events!.push(event);
     newConfig.pastEvents["networking-events"].comingSoon = false;
 
-    saveConfig(newConfig);
+    await saveConfig(newConfig);
   };
 
-  const addFlagshipEvent = (event: EventItem) => {
+  const addFlagshipEvent = async (event: EventItem) => {
     const newConfig = { ...eventsConfig };
     if (!newConfig.pastEvents["flagship-event"].events) {
       newConfig.pastEvents["flagship-event"].events = [];
@@ -271,27 +271,27 @@ export function useEventsData() {
     newConfig.pastEvents["flagship-event"].events!.push(event);
     newConfig.pastEvents["flagship-event"].comingSoon = false;
 
-    saveConfig(newConfig);
+    await saveConfig(newConfig);
   };
 
-  const addUpcomingEvent = (event: UpcomingEvent) => {
+  const addUpcomingEvent = async (event: UpcomingEvent) => {
     const newConfig = { ...eventsConfig };
     newConfig.upcomingEvents.push(event);
 
-    saveConfig(newConfig);
+    await saveConfig(newConfig);
   };
 
-  const removeUpcomingEvent = (eventId: string) => {
+  const removeUpcomingEvent = async (eventId: string) => {
     const newConfig = { ...eventsConfig };
     newConfig.upcomingEvents = newConfig.upcomingEvents.filter(
       (e) => e.id !== eventId,
     );
 
-    saveConfig(newConfig);
+    await saveConfig(newConfig);
   };
 
   // Remove functions for past events
-  const removeSaturdaySession = (eventIndex: number) => {
+  const removeSaturdaySession = async (eventIndex: number) => {
     const newConfig = { ...eventsConfig };
     if (newConfig.pastEvents["saturday-sessions"].events) {
       newConfig.pastEvents["saturday-sessions"].events.splice(eventIndex, 1);
@@ -300,10 +300,10 @@ export function useEventsData() {
         delete newConfig.pastEvents["saturday-sessions"].events;
       }
     }
-    saveConfig(newConfig);
+    await saveConfig(newConfig);
   };
 
-  const removeNetworkingEvent = (eventIndex: number) => {
+  const removeNetworkingEvent = async (eventIndex: number) => {
     const newConfig = { ...eventsConfig };
     if (newConfig.pastEvents["networking-events"].events) {
       newConfig.pastEvents["networking-events"].events.splice(eventIndex, 1);
@@ -312,10 +312,10 @@ export function useEventsData() {
         delete newConfig.pastEvents["networking-events"].events;
       }
     }
-    saveConfig(newConfig);
+    await saveConfig(newConfig);
   };
 
-  const removeFlagshipEvent = (eventIndex: number) => {
+  const removeFlagshipEvent = async (eventIndex: number) => {
     const newConfig = { ...eventsConfig };
     if (newConfig.pastEvents["flagship-event"].events) {
       newConfig.pastEvents["flagship-event"].events.splice(eventIndex, 1);
@@ -324,11 +324,11 @@ export function useEventsData() {
         delete newConfig.pastEvents["flagship-event"].events;
       }
     }
-    saveConfig(newConfig);
+    await saveConfig(newConfig);
   };
 
-  const updateEventConfig = (newConfig: EventsConfig) => {
-    saveConfig(newConfig);
+  const updateEventConfig = async (newConfig: EventsConfig) => {
+    await saveConfig(newConfig);
   };
 
   return {
