@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useSmoothScroll, useScrollProgress } from "../hooks/useSmoothScroll";
 import { useEventPopup } from "../hooks/useEventPopup";
 import { useEventsData } from "../hooks/useEventsData";
+import { useMarketDashboard } from "../contexts/MarketDashboardContext";
 import {
   Menu,
   X,
