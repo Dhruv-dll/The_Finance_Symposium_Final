@@ -260,7 +260,7 @@ export default function SoundControls() {
   const [showControls, setShowControls] = useState(false);
 
   return (
-    <div className="fixed bottom-6 left-6 z-50">
+    <div className="fixed bottom-3 left-3 sm:bottom-4 sm:left-4 md:bottom-6 md:left-6 z-50">
       <div className="flex items-end space-x-3">
         {/* Volume Controls Panel */}
         <AnimatePresence>
