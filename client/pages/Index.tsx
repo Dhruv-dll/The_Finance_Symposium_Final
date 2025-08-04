@@ -451,7 +451,7 @@ export default function Index() {
 
                     <div className="text-finance-gold/60 text-sm">
                       © 2024 The Finance Symposium. All rights reserved. |
-                      Designed with ❤️ by TFS Team
+                      Designed with ❤️ by Dhruv Moghe
                     </div>
                   </div>
                 </div>
