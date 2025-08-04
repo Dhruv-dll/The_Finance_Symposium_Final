@@ -3,12 +3,11 @@ import { motion, useInView } from "framer-motion";
 import {
   Mail,
   MapPin,
-  Phone,
   Send,
   MessageCircle,
   Instagram,
   Linkedin,
-  Twitter,
+  ExternalLink,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -24,31 +23,30 @@ const contactInfo = [
   {
     icon: Mail,
     title: "Email",
-    details: "contact@tfsxaviers.com",
-    subDetails: "info@tfsxaviers.com",
-  },
-  {
-    icon: Phone,
-    title: "Phone",
-    details: "+91 98765 43210",
-    subDetails: "Mon-Fri, 9:00 AM - 6:00 PM",
+    details: "thefinancesymposiumm@gmail.com",
+    subDetails: "For all inquiries and partnerships",
   },
 ];
 
 const socialLinks = [
   {
     icon: Instagram,
-    href: "#",
+    href: "https://www.instagram.com/tfs.sxc/#",
     label: "Instagram",
     color: "hover:text-pink-400",
   },
   {
     icon: Linkedin,
-    href: "#",
+    href: "https://www.linkedin.com/company/the-finance-symposium/",
     label: "LinkedIn",
     color: "hover:text-blue-400",
   },
-  { icon: Twitter, href: "#", label: "Twitter", color: "hover:text-sky-400" },
+  {
+    icon: ExternalLink,
+    href: "https://linktr.ee/tfs.sxc",
+    label: "Linktree",
+    color: "hover:text-green-400",
+  },
   {
     icon: MessageCircle,
     href: "#",
