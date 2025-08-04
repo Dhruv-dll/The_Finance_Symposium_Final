@@ -428,11 +428,17 @@ export default function Index() {
                 <div className="container mx-auto">
                   <div className="text-center">
                     <div className="flex items-center justify-center space-x-4 mb-6">
-                      <div className="w-12 h-12 bg-gradient-to-br from-finance-gold to-finance-electric rounded-lg flex items-center justify-center market-glow">
-                        <span className="text-finance-navy font-bold text-xl">
-                          TFS
-                        </span>
-                      </div>
+                      <div
+                        className="w-12 h-12 flex items-center justify-center rounded-xl relative overflow-hidden"
+                        style={{
+                          backgroundImage:
+                            "url(https://cdn.builder.io/api/v1/image/assets%2F929e4df9940a4d789ccda51924367667%2F738f11e9971c4f0f8ef4fd148b7ae990)",
+                          backgroundRepeat: "no-repeat",
+                          backgroundPosition: "center",
+                          backgroundSize: "cover",
+                          boxShadow: "1px 1px 3px 0px rgba(0, 0, 0, 1)",
+                        }}
+                      />
                       <div>
                         <h3 className="text-xl font-bold text-finance-gold">
                           The Finance Symposium
