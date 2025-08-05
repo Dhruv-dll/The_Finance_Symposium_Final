@@ -66,17 +66,8 @@ export default function OptimizedFinsightSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
   const [selectedMagazine, setSelectedMagazine] = useState<Magazine | null>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   const featuredMagazine = magazines.find(mag => mag.featured) || magazines[0];
-
-  const nextMagazine = () => {
-    setCurrentIndex((prev) => (prev + 1) % magazines.length);
-  };
-
-  const prevMagazine = () => {
-    setCurrentIndex((prev) => (prev - 1 + magazines.length) % magazines.length);
-  };
 
   const MagazineCard = ({ magazine, featured = false }: { magazine: Magazine; featured?: boolean }) => {
     const [isHovered, setIsHovered] = useState(false);
