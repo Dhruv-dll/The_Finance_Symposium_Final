@@ -19,6 +19,35 @@
       "comingSoon": true
     }
   },
-  "upcomingEvents": [],
-  "lastModified": 1754189074489
+  "upcomingEvents": [
+    {
+      "id": "event-1754368687458",
+      "title": "aksgdasjk",
+      "date": "October 10, 2025",
+      "time": "asdasd",
+      "location": "adassd",
+      "description": "asdas",
+      "registrationLink": "",
+      "countdown": {
+        "days": 66,
+        "hours": 0,
+        "minutes": 0
+      }
+    },
+    {
+      "id": "event-1754368767990",
+      "title": "SDHASD",
+      "date": "August 22, 2025",
+      "time": "10:00 aM - 12:00 AM",
+      "location": "sT xAVIERS COLLEGE",
+      "description": "asdasd",
+      "registrationLink": "https://linktr.ee/tfs.sxc",
+      "countdown": {
+        "days": 17,
+        "hours": 0,
+        "minutes": 0
+      }
+    }
+  ],
+  "lastModified": 1754368768214
 }
