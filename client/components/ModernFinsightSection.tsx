@@ -505,7 +505,7 @@ export default function ModernFinsightSection() {
             transition={{ duration: 0.8, delay: 0.5 }}
           >
             Dive deep into the world of finance with our quarterly digital
-            magazine. Featuring cutting-edge insights, market analysis, and
+            magazine. Featuring cutting-edge insights, expert perspectives, and
             exclusive interviews from industry leaders and rising stars.
           </motion.p>
         </motion.div>
