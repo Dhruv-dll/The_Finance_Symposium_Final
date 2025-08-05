@@ -556,9 +556,10 @@ export default function ModernFinsightSection() {
               <Button
                 size="lg"
                 className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold px-8 py-3 rounded-xl transition-all duration-300 hover:scale-105"
+                onClick={() => window.open("https://heyzine.com/flip-book/3f3a9a2239.html#page/1", "_blank")}
               >
-                <Download className="w-5 h-5 mr-2" />
-                Download Latest
+                <ExternalLink className="w-5 h-5 mr-2" />
+                Read Magazine
               </Button>
 
               <Button
