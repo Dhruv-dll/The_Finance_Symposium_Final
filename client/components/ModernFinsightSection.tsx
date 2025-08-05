@@ -80,9 +80,6 @@ export default function ModernFinsightSection() {
   const [selectedMagazine, setSelectedMagazine] = useState<Magazine | null>(
     null,
   );
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isFlipped, setIsFlipped] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
