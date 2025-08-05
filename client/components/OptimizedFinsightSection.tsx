@@ -86,7 +86,7 @@ export default function OptimizedFinsightSection() {
         className={`relative ${featured ? 'w-full max-w-sm mx-auto' : 'w-64'} cursor-pointer group`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        onClick={() => setSelectedMagazine(magazine)}
+        onClick={() => window.open("https://heyzine.com/flip-book/3f3a9a2239.html#page/1", "_blank")}
         whileHover={{ scale: 1.02 }}
         transition={{ duration: 0.2 }}
       >
