@@ -59,25 +59,6 @@ const magazines: Magazine[] = [
       "Industry expert interviews",
       "Financial technology insights"
     ]
-  },
-  {
-    id: "2024-q1",
-    title: "Digital Banking Evolution",
-    edition: "Q1 2024 Edition",
-    date: "March 2024",
-    coverImage: "/placeholder.svg",
-    description: "The transformation of traditional banking through digital innovation and customer experience.",
-    featured: false,
-    articles: 9,
-    downloads: 1734,
-    readTime: "38 min",
-    categories: ["Banking", "Digital", "Innovation"],
-    highlights: [
-      "Neobank business models",
-      "Customer experience design",
-      "Regulatory compliance",
-      "Future of payments"
-    ]
   }
 ];
 
