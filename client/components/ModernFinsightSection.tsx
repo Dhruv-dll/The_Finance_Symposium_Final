@@ -536,67 +536,7 @@ export default function ModernFinsightSection() {
           </div>
         </motion.div>
 
-        {/* Archive Carousel */}
-        <motion.div
-          className="mb-20"
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.8 }}
-        >
-          <div className="text-center mb-12">
-            <h3 className="text-4xl font-bold text-white mb-4">
-              Magazine Archive
-            </h3>
-            <p className="text-white/70 text-lg">
-              Explore our collection of financial insights
-            </p>
-          </div>
 
-          <div className="relative">
-            {/* Navigation Buttons */}
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={prevMagazine}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 p-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full border border-white/20 transition-colors"
-            >
-              <ChevronLeft className="w-6 h-6 text-white" />
-            </motion.button>
-
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={nextMagazine}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 p-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full border border-white/20 transition-colors"
-            >
-              <ChevronRight className="w-6 h-6 text-white" />
-            </motion.button>
-
-            {/* Magazines Carousel */}
-            <motion.div
-              className="flex justify-center space-x-8 overflow-hidden"
-              animate={{
-                x: -currentIndex * 280,
-              }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            >
-              {magazines.map((magazine, index) => (
-                <motion.div
-                  key={magazine.id}
-                  className="flex-shrink-0"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{
-                    opacity: Math.abs(index - currentIndex) <= 1 ? 1 : 0.5,
-                    scale: index === currentIndex ? 1 : 0.8,
-                  }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <Magazine3D magazine={magazine} />
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </motion.div>
 
         {/* Call to Action */}
         <motion.div
