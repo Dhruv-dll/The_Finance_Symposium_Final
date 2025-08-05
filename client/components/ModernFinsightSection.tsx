@@ -17,8 +17,6 @@ import {
   Eye,
   Share,
   Star,
-  ChevronLeft,
-  ChevronRight,
   ExternalLink,
   Sparkles,
   BarChart3,
