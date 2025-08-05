@@ -116,13 +116,7 @@ export default function ModernFinsightSection() {
   const featuredMagazine =
     magazines.find((mag) => mag.featured) || magazines[0];
 
-  const nextMagazine = () => {
-    setCurrentIndex((prev) => (prev + 1) % magazines.length);
-  };
 
-  const prevMagazine = () => {
-    setCurrentIndex((prev) => (prev - 1 + magazines.length) % magazines.length);
-  };
 
   const Magazine3D = ({
     magazine,
