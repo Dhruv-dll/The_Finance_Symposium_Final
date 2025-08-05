@@ -137,24 +137,24 @@ const facultyMembers: TeamMember[] = [
   {
     id: "lloyd-serrao",
     name: "Mr. Lloyd Serrao",
-    title: "Faculty & Market Analytics",
-    bio: "Specialist in market research and financial analytics with deep expertise in data-driven investment strategies.",
+    title: "Assistant Professor",
+    bio: "Mr. Lloyd Serrao, Assistant Professor, is a C.S., L.L.B., and Associate Member of ICSI with over five years of experience in corporate filings, FEMA, IBC, and compliances. With 2 years of teaching experience, his research interests include Finance, Corporate and Commercial Laws, and Banking.",
     image: "/placeholder.svg",
-    email: "lloyd.serrao@tfs.edu",
+    email: "lloyd.serrao@xaviers.edu",
     achievements: [
-      "Market Research Expert",
-      "Data Analytics Specialist",
-      "Investment Strategy Advisor",
-      "Research Publication Leader",
+      "C.S., L.L.B., Associate Member of ICSI",
+      "Over 5 years experience in corporate filings",
+      "Expert in FEMA, IBC, and compliances",
+      "2 years of teaching experience",
     ],
     expertise: [
-      "Market Analytics",
-      "Data Science",
-      "Investment Research",
-      "Statistical Analysis",
+      "Finance",
+      "Corporate and Commercial Laws",
+      "Banking",
+      "Corporate Compliance",
     ],
     quote:
-      "In the world of finance, data tells the story that drives successful investment decisions.",
+      "Understanding legal frameworks is essential for sound financial decision-making and corporate compliance.",
   },
 ];
 
