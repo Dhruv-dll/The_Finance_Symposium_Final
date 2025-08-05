@@ -116,8 +116,6 @@ export default function ModernFinsightSection() {
   const featuredMagazine =
     magazines.find((mag) => mag.featured) || magazines[0];
 
-
-
   const Magazine3D = ({
     magazine,
     featured = false,
@@ -132,7 +130,12 @@ export default function ModernFinsightSection() {
         className={`relative ${featured ? "w-80 h-96" : "w-64 h-80"} perspective-1000 cursor-pointer`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        onClick={() => window.open("https://heyzine.com/flip-book/3f3a9a2239.html#page/1", "_blank")}
+        onClick={() =>
+          window.open(
+            "https://heyzine.com/flip-book/3f3a9a2239.html#page/1",
+            "_blank",
+          )
+        }
         style={{
           perspective: featured ? perspective : 1000,
         }}
@@ -520,12 +523,8 @@ export default function ModernFinsightSection() {
         >
           <div className="relative">
             <Magazine3D magazine={featuredMagazine} featured={true} />
-
-
           </div>
         </motion.div>
-
-
 
         {/* Call to Action */}
         <motion.div
@@ -545,7 +544,12 @@ export default function ModernFinsightSection() {
               <Button
                 size="lg"
                 className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold px-8 py-3 rounded-xl transition-all duration-300 hover:scale-105"
-                onClick={() => window.open("https://heyzine.com/flip-book/3f3a9a2239.html#page/1", "_blank")}
+                onClick={() =>
+                  window.open(
+                    "https://heyzine.com/flip-book/3f3a9a2239.html#page/1",
+                    "_blank",
+                  )
+                }
               >
                 <ExternalLink className="w-5 h-5 mr-2" />
                 Read Magazine

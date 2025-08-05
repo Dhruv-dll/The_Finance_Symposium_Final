@@ -126,11 +126,7 @@ const facultyMembers: TeamMember[] = [
       "2 years of teaching experience",
       "Assistant Professor",
     ],
-    expertise: [
-      "Accountancy",
-      "Finance",
-      "Digital Governance",
-    ],
+    expertise: ["Accountancy", "Finance", "Digital Governance"],
     quote:
       "Digital governance in finance ensures transparency and efficiency in modern financial systems.",
   },

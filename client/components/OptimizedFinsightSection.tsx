@@ -1,9 +1,5 @@
 import React, { useState, useRef } from "react";
-import {
-  motion,
-  useInView,
-  AnimatePresence,
-} from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import {
   BookOpen,
   TrendingUp,
@@ -47,7 +43,8 @@ const magazines: Magazine[] = [
     edition: "Volume 1",
     date: "2024",
     coverImage: "/placeholder.svg",
-    description: "Our inaugural edition featuring comprehensive insights into finance, markets, and emerging technologies shaping the financial world.",
+    description:
+      "Our inaugural edition featuring comprehensive insights into finance, markets, and emerging technologies shaping the financial world.",
     featured: true,
     articles: 15,
     downloads: 3500,
@@ -57,34 +54,49 @@ const magazines: Magazine[] = [
       "Market trends and analysis",
       "Investment strategies for students",
       "Industry expert interviews",
-      "Financial technology insights"
-    ]
-  }
+      "Financial technology insights",
+    ],
+  },
 ];
 
 export default function OptimizedFinsightSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
-  const [selectedMagazine, setSelectedMagazine] = useState<Magazine | null>(null);
+  const [selectedMagazine, setSelectedMagazine] = useState<Magazine | null>(
+    null,
+  );
 
-  const featuredMagazine = magazines.find(mag => mag.featured) || magazines[0];
+  const featuredMagazine =
+    magazines.find((mag) => mag.featured) || magazines[0];
 
-  const MagazineCard = ({ magazine, featured = false }: { magazine: Magazine; featured?: boolean }) => {
+  const MagazineCard = ({
+    magazine,
+    featured = false,
+  }: {
+    magazine: Magazine;
+    featured?: boolean;
+  }) => {
     const [isHovered, setIsHovered] = useState(false);
 
     return (
       <motion.div
-        className={`relative ${featured ? 'w-full max-w-sm mx-auto' : 'w-64'} cursor-pointer group`}
+        className={`relative ${featured ? "w-full max-w-sm mx-auto" : "w-64"} cursor-pointer group`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        onClick={() => window.open("https://heyzine.com/flip-book/3f3a9a2239.html#page/1", "_blank")}
+        onClick={() =>
+          window.open(
+            "https://heyzine.com/flip-book/3f3a9a2239.html#page/1",
+            "_blank",
+          )
+        }
         whileHover={{ scale: 1.02 }}
         transition={{ duration: 0.2 }}
       >
         <motion.div
-          className={`relative ${featured ? 'h-80' : 'h-72'} rounded-2xl overflow-hidden shadow-xl`}
+          className={`relative ${featured ? "h-80" : "h-72"} rounded-2xl overflow-hidden shadow-xl`}
           style={{
-            background: "linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%)",
+            background:
+              "linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%)",
           }}
           animate={{
             boxShadow: isHovered
@@ -95,7 +107,7 @@ export default function OptimizedFinsightSection() {
         >
           {/* Simple Background Pattern */}
           <div className="absolute inset-0 opacity-10">
-            <div 
+            <div
               className="w-full h-full"
               style={{
                 backgroundImage: `
@@ -170,7 +182,8 @@ export default function OptimizedFinsightSection() {
         <motion.div
           className="absolute inset-0 rounded-2xl -z-10"
           style={{
-            background: "linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%)",
+            background:
+              "linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%)",
             filter: "blur(15px)",
           }}
           animate={{
@@ -189,7 +202,8 @@ export default function OptimizedFinsightSection() {
       id="insights"
       className="relative min-h-screen py-12 sm:py-16 lg:py-20 overflow-hidden"
       style={{
-        background: "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)",
+        background:
+          "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)",
       }}
     >
       {/* Light Background Elements */}
@@ -241,7 +255,8 @@ export default function OptimizedFinsightSection() {
               <h2
                 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold"
                 style={{
-                  background: "linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #06b6d4 100%)",
+                  background:
+                    "linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #06b6d4 100%)",
                   backgroundClip: "text",
                   WebkitBackgroundClip: "text",
                   color: "transparent",
@@ -281,9 +296,9 @@ export default function OptimizedFinsightSection() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.5 }}
           >
-            Dive deep into the world of finance with our quarterly digital magazine.
-            Featuring cutting-edge insights, expert perspectives, and exclusive interviews
-            from industry leaders and rising stars.
+            Dive deep into the world of finance with our quarterly digital
+            magazine. Featuring cutting-edge insights, expert perspectives, and
+            exclusive interviews from industry leaders and rising stars.
           </motion.p>
         </motion.div>
 
@@ -296,13 +311,10 @@ export default function OptimizedFinsightSection() {
         >
           <div className="relative">
             <MagazineCard magazine={featuredMagazine} featured={true} />
-            
-            {/* Stats - Mobile Responsive */}
 
+            {/* Stats - Mobile Responsive */}
           </div>
         </motion.div>
-
-
 
         {/* Call to Action - Mobile Responsive */}
         <motion.div
@@ -312,21 +324,29 @@ export default function OptimizedFinsightSection() {
           transition={{ duration: 0.6, delay: 1 }}
         >
           <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-white/10 max-w-2xl mx-auto">
-            <h3 className="text-xl sm:text-2xl font-bold text-white mb-4">Stay Updated</h3>
+            <h3 className="text-xl sm:text-2xl font-bold text-white mb-4">
+              Stay Updated
+            </h3>
             <p className="text-white/80 mb-6 text-sm sm:text-base">
-              Get notified when new editions are released and never miss out on the latest financial insights.
+              Get notified when new editions are released and never miss out on
+              the latest financial insights.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <Button
                 size="lg"
                 className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold px-6 sm:px-8 py-3 rounded-xl transition-all duration-300 hover:scale-105"
-                onClick={() => window.open("https://heyzine.com/flip-book/3f3a9a2239.html#page/1", "_blank")}
+                onClick={() =>
+                  window.open(
+                    "https://heyzine.com/flip-book/3f3a9a2239.html#page/1",
+                    "_blank",
+                  )
+                }
               >
                 <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                 Read Magazine
               </Button>
-              
+
               <Button
                 variant="outline"
                 size="lg"
@@ -366,14 +386,20 @@ export default function OptimizedFinsightSection() {
                       <div className="w-16 h-20 sm:w-20 sm:h-24 lg:w-24 lg:h-32 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
                         <BookOpen className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-white" />
                       </div>
-                      
+
                       <div className="flex-1 min-w-0">
-                        <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-2 truncate">{selectedMagazine.title}</h3>
-                        <p className="text-base sm:text-lg lg:text-xl text-blue-300 mb-2 sm:mb-4">{selectedMagazine.edition}</p>
-                        <p className="text-white/80 leading-relaxed text-sm sm:text-base hidden sm:block">{selectedMagazine.description}</p>
+                        <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-2 truncate">
+                          {selectedMagazine.title}
+                        </h3>
+                        <p className="text-base sm:text-lg lg:text-xl text-blue-300 mb-2 sm:mb-4">
+                          {selectedMagazine.edition}
+                        </p>
+                        <p className="text-white/80 leading-relaxed text-sm sm:text-base hidden sm:block">
+                          {selectedMagazine.description}
+                        </p>
                       </div>
                     </div>
-                    
+
                     <Button
                       variant="ghost"
                       size="sm"
@@ -383,9 +409,11 @@ export default function OptimizedFinsightSection() {
                       <X className="w-5 h-5" />
                     </Button>
                   </div>
-                  
+
                   {/* Mobile description */}
-                  <p className="text-white/80 leading-relaxed text-sm mt-4 sm:hidden">{selectedMagazine.description}</p>
+                  <p className="text-white/80 leading-relaxed text-sm mt-4 sm:hidden">
+                    {selectedMagazine.description}
+                  </p>
                 </div>
 
                 {/* Content - Mobile Responsive */}
@@ -393,9 +421,21 @@ export default function OptimizedFinsightSection() {
                   {/* Stats - Mobile Grid */}
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
                     {[
-                      { label: "Articles", value: selectedMagazine.articles, icon: BookOpen },
-                      { label: "Downloads", value: selectedMagazine.downloads.toLocaleString(), icon: Download },
-                      { label: "Read Time", value: selectedMagazine.readTime, icon: Calendar },
+                      {
+                        label: "Articles",
+                        value: selectedMagazine.articles,
+                        icon: BookOpen,
+                      },
+                      {
+                        label: "Downloads",
+                        value: selectedMagazine.downloads.toLocaleString(),
+                        icon: Download,
+                      },
+                      {
+                        label: "Read Time",
+                        value: selectedMagazine.readTime,
+                        icon: Calendar,
+                      },
                       { label: "Rating", value: "4.9/5", icon: Star },
                     ].map((stat, index) => (
                       <motion.div
@@ -406,15 +446,21 @@ export default function OptimizedFinsightSection() {
                         className="text-center p-3 sm:p-4 bg-white/5 rounded-lg sm:rounded-xl border border-white/10"
                       >
                         <stat.icon className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-blue-400 mx-auto mb-2" />
-                        <div className="text-sm sm:text-base lg:text-xl font-bold text-white">{stat.value}</div>
-                        <div className="text-xs sm:text-sm text-white/70">{stat.label}</div>
+                        <div className="text-sm sm:text-base lg:text-xl font-bold text-white">
+                          {stat.value}
+                        </div>
+                        <div className="text-xs sm:text-sm text-white/70">
+                          {stat.label}
+                        </div>
                       </motion.div>
                     ))}
                   </div>
 
                   {/* Highlights - Mobile Responsive */}
                   <div>
-                    <h4 className="text-lg sm:text-xl font-semibold text-white mb-4">Key Highlights</h4>
+                    <h4 className="text-lg sm:text-xl font-semibold text-white mb-4">
+                      Key Highlights
+                    </h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {selectedMagazine.highlights.map((highlight, index) => (
                         <motion.div
@@ -425,7 +471,9 @@ export default function OptimizedFinsightSection() {
                           className="flex items-center space-x-3 p-3 bg-white/5 rounded-lg border border-white/10"
                         >
                           <div className="w-1.5 h-1.5 bg-blue-400 rounded-full flex-shrink-0" />
-                          <span className="text-white/90 text-sm sm:text-base">{highlight}</span>
+                          <span className="text-white/90 text-sm sm:text-base">
+                            {highlight}
+                          </span>
                         </motion.div>
                       ))}
                     </div>
@@ -440,7 +488,7 @@ export default function OptimizedFinsightSection() {
                       <Download className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                       Download PDF
                     </Button>
-                    
+
                     <Button
                       variant="outline"
                       size="lg"
