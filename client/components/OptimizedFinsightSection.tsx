@@ -307,56 +307,7 @@ export default function OptimizedFinsightSection() {
             <MagazineCard magazine={featuredMagazine} featured={true} />
             
             {/* Stats - Mobile Responsive */}
-            <motion.div
-              className="absolute -top-4 -left-4 sm:-top-8 sm:-left-8"
-              initial={{ opacity: 0, x: -20 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.8 }}
-            >
-              <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-xl rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-white/10">
-                <div className="flex items-center space-x-2 sm:space-x-3 text-white">
-                  <Eye className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
-                  <div>
-                    <div className="text-sm sm:text-lg font-bold">{featuredMagazine.downloads.toLocaleString()}</div>
-                    <div className="text-xs text-white/70">Total Reads</div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
 
-            <motion.div
-              className="absolute -top-4 -right-4 sm:-top-8 sm:-right-8"
-              initial={{ opacity: 0, x: 20 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: 1 }}
-            >
-              <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 backdrop-blur-xl rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-white/10">
-                <div className="flex items-center space-x-2 sm:space-x-3 text-white">
-                  <Star className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
-                  <div>
-                    <div className="text-sm sm:text-lg font-bold">4.9</div>
-                    <div className="text-xs text-white/70">Rating</div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 sm:-bottom-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 1.2 }}
-            >
-              <div className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 backdrop-blur-xl rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-white/10">
-                <div className="flex items-center space-x-2 sm:space-x-3 text-white">
-                  <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
-                  <div>
-                    <div className="text-sm sm:text-lg font-bold">{featuredMagazine.articles}</div>
-                    <div className="text-xs text-white/70">Expert Articles</div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
           </div>
         </motion.div>
 
