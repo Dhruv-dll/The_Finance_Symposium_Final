@@ -83,7 +83,7 @@ const App = () => {
                   element={
                     <PlaceholderPage
                       title="Finsight Magazine"
-                      description="Our digital magazine featuring financial insights, market analysis, and student perspectives on finance."
+                      description="Our digital magazine featuring financial insights, expert perspectives, and student perspectives on finance."
                       category="Publications"
                     />
                   }
