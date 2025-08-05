@@ -216,9 +216,9 @@ export default function Index() {
       date: "2024",
       cover: "/api/placeholder/300/400",
       topics: [
-        "Behavioral Finance",
         "Personal Finance",
-        "Market Trends Analysis",
+        "Financial Education",
+        "Investment Strategies",
       ],
     },
     {
