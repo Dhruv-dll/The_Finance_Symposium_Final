@@ -143,7 +143,7 @@ export default function ModernFinsightSection() {
         className={`relative ${featured ? "w-80 h-96" : "w-64 h-80"} perspective-1000 cursor-pointer`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        onClick={() => setSelectedMagazine(magazine)}
+        onClick={() => window.open("https://heyzine.com/flip-book/3f3a9a2239.html#page/1", "_blank")}
         style={{
           perspective: featured ? perspective : 1000,
         }}
