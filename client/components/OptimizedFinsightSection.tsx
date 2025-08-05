@@ -281,8 +281,8 @@ export default function OptimizedFinsightSection() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.5 }}
           >
-            Dive deep into the world of finance with our quarterly digital magazine. 
-            Featuring cutting-edge insights, market analysis, and exclusive interviews 
+            Dive deep into the world of finance with our quarterly digital magazine.
+            Featuring cutting-edge insights, expert perspectives, and exclusive interviews
             from industry leaders and rising stars.
           </motion.p>
         </motion.div>
